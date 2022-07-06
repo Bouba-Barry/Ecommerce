@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Attribut;
 use App\Entity\Variation;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,9 +16,11 @@ class VariationType extends AbstractType
         $builder
             ->add('nom')
             ->add('code')
-            ->add('attribut')
-            ->add('produits')
-        ;
+            ->add('attribut', EntityType::class, [
+                'class' => Attribut::class,
+                'choice_label' => 'nom'
+            ]);
+        // ->add('produits');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
