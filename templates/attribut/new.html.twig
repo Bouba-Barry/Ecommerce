@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Attribut{% endblock %}
+
+{% block body %}
+    <h1>Create new Attribut</h1>
+
+    {{ include('attribut/_form.html.twig') }}
+
+    <a href="{{ path('app_attribut_index') }}">back to list</a>
+{% endblock %}

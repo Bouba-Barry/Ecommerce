@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Variation index{% endblock %}
+
+{% block body %}
+    <h1>Variation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Code</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for variation in variations %}
+            <tr>
+                <td>{{ variation.id }}</td>
+                <td>{{ variation.nom }}</td>
+                <td>{{ variation.code }}</td>
+                <td>
+                    <a href="{{ path('app_variation_show', {'id': variation.id}) }}">show</a>
+                    <a href="{{ path('app_variation_edit', {'id': variation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_variation_new') }}">Create new</a>
+{% endblock %}

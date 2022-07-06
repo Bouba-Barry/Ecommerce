@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Attribut{% endblock %}
+
+{% block body %}
+    <h1>Attribut</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ attribut.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ attribut.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_attribut_index') }}">back to list</a>
+
+    <a href="{{ path('app_attribut_edit', {'id': attribut.id}) }}">edit</a>
+
+    {{ include('attribut/_delete_form.html.twig') }}
+{% endblock %}

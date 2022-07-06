@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Variation{% endblock %}
+
+{% block body %}
+    <h1>Edit Variation</h1>
+
+    {{ include('variation/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_variation_index') }}">back to list</a>
+
+    {{ include('variation/_delete_form.html.twig') }}
+{% endblock %}
