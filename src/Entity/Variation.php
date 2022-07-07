@@ -83,7 +83,14 @@ class Variation
 
     public function addProduit(Produit $produit): self
     {
-        if (!$this->produits->contains($produit)) {
+        // origine du code à verifier après
+        // if (!$this->produits->contains($produit)) {
+        //     $this->produits[] = $produit;
+        //     $produit->addVariation($this);
+        // }
+
+        // && !$produit->getVariation()->contains($this->id)
+        if ($this->produits->contains($produit)) {
             $this->produits[] = $produit;
             $produit->addVariation($this);
         }

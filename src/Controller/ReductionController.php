@@ -29,6 +29,13 @@ class ReductionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $produit = $form->get('produits')->getData();
+
+            foreach ($produit as $var) {
+                $reduction->addProduit($var);
+            }
+
             $reductionRepository->add($reduction, true);
 
             return $this->redirectToRoute('app_reduction_index', [], Response::HTTP_SEE_OTHER);
@@ -55,6 +62,13 @@ class ReductionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $produit = $form->get('produits')->getData();
+
+            foreach ($produit as $var) {
+                $reduction->addProduit($var);
+            }
+
             $reductionRepository->add($reduction, true);
 
             return $this->redirectToRoute('app_reduction_index', [], Response::HTTP_SEE_OTHER);
@@ -69,7 +83,7 @@ class ReductionController extends AbstractController
     #[Route('/{id}', name: 'app_reduction_delete', methods: ['POST'])]
     public function delete(Request $request, Reduction $reduction, ReductionRepository $reductionRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$reduction->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $reduction->getId(), $request->request->get('_token'))) {
             $reductionRepository->remove($reduction, true);
         }
 

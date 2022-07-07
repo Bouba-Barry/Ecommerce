@@ -83,7 +83,12 @@ class Reduction
 
     public function addProduit(Produit $produit): self
     {
-        if (!$this->produits->contains($produit)) {
+        // if (!$this->produits->contains($produit)) {
+        //     $this->produits[] = $produit;
+        //     $produit->addReduction($this);
+        // }
+
+        if ($this->produits->contains($produit)) {
             $this->produits[] = $produit;
             $produit->addReduction($this);
         }

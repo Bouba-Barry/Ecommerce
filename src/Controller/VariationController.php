@@ -29,6 +29,14 @@ class VariationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $variation_produit = $form->get('produits')->getData();
+
+            foreach ($variation_produit as $var) {
+                $variation->addProduit($var);
+            }
+
+
             $variationRepository->add($variation, true);
 
             return $this->redirectToRoute('app_variation_index', [], Response::HTTP_SEE_OTHER);
@@ -55,6 +63,12 @@ class VariationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $variation_produit = $form->get('produits')->getData();
+
+            foreach ($variation_produit as $var) {
+                $variation->addProduit($var);
+            }
             $variationRepository->add($variation, true);
 
             return $this->redirectToRoute('app_variation_index', [], Response::HTTP_SEE_OTHER);
@@ -69,7 +83,7 @@ class VariationController extends AbstractController
     #[Route('/{id}', name: 'app_variation_delete', methods: ['POST'])]
     public function delete(Request $request, Variation $variation, VariationRepository $variationRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$variation->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $variation->getId(), $request->request->get('_token'))) {
             $variationRepository->remove($variation, true);
         }
 
