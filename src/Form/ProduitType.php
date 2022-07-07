@@ -35,12 +35,12 @@ class ProduitType extends AbstractType
             // ->add('reduction', EntityType::class, [
 
             // ])
-            ->add('variation', EntityType::class, [
-                'class' => Variation::class,
-                'choice_label' => 'nom',
-                'expanded' => true,
-                'multiple' => true
-            ])
+            // ->add('variation', EntityType::class, [
+            //     'class' => Variation::class,
+            //     'choice_label' => 'nom',
+            //     'expanded' => true,
+            //     'multiple' => true
+            // ])
             // ->add('commandes')
             ->add('photo', FileType::class, [
                 'label' => 'image associé au produit',
