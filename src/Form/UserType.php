@@ -19,9 +19,9 @@ class UserType extends AbstractType
             ->add('email')
             ->add('roles', ChoiceType::class, [
                 'choices' => [
-                    'SUPER_AdMIN' => 'ROLE_SUPER_ADMIN',
-                    'ADMIN' => 'ROLE_ADMIN',
-                    'COMPTABLE' => 'ROLE_COMPTABLE',
+                    'ROLE_SUPER_AdMIN' => 'ROLE_SUPER_ADMIN',
+                    'ROLE_ADMIN' => 'ROLE_ADMIN',
+                    'ROLE_COMPTABLE' => 'ROLE_COMPTABLE'
                 ],
                 'multiple' => true,
                 'expanded' => true
@@ -30,12 +30,11 @@ class UserType extends AbstractType
             ->add('prenom')
             ->add('adresse')
             ->add('telephone')
-            ->add('password',RepeatedType::class,[
-                "type"=>PasswordType::class,
-                "first_options"=>["label"=>"Mot de passe "],
-                "second_options"=>["label"=>"Confirmation"]
+            ->add('password', RepeatedType::class, [
+                "type" => PasswordType::class,
+                "first_options" => ["label" => "Mot de passe "],
+                "second_options" => ["label" => "Confirmation"]
             ]);
-        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
