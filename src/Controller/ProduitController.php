@@ -28,7 +28,7 @@ class ProduitController extends AbstractController
     }
 
 
-    #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
+    #[Route('/admin/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProduitRepository $produitRepository, SluggerInterface $slugger): Response
     {
         $produit = new Produit();
@@ -81,7 +81,7 @@ class ProduitController extends AbstractController
     }
 
 
-    #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
+    #[Route('/admin/{id}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
     {
         return $this->render('produit/show.html.twig', [
@@ -89,7 +89,7 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Produit $produit, SluggerInterface $slugger, ProduitRepository $produitRepository): Response
     {
         $form = $this->createForm(ProduitType::class, $produit);
@@ -134,7 +134,7 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_produit_delete', methods: ['POST'])]
+    #[Route('/admin/{id}', name: 'app_produit_delete', methods: ['POST'])]
     public function delete(Request $request, Produit $produit, ProduitRepository $produitRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $produit->getId(), $request->request->get('_token'))) {

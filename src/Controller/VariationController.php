@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 #[Security("is_granted('ROLE_ADMIN')")]
-#[Route('/variation')]
+#[Route('/admin/variation')]
 class VariationController extends AbstractController
 {
     #[Route('/', name: 'app_variation_index', methods: ['GET'])]

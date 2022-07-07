@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 #[Security("is_granted('ROLE_ADMIN')")]
-#[Route('/reduction')]
+#[Route('/admin/reduction')]
 class ReductionController extends AbstractController
 {
     #[Route('/', name: 'app_reduction_index', methods: ['GET'])]

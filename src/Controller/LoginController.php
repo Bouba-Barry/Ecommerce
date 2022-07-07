@@ -11,7 +11,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 // #[Security("is_granted('ROLE_USER')")]
 class LoginController extends AbstractController
 {
-    #[Route('/login', name: 'app_login')]
+    #[Route('/admin/login', name: 'app_login')]
       public function index(AuthenticationUtils $authenticationUtils): Response
     {
          // get the login error if there is one
@@ -27,7 +27,7 @@ class LoginController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="app_logout", methods={"GET"})
+     * @Route("/admin/logout", name="app_logout", methods={"GET"})
      */
     public function logout(): Response
     {

@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 #[Security("is_granted('ROLE_ADMIN')")]
-#[Route('/sous/categorie')]
+#[Route('/admin/sous/categorie')]
 class SousCategorieController extends AbstractController
 {
     #[Route('/', name: 'app_sous_categorie_index', methods: ['GET'])]

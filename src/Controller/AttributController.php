@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
-#[Route('/attribut')]
+#[Route('/admin/attribut')]
 #[Security("is_granted('ROLE_ADMIN')")]
 class AttributController extends AbstractController
 {
