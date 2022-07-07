@@ -32,7 +32,9 @@ class ProduitType extends AbstractType
                 'class' => SousCategorie::class,
                 'choice_label' => 'titre'
             ])
-            ->add('reduction')
+            // ->add('reduction', EntityType::class, [
+
+            // ])
             // ->add('variation', EntityType::class, [
             //     'class' => Variation::class,
             //     'choice_label' => 'nom'
