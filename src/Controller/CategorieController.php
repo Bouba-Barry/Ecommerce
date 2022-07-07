@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/categorie')]
+#[Route('/admin/categorie')]
 #[Security("is_granted('ROLE_ADMIN')")]
 class CategorieController extends AbstractController
 {
