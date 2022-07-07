@@ -23,7 +23,7 @@ class SousCategorieController extends AbstractController
         ]);
     }
 
-    #[Security("is_granted('ROLE_ADMIN')")]
+
     #[Route('/new', name: 'app_sous_categorie_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SousCategorieRepository $sousCategorieRepository): Response
     {
@@ -43,7 +43,6 @@ class SousCategorieController extends AbstractController
         ]);
     }
 
-    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}', name: 'app_sous_categorie_show', methods: ['GET'])]
     public function show(SousCategorie $sousCategorie): Response
     {
@@ -52,7 +51,6 @@ class SousCategorieController extends AbstractController
         ]);
     }
 
-    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}/edit', name: 'app_sous_categorie_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, SousCategorie $sousCategorie, SousCategorieRepository $sousCategorieRepository): Response
     {
@@ -71,7 +69,6 @@ class SousCategorieController extends AbstractController
         ]);
     }
 
-    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}', name: 'app_sous_categorie_delete', methods: ['POST'])]
     public function delete(Request $request, SousCategorie $sousCategorie, SousCategorieRepository $sousCategorieRepository): Response
     {
