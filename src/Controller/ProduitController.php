@@ -12,7 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+
+#[Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMPTABLE')")]
 #[Route('/produit')]
 class ProduitController extends AbstractController
 {
@@ -25,6 +29,7 @@ class ProduitController extends AbstractController
     }
 
 
+    #[Security("is_granted('ROLE_ADMIN')")]
 
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProduitRepository $produitRepository, SluggerInterface $slugger): Response
@@ -78,6 +83,8 @@ class ProduitController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
+
     #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
     {
@@ -86,6 +93,7 @@ class ProduitController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Produit $produit, SluggerInterface $slugger, ProduitRepository $produitRepository): Response
     {
@@ -130,6 +138,8 @@ class ProduitController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Security("is_granted('ROLE_ADMIN')")]
 
     #[Route('/{id}', name: 'app_produit_delete', methods: ['POST'])]
     public function delete(Request $request, Produit $produit, ProduitRepository $produitRepository): Response

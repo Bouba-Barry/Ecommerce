@@ -9,7 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+#[Security("is_granted('ROLE_ADMIN')")]
 #[Route('/sous/categorie')]
 class SousCategorieController extends AbstractController
 {
@@ -21,6 +23,7 @@ class SousCategorieController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/new', name: 'app_sous_categorie_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SousCategorieRepository $sousCategorieRepository): Response
     {
@@ -40,6 +43,7 @@ class SousCategorieController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}', name: 'app_sous_categorie_show', methods: ['GET'])]
     public function show(SousCategorie $sousCategorie): Response
     {
@@ -48,6 +52,7 @@ class SousCategorieController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}/edit', name: 'app_sous_categorie_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, SousCategorie $sousCategorie, SousCategorieRepository $sousCategorieRepository): Response
     {
@@ -66,10 +71,11 @@ class SousCategorieController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}', name: 'app_sous_categorie_delete', methods: ['POST'])]
     public function delete(Request $request, SousCategorie $sousCategorie, SousCategorieRepository $sousCategorieRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$sousCategorie->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $sousCategorie->getId(), $request->request->get('_token'))) {
             $sousCategorieRepository->remove($sousCategorie, true);
         }
 

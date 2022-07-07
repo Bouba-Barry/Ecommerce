@@ -9,7 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+#[Security("is_granted('ROLE_ADMIN')")]
 #[Route('/variation')]
 class VariationController extends AbstractController
 {
@@ -21,6 +23,7 @@ class VariationController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/new', name: 'app_variation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, VariationRepository $variationRepository): Response
     {
@@ -48,6 +51,7 @@ class VariationController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}', name: 'app_variation_show', methods: ['GET'])]
     public function show(Variation $variation): Response
     {
@@ -56,6 +60,7 @@ class VariationController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}/edit', name: 'app_variation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Variation $variation, VariationRepository $variationRepository): Response
     {
@@ -80,6 +85,7 @@ class VariationController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}', name: 'app_variation_delete', methods: ['POST'])]
     public function delete(Request $request, Variation $variation, VariationRepository $variationRepository): Response
     {

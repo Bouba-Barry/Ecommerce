@@ -9,7 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+
+#[Security("is_granted('ROLE_ADMIN')")]
 #[Route('/reduction')]
 class ReductionController extends AbstractController
 {
@@ -21,6 +24,7 @@ class ReductionController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/new', name: 'app_reduction_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ReductionRepository $reductionRepository): Response
     {
@@ -47,6 +51,7 @@ class ReductionController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}', name: 'app_reduction_show', methods: ['GET'])]
     public function show(Reduction $reduction): Response
     {
@@ -55,6 +60,7 @@ class ReductionController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}/edit', name: 'app_reduction_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reduction $reduction, ReductionRepository $reductionRepository): Response
     {
@@ -80,6 +86,7 @@ class ReductionController extends AbstractController
         ]);
     }
 
+    #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}', name: 'app_reduction_delete', methods: ['POST'])]
     public function delete(Request $request, Reduction $reduction, ReductionRepository $reductionRepository): Response
     {
