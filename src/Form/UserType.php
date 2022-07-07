@@ -19,9 +19,9 @@ class UserType extends AbstractType
             ->add('email')
             ->add('roles', ChoiceType::class, [
                 'choices' => [
-                    'SUPER_AdMIN' => 'SUPER_ADMIN',
-                    'ADMIN' => 'ADMIN',
-                    'COMPTABLE' => 'COMPTABLE',
+                    'SUPER_AdMIN' => 'ROLE_SUPER_ADMIN',
+                    'ADMIN' => 'ROLE_ADMIN',
+                    'COMPTABLE' => 'ROLE_COMPTABLE',
                 ],
                 'multiple' => true,
                 'expanded' => true
