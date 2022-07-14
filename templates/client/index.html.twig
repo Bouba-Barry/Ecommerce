@@ -20,6 +20,8 @@
             <th>Nom<th>
             <th>Prenom<th>
             <th>adresse<th>
+            <th>email<th>
+            <th>Action<th>
         </tr>
     <thead>
     <tbody>
@@ -27,6 +29,8 @@
         <td>{{ app.user.nom }}</td>
         <td>{{ app.user.prenom }}</td>
         <td>{{ app.user.adresse }}</td>
+        <td>{{ app.user.email }}</td>
+        <td><a href="{{ path('app_client_edit', {'id': app.user.id}) }}">edit</a></td>
     <tr>
     <tbody>
     </table>
@@ -42,6 +46,7 @@
             <th>adresse livraison<th>
             <th>methode de payment<th>
             <th>Produits<th>
+            <th>Prix Unité<th>
         </tr>
     <thead>
      {# {{ dump(app.user) }} #}
@@ -53,6 +58,7 @@
         <td>{{ commande.getMethodPayement() }}</td>
         {% for prod in commande.getProduit() %}
         <td>{{ prod.getDesignation() }} </td>
+        <td>{{ prod.getAncienPrix() }}DHS</td>
         {% endfor %}
     <tr>
     {% endfor %}
