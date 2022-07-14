@@ -1,3 +1,7 @@
+* {
+  margin-left: 10px;
+}
+
 #panier {
   height: 60px;
 }
@@ -28,4 +32,43 @@
 }
 #panier.zero:before {
   opacity: 1;
+}
+
+/* panier.html.twig */
+
+.progressbtn1 {
+  position: absolute;
+  font-size: 30px;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(246, 139, 30);
+  color: white;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 0 2px #030505, 0 0 2px #0e1313, 0 0 5px #0a0e0e, 0 0 2px #0e1313;
+}
+.progressbtn2 {
+  position: absolute;
+  left: 140px;
+  padding-bottom: 20px;
+  font-size: 34px;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(246, 139, 30);
+  color: white;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 0 2px #030505, 0 0 2px #0e1313, 0 0 5px #0a0e0e, 0 0 2px #0e1313;
+}
+#container {
+  position: relative;
+}
+.valprogress {
+  position: absolute;
+
+  left: 80px;
+  font-size: 24px;
+  border-bottom: 3px solid rgb(246, 139, 30);
 }
