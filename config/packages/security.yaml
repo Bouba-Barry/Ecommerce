@@ -39,7 +39,7 @@ security:
         # allow unauthenticated users to access the login form
         - { path: ^/home, roles: PUBLIC_ACCESS }
         - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: '^/client', roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
+        - { path: ^/client, roles: ROLE_USER }
         # - { path: ^/logout, roles: ROLE_USER }
         
         #  { path: '^/profile/^', roles: ROLE_USER}

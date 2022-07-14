@@ -25,6 +25,11 @@ app.user %} <a href="{{ path('app_logout') }}"> Log OUT</a><br />
 <a href="{{ path('app_produit_index') }}">Produits</a><br />
 <a href="{{ path('app_commande_index') }}">Commandes</a><br />
 <a href="{{ path('app_reduction_index') }}">Reductions</a><br />
+
+{% elseif 'ROLE_USER' in app.user.Roles %}
+<a href="{{ path('app_home') }}">Home Page</a><br/>
+<a href="{{ path('app_client_index') }}">PROFILE </a><br/>
+
 {% endif %} {% else %}
 <a href="{{ path('app_login') }}"> Log IN</a>
 
