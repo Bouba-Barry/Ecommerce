@@ -22,13 +22,13 @@ class ClientController extends AbstractController
 
         // $userlogged = $this->getUser();
         // $user = new User();
-        // // $id = $userlogged->getId();
+        // $id = $userlogged->id;
 
         // $entityManager = $doctrine->getManager();
 
         // $user = $entityManager->getRepository(User::class)->find($id);
 
-        // var_dump($userlogged);
+        // // var_dump($userlogged);
         // $commandes = $user->getCommandes();
 
         return $this->render('client/index.html.twig', [
