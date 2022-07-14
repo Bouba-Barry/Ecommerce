@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         noti.setAttribute("data-count", add + 1);
         noti.classList.add("zero");
       }
+      e.preventDefault();
     });
   }
 });
