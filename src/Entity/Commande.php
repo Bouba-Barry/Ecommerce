@@ -106,6 +106,10 @@ class Commande
         return $this;
     }
 
+    // public function getCommandeProduit($idCmd){
+
+    // }
+
     public function removeProduit(Produit $produit): self
     {
         $this->produit->removeElement($produit);

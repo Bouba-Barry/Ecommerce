@@ -16,13 +16,16 @@
      <table>
     <thead>
         <tr>
-            <th><th>
+            <th>Nom<th>
+            <th>Prenom<th>
+            <th>adresse<th>
         </tr>
     <thead>
     <tbody>
     <tr>
-        {# <td>{{ commande.date_cmd }}<td>
-        <td>{{ commande.adresse_livraison }}</td> #}
+        <td>{{ app.user.nom }}</td>
+        <td>{{ app.user.prenom }}</td>
+        <td>{{ app.user.adresse }}</td>
     <tr>
     <tbody>
     </table>
@@ -37,18 +40,19 @@
             <th>date Commande<th>
             <th>adresse livraison<th>
             <th>methode de payment<th>
-            <th><th>
+            <th>Produits<th>
         </tr>
     <thead>
-     {{ dump(app.user) }}
+     {# {{ dump(app.user) }} #}
     <tbody>
-    {% for commande in app.user.commandes %}
-        {# {% for fact in commande.id %} #}
-        {{ dump(commande) }}
-       
+    {% for commande in app.user %}
     <tr>
         <td>{{ commande.date_cmd }}<td>
         <td>{{ commande.adresse_livraison }}</td>
+        <td>{{ commande.methode_payment }}</td>
+        {% for prod in commande.produits %}
+        <td>{{ prod.designation }} </td>
+        {% endfor %}
     <tr>
     {% endfor %}
     <tbody>
