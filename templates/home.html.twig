@@ -1,6 +1,57 @@
 {% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
-%} {% block body %} {# <a href="{{ path('app_login') }}"> Log OUT</a> #} {% else
-%}
-<a href="{{ path('app_user_index') }}"> Log IN</a>
+%} {% block stylesheets %} <link href={{ asset("css/panier.css") }}
+rel="stylesheet" >
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+/>
 
-{% endblock %}
+{% endblock %} {% block body %}
+
+<a id="panier" style="width: 600px; height: 700px"
+  ><i class="fa-solid fa-cart-shopping"></i
+></a>
+
+<br />
+<br />
+{% for produit in produits %} {#
+<tr>
+  <td>{{ produit.id }}</td>
+  <td>{{ produit.designation }}</td>
+  <td>{{ produit.description }}</td>
+  <td>{{ produit.ancienPrix }}</td>
+  <td>{{ produit.nouveauPrix }}</td>
+  <td>
+    <img src=
+    {{ asset('uploads/produits/' ~ produit.imageProduit ) }} width="80"
+    height="70">
+  </td>
+  <td>{{ produit.qteStock }}</td>
+  <td>
+    <a href="{{ path('app_produit_show', { id: produit.id }) }}">show</a>
+    <a href="{{ path('app_produit_edit', { id: produit.id }) }}">edit</a>
+  </td>
+</tr>
+
+#} <img src= {{ asset('uploads/produits/' ~ produit.imageProduit ) }} width="80"
+height="70">
+<p>
+  {{ produit.designation }}
+</p>
+<p>{{ produit.description }}</p>
+<p>{{ produit.ancienPrix }} DHS</p>
+<button class="addcard btn-primary" id="addcard{{ produit.id }}">
+  Add to Cart
+</button>
+<button id="buy">Buy Now</button>
+<br />
+<br />
+{% endfor %} {% block javascripts %}
+
+<script
+  src="https://kit.fontawesome.com/4c827d40eb.js"
+  crossorigin="anonymous"
+></script>
+<script src="{{ asset('js/panier.js') }}"></script>
+
+{% endblock %} {% endblock %}
