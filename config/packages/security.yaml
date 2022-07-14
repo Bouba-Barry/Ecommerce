@@ -5,7 +5,7 @@ security:
   # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
   role_hierarchy:
     ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_COMPTABLE],
-    ROLE_ADMIN:       [ROLE_COMPTABLE],
+    ROLE_ADMIN:       [ROLE_COMPTABLE, ROLE_USER],
   providers:
     # used to reload user from session & other features (e.g. switch_user)
     app_user_provider:
@@ -39,7 +39,7 @@ security:
         # allow unauthenticated users to access the login form
         - { path: ^/home, roles: PUBLIC_ACCESS }
         - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: ^/client, roles: ROLE_USER }
+        # - { path: ^/client, roles: ROLE_USER }
         # - { path: ^/logout, roles: ROLE_USER }
         
         #  { path: '^/profile/^', roles: ROLE_USER}
