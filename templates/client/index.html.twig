@@ -13,19 +13,39 @@
 
 <div class="profile">
     <h2>Vos Informations personnelles</h2>
-
-<div>
-    <div>
-    <h2>les commandes effectuer</h2>
-    {# {{ dump(app.user) }} #}
-    <table>
+     <table>
     <thead>
         <tr>
             <th><th>
         </tr>
     <thead>
     <tbody>
+    <tr>
+        {# <td>{{ commande.date_cmd }}<td>
+        <td>{{ commande.adresse_livraison }}</td> #}
+    <tr>
+    <tbody>
+    </table>
+
+<div>
+    <div>
+    <h2>les commandes effectuer</h2>
+    <h2></h2>
+    <table>
+    <thead>
+        <tr>
+            <th>date Commande<th>
+            <th>adresse livraison<th>
+            <th>methode de payment<th>
+            <th><th>
+        </tr>
+    <thead>
+     {{ dump(app.user) }}
+    <tbody>
     {% for commande in app.user.commandes %}
+        {# {% for fact in commande.id %} #}
+        {{ dump(commande) }}
+       
     <tr>
         <td>{{ commande.date_cmd }}<td>
         <td>{{ commande.adresse_livraison }}</td>
