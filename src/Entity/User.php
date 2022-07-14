@@ -31,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $prenom;
 
     #[ORM\Column(type: 'string', length: 180)]
-  
+
     private $adresse;
 
     #[ORM\Column(type: 'integer', length: 255)]
