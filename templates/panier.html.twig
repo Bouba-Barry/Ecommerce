@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
+%} {% block body %} {% for produit in produits %} {#
+<tr>
+  <td>{{ produit.id }}</td>
+  <td>{{ produit.designation }}</td>
+  <td>{{ produit.description }}</td>
+  <td>{{ produit.ancienPrix }}</td>
+  <td>{{ produit.nouveauPrix }}</td>
+  <td>
+    <img src=
+    {{ asset('uploads/produits/' ~ produit.imageProduit ) }} width="80"
+    height="70">
+  </td>
+  <td>{{ produit.qteStock }}</td>
+  <td>
+    <a href="{{ path('app_produit_show', { id: produit.id }) }}">show</a>
+    <a href="{{ path('app_produit_edit', { id: produit.id }) }}">edit</a>
+  </td>
+</tr>
+
+#} <img src= {{ asset('uploads/produits/' ~ produit.imageProduit ) }} width="80"
+height="70">
+<p>
+  {{ produit.designation }}
+</p>
+<p>{{ produit.description }}</p>
+<p>{{ produit.ancienPrix }} DHS</p>
+
+<button class="addcard btn-primary" id="addcard{{ produit.id }}">
+  Add to Cart
+</button>
+<button id="buy">Buy Now</button>
+
+<br />
+<br />
+{% endfor %} {% endblock %}

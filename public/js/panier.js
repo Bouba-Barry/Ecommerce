@@ -39,4 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
     });
   }
+  noti.addEventListener("click", function () {
+    window.location.href = "http://127.0.0.1:8000/panier/" + vals; //on fait pas le panier.php/?.. mais panier.php?...
+  });
 });
