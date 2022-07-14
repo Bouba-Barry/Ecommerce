@@ -106,7 +106,9 @@ class Commande
         return $this;
     }
 
-    // public function getCommandeProduit($idCmd){
+    // public function getCommandeProduit()
+    // {
+    //     return $this->getProduit()   
 
     // }
 
