@@ -27,7 +27,7 @@ app.user %} {% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
 
 {% elseif 'ROLE_USER' in app.user.Roles %} {% block javascripts %}
 <script>
-  window.location.href = "http://127.0.0.1:8000";
+  //= "http://127.0.0.1:8000";
   // document.getElementById("submit").click();
   //   document.body, (style.display = "none");
 </script>
