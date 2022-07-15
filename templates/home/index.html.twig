@@ -1,8 +1,7 @@
 {% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
 %} {% block body %} {# <a href="{{ path('app_login') }}"> Log OUT</a> #} {% if
-app.user %} <a href="{{ path('app_logout') }}"> Log OUT</a><br />
-{% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
-
+app.user %} {% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
+<a href="{{ path('app_logout') }}"> Log OUT</a><br />
 <a href="{{ path('app_produit_index') }}">Produits</a><br />
 <a href="{{ path('app_attribut_index') }}">Attributs</a><br />
 <a href="{{ path('app_categorie_index') }}">Categories</a><br />
@@ -12,7 +11,7 @@ app.user %} <a href="{{ path('app_logout') }}"> Log OUT</a><br />
 <a href="{{ path('app_user_index') }}">Users</a><br />
 <a href="{{ path('app_variation_index') }}">Variations</a><br />
 {% elseif 'ROLE_ADMIN' in app.user.Roles %}
-
+<a href="{{ path('app_logout') }}"> Log OUT</a><br />
 <a href="{{ path('app_produit_index') }}">Produits</a><br />
 <a href="{{ path('app_attribut_index') }}">Attributs</a><br />
 <a href="{{ path('app_categorie_index') }}">Categories</a><br />
@@ -21,16 +20,18 @@ app.user %} <a href="{{ path('app_logout') }}"> Log OUT</a><br />
 <a href="{{ path('app_sous_categorie_index') }}">Sous_Categories</a><br />
 <a href="{{ path('app_variation_index') }}">Variations</a><br />
 {% elseif 'ROLE_COMPTABLE' in app.user.Roles %}
-
+<a href="{{ path('app_logout') }}"> Log OUT</a><br />
 <a href="{{ path('app_produit_index') }}">Produits</a><br />
 <a href="{{ path('app_commande_index') }}">Commandes</a><br />
 <a href="{{ path('app_reduction_index') }}">Reductions</a><br />
 
-{% elseif 'ROLE_USER' in app.user.Roles %}
-<a href="{{ path('app_home') }}">Home Page</a><br/>
-<a href="{{ path('app_client_index') }}">PROFILE </a><br/>
-
-{% endif %} {% else %}
+{% elseif 'ROLE_USER' in app.user.Roles %} {% block javascripts %}
+<script>
+  window.location.href = "http://127.0.0.1:8000";
+  // document.getElementById("submit").click();
+  //   document.body, (style.display = "none");
+</script>
+{% endblock %} {% endif %} {% else %}
 <a href="{{ path('app_login') }}"> Log IN</a>
 
 {% endif %} {% endblock %}

@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     but.addEventListener("click", (e) => {
       console.log(but.id);
       i = findindex1(but);
+
       valprogress[i].innerHTML++;
 
       let prix = document

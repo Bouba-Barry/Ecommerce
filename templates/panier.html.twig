@@ -7,7 +7,10 @@ rel="stylesheet" >
 />
 
 {% endblock %} {% block javascripts %}
-
+<script
+  src="https://kit.fontawesome.com/4c827d40eb.js"
+  crossorigin="anonymous"
+></script>
 <script src="{{ asset('js/panier1.js') }}"></script>
 
 {% endblock %} {% block body %} {% for produit in produits %} {#
@@ -42,6 +45,11 @@ height="70">
   <button id="progressbtn2{{ produit.id }}" class="progressbtn2">-</button>
 </div>
 <br /><br /><br />
+<a href="#">
+  <i style="font-size: 30px" class="fa-solid fa-trash-can"></i> supprimer</a
+><br />
+<br />
+
 <button id="buy">Buy Now</button>
 
 <br />
