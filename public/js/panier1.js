@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   let progressbtn1 = document.getElementsByClassName("progressbtn1");
   let progressbtn2 = document.getElementsByClassName("progressbtn2");
+
   console.log(progressbtn1);
   let valprogress = document.getElementsByClassName("valprogress");
   let prix = document.getElementsByClassName("prix");
@@ -36,12 +37,18 @@ document.addEventListener("DOMContentLoaded", function () {
   for (let but of progressbtn2) {
     but.addEventListener("click", (e) => {
       i = findindex2(but);
-      valprogress[i].innerHTML--;
+      if (valprogress[i].innerHTML != 0) {
+        valprogress[i].innerHTML--;
+      }
       let prix = document
         .getElementById("prix" + but.id.charAt(but.id.length - 1))
         .innerHTML.replace("DHS", "");
       console.log(prix);
-      total -= parseInt(prix);
+
+      if (total != 0) {
+        total -= parseInt(prix);
+      }
+
       apayer.innerHTML = "a payer  <br>" + total + "DH";
     });
   }

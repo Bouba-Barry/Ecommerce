@@ -25,7 +25,7 @@ final class Version20220715104232 extends AbstractMigration
         $this->addSql('ALTER TABLE panier ADD CONSTRAINT FK_24CC0DF2A76ED395 FOREIGN KEY (user_id) REFERENCES `user` (id)');
         $this->addSql('ALTER TABLE panier_produit ADD CONSTRAINT FK_D31F28A6F77D927C FOREIGN KEY (panier_id) REFERENCES panier (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE panier_produit ADD CONSTRAINT FK_D31F28A6F347EFB FOREIGN KEY (produit_id) REFERENCES produit (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE commande_produit DROP qte_cmd');
+        // $this->addSql('ALTER TABLE commande_produit DROP qte_cmd');
     }
 
     public function down(Schema $schema): void
@@ -34,6 +34,6 @@ final class Version20220715104232 extends AbstractMigration
         $this->addSql('ALTER TABLE panier_produit DROP FOREIGN KEY FK_D31F28A6F77D927C');
         $this->addSql('DROP TABLE panier');
         $this->addSql('DROP TABLE panier_produit');
-        $this->addSql('ALTER TABLE commande_produit ADD qte_cmd BIGINT NOT NULL');
+        // $this->addSql('ALTER TABLE commande_produit ADD qte_cmd BIGINT NOT NULL');
     }
 }
