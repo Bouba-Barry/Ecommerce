@@ -16,9 +16,11 @@ use Symfony\Component\Validator\Constraints\Length;
 // #[Route('/admin')]
 class HomeController extends AbstractController
 {
+    #[Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') or is_granted('ROLE_COMPTABLE')  ")]
     #[Route('/admin', name: 'app_home_admin')]
     public function index(): Response
     {
+        
         return $this->render('home/index.html.twig');
     }
 
