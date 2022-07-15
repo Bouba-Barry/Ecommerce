@@ -25,13 +25,13 @@ app.user %} {% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
 <a href="{{ path('app_commande_index') }}">Commandes</a><br />
 <a href="{{ path('app_reduction_index') }}">Reductions</a><br />
 
-{% elseif 'ROLE_USER' in app.user.Roles %} {% block javascripts %}
+{# {% elseif 'ROLE_USER' in app.user.Roles %} {% block javascripts %}
 <script>
-  //= "http://127.0.0.1:8000";
+  //window.location.href = "http://127.0.0.1:8000";
   // document.getElementById("submit").click();
   //   document.body, (style.display = "none");
 </script>
-{% endblock %} {% endif %} {% else %}
+{% endblock %} {% endif %} {% else %} #}
 <a href="{{ path('app_login') }}"> Log IN</a>
 
 {% endif %} {% endblock %}
