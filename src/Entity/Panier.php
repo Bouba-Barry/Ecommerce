@@ -29,6 +29,7 @@ class Panier
 
     public function __construct()
     {
+        $this->createAt = new \DateTimeImmutable('now');
         $this->produit = new ArrayCollection();
     }
 
