@@ -49,11 +49,15 @@ class Produit
     #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'produit')]
     private $commandes;
 
+    #[ORM\ManyToMany(targetEntity: Panier::class, mappedBy: 'produit')]
+    private $paniers;
+
     public function __construct()
     {
         $this->reduction = new ArrayCollection();
         $this->variation = new ArrayCollection();
         $this->commandes = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -227,6 +231,33 @@ class Produit
     {
         if ($this->commandes->removeElement($commande)) {
             $commande->removeProduit($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Panier>
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): self
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->addProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): self
+    {
+        if ($this->paniers->removeElement($panier)) {
+            $panier->removeProduit($this);
         }
 
         return $this;
