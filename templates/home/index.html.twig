@@ -31,7 +31,7 @@ app.user %} {% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
   // document.getElementById("submit").click();
   //   document.body, (style.display = "none");
 </script>
-{% endblock %} {% endif %} {% else %} #}
+{% endblock %} #} {% endif %} {% else %}
 <a href="{{ path('app_login') }}"> Log IN</a>
 
 {% endif %} {% endblock %}
