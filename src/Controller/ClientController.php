@@ -28,6 +28,7 @@ class ClientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dd($form);
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $user->getPassword()
