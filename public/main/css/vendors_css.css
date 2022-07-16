@@ -1,6 +1,7 @@
 /****************************/
 /** Imports Plugin css **/
 /****************************/
+
 @import url(../../assets/vendor_components/bootstrap/dist/css/bootstrap.css);
 @import url(../../assets/vendor_components/morris.js/morris.css);
 @import url(../../assets/vendor_components/OwlCarousel2/dist/assets/owl.carousel.css);
@@ -40,7 +41,8 @@
 @import url(../../assets/vendor_plugins/timepicker/bootstrap-timepicker.min.css);
 @import url(../../assets/vendor_plugins/pace/pace.min.css);
 @import url(../../assets/vendor_components/fullcalendar/fullcalendar.min.css);
-@import "../../assets/vendor_components/fullcalendar/fullcalendar.print.min.css" print;
+@import "../../assets/vendor_components/fullcalendar/fullcalendar.print.min.css"
+  print;
 @import url(../../assets/vendor_components/weather-icons/weather-icons.css);
 
 /*# sourceMappingURL=vendors_css.css.map */
