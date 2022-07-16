@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="{{ asset('images/favicon.ico') }}">
+    {# <link rel="icon" href="{{ asset('images/favicon.ico') }}"> #}
 
     <title>Sunny Admin - Log in </title>
   
 	<!-- Vendors Style-->
-	<link rel="stylesheet" href="{{ asset('css/vendors_css.css') }}">
+	{# <link rel="stylesheet" href="{{ asset('css/vendors_css.css') }} ">
 	  
 	<!-- Style-->  
-	<link rel="stylesheet" href="{{ asset('css/style.css') }}">
-	<link rel="stylesheet" href="{{ asset('css/skin_color.css') }} ">	
+	<link rel="stylesheet" href="{{ asset('css/style.css') }} ">
+	<link rel="stylesheet" href="{{ asset('css/skin_color.css') }}">	 #}
 
 </head>
 <body class="hold-transition theme-primary bg-gradient-primary">
@@ -31,9 +31,7 @@
 							<p class="text-white-50">Sign in to start your session</p>							
 						</div>
 						<div class="p-30 rounded30 box-shadowed b-2 b-dashed">
-                        
-                        <section>
-                        </section>											
+							{% block form %} {% endblock %}													
 
 							<div class="text-center text-white">
 							  <p class="mt-20">- Sign With -</p>
@@ -46,7 +44,7 @@
 							</div>
 							
 							<div class="text-center">
-								<p class="mt-15 mb-0 text-white">Don't have an account? <a href="" class="text-info ml-5">Sign Up</a></p>
+								<p class="mt-15 mb-0 text-white">Don't have an account? <a href="auth_register.html" class="text-info ml-5">Sign Up</a></p>
 							</div>
 						</div>
 					</div>
@@ -56,9 +54,9 @@
 	</div>
 
 
-	<!-- Vendor JS -->
-	<script src="{{ asset('js/vendors.min.js') }}"></script>
-    <script src="{{ asset('js/feather.min.js') }} "></script>	
+	{# <!-- Vendor JS -->
+	<script src="{{ asset('js/vendors.min.js') }} "></script>
+    <script src="{{ asset('js/feather.min.js') }} "></script>	 #}
 
 </body>
 </html>
