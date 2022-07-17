@@ -1,47 +1,175 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %} {% block title %}User index{% endblock %} {%
+block content %}
 
-{% block title %}User index{% endblock %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <div class="container-full">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="page-title">Data Tables</h3>
+          <div class="d-inline-block align-items-center">
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="#"><i class="mdi mdi-home-outline"></i></a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Tables</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Data Tables
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
 
-{% block body %}
-    <h1>User index</h1>
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            <div class="box-header">
+              <h4 class="box-title">Complex headers (rowspan and colspan)</h4>
+            </div>
+            <div class="box-body">
+              <div class="table-responsive">
+                <table
+                  id="complex_header"
+                  class="table table-striped table-bordered display"
+                  style="width: 100%"
+                >
+                  <thead>
+                    <tr>
+                      <th rowspan="2">Nom Complet</th>
+                      <th colspan="2">HR Information</th>
+                      <th colspan="2">Contact</th>
+                      <th rowspan="2"></th>
+                    </tr>
+                    <tr>
+                      <th>Adresse</th>
+                      <th>Roles</th>
+                      <th>Telephone</th>
+                      <th style="border-right: 1px solid #d5dfea">E-mail</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for user in users %}
+                    <tr>
+                      <td>{{ user.Nom }} {{ user.prenom }}</td>
+                      <td>{{ user.adresse }}</td>
+                      <td>
+                        <select size="1" id="row-1-office" name="row-1-office">
+                          <option value="Roles" selected="selected">
+                            Roles Here
+                          </option>
+                          {% for role in user.roles %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Adresse</th>
-                <th>Telephone</th>
-                {# <th>Password</th> #}
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.nom }}</td>
-                <td>{{ user.prenom }}</td>
-                <td>{{ user.adresse }}</td>
-                <td>{{ user.telephone }}</td>
-                {# <td>{{ user.password }}</td> #}
-                <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                          <option value="{{ role }}">
+                            {{ role }}
+                          </option>
 
-    <a href="{{ path('app_user_new') }}">Create new</a>
-{% endblock %}
+                          {% endfor %}
+                        </select>
+                      </td>
+                      <td>{{ user.telephone }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>
+                        <a href="#" class="btn btn-md btn-primary">
+                          <i class="fa fa-eye"></i>
+                        </a>
+                        <a
+                          href="{{ path('app_user_edit', { id: user.id }) }}"
+                          class="btn btn-md btn-warning"
+                        >
+                          <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="#" class="btn btn-md btn-danger">
+                          <i class="fa fa-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Name</th>
+                      <th>Position</th>
+                      <th>Salary</th>
+                      <th>Office</th>
+                      <th style="border-right: 1px solid #d5dfea">Extn.</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %} {% block javascript %}
+<script src="{{
+    asset('assets/vendor_components/datatable/datatables.min.js')
+  }}"></script>
+<script src="{{ asset('main/js/pages/data-table.js') }}"></script>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+  integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+{% endblock %} {#
+<h1>User index</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Email</th>
+      <th>Roles</th>
+      <th>Nom</th>
+      <th>Prenom</th>
+      <th>Adresse</th>
+      <th>Telephone</th>
+      {#
+      <th>Password</th>
+      <th>actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+      <td>{{ user.nom }}</td>
+      <td>{{ user.prenom }}</td>
+      <td>{{ user.adresse }}</td>
+      <td>{{ user.telephone }}</td>
+      {#
+      <td>{{ user.password }}</td>
+      <td>
+        <a href="{{ path('app_user_show', { id: user.id }) }}">show</a>
+        <a href="{{ path('app_user_edit', { id: user.id }) }}">edit</a>
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="9">no records found</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{{ path('app_user_new') }}">Create new</a> #}

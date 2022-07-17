@@ -164,7 +164,7 @@
                   data-toggle="dropdown"
                   title="User"
                 >
-                  <img src="../images/avatar/1.jpg" alt="" />
+                  <img src="{{ asset('uploads/user/visa.jpg') }}" alt="" />
                 </a>
                 <ul class="dropdown-menu animated flipInX">
                   <li class="user-body">
@@ -217,7 +217,7 @@
 
           <!-- sidebar menu-->
           <ul class="sidebar-menu" data-widget="tree">
-            <li>
+            <li class="active">
               <a href="index.html">
                 <i data-feather="pie-chart"></i>
                 <span>Dashboard</span>
@@ -484,7 +484,7 @@
               </ul>
             </li>
 
-            <li class="treeview">
+            <li class="treeview active">
               <a href="#">
                 <i data-feather="inbox"></i>
                 <span>Forms</span>
@@ -545,8 +545,8 @@
                   >
                 </li>
                 <li>
-                  <a href="tables_data.html"
-                    ><i class="ti-more"></i>Data tables</a
+                  <a href="{{ path('app_user_index') }}"
+                    ><i class="ti-more"></i>Liste Users</a
                   >
                 </li>
               </ul>
