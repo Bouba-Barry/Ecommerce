@@ -19,18 +19,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[Assert\Email(
+        message: 'The email {{ value }} is not a valid email.',
+    )]
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;
 
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: 'Your last name must be at least {{ limit }} characters long',
+        maxMessage: 'Your last name cannot be longer than {{ limit }} characters',
+    )]
     #[ORM\Column(type: 'string', length: 180)]
     private $nom;
 
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
     #[ORM\Column(type: 'string', length: 180)]
     private $prenom;
-    
+
     #[ORM\Column(type: 'string', length: 180)]
     #[Assert\Length(
         min: 10,
@@ -45,6 +60,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer', length: 255)]
     private $telephone;
 
+    #[Assert\Length(
+        min: 3,
+        minMessage: 'Au Moins {{ limit }} charactères',
+    )]
     #[ORM\Column(type: 'string')]
     private $password;
 
@@ -82,7 +101,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
- 
+
     public function getTelephone(): ?int
     {
         return $this->telephone;

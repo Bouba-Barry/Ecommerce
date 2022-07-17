@@ -16,118 +16,122 @@
 <body class="hold-transition theme-primary bg-gradient-primary">
 <div class="container h-p100">
   <div class="row align-items-center justify-content-md-center h-p100">
-    <div class="col-12">
+    <div class="col-12 ">
       <div class="row justify-content-center no-gutters">
-        <div class="col-lg-5 col-md-5 col-12">
-          <div class="content-top-agile p-5">
+        <div class="col-lg-6 col-md-5 col-12 ">
+          <div class="content-top-agile p-10">
             <h2 class="text-white">Get started with Us</h2>
             <p class="text-white-50">Register a new membership</p>
           </div>
-          <div class="p-20 rounded30 box-shadowed b-2 b-dashed">
-            {{ form_start(form) }}
+          <div class="p-30 rounded30 h-900 box-shadowed b-2 b-dashed">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
             <form action="{{ path('app_client_new') }}" method="post">
-              <div class="form-group">
-                <div class="input-group mb-3">
+              <div class="form-group pl-20">
+                <div class="input-group mb-2" style="">
                   <div class="input-group-prepend">
                     <span class="input-group-text bg-transparent text-white"
-                      ><i class="ti-user"></i
+                      ><i class="ti-user h-15"></i
                     ></span>
+                     {{ form_row(form.nom) }}
                   </div>
-                  <input
+                  {{ form_errors(form.nom)}}
+                  {# <input
                     type="text"
                     name="nom"
                     class="form-control pl-15 bg-transparent text-white plc-white"
                     placeholder="Last Name"
-                  />
+                  /> #}
+                 
                 </div>
               </div>
-                  <div class="form-group">
+                  <div class="form-group pl-20">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text bg-transparent text-white"
                       ><i class="ti-user"></i
-                    ></span>
+                    ></span>{{ form_row(form.prenom) }}
                   </div>
-                  <input
-                    name="prenom"
-                    type="text"
-                    class="form-control pl-15 bg-transparent text-white plc-white"
-                    placeholder="First Name"
-                  />
+                  {{ form_errors(form.prenom)}}
+
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group pl-20">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text bg-transparent text-white"
                       ><i class="ti-email"></i
                     ></span>
+                   {{ form_row(form.email) }}
                   </div>
-                  <input
+                  {# <input
                     type="email"
                     name="email"
                     class="form-control pl-15 bg-transparent text-white plc-white"
                     placeholder="Email"
-                  />
+                  /> #}
+                  
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group pl-20">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text bg-transparent text-white"
                       ><i class="ti-lock"></i
-                    ></span>
+                    ></span> {{ form_row(form.password.first) }}
                   </div>
-                  <input
+                  {# <input
                     type="password"
                     name="password"
                     class="form-control pl-15 bg-transparent text-white plc-white"
                     placeholder="Password"
-                  />
+                  /> #}
+                  
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group pl-20">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text bg-transparent text-white"
                       ><i class="ti-lock"></i
-                    ></span>
+                    ></span>{{ form_row(form.password.second) }}
                   </div>
-                  <input
+                  {# <input
                     type="password"
                     class="form-control pl-15 bg-transparent text-white plc-white"
                     placeholder="Retype Password"
-                  />
+                  /> #}
+                  
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group pl-20">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text bg-transparent text-white"
-                      ><i class="ti-user"></i
-                    ></span>
+                      ><i class="ti-home"></i
+                    ></span>{{ form_row(form.adresse) }}
                   </div>
-                  <input
+                  {# <input
                     type="text"
                     name="adresse"
                     class="form-control pl-15 bg-transparent text-white plc-white"
                     placeholder="Adresse"
-                  />
+                  /> #}
+                  
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group pl-20">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text bg-transparent text-white"
-                      ><i class="ti-user"></i
-                    ></span>
+                      ><i class="ti-tablet"></i
+                    ></span> {{ form_row(form.telephone) }}
                   </div>
-                  <input
+                  {# <input
                     type="tel"
                     name="telephone"
                     class="form-control pl-15 bg-transparent text-white plc-white"
                     placeholder="Telephone"
-                  />
+                  /> #} 
                 </div>
               </div>
               <div class="row">
@@ -152,7 +156,7 @@
               </div>
             </form>
 
-            <div class="text-center text-white">
+            {# <div class="text-center text-white">
               <p class="mt-20">- Register With -</p>
               <p class="gap-items-2 mb-20">
                 <a
@@ -176,7 +180,7 @@
                   ><i class="fa fa-instagram"></i
                 ></a>
               </p>
-            </div>
+            </div> #}
 
             <div class="text-center">
               <p class="mt-10 mb-0 text-white">
@@ -187,8 +191,8 @@
                   Sign In</a
                 >
               </p>
-              {{ form_end(form) }}
             </div>
+            {{ form_end(form) }}
           </div>
         </div>
       </div>
@@ -197,4 +201,5 @@
 </div>
 {# {{ form_widget(form) }} #} {#
 <button class="btn">{{ button_label|default('Save') }}</button> #}
+
  {% endblock %}
