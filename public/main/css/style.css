@@ -25077,7 +25077,7 @@ input[type="color"] {
   box-shadow: none;
   border-color: #b3c5d9;
   height: auto;
-  width: 400px;
+  width: 305px;
 }
 .form-control:focus {
   box-shadow: none;
@@ -30074,6 +30074,7 @@ a.btn {
 
 .btn-rounded {
   border-radius: 60px;
+  width: 160px;
 }
 
 .btn-circle {

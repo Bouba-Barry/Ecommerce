@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Validator\Constraints\Length;
 
 #[Security("is_granted('ROLE_SUPER_ADMIN')")]
 #[Route('/admin/user')]
@@ -34,6 +35,7 @@ class UserController extends AbstractController
         // && $form->isValid()
         if ($form->isSubmitted() ) {
             // dd($user->getPassword());
+            
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $user->getPassword()

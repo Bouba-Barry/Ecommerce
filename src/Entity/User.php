@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -29,11 +30,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 180)]
     private $prenom;
-
+    
     #[ORM\Column(type: 'string', length: 180)]
-
+    #[Assert\Length(
+        min: 10,
+        minMessage: 'Your phone number east 10 {{ limit }} numbers long',
+    )]
     private $adresse;
 
+    #[Assert\Length(
+        min: 10,
+        minMessage: 'Your phone number east 10 {{ limit }} numbers long',
+    )]
     #[ORM\Column(type: 'integer', length: 255)]
     private $telephone;
 
@@ -74,6 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+ 
     public function getTelephone(): ?int
     {
         return $this->telephone;

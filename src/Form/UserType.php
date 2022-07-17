@@ -21,7 +21,7 @@ class UserType extends AbstractType
             ->add('email',EmailType::class, array('label'   => false,'attr'=>['placeholder' => 'Email','class'=>'form-control pl-15 bg-transparent text-white plc-white']))
             ->add('roles', ChoiceType::class, [
                 'choices' => [
-                    'ROLE_SUPER_AdMIN' => 'ROLE_SUPER_ADMIN',
+                    'ROLE_SUPER_AdMIN ' => 'ROLE_SUPER_ADMIN',
                     'ROLE_ADMIN' => 'ROLE_ADMIN',
                     'ROLE_COMPTABLE' => 'ROLE_COMPTABLE'
                 ],
