@@ -1,274 +1,307 @@
-{% extends 'base.html.twig' %} {% block title %}Adding User{% endblock %} {%
-block stylesheets %}
-<link rel="icon" href="{{ asset('images/favicon.ico') }}" />
-<!-- Vendors Style-->
-<link rel="stylesheet" href="{{ asset('main/css/vendors_css.css') }}" />
-<!-- Style-->
-<link rel="stylesheet" href="{{ asset('main/css/style.css') }}" />
-<link rel="stylesheet" href="{{ asset('main/css/skin_color.css') }}" />
-
-{% endblock %} {% block javascripts %}
-
-<script src="{{ asset('main/js/vendors.min.js') }}"></script>
-<script src="{{ asset('assets/icons/feather-icons/feather.min.js') }}"></script>
-
-{% endblock %} {% block body %}
-{{ form_start(form) }}
-
-<body class="hold-transition the me-primary bg-gradient-primary">
-  <div class="container h-p100">
-    <div class="row align-items-center justify-content-md-center h-p100">
-      <div class="col-12">
-        <div class="row justify-content-center no-gutters">
-          <div class="col-lg-5 col-md-5 col-12">
-            <div class="content-top-agile p-10">
-              <h2 class="text-white">ADD USER HERE</h2>
-              <p class="text-white-50">Register a new membership</p>
-            </div>
-            <div class="p-30 rounded30 box-shadowed b-2 b-dashed">
-              <form action="{{ path('app_user_new') }}" method="post">
-                <div class="form-group">                  
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-transparent text-white"
-                        ><i class="ti-mobile"></i
-                      ></span>
-                      {{ form_row(form.telephone) }}
-                    </div>
-                    {#
-                    <input
-                      type="text"
-                      name="nom"
-                      class="form-control pl-15 bg-transparent text-white plc-white"
-                      placeholder="Full Name"
-                    />
-                    #}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-transparent text-white"
-                        ><i class="ti-location-pin"></i
-                      ></span>
-                      {{ form_row(form.adresse) }}
-                    </div>
-                    {#
-                    <input
-                      type="text"
-                      name="nom"
-                      class="form-control pl-15 bg-transparent text-white plc-white"
-                      placeholder="Full Name"
-                    />
-                    #}
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-transparent text-white"
-                        ><i class="ti-email"></i></i
-                      ></span>
-                      {{ form_row(form.email) }}
-                    </div>
-                    {#
-                    <input
-                      type="text"
-                      name="nom"
-                      class="form-control pl-15 bg-transparent text-white plc-white"
-                      placeholder="Full Name"
-                    />
-                    #}
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-transparent text-white"
-                        ><i class="ti-user"></i
-                      ></span>
-                      {{ form_row(form.prenom) }}
-                    </div>
-                    {#
-                    <input
-                      type="email"
-                      name="email"
-                      class="form-control pl-15 bg-transparent text-white plc-white"
-                      placeholder="Email"
-                    />
-                    #} {#
-                    <div
-                      class="form-control pl-15 bg-transparent text-white plc-white"
-                    >
-                      #} {#
-                    </div>
-                    #}
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-transparent text-white"
-                        ><i class="ti-user"></i
-                      ></span>
-                      {{ form_row(form.nom) }}
-                    </div>
-                    {#
-                    <input
-                      type="email"
-                      name="email"
-                      class="form-control pl-15 bg-transparent text-white plc-white"
-                      placeholder="Email"
-                    />
-                    #}
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-transparent text-white"
-                        ><i class="ti-lock"></i
-                      ></span>
-                      {{ form_row(form.password.first) }}
-                    </div>
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-transparent text-white"
-                        ><i class="ti-lock"></i
-                      ></span>
-                      {{ form_row(form.password.second) }}
-                    </div>
-                    {#
-                    <input
-                      type="password"
-                      name="password"
-                      class="form-control pl-15 bg-transparent text-white plc-white"
-                      placeholder="Password"
-                    />
-                    #}
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-transparent text-white"
-                        ><i class="ti-pencil-alt"></i
-                      ></span>
-                      <div
-                        class="form-control pl-15 bg-transparent text-white plc-white"
-                      >
-                     
-                        {{ form_row(form.roles) }}
-                      </div>
-                    </div>
-                    {#
-                    <input
-                      type="checkbox"
-                      class="form-control pl-15 bg-transparent text-white plc-white"
-                      placeholder="Retype Password"
-                    />
-                    #}
-                  </div>
-                </div>
-
-                {#
-                <div class="form-group">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-transparent text-white"
-                        ><i class="ti-lock"></i
-                      ></span>
-                    </div>
-                    <input
-                      type="password"
-                      class="form-control pl-15 bg-transparent text-white plc-white"
-                      placeholder="Retype Password"
-                    />
-                  </div>
-                </div>
-                #}
-                <div class="row">
-                  <div class="col-12">
-                    {#
-                    <div class="checkbox text-white">
-                      <input type="checkbox" id="basic_checkbox_1" />
-                      <label for="basic_checkbox_1"
-                        >I agree to the
-                        <a href="#" class="text-warning"><b>Terms</b></a></label
-                      >
-                    </div>
-                    #}
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-12 text-center">
-                    {#
-                    <button
-                      type="submit"
-                      class="btn btn-info btn-rounded margin-top-10"
-                    >
-                      SIGN IN
-                    </button>
-                    #}
-                    <button class="btn btn-info btn-rounded margin-top-10">
-                      {{ button_label|default('Save') }}
-                    </button>
-                  </div>
-                  <!-- /.col -->
-                </div>
-              </form>
-
-              {#
-              <div class="text-center text-white">
-                <p class="mt-20">- Register With -</p>
-                <p class="gap-items-2 mb-20">
-                  <a
-                    class="btn btn-social-icon btn-round btn-outline btn-white"
-                    href="#"
-                    ><i class="fa fa-facebook"></i
-                  ></a>
-                  <a
-                    class="btn btn-social-icon btn-round btn-outline btn-white"
-                    href="#"
-                    ><i class="fa fa-twitter"></i
-                  ></a>
-                  <a
-                    class="btn btn-social-icon btn-round btn-outline btn-white"
-                    href="#"
-                    ><i class="fa fa-google-plus"></i
-                  ></a>
-                  <a
-                    class="btn btn-social-icon btn-round btn-outline btn-white"
-                    href="#"
-                    ><i class="fa fa-instagram"></i
-                  ></a>
-                </p>
-              </div>
-              #}
-
-              <div class="text-center">
-                <p class="mt-15 mb-0 text-white">
-                  Retour au Dashbord?<a
-                    href="{{ path('app_user_index') }}"
-                    class="text-danger ml-5"
-                  >
-                    Cliquer ici</a
-                  >
-                </p>
-              </div>
-            </div>
+{% extends 'admin.html.twig' %} {% block title %}Adding User{% endblock %} {%
+block content %} {# {{ form_start(form) }} #}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <div class="container-full">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="page-title">Form Wizard</h3>
+          <div class="d-inline-block align-items-center">
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="#"><i class="mdi mdi-home-outline"></i></a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Forms</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Form Wizard
+                </li>
+              </ol>
+            </nav>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
-{# {{ form_widget(form) }} #}
 
-{{ form_end(form) }} {% endblock %}
+    <!-- Main content -->
+    <section class="content">
+      <!-- Step wizard -->
+      <div class="box box-default">
+        <div class="box-header with-border">
+          <h4 class="box-title">Client Registration</h4>
+          <h6 class="box-subtitle">
+            You can find the
+            <a href="http://www.jquery-steps.com" target="_blank"
+              >offical website
+            </a>
+          </h6>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body wizard-content">
+          {% block form %}{% endblock %}
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+
+      <!-- Validation wizard -->
+      <div class="box box-default">
+        <div class="box-header with-border">
+          <h4 class="box-title">Step wizard with validation</h4>
+          <h6 class="box-subtitle">
+            You can us the validation like what we did
+          </h6>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body wizard-content">
+          <form action="#" class="validation-wizard wizard-circle">
+            <!-- Step 1 -->
+            <h6>Step 1</h6>
+            <section>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="wfirstName2">
+                      First Name : <span class="danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control required"
+                      id="wfirstName2"
+                      name="firstName"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="wlastName2">
+                      Last Name : <span class="danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control required"
+                      id="wlastName2"
+                      name="lastName"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="wemailAddress2">
+                      Email Address : <span class="danger">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      class="form-control required"
+                      id="wemailAddress2"
+                      name="emailAddress"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="wphoneNumber2">Phone Number :</label>
+                    <input type="tel" class="form-control" id="wphoneNumber2" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="wlocation2">
+                      Select City : <span class="danger">*</span>
+                    </label>
+                    <select
+                      class="custom-select form-control required"
+                      id="wlocation2"
+                      name="location"
+                    >
+                      <option value="">Select City</option>
+                      <option value="India">India</option>
+                      <option value="USA">USA</option>
+                      <option value="Dubai">Dubai</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="wdate2">Date of Birth :</label>
+                    <input type="date" class="form-control" id="wdate2" />
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- Step 2 -->
+            <h6>Step 2</h6>
+            <section>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="jobTitle3">Company Name :</label>
+                    <input
+                      type="text"
+                      class="form-control required"
+                      id="jobTitle3"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="webUrl3">Company URL :</label>
+                    <input
+                      type="url"
+                      class="form-control required"
+                      id="webUrl3"
+                      name="webUrl3"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="shortDescription3">Short Description :</label>
+                    <textarea
+                      name="shortDescription"
+                      id="shortDescription3"
+                      rows="6"
+                      class="form-control"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- Step 3 -->
+            <h6>Step 3</h6>
+            <section>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="wint1">Interview For :</label>
+                    <input
+                      type="text"
+                      class="form-control required"
+                      id="wint1"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="wintType1">Interview Type :</label>
+                    <select
+                      class="custom-select form-control required"
+                      id="wintType1"
+                      data-placeholder="Type to search cities"
+                      name="wintType1"
+                    >
+                      <option value="Banquet">Normal</option>
+                      <option value="Fund Raiser">Difficult</option>
+                      <option value="Dinner Party">Hard</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="wLocation1">Location :</label>
+                    <select
+                      class="custom-select form-control required"
+                      id="wLocation1"
+                      name="wlocation"
+                    >
+                      <option value="">Select City</option>
+                      <option value="India">India</option>
+                      <option value="USA">USA</option>
+                      <option value="Dubai">Dubai</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="wjobTitle4">Interview Date :</label>
+                    <input
+                      type="date"
+                      class="form-control required"
+                      id="wjobTitle4"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Requirements :</label>
+                    <input name="group2" type="radio" id="radio_3" value="1" />
+                    <label for="radio_3" class="d-block">Employee</label>
+                    <input name="group2" type="radio" id="radio_4" value="1" />
+                    <label for="radio_4">Contract</label>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- Step 4 -->
+            <h6>Step 4</h6>
+            <section>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="behName3">Behaviour :</label>
+                    <input
+                      type="text"
+                      class="form-control required"
+                      id="behName3"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="participants3">Confidance</label>
+                    <input
+                      type="text"
+                      class="form-control required"
+                      id="participants3"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="participants4">Result</label>
+                    <select
+                      class="custom-select form-control required"
+                      id="participants4"
+                      name="location"
+                    >
+                      <option value="">Select Result</option>
+                      <option value="Selected">Selected</option>
+                      <option value="Rejected">Rejected</option>
+                      <option value="Call Second-time">Call Second-time</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="decisions2">Comments</label>
+                    <textarea
+                      name="decisions"
+                      id="decisions2"
+                      rows="4"
+                      class="form-control"
+                    ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Rate Interviwer :</label>
+                    <div class="c-inputs-stacked">
+                      <input type="checkbox" id="checkbox_6" />
+                      <label for="checkbox_6" class="d-block">1 star</label>
+                      <input type="checkbox" id="checkbox_7" />
+                      <label for="checkbox_7" class="d-block">2 star</label>
+                      <input type="checkbox" id="checkbox_8" />
+                      <label for="checkbox_8" class="d-block">3 star</label>
+                      <input type="checkbox" id="checkbox_9" />
+                      <label for="checkbox_9" class="d-block">4 star</label>
+                      <input type="checkbox" id="checkbox_10" />
+                      <label for="checkbox_10" class="d-block">5 star</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </form>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+{# {{ form_end(form) }} #}{% endblock %}

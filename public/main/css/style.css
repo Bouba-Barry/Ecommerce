@@ -25078,6 +25078,7 @@ input[type="color"] {
   border-color: #b3c5d9;
   height: auto;
   width: 305px;
+  margin-bottom: -1rem;
 }
 .form-control:focus {
   box-shadow: none;
