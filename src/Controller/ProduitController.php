@@ -36,8 +36,9 @@ class ProduitController extends AbstractController
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
 
+            dd($form);
             /** @var UploadedFile $brochureFile */
             $produit = $form->getData();
             $brochureFile = $form->get('photo')->getData();

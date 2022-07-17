@@ -12,25 +12,32 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ProduitType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('designation')
-            ->add('description')
-            ->add('ancien_prix')
-            ->add('nouveau_prix')
+            ->add('designation', TextType::class, array('label' => false, 'attr' => ['placeholder' => 'designation', 'class' => 'form-control']))
+            ->add('description', TextareaType::class, array('label' => false, 'attr' => ['placeholder' => 'description', 'class' => 'form-control']))
+            ->add('ancien_prix', NumberType::class, array('label' => false, 'attr' => ['placeholder' => 'Old Prix', 'class' => 'form-control']))
+            ->add('nouveau_prix', NumberType::class, array('label' => false, 'attr' => ['placeholder' => 'New Prix', 'class' => 'form-control']))
             // ->add('image_produit')
-            ->add('qte_stock')
+            ->add('qte_stock', NumberType::class, array('label' => false, 'attr' => ['placeholder' => 'Quantité En Stock', 'class' => 'form-control']))
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'nom'
+                'choice_label' => 'nom',
+                'label' => false,
+                'attr' => ['placeholder' => 'User qui a ajouter', 'class' => 'form-control']
             ])
             ->add('sous_categorie', EntityType::class, [
                 'class' => SousCategorie::class,
-                'choice_label' => 'titre'
+                'choice_label' => 'titre',
+                'label' => false,
+                'attr' => ['placeholder' => 'Sous Catégorie Produit', 'class' => 'form-control']
             ])
             // ->add('reduction', EntityType::class, [
 
@@ -43,7 +50,7 @@ class ProduitType extends AbstractType
             // ])
             // ->add('commandes')
             ->add('photo', FileType::class, [
-                'label' => 'image associé au produit',
+                'label' => false,
 
                 // on a pas d'attribut photo ds notre entité
                 'mapped' => false,
@@ -65,6 +72,7 @@ class ProduitType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid image',
                     ])
                 ],
+                'attr' => ['placeholder' => 'Image Produit', 'class' => 'form-control']
             ]);
     }
 

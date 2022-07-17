@@ -16,6 +16,8 @@
     <!-- Style-->
     <link rel="stylesheet" href="{{ asset('main/css/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('main/css/skin_color.css') }}" />
+
+    {% block stylesheet %} {% endblock %}
   </head>
 
   <body class="hold-transition light-skin sidebar-mini theme-primary fixed">
@@ -492,8 +494,8 @@
               </a>
               <ul class="treeview-menu">
                 <li>
-                  <a href="forms_advanced.html"
-                    ><i class="ti-more"></i>Advanced Elements</a
+                  <a href="{{ path('app_produit_new') }}"
+                    ><i class="ti-more"></i>Ajout Produit</a
                   >
                 </li>
                 <li>
@@ -1850,5 +1852,6 @@
     <!-- Sunny Admin App -->
     <script src="{{ asset('main/js/template.js') }}"></script>
     <script src="{{ asset('main/js/pages/dashboard.js') }}"></script>
+    {% block javascript %}{% endblock %}
   </body>
 </html>

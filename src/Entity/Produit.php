@@ -6,6 +6,7 @@ use App\Repository\ProduitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -15,21 +16,30 @@ class Produit
     #[ORM\Column(type: 'integer')]
     private $id;
 
+
+
+    // #[Assert\Length(
+    //     min: 3,
+    //     minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
+    // )]
     #[ORM\Column(type: 'string', length: 255)]
     private $designation;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $description;
 
+    #[Assert\GreaterThan(5)]
     #[ORM\Column(type: 'float')]
     private $ancien_prix;
 
+    // #[Assert\GreaterThan(1)]
     #[ORM\Column(type: 'float', nullable: true)]
     private $nouveau_prix;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $image_produit;
 
+    // #[Assert\Positive]
     #[ORM\Column(type: 'bigint')]
     private $qte_stock;
 
