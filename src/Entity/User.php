@@ -47,16 +47,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $prenom;
 
    
-    #[Assert\Length(
-        min: 10,
-        minMessage: 'Your phone number east 10 {{ limit }} numbers long',
-    )]
+    // #[Assert\Length(
+    //     min: 10,
+    //     minMessage: 'Your phone number east 10 {{ limit }} numbers long',
+    // )]
     #[ORM\Column(type: 'string', length: 180)]
     private $adresse;
 
     #[Assert\Length(
         min: 10,
-        minMessage: 'Your phone number east 10 {{ limit }} numbers long',
+        minMessage: 'votre Numero doit contenir au moins {{ limit }} ',
     )]
     #[ORM\Column(type: 'integer', length: 255)]
     private $telephone;

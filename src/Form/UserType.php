@@ -18,7 +18,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email',EmailType::class, array('label'   => false,'attr'=>['placeholder' => 'Email','class'=>'form-control pl-15 bg-transparent text-white plc-white']))
+            ->add('email',EmailType::class, array('label'   => false,'attr'=>['placeholder' => 'Email','class'=>'form-control']))
             ->add('roles', ChoiceType::class, [
                 'choices' => [
                     'ROLE_SUPER_AdMIN ' => 'ROLE_SUPER_ADMIN',
@@ -28,15 +28,15 @@ class UserType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'label'   => false
-            ],array('attr'=>['class'=>'form-control pl-15 bg-transparent text-white plc-white']))
-            ->add('nom',TextType::class,array('label'   => false,'attr'=>['placeholder' => 'Nom','class'=>'form-control pl-15 bg-transparent text-white plc-white']))
-            ->add('prenom',TextType::class,array('label'   => false,'attr'=>['placeholder' => 'Prenom','class'=>'form-control pl-15 bg-transparent text-white plc-white']))
-            ->add('adresse',TextType::class,array('label'   => false,'attr'=>['placeholder' => 'Adresse','class'=>'form-control pl-15 bg-transparent text-white plc-white']))
-            ->add('telephone',TelType::class,array('label'   => false,'attr'=>['placeholder' => 'Telephone','class'=>'form-control pl-15 bg-transparent text-white plc-white']))
+            ],array('attr'=>['class'=>'form-control']))
+            ->add('nom',TextType::class,array('label'   => false,'attr'=>['placeholder' => 'Nom','class'=>'form-control']))
+            ->add('prenom',TextType::class,array('label'   => false,'attr'=>['placeholder' => 'Prenom','class'=>'form-control']))
+            ->add('adresse',TextType::class,array('label'   => false,'attr'=>['placeholder' => 'Adresse','class'=>'form-control']))
+            ->add('telephone',TelType::class,array('label'   => false,'attr'=>['placeholder' => 'Telephone','class'=>'form-control']))
             ->add('password', RepeatedType::class, [
                 "type" => PasswordType::class,
-                "first_options" => ["label" => false,'attr'=>['placeholder' => 'Mot de passe','class'=>'form-control pl-15 bg-transparent text-white plc-white']],
-                "second_options" => ["label" => false,'attr'=>['placeholder' => 'Confirmation','class'=>'form-control pl-15 bg-transparent text-white plc-white']],
+                "first_options" => ["label" => false,'attr'=>['placeholder' => 'Mot de passe','class'=>'form-control']],
+                "second_options" => ["label" => false,'attr'=>['placeholder' => 'Confirmation','class'=>'form-control']],
                 
             ]);
     }
