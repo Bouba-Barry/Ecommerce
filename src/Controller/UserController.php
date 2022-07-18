@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\AdminProfileType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,62 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/profile', name: 'app_user_profile')]
+    public function profile(Request $request, SluggerInterface $slugger, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $user = $this->getUser();
+        // $user = $this->getUser();
+        // dd($user);
+        // $user = new User();
+        $form = $this->createForm(AdminProfileType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $picture */
+            $user = $form->getData();
+            $picture = $form->get('profile')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($picture) {
+                $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $picture->guessExtension();
+
+                // Move the file to the directory where pictures are stored
+                try {
+                    $picture->move(
+                        $this->getParameter('profile_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $user->setProfile($newFilename);
+            }
+            /** fin de l'upload du profile du user */
+
+
+            $hashedPassword = $passwordHasher->hashPassword(
+                $user,
+                $user->getPassword()
+            );
+
+            $user->setPassword($hashedPassword);
+            $userRepository->add($user, true);
+        }
+
+        return $this->renderForm('user/profile.html.twig', [
+            'user' => $this->getUser(),
+            'form' => $form
+        ]);
+    }
+
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UserRepository $userRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher): Response
     {
@@ -48,7 +105,7 @@ class UserController extends AbstractController
             $picture = $form->get('profile')->getData();
 
             // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
+            // so the img must be processed only when a file is uploaded
             if ($picture) {
                 $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
@@ -108,9 +165,37 @@ class UserController extends AbstractController
         //  if (count($form->getErrors()) > 0) {
         //      dd($form->getErrors());
         //  }
-        if ($form->isSubmitted() && $form->isValid() ) {
-            
-            //  dd($form->getErrors());
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $picture */
+            $user = $form->getData();
+            $picture = $form->get('profile')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($picture) {
+                $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $picture->guessExtension();
+
+                // Move the file to the directory where pictures are stored
+                try {
+                    $picture->move(
+                        $this->getParameter('profile_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $user->setProfile($newFilename);
+            }
+            /** fin de l'upload du profile du user */
+
+
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $user->getPassword()
