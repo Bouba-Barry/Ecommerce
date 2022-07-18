@@ -1,26 +1,95 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %} 
 
-{% block title %}Attribut{% endblock %}
+{% block stylesheet %} {% endblock stylesheet %}
+{# {% block title %}Produit index{% endblock %}  #}
+{% block content %}
 
-{% block body %}
-    <h1>Attribut</h1>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+	  <div class="container-full">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="d-flex align-items-center">
+				<div class="mr-auto">
+					<h3 class="page-title">Attribut</h3>
+					<div class="d-inline-block align-items-center">
+						<nav>
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
+								{# <li class="breadcrumb-item" aria-current="page"></li> #}
+								<li class="breadcrumb-item" aria-current="page"><a class="btn btn-primary btn-sm" href="{{ path('app_attribut_new') }}">Ajouter Un Attribut</a></li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ attribut.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ attribut.nom }}</td>
-            </tr>
-        </tbody>
-    </table>
+		<!-- Main content -->
+		<section class="content">
+		  <div class="row">
+			  
 
-    <a href="{{ path('app_attribut_index') }}">back to list</a>
+			<div class="col-12">
 
-    <a href="{{ path('app_attribut_edit', {'id': attribut.id}) }}">edit</a>
+			 <div class="box">
+				<div class="box-header with-border">
+				  <h3 class="box-title">Parcourir les Attributs</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
+					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
+						<thead>
+							<tr>
+							<th col-1>ID</th>
+							<th>Désignation</th>
+                            <th class="col-3">Action <th>
+						
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="">{{ attribut.id }}</td>
+               					 <td>{{ attribut.nom }}</td>
+                				<td>
+								
+                        			<a href="{{ path('app_attribut_edit', {'id': attribut.id}) }}" class="btn btn-md btn-warning">
+		                          <i class="fa fa-edit"></i>
+         	               		</a>
+            	            	{# <a href="{{ path('app_attribut_delete', {'id': attribut.id}) }}" class="btn btn-md btn-danger">
+                	          	<i class="fa fa-trash"></i>
+                    	    	</a> #}
+								  {{ include('attribut/_delete_form.html.twig') }}
+							</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+							<th>ID</th>
+								<th>Désignation</th>
+							</tr>
+						</tfoot>
+					</table>
+					</div>
+				</div>
+				<!-- /.box-body -->
+			  </div>
+			  <!-- /.box -->      
+			</div>  
+			<!-- /.col -->
+		  </div>
+		  <!-- /.row -->
+		</section>
+		<!-- /.content -->
+	  
+	  </div>
+  </div>
+  <!-- /.content-wrapper -->
 
-    {{ include('attribut/_delete_form.html.twig') }}
+    
+{% endblock %}
+{% block javascript %}
+<script src="{{ asset('assets/vendor_components/datatable/datatables.min.js') }} "></script>
+	<script src="{{ asset('main/js/pages/data-table.js') }}"></script>
 {% endblock %}
