@@ -106,6 +106,19 @@ block content %}  {{ form_start(form) }}
                     {{ form_row(form.adresse) }}
                   </div>
                 </div>
+                {#  Input des profiles ajouter icic #}
+                <div class="col-md-6">
+                  {{ form_errors(form.profile) }}
+                  <div class="form-group">
+                    <label for="addressline1">Photo profile :</label>
+                    {#
+                    <input type="text" class="form-control" id="addressline1" />
+                    #}
+                    {{ form_row(form.profile) }}
+                  </div>
+                </div>
+                {#  end Input des profiles ajouter icic #}
+
                 <div class="col-md-6">
                   {{form_errors(form.password.first)}}
                   <div class="form-group">

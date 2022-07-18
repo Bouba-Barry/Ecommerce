@@ -101,7 +101,7 @@ class ProduitController extends AbstractController
 
         if ($form->isSubmitted()) {
 
-            dd($form);
+            // dd($form);
             /** @var UploadedFile $brochureFile */
             $produit = $form->getData();
             $brochureFile = $form->get('photo')->getData();

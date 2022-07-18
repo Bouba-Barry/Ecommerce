@@ -74,6 +74,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Panier::class)]
     private $paniers;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $profile;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
@@ -296,6 +299,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $panier->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProfile(): ?string
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?string $profile): self
+    {
+        $this->profile = $profile;
 
         return $this;
     }
