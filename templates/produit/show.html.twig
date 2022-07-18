@@ -1,46 +1,98 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %} 
 
-{% block title %}Produit{% endblock %}
+{% block stylesheet %} {% endblock stylesheet %}
+{# {% block title %}Produit index{% endblock %}  #}
+{% block content %}
 
-{% block body %}
-    <h1>Produit</h1>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+	  <div class="container-full">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="d-flex align-items-center">
+				<div class="mr-auto">
+					<h3 class="page-title">Produits</h3>
+					<div class="d-inline-block align-items-center">
+						<nav>
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
+								{# <li class="breadcrumb-item" aria-current="page"></li>
+								<li class="breadcrumb-item active" aria-current="page">Data Tables</li> #}
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ produit.id }}</td>
-            </tr>
-            <tr>
-                <th>Designation</th>
-                <td>{{ produit.designation }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ produit.description }}</td>
-            </tr>
-            <tr>
-                <th>Ancien_prix</th>
-                <td>{{ produit.ancienPrix }}</td>
-            </tr>
-            <tr>
-                <th>Nouveau_prix</th>
-                <td>{{ produit.nouveauPrix }}</td>
-            </tr>
-            <tr>
-                <th>Image_produit</th>
-                <td>{{ produit.imageProduit }}</td>
-            </tr>
-            <tr>
-                <th>Qte_stock</th>
-                <td>{{ produit.qteStock }}</td>
-            </tr>
-        </tbody>
-    </table>
+		<!-- Main content -->
+		<section class="content">
+		  <div class="row">
+			  
 
-    <a href="{{ path('app_produit_index') }}">back to list</a>
+			<div class="col-12">
 
-    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
+			 <div class="box">
+				<div class="box-header with-border">
+				  <h3 class="box-title">Detail Produit </h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
 
-    {{ include('produit/_delete_form.html.twig') }}
+                    <a class="btn btn-primary mb-15" href="{{ path('app_produit_index') }}">back to list</a>
+
+					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
+						<thead>
+							<tr>
+							<th col-1>ID</th>
+								<th>Désignation</th>
+								<th>Description</th>
+								<th>Prix Old</th>
+								<th>Image Produit</th>
+								<th>Quantié Stocker</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="col-1">{{ produit.id }}</td>
+               					 <td>{{ produit.designation }}</td>
+                				<td>{{ produit.description }}</td>
+                				<td>{{ produit.ancienPrix }}Dhs</td>
+                				{# <td>{{ produit.nouveauPrix }}Dhs</td> #}
+                				<td><img src= {{ asset('uploads/produits/' ~ produit.imageProduit ) }} width="80" height="70"></td>
+                				<td>{{ produit.qteStock }}</td>
+                				<td>
+                    				
+                    				<a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
+                                   {{ include('produit/_delete_form.html.twig') }}
+                				</td>
+							</tr>
+						</tbody>
+						{# <tfoot class="mb-5">
+						  
+						</tfoot> #}
+					</table>
+					</div>
+				</div>
+				<!-- /.box-body -->
+			  </div>
+			  <!-- /.box -->      
+			</div>  
+			<!-- /.col -->
+		  </div>
+		  <!-- /.row -->
+		</section>
+		<!-- /.content -->
+	  
+	  </div>
+  </div>
+  <!-- /.content-wrapper -->
+
+    
+{% endblock %}
+{% block javascript %}
+{# <script src="{{ asset('assets/vendor_components/datatable/datatables.min.js') }} "></script>
+	<script src="{{ asset('main/js/pages/data-table.js') }}"></script> #}
 {% endblock %}

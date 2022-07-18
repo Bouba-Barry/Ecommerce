@@ -33,12 +33,15 @@ class ProduitController extends AbstractController
     {
         $produit = new Produit();
 
-        $form = $this->createForm(ProduitType::class, $produit);
+        $form = $this->createForm(ProduitType::class, $produit, [
+            'action' => $this->generateUrl('app_produit_new'),
+            'method' => 'POST',
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
 
-            dd($form);
+            // dd($form);
             /** @var UploadedFile $brochureFile */
             $produit = $form->getData();
             $brochureFile = $form->get('photo')->getData();
@@ -96,8 +99,9 @@ class ProduitController extends AbstractController
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
 
+            dd($form);
             /** @var UploadedFile $brochureFile */
             $produit = $form->getData();
             $brochureFile = $form->get('photo')->getData();

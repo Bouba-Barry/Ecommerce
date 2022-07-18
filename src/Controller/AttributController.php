@@ -34,7 +34,7 @@ class AttributController extends AbstractController
         $form = $this->createForm(AttributType::class, $attribut);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $attributRepository->add($attribut, true);
 
             return $this->redirectToRoute('app_attribut_index', [], Response::HTTP_SEE_OTHER);
@@ -75,7 +75,7 @@ class AttributController extends AbstractController
     #[Route('/{id}', name: 'app_attribut_delete', methods: ['POST'])]
     public function delete(Request $request, Attribut $attribut, AttributRepository $attributRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$attribut->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $attribut->getId(), $request->request->get('_token'))) {
             $attributRepository->remove($attribut, true);
         }
 
