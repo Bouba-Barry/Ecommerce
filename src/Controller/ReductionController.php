@@ -31,7 +31,7 @@ class ReductionController extends AbstractController
         $form = $this->createForm(ReductionType::class, $reduction);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
 
             $produit = $form->get('produits')->getData();
 

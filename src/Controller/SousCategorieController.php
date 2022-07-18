@@ -31,7 +31,7 @@ class SousCategorieController extends AbstractController
         $form = $this->createForm(SousCategorieType::class, $sousCategorie);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $sousCategorieRepository->add($sousCategorie, true);
 
             return $this->redirectToRoute('app_sous_categorie_index', [], Response::HTTP_SEE_OTHER);
@@ -57,7 +57,7 @@ class SousCategorieController extends AbstractController
         $form = $this->createForm(SousCategorieType::class, $sousCategorie);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $sousCategorieRepository->add($sousCategorie, true);
 
             return $this->redirectToRoute('app_sous_categorie_index', [], Response::HTTP_SEE_OTHER);
