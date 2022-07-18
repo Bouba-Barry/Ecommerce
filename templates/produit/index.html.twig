@@ -48,7 +48,7 @@
 								<th>Prix Old</th>
 								<th>Image Produit</th>
 								<th class="col-1">Quantié Stocker</th>
-								<th class="col-2">Action</th>
+								<th class="col-3">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -68,9 +68,9 @@
                         			<a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-md btn-warning">
 		                          <i class="fa fa-edit"></i>
          	               		</a>
-            	            	{# <a href="{{ path('app_produit_delete', {'id': produit.id}) }}" class="btn btn-md btn-danger">
+            	            	<a href="{{ path('app_produit_delete', {'id': produit.id}) }}" class="btn btn-md btn-danger">
                 	          	<i class="fa fa-trash"></i>
-                    	    	</a> #}
+                    	    	</a>
 							</td>
 							</tr>
 							{% else %}
