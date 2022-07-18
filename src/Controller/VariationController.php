@@ -67,7 +67,7 @@ class VariationController extends AbstractController
         $form = $this->createForm(VariationType::class, $variation);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
 
             $variation_produit = $form->get('produits')->getData();
 

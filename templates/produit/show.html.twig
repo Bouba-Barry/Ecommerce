@@ -15,9 +15,10 @@
 					<div class="d-inline-block align-items-center">
 						<nav>
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
+								{# <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li> #}
 								{# <li class="breadcrumb-item" aria-current="page"></li>
-								<li class="breadcrumb-item active" aria-current="page">Data Tables</li> #}
+								#}
+								
 							</ol>
 						</nav>
 					</div>
@@ -51,7 +52,7 @@
 								<th>Prix Old</th>
 								<th>Image Produit</th>
 								<th>Quantié Stocker</th>
-								<th>Action</th>
+								<th >Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -65,7 +66,9 @@
                 				<td>{{ produit.qteStock }}</td>
                 				<td>
                     				
-                    				<a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
+                    					<a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-md btn-warning mb-5">
+		                          <i class="fa fa-edit"></i>
+         	               		</a>
                                    {{ include('produit/_delete_form.html.twig') }}
                 				</td>
 							</tr>

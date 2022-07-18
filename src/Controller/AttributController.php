@@ -60,7 +60,7 @@ class AttributController extends AbstractController
         $form = $this->createForm(AttributType::class, $attribut);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $attributRepository->add($attribut, true);
 
             return $this->redirectToRoute('app_attribut_index', [], Response::HTTP_SEE_OTHER);

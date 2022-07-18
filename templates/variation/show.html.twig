@@ -17,7 +17,7 @@
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
 								{# <li class="breadcrumb-item" aria-current="page"></li> #}
-								<li class="breadcrumb-item" aria-current="page"><a class="btn btn-primary btn-sm" href="{{ path('app_variation_new') }}">Ajouter Une Variation</a></li>
+								<li class="breadcrumb-item" aria-current="page"><a class="btn btn-secondary btn-sm" href="{{ path('app_variation_index') }}">Retour à la Liste</a></li>
 							</ol>
 						</nav>
 					</div>
@@ -66,10 +66,8 @@
                                     {% endfor %}
                                 </td>
                 				<td>
-									<a href="{{ path('app_variation_show', {'id': variation.id}) }}" class="btn btn-md btn-primary">
-                          				<i class="fa fa-eye"></i>
-                        			</a>
-                        			<a href="{{ path('app_variation_edit', {'id': variation.id}) }}" class="btn btn-md btn-warning">
+
+                        			<a href="{{ path('app_variation_edit', {'id': variation.id}) }}" class="btn btn-md btn-warning mb-5">
 		                          <i class="fa fa-edit"></i>
          	               		</a>
             	            	{# <a href="{{ path('app_produit_delete', {'id': produit.id}) }}" class="btn btn-md btn-danger">

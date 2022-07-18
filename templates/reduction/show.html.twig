@@ -17,7 +17,7 @@
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
 								{# <li class="breadcrumb-item" aria-current="page"></li> #}
-								<li class="breadcrumb-item" aria-current="page"><a class="btn btn-primary btn-sm" href="{{ path('app_reduction_index') }}">Retour à la liste</a></li>
+								<li class="breadcrumb-item" aria-current="page"></li>
 							</ol>
 						</nav>
 					</div>
@@ -39,6 +39,7 @@
 				<!-- /.box-header -->
 				<div class="box-body">
 					<div class="table-responsive">
+					<a class="btn btn-primary btn-md" href="{{ path('app_reduction_index') }}">Retour à la liste</a>
 					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
 						<thead>
 							<tr>
@@ -67,10 +68,8 @@
                                     {% endfor %}
                                 </td>
                 				<td>
-									<a href="{{ path('app_reduction_show', {'id': reduction.id}) }}" class="btn btn-md btn-primary">
-                          				<i class="fa fa-eye"></i>
-                        			</a>
-                        			<a href="{{ path('app_reduction_edit', {'id': reduction.id}) }}" class="btn btn-md btn-warning">
+									
+                        			<a href="{{ path('app_reduction_edit', {'id': reduction.id}) }}" class="btn btn-md btn-warning mb-5">
 		                          <i class="fa fa-edit"></i>
          	               		</a>
             	            	{# <a href="{{ path('app_produit_delete', {'id': produit.id}) }}" class="btn btn-md btn-danger">

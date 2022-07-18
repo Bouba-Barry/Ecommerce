@@ -17,7 +17,7 @@
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
 								{# <li class="breadcrumb-item" aria-current="page"></li> #}
-								<li class="breadcrumb-item" aria-current="page"><a class="btn btn-primary btn-sm" href="{{ path('app_categorie_new') }}">Ajouter Une Categorie</a></li>
+								<li class="breadcrumb-item" aria-current="page"></li>
 							</ol>
 						</nav>
 					</div>
@@ -39,6 +39,7 @@
 				<!-- /.box-header -->
 				<div class="box-body">
 					<div class="table-responsive">
+					<a class="btn btn-primary btn-md mb-15" href="{{ path('app_categorie_new') }}">Ajout Categorie</a>
 					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
 						<thead>
 							<tr>
@@ -60,9 +61,9 @@
                         			<a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}" class="btn btn-md btn-warning">
 		                          <i class="fa fa-edit"></i>
          	               		</a>
-            	            	{# <a href="{{ path('app_produit_delete', {'id': produit.id}) }}" class="btn btn-md btn-danger">
+            	            	<a href="{{ path('app_categorie_delete', {'id': categorie.id}) }}" class="btn btn-md btn-danger">
                 	          	<i class="fa fa-trash"></i>
-                    	    	</a> #}
+                    	    	</a>
 							</td>
 							</tr>
 							{% else %}

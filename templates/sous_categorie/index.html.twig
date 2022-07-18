@@ -60,10 +60,10 @@
                         			<a href="{{ path('app_sous_categorie_edit', {'id': sous_categorie.id}) }}" class="btn btn-md btn-warning">
 		                          <i class="fa fa-edit"></i>
          	               		</a>
-            	            	{# <a href="{{ path('app_produit_delete', {'id': produit.id}) }}" class="btn btn-md btn-danger">
+            	            	<a href="{{ path('app_sous_categorie_delete', {'id': sous_categorie.id}) }}" class="btn btn-md btn-danger">
                 	          	<i class="fa fa-trash"></i>
-                    	    	</a> #}
-                                {{ include('sous_categorie/_delete_form.html.twig') }}
+                    	    	</a>
+                                {# {{ include('sous_categorie/_delete_form.html.twig') }} #}
 							</td>
 							</tr>
 							{% else %}
