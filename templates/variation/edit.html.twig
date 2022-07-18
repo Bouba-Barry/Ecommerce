@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Edit Variation</h1>
 
-    {{ include('variation/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('variation/_form.html.twig', {'button_label': 'Update'},  { action: path("app_variation_edit", { id: variation.id }) }) }}
 
     <a href="{{ path('app_variation_index') }}">back to list</a>
 

@@ -44,7 +44,7 @@
                             
 							{{ form_row(form.designation) }}
                            
-							<span class="form-text text-muted">{{ form_errors(form) }}</span>
+							{# <span class="form-text text-muted">{{ form_errors(form) }}</span> #}
 						</div>
 					</div>
 
@@ -53,20 +53,30 @@
 						<div class=" mb-3 col-md-10">
 							{# <input class="form-control" type="datetime" name="datetime"> #}
                             
-							{{ form_row(form.) }}
+							{{ form_row(form.pourcentage) }}
                            
-							<span class="form-text text-muted">{{ form_errors(form) }}</span>
+							{# <span class="form-text text-muted">{{ form_errors(form) }}</span> #}
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-form-label col-md-2">Periode</label>
+						<div class=" mb-3 col-md-10">
+							{# <input class="form-control" type="datetime" name="datetime"> #}
+                            
+							{{ form_row(form.periode) }}
+                           
+							{# <span class="form-text text-muted">{{ form_errors(form) }}</span> #}
 						</div>
 					</div>
 
                     	<div class="form-group row">
-						<label class="col-form-label col-md-2">Categorie Reliée</label>
+						<label class="col-form-label col-md-2">produits Reliée</label>
 						<div class=" mb-3 col-md-10">
 							{# <input class="form-control" type="datetime" name="datetime"> #}
-                            
-							{{ form_row(form.categorie) }}
+							{{ form_row(form.produits) }}
                            
-							<span class="form-text text-muted">{{ form_errors(form) }}</span>
+							{# <span class="form-text text-muted">{{ form_errors(form) }}</span> #}
 						</div>
 					</div>
 					
