@@ -164,7 +164,8 @@
                   data-toggle="dropdown"
                   title="User"
                 >
-                  <img src={{ asset('uploads/users/' ~ app.user.profile ) }} alt="" />
+                  <img src={{ asset('uploads/users/' ~ app.user.profile ) }}
+                  alt="" />
                 </a>
                 <ul class="dropdown-menu animated flipInX">
                   <li class="user-body">
@@ -178,7 +179,7 @@
                       ><i class="ti-settings text-muted mr-2"></i> Settings</a
                     >
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#"
+                    <a class="dropdown-item" href="{{ path('app_logout') }}"
                       ><i class="ti-lock text-muted mr-2"></i> Logout</a
                     >
                   </li>
@@ -546,17 +547,21 @@
                   <i class="fa fa-angle-right pull-right"></i>
                 </span>
               </a>
+
+              {% if 'ROLE_ADMIN' in app.user.ROLES %}
               <ul class="treeview-menu">
                 <li>
                   <a href="{{ path('app_produit_index') }}"
                     ><i class="ti-more"></i>Liste Des Produits</a
                   >
                 </li>
+                {% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
                 <li>
                   <a href="{{ path('app_user_index') }}"
                     ><i class="ti-more"></i>Liste Users</a
                   >
                 </li>
+                {% endif %}
                 <li>
                   <a href="{{ path('app_categorie_index') }}"
                     ><i class="ti-more"></i>Liste Categorie</a
@@ -583,6 +588,7 @@
                   >
                 </li>
               </ul>
+              {% endif %}
             </li>
 
             <li class="treeview">
@@ -719,7 +725,7 @@
             </li>
 
             <li>
-              <a href="auth_login.html">
+              <a href="{{ path('app_logout') }}">
                 <i data-feather="lock"></i>
                 <span>Log Out</span>
               </a>

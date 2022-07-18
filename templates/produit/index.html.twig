@@ -68,6 +68,7 @@ content %}
                 				{# <td>{{ produit.nouveauPrix }}Dhs</td> #}
                 				<td><img src= {{ asset('uploads/produits/' ~ produit.imageProduit ) }} width="80" height="70"></td>
                 				<td>{{ produit.qteStock }}</td>
+								{% if produit.user.id == app.user.id %}
                 				<td>
 									<a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn btn-md btn-primary">
                           				<i class="fa fa-eye"></i>
@@ -79,6 +80,9 @@ content %}
                 	          	<i class="fa fa-trash"></i>
                     	    	</a>
 							</td>
+							{% else %}
+								<td></td>
+							{% endif %}
 							</tr>
 							{% else %}
             				<tr>
@@ -94,7 +98,7 @@ content %}
 								<th>Prix Old</th>
 								{# <th>New Prix</th> #}
 								<th>Images Produit</th>
-								<th>Action</th>
+								<th style="border-right: 1px solid #d5dfea">Action</th>
 							</tr>
 						</tfoot>
 					</table>

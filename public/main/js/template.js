@@ -161,7 +161,7 @@ if (typeof jQuery === "undefined") {
         $(Selector.sidebar).slimScroll({
           height: $(window).height() - $(Selector.mainHeader).height() + "px",
           color: "rgba(0,0,0,0.2)",
-          size: "3px",
+          size: "10px",
         });
       }
     }

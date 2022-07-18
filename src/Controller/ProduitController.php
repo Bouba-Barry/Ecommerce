@@ -4,15 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Form\ProduitType;
+use Doctrine\ORM\Mapping\Id;
 use App\Repository\ProduitRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
 
 
 #[Security("is_granted('ROLE_ADMIN')")]
@@ -88,9 +90,14 @@ class ProduitController extends AbstractController
     #[Route('/admin/{id}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
     {
+        // if($produit->getUser()==$this->getUser()){
+       
+        
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
         ]);
+    
+
     }
 
     #[Route('/admin/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
