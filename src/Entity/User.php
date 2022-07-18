@@ -47,10 +47,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $prenom;
 
    
-    // #[Assert\Length(
-    //     min: 10,
-    //     minMessage: 'Your phone number east 10 {{ limit }} numbers long',
-    // )]
+    
     #[ORM\Column(type: 'string', length: 180)]
     private $adresse;
 

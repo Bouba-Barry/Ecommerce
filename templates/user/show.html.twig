@@ -1,50 +1,127 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %} {% block content %}
 
-{% block title %}User{% endblock %}
+<div class="content-wrapper">
+  <div class="container-full">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="page-title">Data Tables</h3>
+          <div class="d-inline-block align-items-center">
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="#"><i class="mdi mdi-home-outline"></i></a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Tables</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Data Tables
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
 
-{% block body %}
-    <h1>User</h1>
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            <div class="box-header">
+              <a href="{{ path('app_user_index') }}" class="btn btn-primary"
+                >Liste Users</a
+              >
+            </div>
+            <div class="box-body">
+              <div class="table-responsive">
+                <table
+                  id="complex_header"
+                  class="table table-striped table-bordered display"
+                  style="width: 100%"
+                >
+                  <thead>
+                    <tr>
+                      <th rowspan="2">Nom Complet</th>
+                      <th colspan="2">HR Information</th>
+                      <th colspan="2">Contact</th>
+                      {#
+                      <th rowspan="2"></th>
+                      #}
+                    </tr>
+                    <tr>
+                      <th>Adresse</th>
+                      <th>Roles</th>
+                      <th>Telephone</th>
+                      <th style="border-right: 1px solid #d5dfea">E-mail</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ user.Nom }} {{ user.prenom }}</td>
+                      <td>{{ user.adresse }}</td>
+                      <td>
+                        <select size="1" id="row-1-office" name="row-1-office">
+                          <option value="Roles" selected="selected">
+                            Roles Here
+                          </option>
+                          {% for role in user.roles %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ user.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ user.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Adresse</th>
-                <td>{{ user.adresse }}</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>{{ user.telephone }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-        </tbody>
-    </table>
+                          <option value="{{ role }}">
+                            {{ role }}
+                          </option>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+                          {% endfor %}
+                        </select>
+                      </td>
+                      <td>{{ user.telephone }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>
+                        {#
+                        <a href="#" class="btn btn-md btn-primary">
+                          <i class="fa fa-eye"></i>
+                        </a>
+                        #}
+                        <a
+                          href="{{ path('app_user_edit', { id: user.id }) }}"
+                          class="btn btn-md btn-warning"
+                        >
+                          <i class="fa fa-edit"></i>
+                        </a>
+                        {#
+                        <a
+                          href="{{ path('app_user_delete', { id: user.id }) }}"
+                          class="btn btn-md btn-danger"
+                        >
+                          <i class="fa fa-trash"></i>
+                        </a>
+                        #}
+                        {{ include("user/_delete_form.html.twig") }}
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Name</th>
+                      <th>Position</th>
+                      <th>Salary</th>
+                      <th>Office</th>
+                      <th style="border-right: 1px solid #d5dfea">Extn.</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
 
-    {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

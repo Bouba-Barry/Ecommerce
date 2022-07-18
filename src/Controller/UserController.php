@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Validator\Constraints\Length;
 
 #[Security("is_granted('ROLE_SUPER_ADMIN')")]
@@ -32,6 +33,9 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
+        //  if (count($form->getErrors()) > 0) {
+        //      dd($form->getErrors());
+        //  }
         // && $form->isValid()
         if ($form->isSubmitted() && $form->isValid() ) {
             // dd($user->getPassword());
@@ -58,7 +62,8 @@ class UserController extends AbstractController
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
-    {
+    {  
+        // dd("HH");
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
@@ -69,9 +74,12 @@ class UserController extends AbstractController
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-// && $form->isValid()
-        if ($form->isSubmitted() ) {
+         if (count($form->getErrors()) > 0) {
+             dd($form->getErrors());
+         }
+        if ($form->isSubmitted() && $form->isValid() ) {
             
+            //  dd($form->getErrors());
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $user->getPassword()
@@ -93,9 +101,10 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+        //  dd("ff");
+         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
-        }
+         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }

@@ -45,8 +45,10 @@ block content %}  {{ form_start(form) }}
             class="tab-wizard wizard-circle"
           >
             <!-- Step 1 -->
-            <h6 >Client Information</h6>
+            <a href="{{path('app_user_index')}}" class="btn btn-primary">Liste Users</a>
+            
             <section>
+              <br>
               <div class="row">
                 <div class="col-md-6">
                   {{form_errors(form.email)}}
