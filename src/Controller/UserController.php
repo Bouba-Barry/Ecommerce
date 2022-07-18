@@ -74,9 +74,9 @@ class UserController extends AbstractController
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-         if (count($form->getErrors()) > 0) {
-             dd($form->getErrors());
-         }
+        //  if (count($form->getErrors()) > 0) {
+        //      dd($form->getErrors());
+        //  }
         if ($form->isSubmitted() && $form->isValid() ) {
             
             //  dd($form->getErrors());

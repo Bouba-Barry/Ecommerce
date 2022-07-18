@@ -492,6 +492,9 @@
                   <i class="fa fa-angle-right pull-right"></i>
                 </span>
               </a>
+
+              {% if 'ROLE_SUPER_ADMIN' in app.user.Roles or 'ROLE_ADMIN' in
+              app.user.Roles %}
               <ul class="treeview-menu">
                 <li>
                   <a href="{{ path('app_produit_new') }}"
@@ -513,11 +516,15 @@
                     ><i class="ti-more"></i>Ajout de Réduction</a
                   >
                 </li>
+
+                {% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
                 <li>
                   <a href="{{ path('app_user_new') }}"
                     ><i class="ti-more"></i>Ajout User</a
                   >
                 </li>
+                {% endif %}
+
                 <li>
                   <a href="{{ path('app_attribut_new') }}"
                     ><i class="ti-more"></i>Ajout Attribut</a
@@ -529,6 +536,7 @@
                   >
                 </li>
               </ul>
+              {% endif %}
             </li>
             <li class="treeview">
               <a href="#">
