@@ -3,21 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\AdminProfileType;
 use App\Form\UserType;
+use App\Form\AdminProfileType;
+use App\Form\EditPasswordType;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Security\Core\Role\Role;
-use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-#[Security("is_granted('ROLE_SUPER_ADMIN')")]
+#[Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN')  or is_granted('ROLE_COMPTABLE')")]
 #[Route('/admin/user')]
 class UserController extends AbstractController
 {
@@ -32,14 +33,44 @@ class UserController extends AbstractController
     #[Route('/profile', name: 'app_user_profile')]
     public function profile(Request $request, SluggerInterface $slugger, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
+        
         $user = $this->getUser();
         // $user = $this->getUser();
         // dd($user);
         // $user = new User();
         $form = $this->createForm(AdminProfileType::class, $user);
+        $form2 = $this->createForm(EditPasswordType::class, $user);
         $form->handleRequest($request);
+        $form2->handleRequest($request);
 
+
+        if($form2->isSubmitted() && $form2->isValid()){
+            $this->addFlash('success', 'Mot de passe a ete modifie avec succes');
+            $user = $form2->getData();
+            //   dd($user->getPassword());
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the img must be processed only when a file is uploaded
+       
+            /** fin de l'upload du profile du user */
+
+            $hashedPassword = $passwordHasher->hashPassword(
+                $user,
+                $user->getPassword()
+            );
+
+            $user->setPassword($hashedPassword);
+           
+
+            $userRepository->add($user, true);
+            
+            return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
+
+
+        }
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Vos informations sont modifies avec success');
+
 
             /** @var UploadedFile $picture */
             $user = $form->getData();
@@ -66,6 +97,8 @@ class UserController extends AbstractController
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $user->setProfile($newFilename);
+                return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
+
             }
             /** fin de l'upload du profile du user */
 
@@ -77,11 +110,16 @@ class UserController extends AbstractController
 
             $user->setPassword($hashedPassword);
             $userRepository->add($user, true);
+
+            return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
+
         }
 
         return $this->renderForm('user/profile.html.twig', [
             'user' => $this->getUser(),
-            'form' => $form
+            'users'=>$userRepository->findAll(),
+            'form' => $form,
+            'form2' => $form2
         ]);
     }
 
@@ -157,6 +195,8 @@ class UserController extends AbstractController
         ]);
     }
 
+
+   
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, SluggerInterface $slugger, User $user, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
@@ -211,6 +251,7 @@ class UserController extends AbstractController
         //     'user' => $user,
         //     'form' => $form,
         // ]);
+        dd("jhh");
 
         $form = $this->createForm(AdminProfileType::class, $user);
         $form->handleRequest($request);

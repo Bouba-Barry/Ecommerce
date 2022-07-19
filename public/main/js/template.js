@@ -5,6 +5,19 @@
 
 //should be included in all pages. It controls some layout
 
+let f = document.getElementById("message");
+setTimeout(function () {
+  document.getElementById("message").innerHTML = "";
+}, 5000);
+
+// let x = document.getElementById("active");
+// let y = document.getElementById("pactive");
+
+// x.addEventListener("click", function () {
+//   document.getElementById("settings").style.display = "block";
+//   // document.getElementById("activity").style.display = "none";
+// });
+
 // Make sure jQuery has been loaded
 if (typeof jQuery === "undefined") {
   throw new Error("template requires jQuery");

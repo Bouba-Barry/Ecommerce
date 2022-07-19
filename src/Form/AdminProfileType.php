@@ -22,16 +22,16 @@ class AdminProfileType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, array('label'   => false, 'attr' => ['placeholder' => 'Email', 'class' => 'form-control']))
-            ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'ROLE_SUPER_AdMIN ' => 'ROLE_SUPER_ADMIN',
-                    'ROLE_ADMIN' => 'ROLE_ADMIN',
-                    'ROLE_COMPTABLE' => 'ROLE_COMPTABLE'
-                ],
-                'multiple' => true,
-                'expanded' => true,
-                'label'   => false
-            ], array('attr' => ['class' => 'form-control']))
+            // ->add('roles', ChoiceType::class, [
+            //     'choices' => [
+            //         'ROLE_SUPER_AdMIN ' => 'ROLE_SUPER_ADMIN',
+            //         'ROLE_ADMIN' => 'ROLE_ADMIN',
+            //         'ROLE_COMPTABLE' => 'ROLE_COMPTABLE'
+            //     ],
+            //     'multiple' => true,
+            //     'expanded' => true,
+            //     'label'   => false
+            // ], array('attr' => ['class' => 'form-control']))
             ->add('nom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Nom', 'class' => 'form-control']))
             ->add('prenom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Prenom', 'class' => 'form-control']))
             ->add('adresse', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Adresse', 'class' => 'form-control']))
