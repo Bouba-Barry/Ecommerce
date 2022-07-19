@@ -46,8 +46,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 180)]
     private $prenom;
 
-   
-    
+
+
     #[ORM\Column(type: 'string', length: 180)]
     private $adresse;
 
@@ -77,8 +77,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $profile;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $createAt;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $update_at;
+
     public function __construct()
     {
+        $this->createAt = new \DateTimeImmutable('now');
         $this->produits = new ArrayCollection();
         $this->commandes = new ArrayCollection();
         $this->paniers = new ArrayCollection();
@@ -311,6 +318,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setProfile(?string $profile): self
     {
         $this->profile = $profile;
+
+        return $this;
+    }
+
+    public function getCreateAt(): ?\DateTimeImmutable
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt(?\DateTimeImmutable $createAt): self
+    {
+        $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeImmutable
+    {
+        return $this->update_at;
+    }
+
+    public function setUpdateAt(?\DateTimeImmutable $update_at): self
+    {
+        $this->update_at = $update_at;
 
         return $this;
     }

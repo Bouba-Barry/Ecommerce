@@ -56,28 +56,58 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->add($user, true);
     }
 
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function findRoles()
+    {
+        $conn = $this->getEntityManager()->getConnection();
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        // $x = "ROLE_USER";
+        // return $this->createQueryBuilder('u')
+        //     ->andWhere(' :x in (u.roles) ')
+        //     ->setParameter('x', $x)
+        //     // ->orderBy('u.id', 'ASC')
+        //     //    ->setMaxResults(10)
+        //     ->getQuery()
+        //     ->getResult();
+        $sql = "
+        SELECT * FROM user u
+        WHERE  JSON_CONTAINS(`roles`, '\"ROLE_USER\"')
+        ORDER BY u.id ASC
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function findRecentClient()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        SELECT * FROM user u
+        WHERE  (DATEDIFF(CURRENT_TIMESTAMP(), u.create_at)  BETWEEN 1 and 31)
+        ORDER BY u.id ASC
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    // public function findOneBySomeField($value): ?User
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.nom = :val')
+    //         ->setParameter('val', $value)
+    //         ->getQuery()
+    //         ->getOneOrNullResult();
+    // }
 }

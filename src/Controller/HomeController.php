@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Panier;
 use App\Entity\Produit;
+use App\Entity\User;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,10 +20,41 @@ class HomeController extends AbstractController
 {
     #[Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') or is_granted('ROLE_COMPTABLE')  ")]
     #[Route('/admin', name: 'app_home_admin')]
-    public function index(): Response
+    public function index(UserRepository $userRepository, ProduitRepository $produitRepository): Response
     {
-        
-        return $this->render('admin.html.twig');
+
+        $clientRecent = $userRepository->findRecentClient();
+        $membreRecent = count($clientRecent);
+
+        $clientTotal = $userRepository->findRoles();
+        $totalClient = count($clientTotal);
+
+        $pourcentage = ($membreRecent * 100) / $totalClient;
+
+        $produits = $produitRepository->findAll();
+
+        $salesMonth = count($produitRepository->findSalesMonth());
+        // $total = 0;
+        // foreach ($salesMonth as $s) {
+        //     $s->ancien_prix
+
+        // }
+        // dd($salesMonth);
+
+
+        // produit ajouter il y'a au max un mois
+        $productRecent = $produitRepository->findRecent();
+
+
+        return $this->render('home/dashbord.html.twig', [
+            'clients' => $clientRecent,
+            'produits' => $produits,
+            'produitRecents' => $productRecent,
+            'totalClient' => $totalClient,
+            'RecentClient' => $membreRecent,
+            'pourClient' => $pourcentage,
+            'month_prod_sales' => $salesMonth,
+        ]);
     }
 
 

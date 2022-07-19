@@ -21,6 +21,12 @@ class Attribut
     #[ORM\OneToMany(mappedBy: 'attribut', targetEntity: Variation::class)]
     private $variations;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $create_at;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $update_at;
+
     public function __construct()
     {
         $this->variations = new ArrayCollection();
@@ -69,6 +75,30 @@ class Attribut
                 $variation->setAttribut(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreateAt(): ?\DateTimeImmutable
+    {
+        return $this->create_at;
+    }
+
+    public function setCreateAt(?\DateTimeImmutable $create_at): self
+    {
+        $this->create_at = $create_at;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeImmutable
+    {
+        return $this->update_at;
+    }
+
+    public function setUpdateAt(?\DateTimeImmutable $update_at): self
+    {
+        $this->update_at = $update_at;
 
         return $this;
     }

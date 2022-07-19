@@ -25,6 +25,12 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: SousCategorie::class)]
     private $sousCategories;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $create_at;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $update_at;
+
     public function __construct()
     {
         $this->sousCategories = new ArrayCollection();
@@ -73,6 +79,30 @@ class Categorie
                 $sousCategory->setCategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreateAt(): ?\DateTimeImmutable
+    {
+        return $this->create_at;
+    }
+
+    public function setCreateAt(?\DateTimeImmutable $create_at): self
+    {
+        $this->create_at = $create_at;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeImmutable
+    {
+        return $this->update_at;
+    }
+
+    public function setUpdateAt(?\DateTimeImmutable $update_at): self
+    {
+        $this->update_at = $update_at;
 
         return $this;
     }

@@ -27,6 +27,12 @@ class Reduction
     #[ORM\ManyToMany(targetEntity: Produit::class, mappedBy: 'reduction')]
     private $produits;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $create_at;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $update_at;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
@@ -101,6 +107,30 @@ class Reduction
         if ($this->produits->removeElement($produit)) {
             $produit->removeReduction($this);
         }
+
+        return $this;
+    }
+
+    public function getCreateAt(): ?\DateTimeImmutable
+    {
+        return $this->create_at;
+    }
+
+    public function setCreateAt(?\DateTimeImmutable $create_at): self
+    {
+        $this->create_at = $create_at;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeImmutable
+    {
+        return $this->update_at;
+    }
+
+    public function setUpdateAt(?\DateTimeImmutable $update_at): self
+    {
+        $this->update_at = $update_at;
 
         return $this;
     }
