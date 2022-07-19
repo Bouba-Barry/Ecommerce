@@ -1,6 +1,4 @@
-{% extends 'base.html.twig' %} {% block title %}Edit User{% endblock %} {% block
-body %}
-
+{% extends 'admin.html.twig' %} {#
 {{
   include(
     "user/_form.html.twig",
@@ -8,6 +6,68 @@ body %}
     { action: path("app_user_edit", { id: user.id }) }
   )
 }}
+#} {% block content %}
+
+<div class="content-wrapper">
+  <div class="container-full">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="page-title">Form Wizard</h3>
+          <div class="d-inline-block align-items-center">
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="#"><i class="mdi mdi-home-outline"></i></a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Forms</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Form Wizard
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Step wizard -->
+      <div class="box box-default">
+        <div class="box-header with-border">
+          <h4 class="box-title">Client Modification</h4>
+          <h6 class="box-subtitle">
+            You can find the
+            <a href="http://www.jquery-steps.com" target="_blank"
+              >offical website
+            </a>
+          </h6>
+        </div>
+
+        <!-- /.box-header -->
+        <div class="box-body wizard-content">
+          <a href="{{ path('app_user_index') }}" class="btn btn-primary"
+            >Liste Users</a
+          >
+          {{
+            include(
+              "user/_form_edit_user.html.twig",
+              { button_label: "Update" },
+              { action: path("app_user_edit", { id: user.id }) }
+            )
+          }}
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+
+<!-- /.content-wrapper -->
 
 {# <a href="{{ path('app_user_index') }}">back to list</a> #} {#
 {{ include("user/_delete_form.html.twig") }} #} {% endblock %}
