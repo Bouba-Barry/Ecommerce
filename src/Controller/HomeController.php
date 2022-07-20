@@ -61,7 +61,7 @@ class HomeController extends AbstractController
     #[Route('', name: 'app_home')]
     public function home(ProduitRepository $produitRepository): Response
     {
-        return $this->render('other/index.html.twig', [
+        return $this->render('frontend/home.html.twig', [
             'produits' => $produitRepository->findAll(),
         ]);
     }
