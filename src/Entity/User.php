@@ -86,6 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable('now');
+        $this->update_at = new \DateTimeImmutable('now');
         $this->produits = new ArrayCollection();
         $this->commandes = new ArrayCollection();
         $this->paniers = new ArrayCollection();

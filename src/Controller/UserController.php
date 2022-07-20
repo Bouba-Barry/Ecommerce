@@ -33,7 +33,7 @@ class UserController extends AbstractController
     #[Route('/profile', name: 'app_user_profile')]
     public function profile(Request $request, SluggerInterface $slugger, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
-        
+
         $user = $this->getUser();
         // $user = $this->getUser();
         // dd($user);
@@ -44,14 +44,14 @@ class UserController extends AbstractController
         $form2->handleRequest($request);
 
 
-        if($form2->isSubmitted() && $form2->isValid()){
+        if ($form2->isSubmitted() && $form2->isValid()) {
             $this->addFlash('success', 'Mot de passe a ete modifie avec succes');
             $user = $form2->getData();
             //   dd($user->getPassword());
 
             // this condition is needed because the 'brochure' field is not required
             // so the img must be processed only when a file is uploaded
-       
+
             /** fin de l'upload du profile du user */
 
             $hashedPassword = $passwordHasher->hashPassword(
@@ -60,13 +60,11 @@ class UserController extends AbstractController
             );
 
             $user->setPassword($hashedPassword);
-           
+
 
             $userRepository->add($user, true);
-            
+
             return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
-
-
         }
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Vos informations sont modifies avec success');
@@ -97,27 +95,19 @@ class UserController extends AbstractController
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $user->setProfile($newFilename);
-                return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
+                // return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
 
             }
             /** fin de l'upload du profile du user */
-
-
-            $hashedPassword = $passwordHasher->hashPassword(
-                $user,
-                $user->getPassword()
-            );
-
-            $user->setPassword($hashedPassword);
             $userRepository->add($user, true);
 
-            return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
 
+            return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/profile.html.twig', [
             'user' => $this->getUser(),
-            'users'=>$userRepository->findAll(),
+            'users' => $userRepository->findAll(),
             'form' => $form,
             'form2' => $form2
         ]);
@@ -196,7 +186,7 @@ class UserController extends AbstractController
     }
 
 
-   
+
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, SluggerInterface $slugger, User $user, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
@@ -283,7 +273,6 @@ class UserController extends AbstractController
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $user->setProfile($newFilename);
-
             }
             /** fin de l'upload du profile du user */
 
@@ -299,8 +288,8 @@ class UserController extends AbstractController
         }
 
         return $this->renderForm('user/edit.html.twig', [
-                 'user' => $user,
-                 'form' => $form,
+            'user' => $user,
+            'form' => $form,
         ]);
     }
 

@@ -35,6 +35,9 @@ class Reduction
 
     public function __construct()
     {
+        $this->create_at = new \DateTimeImmutable('now');
+        $this->update_at = new \DateTimeImmutable('now');
+
         $this->produits = new ArrayCollection();
     }
 

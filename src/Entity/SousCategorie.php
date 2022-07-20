@@ -24,8 +24,18 @@ class SousCategorie
     #[ORM\OneToMany(mappedBy: 'sous_categorie', targetEntity: Produit::class)]
     private $produits;
 
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $create_at;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $update_at;
+
+
     public function __construct()
     {
+        $this->create_at = new \DateTimeImmutable('now');
+        $this->update_at = new \DateTimeImmutable('now');
         $this->produits = new ArrayCollection();
     }
 
@@ -84,6 +94,30 @@ class SousCategorie
                 $produit->setSousCategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreateAt(): ?\DateTimeImmutable
+    {
+        return $this->create_at;
+    }
+
+    public function setCreateAt(?\DateTimeImmutable $createAt): self
+    {
+        $this->create_at = $createAt;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeImmutable
+    {
+        return $this->update_at;
+    }
+
+    public function setUpdateAt(?\DateTimeImmutable $update_at): self
+    {
+        $this->update_at = $update_at;
 
         return $this;
     }
