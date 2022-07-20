@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <!-- Bootstrap CSS --> 
+        <link rel="stylesheet" href="{{ asset('FrontOffice/assets/css/bootstrap.min.css') }}">
+        <!-- Animate CSS --> 
+        <link rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/animate.min.css') }}">
+        <!-- Meanmenu CSS -->
+        <link rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/meanmenu.css') }}">
+        <!-- Boxicons CSS -->
+        <link rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/boxicons.min.css') }}">
+        <!-- Flaticon CSS -->
+        <link rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/flaticon.css') }}">
+        <!-- Nice Select CSS -->
+        <link rel="stylesheet" href="{{ asset('FrontOffice/assets/css/nice-select.min.css') }}">
+        <!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="{{ asset('FrontOffice/assets/css/owl.carousel.min.css') }}">
+        <!-- Owl Carousel Default CSS -->
+        <link rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/owl.theme.default.min.css') }}">
+        <!-- Odometer CSS -->
+        <link rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/odometer.min.css') }}">
+        <!-- Magnific Popup CSS -->
+        <link rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/magnific-popup.min.css') }}">
+        <!-- Style CSS -->
+        <link rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/style.css') }} ">
+        <!-- Responsive CSS -->
+		<link rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/responsive.css') }} ">
+    <title>{% block title %}{% endblock %}</title>
+     <link rel="icon" type="image/png" href=" {{ asset('FrontOffice/assets/img/favicon.png ') }}">
+    {% block stylesheets %} {% endblock %}
+    {% block javascripts %} {% endblock %}
+  </head>
+  <body>
+   
+        {% include('other/header.html.twig') %}
+
+        {% block content %} {% endblock %}
+
+        
+        {% include('other/footer.html.twig') %}
+
+         <!-- Jquery Slim JS -->
+        <script src=" {{ asset('FrontOffice/assets/js/jquery.min.js') }}"></script>
+        <!-- Popper JS -->
+        <script src=" {{ asset('FrontOffice/assets/js/popper.min.js') }} "></script>
+        <!-- Bootstrap JS -->
+        <script src=" {{ asset('FrontOffice/assets/js/bootstrap.min.js') }} "></script>
+        <!-- Meanmenu JS -->
+        <script src=" {{ asset('FrontOffice/assets/js/jquery.meanmenu.js') }} "></script>
+        <!-- Nice Select JS -->
+        <script src=" {{ asset('FrontOffice/assets/js/jquery.nice-select.min.js') }} "></script>
+        <!-- Owl Carousel JS -->
+        <script src=" {{ asset('FrontOffice/assets/js/owl.carousel.min.js') }} "></script>
+        <!-- Magnific Popup JS -->
+        <script src=" {{ asset('FrontOffice/assets/js/jquery.magnific-popup.min.js') }} "></script>
+        <!-- Odometer JS -->
+        <script src=" {{ asset('FrontOffice/assets/js/odometer.min.js') }} "></script>
+        <!-- Jquery Appear JS -->
+        <script src=" {{ asset('FrontOffice/assets/js/jquery.appear.min.js') }} "></script>
+        <!-- Ajaxchimp JS -->
+		<script src=" {{ asset('FrontOffice/assets/js/jquery.ajaxchimp.min.js') }} "></script>
+		<!-- Form Validator JS -->
+		<script src=" {{ asset('FrontOffice/assets/js/form-validator.min.js') }} "></script>
+		<!-- Contact JS -->
+        <script src=" {{ asset('FrontOffice/assets/js/contact-form-script.js') }} "></script>
+        <!-- Wow JS -->
+        <script src=" {{ asset('FrontOffice/assets/js/wow.min.js') }} "></script>
+        <!-- Custom JS -->
+        <script src=" {{ asset('FrontOffice/assets/js/main.js') }} "></script>
+  </body>
+</html>
