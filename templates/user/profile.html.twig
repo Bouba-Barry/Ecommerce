@@ -938,11 +938,6 @@
 
               <div class="tab-pane" id="settings">
                 <div class="box p-15">
-                  {% for message in app.flashes('success') %}
-                  <div class="alert alert-success">
-                    {{ message }}
-                  </div>
-                  {% endfor %}
                   {{
                     include(
                       "user/_formProfile.html.twig",
@@ -959,6 +954,7 @@
                     include(
                       "user/_form_editpassword.html.twig",
                       { button_label: "Update" },
+                    
                     )
                   }}
                 </div>

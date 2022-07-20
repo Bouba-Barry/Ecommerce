@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Form\AdminProfileType;
 use App\Form\EditPasswordType;
+use App\Form\EditUserType;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,18 +36,31 @@ class UserController extends AbstractController
     {
         
         $user = $this->getUser();
+        
+        //  dd($user->getTelephone());
         // $user = $this->getUser();
         // dd($user);
         // $user = new User();
         $form = $this->createForm(AdminProfileType::class, $user);
+        // $form->get('telephone')->setData('0'.$user->getTelephone());
+        // $form->setTelephone("0");
         $form2 = $this->createForm(EditPasswordType::class, $user);
-        $form->handleRequest($request);
+        // $form2->get('telephone')->setData('0'.$user->getTelephone());
+        if($form){
+        $form->handleRequest($request);}
+        if($form2){
         $form2->handleRequest($request);
+        }
 
+        // if (count($form2->getErrors()) > 0) {
+        //     dd($form2->getErrors());
+        // }
 
-        if($form2->isSubmitted() && $form2->isValid()){
+        if($form2->isSubmitted() && $form2->isValid() ){
+            // dd("dd");
             $this->addFlash('success', 'Mot de passe a ete modifie avec succes');
             $user = $form2->getData();
+            // dd($user->getPassword());
             //   dd($user->getPassword());
 
             // this condition is needed because the 'brochure' field is not required
@@ -70,12 +84,12 @@ class UserController extends AbstractController
         }
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Vos informations sont modifies avec success');
-
+             
 
             /** @var UploadedFile $picture */
             $user = $form->getData();
             $picture = $form->get('profile')->getData();
-
+            //  dd($form->get('telephone')->getData());
             // this condition is needed because the 'brochure' field is not required
             // so the PDF file must be processed only when a file is uploaded
             if ($picture) {
@@ -97,18 +111,18 @@ class UserController extends AbstractController
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $user->setProfile($newFilename);
-                return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
+                // return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
 
             }
             /** fin de l'upload du profile du user */
 
 
-            $hashedPassword = $passwordHasher->hashPassword(
-                $user,
-                $user->getPassword()
-            );
+            // $hashedPassword = $passwordHasher->hashPassword(
+            //     $user,
+            //     $user->getPassword()
+            // );
 
-            $user->setPassword($hashedPassword);
+            // $user->setPassword($hashedPassword);
             $userRepository->add($user, true);
 
             return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
@@ -251,9 +265,9 @@ class UserController extends AbstractController
         //     'user' => $user,
         //     'form' => $form,
         // ]);
-        dd("jhh");
+        // dd("jhh");
 
-        $form = $this->createForm(AdminProfileType::class, $user);
+        $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -55,7 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         min: 10,
         minMessage: 'votre Numero doit contenir au moins {{ limit }} ',
     )]
-    #[ORM\Column(type: 'integer', length: 255)]
+    #[ORM\Column(type: 'string', length: 255)]
     private $telephone;
 
     #[Assert\Length(
@@ -110,7 +110,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getTelephone(): ?int
+    public function getTelephone(): ? string
     {
         return $this->telephone;
     }

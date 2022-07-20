@@ -35,7 +35,7 @@ class EditUserType extends AbstractType
             ->add('nom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Nom', 'class' => 'form-control']))
             ->add('prenom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Prenom', 'class' => 'form-control']))
             ->add('adresse', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Adresse', 'class' => 'form-control']))
-            ->add('telephone', TelType::class, array('label'   => false, 'attr' => ['placeholder' => 'Telephone', 'class' => 'form-control']))
+            ->add('telephone', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Telephone', 'class' => 'form-control']))
             // ->add('password', RepeatedType::class, [
             //     "type" => PasswordType::class,
             //     "first_options" => ["label" => false, 'attr' => ['placeholder' => 'Mot de passe', 'class' => 'form-control']],

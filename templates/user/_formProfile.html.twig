@@ -1,5 +1,15 @@
 <section>
 {{form_start(form)}}
+ {% if not form.vars.valid %} 
+<script>
+
+  document.getElementById("activity").classList.remove("active");
+  
+  document.getElementById("settings").classList.add("active");
+  document.getElementById("modify_password").classList.remove("active");
+ 
+</script>
+{% endif %}
               <br>
               <div class="row">
                 <div class="col-md-6">
