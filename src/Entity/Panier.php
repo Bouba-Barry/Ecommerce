@@ -19,7 +19,12 @@ class Panier
     private $montant;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private $createAt;
+    private $create_at;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $update_at;
+
+
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'paniers')]
     private $user;
@@ -29,7 +34,10 @@ class Panier
 
     public function __construct()
     {
-        $this->createAt = new \DateTimeImmutable('now');
+        $this->create_at = new \DateTimeImmutable('now');
+        $this->update_at = new \DateTimeImmutable('now');
+
+
         $this->produit = new ArrayCollection();
     }
 
@@ -50,17 +58,6 @@ class Panier
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeImmutable
-    {
-        return $this->createAt;
-    }
-
-    public function setCreateAt(\DateTimeImmutable $createAt): self
-    {
-        $this->createAt = $createAt;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {
@@ -94,6 +91,30 @@ class Panier
     public function removeProduit(Produit $produit): self
     {
         $this->produit->removeElement($produit);
+
+        return $this;
+    }
+
+    public function getCreateAt(): ?\DateTimeImmutable
+    {
+        return $this->create_at;
+    }
+
+    public function setCreateAt(?\DateTimeImmutable $create_at): self
+    {
+        $this->create_at = $create_at;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeImmutable
+    {
+        return $this->update_at;
+    }
+
+    public function setUpdateAt(?\DateTimeImmutable $update_at): self
+    {
+        $this->update_at = $update_at;
 
         return $this;
     }

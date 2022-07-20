@@ -65,9 +65,13 @@ class Produit
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $createAt;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $updateAt;
+
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable('now');
+        $this->updateAt = new \DateTimeImmutable('now');
 
         $this->reduction = new ArrayCollection();
         $this->variation = new ArrayCollection();
@@ -286,6 +290,17 @@ class Produit
     public function setCreateAt(?\DateTimeImmutable $createAt): self
     {
         $this->createAt = $createAt;
+
+        return $this;
+    }
+    public function getUpdateAt(): ?\DateTimeImmutable
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(?\DateTimeImmutable $updateAt): self
+    {
+        $this->updateAt = $updateAt;
 
         return $this;
     }
