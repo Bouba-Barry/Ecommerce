@@ -115,8 +115,21 @@ class HomeController extends AbstractController
     #[Route('', name: 'app_home')]
     public function home(ProduitRepository $produitRepository): Response
     {
+        $totalSalesMonth = $produitRepository->TOTALSALESMONTH(); // pour la partie admin
+        // dd($totalSalesMonth[0]['total']);
+        $MostSalesMonth = $produitRepository->findSalesMonth();
+        $NewProduct = $produitRepository->findRecentProduct(); //produit arriver il y'a 2 weeks et maxREsult 10
+        // dd($NewProduct);
+        $bestSellers = $produitRepository->BestSellers();
+        // dd($bestSellers);
+        $plusVendus = $produitRepository->MostBuy();
+        // dd($plusVendus);
         return $this->render('frontend/home.html.twig', [
             'produits' => $produitRepository->findAll(),
+            'mostSaleMonth' => $MostSalesMonth,
+            'NewProduct' => $NewProduct,
+            'bestSellers' => $bestSellers
+
         ]);
     }
 
