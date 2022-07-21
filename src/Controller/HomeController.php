@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Panier;
 use App\Entity\Produit;
+use App\Entity\SousCategorie;
 use App\Entity\User;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
+use App\Repository\SousCategorieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +20,58 @@ use Symfony\Component\Validator\Constraints\Length;
 // #[Route('/admin')]
 class HomeController extends AbstractController
 {
+
+
+    #[Route('/shop_details/{id}', name: 'app_shp_details',methods: ['GET'])]
+     public function shop_details($id,ProduitRepository $produitRepository,SousCategorieRepository $sousCategorieRepository){
+        // dd($produit);
+
+        $produit=$produitRepository->find($id);
+
+
+        $produits_similaires=$produitRepository->findBy(['sous_categorie' => $produit->getSousCategorie()]);
+      
+
+        $sous_categories=$sousCategorieRepository->findBy(['categorie' => $produit->getSousCategorie()->getCategorie() ]);
+
+      
+
+        $produits_en_relation=$produitRepository->findBy(['sous_categorie' => $sous_categories]);
+
+        // dd($produits_en_relation);
+        // dd($produits_similaires);
+
+        return $this->render('frontend/shop-details.html.twig', [
+            'produit' => $produit,
+            'produits_similaires' => $produits_similaires,
+            'produits_en_relation' => $produits_en_relation
+        ]);         
+  
+
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     #[Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') or is_granted('ROLE_COMPTABLE')  ")]
     #[Route('/admin', name: 'app_home_admin')]
     public function index(UserRepository $userRepository, ProduitRepository $produitRepository): Response
