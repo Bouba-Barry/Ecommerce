@@ -22,21 +22,22 @@ class HomeController extends AbstractController
 {
 
 
-    #[Route('/shop_details/{id}', name: 'app_shp_details',methods: ['GET'])]
-     public function shop_details($id,ProduitRepository $produitRepository,SousCategorieRepository $sousCategorieRepository){
+    #[Route('/shop_details/{id}', name: 'app_shp_details', methods: ['GET'])]
+    public function shop_details($id, ProduitRepository $produitRepository, SousCategorieRepository $sousCategorieRepository)
+    {
         // dd($produit);
 
-        $produit=$produitRepository->find($id);
+        $produit = $produitRepository->find($id);
 
 
-        $produits_similaires=$produitRepository->findBy(['sous_categorie' => $produit->getSousCategorie()]);
-      
+        $produits_similaires = $produitRepository->findBy(['sous_categorie' => $produit->getSousCategorie()]);
 
-        $sous_categories=$sousCategorieRepository->findBy(['categorie' => $produit->getSousCategorie()->getCategorie() ]);
 
-      
+        $sous_categories = $sousCategorieRepository->findBy(['categorie' => $produit->getSousCategorie()->getCategorie()]);
 
-        $produits_en_relation=$produitRepository->findBy(['sous_categorie' => $sous_categories]);
+
+
+        $produits_en_relation = $produitRepository->findBy(['sous_categorie' => $sous_categories]);
 
         // dd($produits_en_relation);
         // dd($produits_similaires);
@@ -45,10 +46,8 @@ class HomeController extends AbstractController
             'produit' => $produit,
             'produits_similaires' => $produits_similaires,
             'produits_en_relation' => $produits_en_relation
-        ]);         
-  
-
-     }
+        ]);
+    }
 
 
 
@@ -123,7 +122,7 @@ class HomeController extends AbstractController
         $bestSellers = $produitRepository->BestSellers();
         // dd($bestSellers);
         $plusVendus = $produitRepository->MostBuy();
-        // dd($plusVendus);
+        dd($plusVendus);
         return $this->render('frontend/home.html.twig', [
             'produits' => $produitRepository->findAll(),
             'mostSaleMonth' => $MostSalesMonth,
