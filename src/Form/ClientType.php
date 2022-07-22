@@ -17,15 +17,15 @@ class ClientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, array('label'   => false, 'attr' => ['placeholder' => 'Email', 'class' => 'form-control pl-15 bg-transparent text-white plc-white']))
-            ->add('nom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Nom', 'class' => 'form-control pl-15 bg-transparent text-white plc-white']))
-            ->add('prenom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Prenom', 'class' => 'form-control pl-15 bg-transparent text-white plc-white']))
-            ->add('adresse', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Adresse', 'class' => 'form-control pl-15 bg-transparent text-white plc-white']))
-            ->add('telephone', TelType::class, array('label'   => false, 'attr' => ['placeholder' => 'Telephone', 'class' => 'form-control pl-15 bg-transparent text-white plc-white']))
+            ->add('email', EmailType::class, array('label'   => false, 'attr' => ['placeholder' => 'user@gmail.com', 'class' => 'form-control']))
+            ->add('nom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'barry', 'class' => 'form-control']))
+            ->add('prenom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'bouba', 'class' => 'form-control']))
+            ->add('adresse', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Marrakech, sidi abbad', 'class' => 'form-control']))
+            ->add('telephone', TelType::class, array('label'   => false, 'attr' => ['placeholder' => '06---------', 'class' => 'form-control']))
             ->add('password', RepeatedType::class, [
                 "type" => PasswordType::class,
-                "first_options" => ["label" => false, 'attr' => ['placeholder' => 'Mot de passe', 'class' => 'form-control pl-15 bg-transparent text-white plc-white']],
-                "second_options" => ["label" => false, 'attr' => ['placeholder' => 'Confirmation', 'class' => 'form-control pl-15 bg-transparent text-white plc-white']],
+                "first_options" => ["label" => false, 'attr' => ['placeholder' => 'Mot de passe', 'class' => 'form-control']],
+                "second_options" => ["label" => false, 'attr' => ['placeholder' => 'Confirmation', 'class' => 'form-control']],
 
             ]);
     }

@@ -1,0 +1,85 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block content %}
+
+	<!-- Start Page Banner -->
+	<div class="page-banner-area item-bg4">
+		<div class="d-table">
+			<div class="d-table-cell">
+				<div class="container">
+					<div class="page-banner-content">
+						<h2>Register</h2>
+						<ul>
+							<li>
+								<a href="index.html">Home</a>
+							</li>
+							<li>Register</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Page Banner -->
+
+
+	<!-- Start Register Area -->
+	<section class="register-area ptb-100">
+		<div class="container">
+			<div class="register-form">
+				<h2>Register</h2>
+
+				{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+				<div class="form-group">
+					<label>Nom</label>
+					{{ form_row(form.nom) }}
+				</div>
+
+				<div class="form-group">
+					<label>prenom</label>
+					{{ form_row(form.prenom) }}
+					<span>{{ form_errors(form.prenom)}}</span>
+				</div>
+
+				<div class="form-group">
+					<label>email</label>
+					{{ form_row(form.email) }}
+					<span>{{ form_errors(form.email)}}</span>
+				</div>
+
+				<div class="form-group">
+					<label>Password</label>
+					{{ form_row(form.password.first) }}
+					<span>{{ form_errors(form.password.first)}}</span>
+				</div>
+
+				<div class="form-group">
+					<label>Password</label>
+					{{ form_row(form.password.second) }}
+				</div>
+				<p class="description">The password should be at least eight characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! " ? $ % ^ & )</p>
+
+				<div class="form-group">
+					<label>adresse</label>
+					{{ form_row(form.adresse) }}
+					<span>{{ form_errors(form.adresse)}}</span>
+				</div>
+
+				<div class="form-group">
+					<label>Telephone</label>
+					{{ form_row(form.telephone) }}
+					<span>{{ form_errors(form.telephone)}}</span>
+				</div>
+
+				<div class="col-12 text-center">
+					<button class="btn btn-info btn-rounded margin-top-10">
+						{{ button_label|default('Register') }}
+					</button>
+				</div>
+
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</section>
+	<!-- End Register Area -->
+{% endblock %}

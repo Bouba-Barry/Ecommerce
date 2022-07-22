@@ -36,7 +36,7 @@ class UserController extends AbstractController
     {
 
         $user = $this->getUser();
-        
+
         //  dd($user->getTelephone());
         // $user = $this->getUser();
         // dd($user);
@@ -46,17 +46,18 @@ class UserController extends AbstractController
         // $form->setTelephone("0");
         $form2 = $this->createForm(EditPasswordType::class, $user);
         // $form2->get('telephone')->setData('0'.$user->getTelephone());
-        if($form){
-        $form->handleRequest($request);}
-        if($form2){
-        $form2->handleRequest($request);
+        if ($form) {
+            $form->handleRequest($request);
+        }
+        if ($form2) {
+            $form2->handleRequest($request);
         }
 
         // if (count($form2->getErrors()) > 0) {
         //     dd($form2->getErrors());
         // }
 
-        if($form2->isSubmitted() && $form2->isValid() ){
+        if ($form2->isSubmitted() && $form2->isValid()) {
             // dd("dd");
             $this->addFlash('success', 'Mot de passe a ete modifie avec succes');
             $user = $form2->getData();
@@ -82,7 +83,7 @@ class UserController extends AbstractController
         }
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Vos informations sont modifies avec success');
-             
+
 
             /** @var UploadedFile $picture */
             $user = $form->getData();

@@ -28,7 +28,7 @@ class ClientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form);
+            // dd($form);
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $user->getPassword()
@@ -43,7 +43,7 @@ class ClientController extends AbstractController
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('client/add_client.html.twig', [
+        return $this->renderForm('frontend/register.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
