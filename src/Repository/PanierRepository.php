@@ -21,8 +21,20 @@ class PanierRepository extends ServiceEntityRepository
         parent::__construct($registry, Panier::class);
     }
 
+    public function add_to_produit_panier($panier_id,$produit_id,$qte){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql="INSERT INTO panier_produit(panier_id,produit_id,qte_produit) VALUES(:panier_id,:produit_id ,:qte)";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['panier_id' => $panier_id,'produit_id' => $produit_id , 'qte' => $qte ]);
+
+        return true;
+
+    }
+
     public function add(Panier $entity, bool $flush = false): void
     {
+
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {

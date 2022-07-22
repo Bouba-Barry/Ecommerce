@@ -1,7 +1,9 @@
 {% extends 'frontend/index.html.twig' %} {% block content %}
 
 <!-- End Sidebar Modal -->
-
+<p id="user_id" style="display: none">
+  {% if app.user %} {{ app.user.id }} {% endif %}
+</p>
 <!-- Start Page Banner -->
 <div class="page-banner-area item-bg4">
   <div class="d-table">
@@ -60,14 +62,18 @@
               <div class="product-add-to-cart">
                 <div class="input-counter">
                   <span class="minus-btn">
-                    <i class="bx bx-minus"></i>
+                    <i class="bx bx-minus progressbtn2"></i>
                   </span>
-                  <input type="text" min="1" value="1" />
+                  <input class="valprogress" type="text" min="1" value="1" />
                   <span class="plus-btn">
-                    <i class="bx bx-plus"></i>
+                    <i class="bx bx-plus progressbtn1"></i>
                   </span>
                 </div>
-                <button type="submit" class="default-btn">
+                <button
+                  type="submit"
+                  id="addcard{{ produit.id }}"
+                  class="default-btn addcard"
+                >
                   Add to cart
                   <span></span>
                 </button>
@@ -583,5 +589,8 @@
   </div>
 </section>
 <!-- End Featured Products Area -->
+
+{% endblock %} {% block javascripts %}
+<script src="{{ asset('js/panier.js') }}"></script>
 
 {% endblock %}
