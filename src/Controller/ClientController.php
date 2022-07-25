@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Panier;
 use App\Form\UserType;
 use App\Form\ClientType;
 use App\Repository\UserRepository;
+use App\Repository\PanierRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,11 +23,15 @@ class ClientController extends AbstractController
 {
 
     #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request,PanierRepository $panierRepository ,UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(ClientType::class, $user);
         $form->handleRequest($request);
+        $panier=new Panier();
+        $panier->setUser($user);
+        $panierRepository->add($panier);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             // dd($form);

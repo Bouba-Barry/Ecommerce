@@ -61,12 +61,18 @@
               </p>
               <div class="product-add-to-cart">
                 <div class="input-counter">
-                  <span class="minus-btn">
-                    <i class="bx bx-minus progressbtn2"></i>
+                  <span
+                    id="progressbtn2{{ produit.id }}"
+                    class="minus-btn progressbtn2"
+                  >
+                    <i class="bx bx-minus"></i>
                   </span>
-                  <input class="valprogress" type="text" min="1" value="1" />
-                  <span class="plus-btn">
-                    <i class="bx bx-plus progressbtn1"></i>
+                  <input class="valprogress" type="text" min="0" value="1" />
+                  <span
+                    class="plus-btn progressbtn1"
+                    id="progressbtn1{{ produit.id }}"
+                  >
+                    <i class="bx bx-plus"></i>
                   </span>
                 </div>
                 <button
@@ -313,7 +319,10 @@
             <div class="col-lg-6 col-md-6">
               <div class="top-products-item">
                 <div class="products-image">
-                  <a href="shop-details.html"
+                  <a
+                    href="{{
+                      path('app_shop_details', { id: produit_similaire.id })
+                    }}"
                     ><img
                       src="{{ asset('uploads/produits/' ~ produit_similaire.getImageProduit() ) }}"
                       alt="image"
@@ -341,6 +350,8 @@
                     <li>
                       <a
                         href="#"
+                        id="searchbtn{{ produit_similaire.id }}"
+                        class="search"
                         data-tooltip="tooltip"
                         data-placement="top"
                         title="Quick View"
@@ -388,6 +399,7 @@
 
       <div class="col-lg-4 col-md-12">
         <aside class="widget-area">
+          {#
           <section class="widget widget_search">
             <h3 class="widget-title">Search</h3>
 
@@ -405,7 +417,7 @@
               </button>
             </form>
           </section>
-
+          #} {#
           <section class="widget price_list_widget">
             <h3 class="widget-title">Price</h3>
 
@@ -415,6 +427,7 @@
               </div>
             </form>
           </section>
+          #}
 
           <section class="widget widget_popular_products">
             <h3 class="widget-title">Popular Products</h3>
@@ -514,7 +527,10 @@
       <div class="col-lg-3 col-md-6">
         <div class="featured-products-item">
           <div class="products-image">
-            <a href="shop-details.html"
+            <a
+              href="{{
+                path('app_shop_details', { id: produit_en_relation.id })
+              }}"
               ><img
                 src="{{ asset('uploads/produits/' ~ produit_en_relation.getImageProduit()) }}"
                 alt="image"
@@ -542,6 +558,8 @@
               <li>
                 <a
                   href="#"
+                  id="searchbtn{{ produit_en_relation.id }}"
+                  class="search"
                   data-tooltip="tooltip"
                   data-placement="top"
                   title="Quick View"

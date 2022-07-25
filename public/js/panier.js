@@ -1,4 +1,3 @@
-console.log("dfff");
 document.addEventListener("DOMContentLoaded", function () {
   let addcard = document.getElementsByClassName("addcard");
   let buynow = document.getElementById("buy");
@@ -7,12 +6,83 @@ document.addEventListener("DOMContentLoaded", function () {
   let progressbtn2 = document.getElementsByClassName("progressbtn2");
   let valprogress = document.getElementsByClassName("valprogress");
   let user_id = document.getElementById("user_id");
+  var noti = document.getElementById("panier");
+  let search = document.getElementsByClassName("search");
+  let productsQuickView = document.getElementById("productsQuickView");
+  let titre_produit = document.getElementById("titre_produit");
 
-  console.log(user_id.innerHTML);
+  for (let but of search) {
+    but.addEventListener("click", (e) => {
+      // console.log(but.id);
+      i = findindex_search(but);
+      let vals = [];
+      vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+
+      fetch(`http://127.0.0.1:8000/getProduit/${vals}`)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            console.log("mauvaise réponse!");
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          getinfos_produits(data);
+        })
+        .catch((err) => {
+          console.log("error");
+        });
+    });
+
+    function getinfos_produits(data) {}
+  }
+
+  function findindex_search(button) {
+    for (let j = 0; j < search.length; j++) {
+      if (search[j].id === button.id) {
+        console.log(j);
+        return j;
+      } else continue;
+    }
+  }
   // buynow.addEventListener("click", function () {
   //   console.log(1);
   // });
   // console.log(addcard);
+
+  fetch(`http://127.0.0.1:8000/panier_length/${parseInt(user_id.innerHTML)}`)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        console.log("mauvaise réponse!");
+      }
+    })
+    .then((data) => {
+      console.log(data);
+      filter_produits(data);
+    })
+    .catch((err) => {
+      console.log("error");
+    });
+
+  function filter_produits(data) {
+    if (data.length > 0) {
+      for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < progressbtn1.length; j++) {
+          if (
+            progressbtn1[j].id.charAt(progressbtn1[j].id.length - 1) ==
+            data[i].produit_id
+          ) {
+            addcard[j].style.display = "none";
+            valprogress[j].value = data[i].qte_produit;
+          }
+        }
+      }
+    }
+  }
+
   var vals = [];
   for (let i = 0; i < addcard.length; i++) {
     addcard[i].addEventListener("click", test);
@@ -37,7 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  var noti = document.getElementById("panier");
   console.log(noti);
 
   for (let but of addcard) {
@@ -50,7 +119,29 @@ document.addEventListener("DOMContentLoaded", function () {
       // but.style.display = "none";
       // noti.setAttribute("data-count", add + 1);
       // noti.classList.add("zero");
-      noti.innerHTML = Number(valprogress[i].value);
+      let vals = [];
+      let qte = [];
+      vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+      qte.push(Number(valprogress[i].value));
+      fetch(
+        `http://127.0.0.1:8000/panier/${vals}/${qte}/${parseInt(
+          user_id.innerHTML
+        )}`
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response;
+          } else {
+            console.log("mauvaise réponse!");
+          }
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log("error");
+        });
+      noti.innerHTML = parseInt(noti.innerHTML) + Number(valprogress[i].value);
     });
   }
   //progress
@@ -58,14 +149,42 @@ document.addEventListener("DOMContentLoaded", function () {
     but.addEventListener("click", (e) => {
       // console.log(but.id);
       i = findindex1(but);
-      console.log(addcard[i].textContent);
 
-      // console.log(add);
+      console.log(addcard[i].style.display);
 
-      if (addcard[i].textContent.includes("Add to cart") == false) {
+      if (
+        addcard[i].textContent.includes("Add to cart") == false ||
+        addcard[i].style.display == "none"
+      ) {
+        let vals = [];
+        let qte = [];
+        vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+        qte.push(Number(valprogress[i].value));
+
+        fetch(
+          `http://127.0.0.1:8000/panier_edit/${vals}/${qte}/${parseInt(
+            user_id.innerHTML
+          )}`
+        )
+          .then((response) => {
+            if (response.ok) {
+              return response;
+            } else {
+              console.log("mauvaise réponse!");
+            }
+          })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log("error");
+          });
+
         console.log(valprogress[i].value);
+        console.log(noti.innerHTML);
         noti.innerHTML = Number(noti.innerHTML) + 1;
       }
+
       // valprogress[i].innerHTML++;
 
       // let prix = document
@@ -86,19 +205,74 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("fin");
       console.log(valprogress[i]);
       // console.log(add);
-      if (Number(valprogress[i].value) == 1) {
+      let vals = [];
+      let qte = [];
+      vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+      qte.push(Number(valprogress[i].value));
+
+      if (
+        addcard[i].textContent.includes("Add to cart") == false ||
+        addcard[i].style.display == "none"
+      ) {
+        fetch(
+          `http://127.0.0.1:8000/panier_edit/${vals}/${qte}/${parseInt(
+            user_id.innerHTML
+          )}`
+        )
+          .then((response) => {
+            if (response.ok) {
+              return response;
+            } else {
+              console.log("mauvaise réponse!");
+            }
+          })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log("error");
+          });
+
+        // console.log(valprogress[i].value);
+      }
+      if (
+        Number(valprogress[i].value) != 0 &&
+        addcard[i].style.display == "none"
+      ) {
+        noti.innerHTML = Number(noti.innerHTML) - 1;
+      }
+
+      if (Number(valprogress[i].value) == 0) {
+        valprogress[i].value = 1;
+        noti.innerHTML = Number(noti.innerHTML) - 1;
         console.log(valprogress[i].parentNode.parentNode.children[1]);
         valprogress[i].parentNode.parentNode.children[1].innerHTML =
-          "add to cart";
+          "Add to cart";
 
         valprogress[i].parentNode.parentNode.children[1].style.display =
           "inline";
 
         valprogress[i].parentNode.parentNode.children[1].style.backgroundColor =
           "#f99459";
-      }
-      if (Number(noti.innerHTML) != 0) {
-        noti.innerHTML = Number(noti.innerHTML) - 1;
+
+        fetch(
+          `http://127.0.0.1:8000/panier_delete/${vals}/${parseInt(
+            user_id.innerHTML
+          )}`
+        )
+          .then((response) => {
+            if (response.ok) {
+              return response;
+            } else {
+              console.log("mauvaise réponse!");
+            }
+          })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log("error");
+          });
       }
 
       // let prix = document
@@ -147,11 +321,6 @@ document.addEventListener("DOMContentLoaded", function () {
       qte.push(Number(valprogress[i].value));
     }
     window.location.href =
-      "http://127.0.0.1:8000/panier/" +
-      valeurs +
-      "/" +
-      qte +
-      "/" +
-      Number(user_id.innerHTML); //on fait pas le panier.php/?.. mais panier.php?...
+      "http://127.0.0.1:8000/panier_infos/" + Number(user_id.innerHTML); //on fait pas le panier.php/?.. mais panier.php?...
   });
 });

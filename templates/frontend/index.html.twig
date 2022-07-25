@@ -75,6 +75,9 @@
   </head>
 
   <body>
+    <p id="user_id" style="display: none">
+      {% if app.user %} {{ app.user.id }} {% endif %}
+    </p>
     <!-- Start Preloader Area -->
     <div class="preloader">
       <div class="preloader">
@@ -894,10 +897,10 @@
 
             <div class="col-lg-6 col-md-6">
               <div class="product-content">
-                <h3>Seasoned Tomatoes</h3>
+                <h3 id="titre_produit">Seasoned Tomatoes</h3>
                 <div class="price">
-                  <span class="new-price">$541.00</span>
-                  <span class="old-price">$652.00</span>
+                  <span class="new-price" id="new_price">$541.00</span>
+                  <span class="old-price" id="old_price">$652.00</span>
                 </div>
                 <div class="product-review">
                   <div class="rating">
@@ -909,7 +912,7 @@
                   </div>
                   <a href="#" class="rating-count">5 reviews</a>
                 </div>
-                <p>
+                <p id="description_produit">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et.
                 </p>
@@ -1024,6 +1027,7 @@
     <script src=" {{ asset('FrontOffice/assets/js/wow.min.js') }} "></script>
     <!-- Custom JS -->
     <script src=" {{ asset('FrontOffice/assets/js/main.js') }} "></script>
+    <script src="{{ asset('js/panier2.js') }}"></script>
     {% block javascripts %}{% endblock %}
   </body>
 </html>

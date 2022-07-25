@@ -13,7 +13,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
   #[Route('/login', name: 'app_login')]
-  #[Route('/user/login', name: 'app_login')]
+  #[Route('/user/login', name: 'app_user_login')]
   public function index(Request $request, AuthenticationUtils $authenticationUtils): Response
   {
 
@@ -60,7 +60,7 @@ class LoginController extends AbstractController
       ]);
     }
   }
-
+ 
 
   /**
    * @Route("/admin/logout", name="app_logout", methods={"GET"})

@@ -32,6 +32,72 @@ class PanierRepository extends ServiceEntityRepository
 
     }
 
+
+    public function edit_produit_panier($panier_id,$produit_id,$qte){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql="UPDATE panier_produit
+         SET qte_produit=:qte
+         WHERE panier_id=:panier_id and produit_id=:produit_id";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['panier_id' => $panier_id,'produit_id' => $produit_id , 'qte' => $qte ]);
+        // $d=$resultSet->fetchAllAssociative();
+        return true;
+
+    }
+
+
+    public function find_one_produit_panier($panier_id,$produit_id){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql=("SELECT * FROM panier_produit where panier_id=:panier_id and produit_id=:produit_id ");
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['panier_id' => $panier_id , 'produit_id' => $produit_id ]);
+        $d=$resultSet->fetchAllAssociative();
+
+        return $d;
+
+    }
+
+
+    public function delete_one_produit_panier($panier_id,$produit_id){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql=("DELETE FROM panier_produit where panier_id=:panier_id and produit_id=:produit_id ");
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['panier_id' => $panier_id , 'produit_id' => $produit_id ]);
+        // $d=$resultSet->fetchAllAssociative();
+
+        return true;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public function find_produit_panier($panier_id){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql=("SELECT * FROM panier_produit where panier_id=:panier_id ");
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['panier_id' => $panier_id ]);
+        $d=$resultSet->fetchAllAssociative();
+
+        return json_encode($d);
+
+    }
+     
+     
+   
+
+
     public function add(Panier $entity, bool $flush = false): void
     {
 

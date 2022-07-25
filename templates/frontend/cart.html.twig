@@ -1,0 +1,159 @@
+{% extends "frontend/index.html.twig" %} {% block content %} {#
+<p id="panierlength" style="display: none">{{ length }}</p>
+#}
+<p id="user_id" style="display: none">
+  {% if app.user %} {{ app.user.id }} {% endif %}
+</p>
+<!-- Start Page Banner -->
+<div class="page-banner-area item-bg2">
+  <div class="d-table">
+    <div class="d-table-cell">
+      <div class="container">
+        <div class="page-banner-content">
+          <h2>Cart</h2>
+          <ul>
+            <li>
+              <a href="index.html">Home</a>
+            </li>
+            <li>Cart</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Banner -->
+
+<!-- Start Cart Area -->
+<section class="cart-area ptb-100">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <form>
+          <div class="cart-table table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Unit Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for panier_produit in panier_produits %} {% for produit in
+                produits %} {% if produit.id == panier_produit.produit_id %}
+                <tr>
+                  <td class="product-thumbnail">
+                    <a href="#">
+                      <img
+                        src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
+                        alt="item"
+                      />
+                    </a>
+                  </td>
+                  <td class="product-name">
+                    <a href="shop-details.html">{{ produit.designation }}</a>
+                  </td>
+                  <td class="product-price">
+                    <span class="unit-amount prix">
+                      {% if produit.getNouveauPrix() == null %}{{
+                        produit.getAncienPrix()
+                      }}DH {% else %} {{ produit.getNouveauPrix() }}DH {% endif
+                      %}</span
+                    >
+                  </td>
+                  <td class="product-quantity">
+                    <div class="input-counter">
+                      <span
+                        id="progressbtn2{{ produit.id }}"
+                        class="minus-btn progressbtn2"
+                      >
+                        <i class="bx bx-minus"></i>
+                      </span>
+                      <input
+                        min="1"
+                        type="text"
+                        class="valprogress"
+                        value="{{ panier_produit.qte_produit }}"
+                      />
+                      <span
+                        class="plus-btn progressbtn1"
+                        id="progressbtn1{{ produit.id }}"
+                      >
+                        <i class="bx bx-plus"></i>
+                      </span>
+                    </div>
+                  </td>
+                  <td class="product-subtotal">
+                    <span class="subtotal-amount total_par_produit"
+                      >{% if produit.getNouveauPrix() == null %}{{
+                        panier_produit.qte_produit * produit.getAncienPrix()
+                      }}DH {% else %}
+                      {{
+                        panier_produit.qte_produit * produit.getNouveauPrix()
+                      }}DH {% endif %}
+                    </span>
+                    <a
+                      href="{{
+                        path('app_panier_delete', {
+                          id: produit.id,
+                          user_id: app.user.id
+                        })
+                      }}"
+                      class="remove"
+                    >
+                      <i class="bx bx-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+                {% endif %} {% endfor %} {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="cart-buttons">
+            <div class="row align-items-center">
+              <div class="col-lg-7 col-sm-7 col-md-7">
+                <a href="shop-1.html" class="default-btn"> Back to Shop </a>
+              </div>
+              <div class="col-lg-5 col-sm-5 col-md-5 text-right">
+                <a href="#" class="default-btn"> Update Cart </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="cart-totals">
+            <h3>Cart Totals</h3>
+            <ul>
+              <li>
+                Subtotal
+                <span id="subtotal"> </span>
+              </li>
+              <li>
+                TVA
+                <span id="tva">20%</span>
+              </li>
+              <li>
+                Total
+                <span><b id="total"></b></span>
+              </li>
+            </ul>
+            <a href="#" class="default-btn"> Proceed to Checkout </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Cart Area -->
+
+<!-- Start Footer Area -->
+
+<!-- End Go Top Area -->
+
+<!-- Jquery Slim JS -->
+{% endblock %} {% block javascripts %}
+<script src="{{ asset('js/panier1.js') }}"></script>
+
+{% endblock %}
