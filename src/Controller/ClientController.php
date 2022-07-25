@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
-#[Route('/client')]
+#[Route('/user')]
 class ClientController extends AbstractController
 {
 
@@ -55,25 +55,48 @@ class ClientController extends AbstractController
         ]);
     }
 
-    #[Security("is_granted('ROLE_USER')")]
-    #[Route('/', name: 'app_client_index')]
-    public function index(ManagerRegistry $doctrine): Response
+    // #[Security("is_granted('ROLE_USER')")]
+    #[Route('/profile', name: 'app_client_index')]
+    public function index(ManagerRegistry $doctrine, UserRepository $userRepository): Response
     {
 
-        // $userlogged = $this->getUser();
-        // $user = new User();
-        // $id = $userlogged->id;
 
-        // $entityManager = $doctrine->getManager();
+        $userlogged = $this->getUser();
+        $id = $userlogged->getId();
 
-        // $user = $entityManager->getRepository(User::class)->find($id);
+        // dd($id);
 
-        // // var_dump($userlogged);
-        // $commandes = $user->getCommandes();
+        $user = $userRepository->find($id);
+        // dd($user);
 
-        return $this->render('client/index.html.twig', [
-            // 'controller_name' => $user,
-        ]);
+
+
+        if ($userlogged == null) {
+            return $this->redirectToRoute('app_login_user', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if (in_array("ROLE_USER", $userlogged->getRoles())) {
+            // dd($userlogged->getRoles());
+            // dd($userlogged->Id);
+
+            $order = $user->getPaniers();
+            // dd($order);
+
+            // $entityManager = $doctrine->getManager();
+
+            // $user = $entityManager->getRepository(User::class)->find($id);
+
+            // // var_dump($userlogged);
+            // $commandes = $user->getCommandes();
+
+
+            return $this->render('frontend/profile.html.twig', [
+                'user' => $userlogged,
+                'order' => $order
+            ]);
+        } else {
+            return $this->redirectToRoute('app_login_user', [], Response::HTTP_SEE_OTHER);
+        }
     }
 
     // #[Route('/{id}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]

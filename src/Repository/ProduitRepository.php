@@ -54,6 +54,10 @@ class ProduitRepository extends ServiceEntityRepository
     //         ->getQuery()
     //         ->getResult();
     // }
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
     public function findRecentProduct()
     {
         $conn = $this->getEntityManager()->getConnection();
@@ -124,7 +128,6 @@ class ProduitRepository extends ServiceEntityRepository
         GROUP BY f.produit_id
         HAVING COUNT(*) > 1
         ORDER BY p.id DESC
-    
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
@@ -156,6 +159,29 @@ class ProduitRepository extends ServiceEntityRepository
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function PopularProducts()
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        SELECT p.* FROM produit p, commande_produit f
+        WHERE p.id = f.produit_id 
+        GROUP BY f.produit_id
+        ORDER BY SUM(f.qte_cmd) DESC
+        LIMIT 30
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
 
 
     //    public function findOneBySomeField($value): ?Produit

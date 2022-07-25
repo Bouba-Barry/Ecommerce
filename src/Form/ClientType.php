@@ -21,13 +21,13 @@ class ClientType extends AbstractType
             ->add('nom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'barry', 'class' => 'form-control']))
             ->add('prenom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'bouba', 'class' => 'form-control']))
             ->add('adresse', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Marrakech, sidi abbad', 'class' => 'form-control']))
-            ->add('telephone', TelType::class, array('label'   => false, 'attr' => ['placeholder' => '06---------', 'class' => 'form-control']))
-            ->add('password', RepeatedType::class, [
-                "type" => PasswordType::class,
-                "first_options" => ["label" => false, 'attr' => ['placeholder' => 'Mot de passe', 'class' => 'form-control']],
-                "second_options" => ["label" => false, 'attr' => ['placeholder' => 'Confirmation', 'class' => 'form-control']],
+            ->add('telephone', TextType::class, array('label'   => false, 'attr' => ['placeholder' => '06---------', 'class' => 'form-control']));
+        // ->add('password', RepeatedType::class, [
+        //     "type" => PasswordType::class,
+        //     "first_options" => ["label" => false, 'attr' => ['placeholder' => 'Mot de passe', 'class' => 'form-control']],
+        //     "second_options" => ["label" => false, 'attr' => ['placeholder' => 'Confirmation', 'class' => 'form-control']],
 
-            ]);
+        // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

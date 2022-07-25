@@ -1,0 +1,132 @@
+{% extends "frontend/index.html.twig" %}
+{% block title %}Shop List
+{% endblock %}
+
+{% block javascript %}
+	<script src="https://kit.fontawesome.com/4c827d40eb.js" crossorigin="anonymous"></script>
+	<script src="{{ asset('FrontOffice/other/shop.js') }} "></script>
+{% endblock %}
+
+{% block content %}
+
+	<!-- Start Page Banner -->
+	<div class="page-banner-area">
+		<div class="d-table">
+			<div class="d-table-cell">
+				<div class="container">
+					<div class="page-banner-content">
+						<h2>Shop List One</h2>
+						<ul>
+							<li>
+								<a href="index.html">Home</a>
+							</li>
+							<li>Shop List One</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{#  End Page Banner #}
+	{# start the main block   #}
+
+	<!-- Start Top Products Area -->
+		<section class="top-products-area pt-100 pb-100"> <div class="container">
+			<div class="orgo-grid-sorting row align-items-center">
+				<div class="col-lg-6 col-md-6 result-count">
+					<p>We found
+						<span class="count">10</span>
+						products available for you</p>
+				</div>
+
+				<div class="col-lg-6 col-md-6 ordering">
+					<div class="select-box">
+						<label>Sort By:</label>
+						<select
+						id="trieProd"/>
+						{# <op0t0ion value="" id="first"></option> #}
+						<option value="default">Default</option>
+						<option value="populaire">Popularity</option>
+						<option value="new">Latest</option>
+						<option value="price_asc">Price: low to high</option>
+						<option value="price_desc">Price: high to low</option>
+					</select>
+					{# <button id="shortBy">
+																										check</button> #}
+				</div>
+			</div>
+		</div>
+		{# <div id="blockProd"></div> #}
+
+
+		<div class="row">
+			{% for produit in produits %}
+				<div class="col-lg-3 col-md-6">
+					<div class="top-products-item">
+						<div class="products-image">
+							<a href="shop-details.html"><img src="{{ asset('FrontOffice/assets/img/top-products/top-products-8.jpg') }} " alt="image"></a>
+
+							<ul class="products-action">
+								<li>
+									<a href="cart.html" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+										<i class="flaticon-shopping-cart"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+										<i class="flaticon-heart"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#" data-tooltip="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+										<i class="flaticon-search"></i>
+									</a>
+								</li>
+							</ul>
+
+							<div class="sale">
+								<span>Sale</span>
+							</div>
+						</div>
+
+						<div class="products-content">
+							<h3>
+								<a href="shop-details.html">{{ produit.designation }}</a>
+							</h3>
+							<div class="price">
+								<span class="new-price">DHS{{ produit.nouveau_prix }}</span>
+								<span class="old-price">DHS{{ produit.ancien_prix }}
+								</span>
+							</div>
+							<ul class="rating">
+								<li>
+									<i class='bx bxs-star'></i>
+									<i class='bx bxs-star'></i>
+									<i class='bx bxs-star'></i>
+									<i class='bx bxs-star'></i>
+									<i class='bx bx-star'></i>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			{% endfor %}
+
+			<div class="col-lg-12 col-md-12">
+				<div class="pagination-area">
+					<a href="#" class="prev page-numbers">
+						<i class="flaticon-left-arrow"></i>
+					</a>
+					<a href="#" class="page-numbers">1</a>
+					<span class="page-numbers current" aria-current="page">2</span>
+					<a href="#" class="page-numbers">3</a>
+					<a href="#" class="page-numbers">4</a>
+					<a href="#" class="next page-numbers">
+						<i class="flaticon-right-arrow"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section><!-- End Top Products Area --><button id="click">click Me</button>{# end of the main block #}{% endblock %}

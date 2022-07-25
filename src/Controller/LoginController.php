@@ -60,7 +60,7 @@ class LoginController extends AbstractController
       ]);
     }
   }
- 
+
 
   /**
    * @Route("/admin/logout", name="app_logout", methods={"GET"})

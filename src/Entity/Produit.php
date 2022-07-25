@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -14,6 +15,7 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['prod:read'])]
     private $id;
 
 
@@ -22,29 +24,36 @@ class Produit
     //     min: 3,
     //     minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
     // )]
+
     #[ORM\Column(type: 'string', length: 255)]
     private $designation;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['prod:read'])]
     private $description;
 
     #[Assert\GreaterThan(5)]
     #[ORM\Column(type: 'float')]
+    #[Groups(['prod:read'])]
     private $ancien_prix;
 
     // #[Assert\GreaterThan(1)]
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['prod:read'])]
     private $nouveau_prix;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['prod:read'])]
     private $image_produit;
 
     // #[Assert\Positive]
     #[ORM\Column(type: 'bigint')]
+    // #[Groups(['prod:read'])]
     private $qte_stock;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'produits')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['prod:read'])]
     private $user;
 
     #[ORM\ManyToOne(targetEntity: SousCategorie::class, inversedBy: 'produits')]
