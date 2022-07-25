@@ -21,10 +21,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\Length;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Constraints\Length;
 
 // #[Route('/admin')]
 class HomeController extends AbstractController
@@ -77,10 +75,15 @@ class HomeController extends AbstractController
 
 
     #[Route('/getProduit/{id}', name: 'app_get_produit', methods: ['GET'])]
-    public function getProduit(Produit $produit, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    public function getProduit(Produit $produit,SerializerInterface $serializer): JsonResponse
     {
 
-        return $this->json($produit);
+        $json = $serializer->serialize($produit, 'json', ['groups' => ['prod:read']]);
+        // dd($this->json($res));
+        // dd($t);
+        // dd($json);
+        return $this->json($json);
+
     }
 
 
