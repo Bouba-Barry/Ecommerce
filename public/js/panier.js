@@ -10,13 +10,20 @@ document.addEventListener("DOMContentLoaded", function () {
   let search = document.getElementsByClassName("search");
   let productsQuickView = document.getElementById("productsQuickView");
   let titre_produit = document.getElementById("titre_produit");
+  let image_produit = document.getElementById("image_produit");
+  let new_price = document.getElementById("new_price");
+  let old_price = document.getElementById("old_price");
+  let description_produit = document.getElementById("description_produit");
 
   for (let but of search) {
     but.addEventListener("click", (e) => {
       // console.log(but.id);
       i = findindex_search(but);
+      console.log("le i : " + i);
+
       let vals = [];
-      vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+      vals.push(search[i].id.charAt(search[i].id.length - 1));
+      console.log("search id: " + search[i].id);
 
       fetch(`http://127.0.0.1:8000/getProduit/${vals}`)
         .then((response) => {
@@ -31,17 +38,67 @@ document.addEventListener("DOMContentLoaded", function () {
           getinfos_produits(data);
         })
         .catch((err) => {
-          console.log("error");
+          console.log(err);
         });
     });
 
-    function getinfos_produits(data) {}
+    function getinfos_produits(data, i) {
+      titre_produit.innerHTML = data.designation;
+      new_price.innerHTML = data.nouveau_prix;
+      old_price.innerHTML = data.ancien_prix + "DH";
+      image_produit.style.backgroundImage =
+        "url(../../../uploads/produits/" + data.image_produit + ")";
+      description_produit.innerHTML = data.description;
+      addcard[1].setAttribute("id", "addcard" + data.id);
+      progressbtn1[1].setAttribute("id", "progressbtn1" + data.id);
+      progressbtn2[1].setAttribute("id", "progressbtn2" + data.id);
+      console.log("id: " + addcard[1].id);
+      console.log("id: " + progressbtn1[1].id);
+
+      fetch(
+        `http://127.0.0.1:8000/panier_length/${parseInt(user_id.innerHTML)}`
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            console.log("mauvaise réponse!");
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          filter_produits(data);
+        })
+        .catch((err) => {
+          console.log("error");
+        });
+
+      function filter_produits(data) {
+        if (data.length > 0) {
+          for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < progressbtn1.length; j++) {
+              console.log(progressbtn1[j]);
+              if (
+                progressbtn1[j].id.charAt(progressbtn1[j].id.length - 1) ==
+                data[i].produit_id
+              ) {
+                addcard[j].style.display = "none";
+                valprogress[j].value = data[i].qte_produit;
+              }
+            }
+          }
+        }
+      }
+      // image_produit.setAttribute(
+      //   "src",
+      //   "{{ asset('uploads/produits/" + data.image_produit + "') }}"
+      // );
+    }
   }
 
   function findindex_search(button) {
     for (let j = 0; j < search.length; j++) {
       if (search[j].id === button.id) {
-        console.log(j);
         return j;
       } else continue;
     }
@@ -71,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (data.length > 0) {
       for (let i = 0; i < data.length; i++) {
         for (let j = 0; j < progressbtn1.length; j++) {
+          console.log(progressbtn1[j]);
           if (
             progressbtn1[j].id.charAt(progressbtn1[j].id.length - 1) ==
             data[i].produit_id
@@ -83,7 +141,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  var vals = [];
   for (let i = 0; i < addcard.length; i++) {
     addcard[i].addEventListener("click", test);
     function test() {
@@ -91,9 +148,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function testclick() {
-      var matches = addcard[i].id.match(/(\d+)/);
+      // let vals = [];
+      // var matches = addcard[i].id.match(/(\d+)/);
+      // console.log(matches[0]);
+
       //   sessionStorage.setItem("clone", matches[0]);
-      vals.push(matches[0]);
+      // vals.push(matches[0]);
       addcard[i].innerHTML = "added to card";
       setTimeout(function () {
         addcard[i].innerHTML = "";
@@ -107,8 +167,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  console.log(noti);
-
   for (let but of addcard) {
     but.addEventListener("click", (e) => {
       // var add = Number(noti.getAttribute("data-count") || 0);
@@ -121,7 +179,9 @@ document.addEventListener("DOMContentLoaded", function () {
       // noti.classList.add("zero");
       let vals = [];
       let qte = [];
+      console.log(progressbtn1);
       vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+      console.log("voila : " + progressbtn1[i].id);
       qte.push(Number(valprogress[i].value));
       fetch(
         `http://127.0.0.1:8000/panier/${vals}/${qte}/${parseInt(
@@ -130,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
       )
         .then((response) => {
           if (response.ok) {
-            return response;
+            return response.json();
           } else {
             console.log("mauvaise réponse!");
           }
@@ -243,8 +303,11 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       if (Number(valprogress[i].value) == 0) {
+        if (addcard[i].style.display == "none") {
+          noti.innerHTML = Number(noti.innerHTML) - 1;
+        }
         valprogress[i].value = 1;
-        noti.innerHTML = Number(noti.innerHTML) - 1;
+
         console.log(valprogress[i].parentNode.parentNode.children[1]);
         valprogress[i].parentNode.parentNode.children[1].innerHTML =
           "Add to cart";

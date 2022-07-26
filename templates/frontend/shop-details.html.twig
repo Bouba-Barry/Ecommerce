@@ -523,7 +523,8 @@
 
     <div class="row">
       {% for produit_en_relation in produits_en_relation %} {% if
-      produit_en_relation != produit %}
+      produit_en_relation != produit and produit_en_relation not in
+      produits_similaires %}
       <div class="col-lg-3 col-md-6">
         <div class="featured-products-item">
           <div class="products-image">

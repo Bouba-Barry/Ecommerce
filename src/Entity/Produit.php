@@ -26,6 +26,7 @@ class Produit
     // )]
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['prod:read'])]
     private $designation;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

@@ -82,6 +82,7 @@ class HomeController extends AbstractController
         // dd($this->json($res));
         // dd($t);
         // dd($json);
+        $json=json_decode($json);
         return $this->json($json);
 
     }

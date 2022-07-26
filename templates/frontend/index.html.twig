@@ -892,7 +892,7 @@
 
           <div class="row">
             <div class="col-lg-6 col-md-6">
-              <div class="products-image"></div>
+              <div id="image_produit" class="products-image"></div>
             </div>
 
             <div class="col-lg-6 col-md-6">
@@ -918,15 +918,17 @@
                 </p>
                 <div class="product-add-to-cart">
                   <div class="input-counter">
-                    <span class="minus-btn">
+                    <span class="minus-btn progressbtn2">
                       <i class="bx bx-minus"></i>
                     </span>
-                    <input type="text" value="1" />
-                    <span class="plus-btn">
+                    <input type="text" class="valprogress" value="1" min="0" />
+                    <span class="plus-btn progressbtn1">
                       <i class="bx bx-plus"></i>
                     </span>
                   </div>
-                  <button type="submit" class="default-btn">Add to cart</button>
+                  <button type="submit" class="default-btn addcard">
+                    Add to cart
+                  </button>
                 </div>
 
                 <div class="buy-checkbox-btn">
