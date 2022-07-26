@@ -14,12 +14,11 @@ use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\SousCategorieRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Validator\Constraints\Length;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -150,7 +149,12 @@ class HomeController extends AbstractController
         // if ($v) {
         //     dd($v);
         // }
-
+        $priceAsc = $produitRepository->price_asc();
+        // dd($priceAsc);
+        $priceDesc = $produitRepository->price_desc();
+        // dd($priceDesc);
+        $popular = $produitRepository->PopularProducts();
+        // dd($popular);
         $produits = $produitRepository->findRecentProduct();
 
         return $this->render('frontend/shoplist.html.twig', [
@@ -164,23 +168,23 @@ class HomeController extends AbstractController
     {
         // dd($val);
         // dd($attr);
-        $res = "";
+        // $res = [];
         // dd("je suis bien arriver dans le controller");
         switch ($val) {
             case 'default':
-                $res = $produitRepository->findRecentProduct();
+                $res = [];
                 break;
             case 'populaire':
-                $res = $produitRepository->findRecentProduct();
+                $res = $produitRepository->BestSellers();
                 break;
             case 'new':
-                $res = "def";
+                $res = $produitRepository->findRecentProduct();
                 break;
             case 'price_asc':
-                $res = "def";
+                $res = $produitRepository->price_asc();
                 break;
             case 'price_desc':
-                $res = "def";
+                $res = $produitRepository->price_desc();
                 break;
         }
 
@@ -195,6 +199,9 @@ class HomeController extends AbstractController
         // dd($t);
         // dd($json);
         return $this->json($json);
+        // return $this->render('frontend/shoplist.html.twig', [
+        //     'res' => $res
+        // ]);
     }
 
 
