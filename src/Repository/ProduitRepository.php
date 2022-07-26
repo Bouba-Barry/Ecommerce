@@ -39,21 +39,20 @@ class ProduitRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Produit[] Returns an array of Produit objects
-    //  */
-    // public function findRecentProduct(): array
-    // {
-    //     // SELECT p FROM DoctrineExtensions\Query\BlogPost p WHERE DATEDIFF(CURRENT_TIME(), p.created) < 7 
-    //     return $this->createQueryBuilder('p')
-    //         //    ->andWhere('p.createAt = :val')
-    //         ->andWhere('DATEDIFF(CURRENT_TIMESTAMP(), p.createdAt)  BETWEEN 1 and 31 ')
-    //         // ->setParameter('val', $value)
-    //         ->orderBy('p.id', 'ASC')
-    //         ->setMaxResults(10)
-    //         ->getQuery()
-    //         ->getResult();
-    // }
+    /**
+     * @return Produit Returns an array of Produit objects
+     */
+    public function findBySearch($attr): array
+    {
+        // SELECT p FROM DoctrineExtensions\Query\BlogPost p WHERE DATEDIFF(CURRENT_TIME(), p.created) < 7 
+        return $this->createQueryBuilder('p')
+            //    ->andWhere('p.createAt = :val')
+            ->andWhere('p.designation like  :val')
+            ->setParameter('val', '%' . $attr . '%')
+            // ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
 
     /**
      * @return Produit[] Returns an array of Produit objects

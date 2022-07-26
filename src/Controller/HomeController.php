@@ -204,6 +204,22 @@ class HomeController extends AbstractController
         // ]);
     }
 
+    #[ROUTE('/search/{val}', name: 'app_search_by', methods: ['GET'])]
+    public function search($val, ProduitRepository $produitRepository, SerializerInterface $serializer): JsonResponse
+    {
+        // $search = $request->get('q');
+        // dd($search);
+        // return $this->render('');
+        // if ($search) {
+        $res = $produitRepository->findBySearch($val);
+
+        // dd($res);
+        $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
+    //}
+
 
 
 
@@ -277,6 +293,9 @@ class HomeController extends AbstractController
         $bestSellers = $produitRepository->BestSellers();
         // dd($bestSellers);
         $plusVendus = $produitRepository->MostBuy();
+
+        // $findsearch = $produitRepository->findBySearch('ome');
+        // dd($findsearch);
         // dd($plusVendus);
         return $this->render('frontend/home.html.twig', [
             'produits' => $produitRepository->findAll(),
