@@ -62,11 +62,11 @@ class ClientController extends AbstractController
 
 
         $userlogged = $this->getUser();
-        $id = $userlogged->getId();
+        // $id = $userlogged->getId();
 
         // dd($id);
 
-        $user = $userRepository->find($id);
+        $user = $userRepository->find($userlogged);
         // dd($user);
 
 

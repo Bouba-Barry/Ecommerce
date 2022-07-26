@@ -15,8 +15,7 @@ class Panier
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'float')]
-    private $montant;
+    
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $create_at;
@@ -46,17 +45,7 @@ class Panier
         return $this->id;
     }
 
-    public function getMontant(): ?float
-    {
-        return $this->montant;
-    }
-
-    public function setMontant(float $montant): self
-    {
-        $this->montant = $montant;
-
-        return $this;
-    }
+  
 
 
     public function getUser(): ?User

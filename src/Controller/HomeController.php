@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use doctrine;
 use App\Entity\User;
+use App\Entity\Ville;
 use App\Entity\Panier;
+use App\Entity\Region;
 use App\Entity\Produit;
 use Doctrine\ORM\Mapping\Id;
 use App\Entity\SousCategorie;
@@ -14,19 +16,75 @@ use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\SousCategorieRepository;
+use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\SerializerInterface;
 
 // #[Route('/admin')]
 class HomeController extends AbstractController
 {
+
+
+    #[Route('/checkout/{id}', name: 'app_checkout', methods: ['GET'])]
+    public function checkout(User $user, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
+    {
+        $panier=$panierRepository->findOneBy(['user' => $user ]);  
+        $panier_produit = $panierRepository->find_produit_panier($panier->getId());
+        $vals = [];
+        $obj = json_decode($panier_produit);
+        $length = 0;
+        foreach ($obj as $panier_prod) {
+            $length = $length + $panier_prod->qte_produit;
+        } 
+        foreach ($obj as $val) {
+            array_push($vals, $val->produit_id);
+            // $length=$length+$panier_produit;
+        }
+        // dd($vals);
+        $produits = $produitRepository->findBy(['id' => $vals]); 
+ 
+        return $this->render('frontend/checkout.html.twig', [
+            'panier_produits' => $obj,
+            'produits' => $produits,
+            'length' => $length
+        ]);
+    }  
+    
+    
+    #[Route('/getVilles/{id}', name: 'app_getVilles', methods: ['GET'])]
+    public function getVilles(Region $region, SerializerInterface $serializer,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine):JsonResponse
+    {
+       
+        $region_villes=$region->getVilles();
+        $json = $serializer->serialize($region_villes, 'json', ['groups' => ['ville']]);
+
+         $json=json_decode($json);
+        return $this->$json($json);
+    } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     #[Route('/panier_infos/{id}', name: 'app_panier_infos', methods: ['GET'])]
     public function panier_infos(User $user, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
@@ -244,7 +302,7 @@ class HomeController extends AbstractController
 
 
         // produit ajouter il y'a au max un mois
-        $productRecent = $produitRepository->findRecent();
+        $productRecent = $produitRepository->findRecentProduct();
 
 
         return $this->render('home/dashbord.html.twig', [

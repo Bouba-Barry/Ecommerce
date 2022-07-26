@@ -83,6 +83,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $update_at;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Ville $ville = null;
+
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable('now');
@@ -343,6 +346,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdateAt(?\DateTimeImmutable $update_at): self
     {
         $this->update_at = $update_at;
+
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }

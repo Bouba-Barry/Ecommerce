@@ -45,7 +45,9 @@
         <div class="top-products-item">
           <div class="products-image">
             <a href="{{ path('app_shop_details', { id: produit.id }) }}"
-              ><img src="{{ produit.imageProduit }}" width="650" height="650"
+              ><img
+                src="{{ asset('uploads/produits/' ~ produit.imageProduit) }}"
+                style="width: 250px; height: 200px"
             /></a>
 
             <ul class="products-action">
@@ -73,6 +75,8 @@
                 <a
                   href="#"
                   data-tooltip="tooltip"
+                  id="searchbtn{{ produit.id }}"
+                  class="search"
                   data-placement="top"
                   title="Quick View"
                   data-toggle="modal"
@@ -942,4 +946,6 @@ Area -
   </div>
 </div>
 <!-- End Partner Area -->
+{% endblock %} {% block javascripts %}
+<script src="{{ asset('js/panier3.js') }}"></script>
 {% endblock %}
