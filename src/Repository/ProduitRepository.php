@@ -39,21 +39,20 @@ class ProduitRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Produit[] Returns an array of Produit objects
-    //  */
-    // public function findRecentProduct(): array
-    // {
-    //     // SELECT p FROM DoctrineExtensions\Query\BlogPost p WHERE DATEDIFF(CURRENT_TIME(), p.created) < 7 
-    //     return $this->createQueryBuilder('p')
-    //         //    ->andWhere('p.createAt = :val')
-    //         ->andWhere('DATEDIFF(CURRENT_TIMESTAMP(), p.createdAt)  BETWEEN 1 and 31 ')
-    //         // ->setParameter('val', $value)
-    //         ->orderBy('p.id', 'ASC')
-    //         ->setMaxResults(10)
-    //         ->getQuery()
-    //         ->getResult();
-    // }
+    /**
+     * @return Produit Returns an array of Produit objects
+     */
+    public function findBySearch($attr): array
+    {
+        // SELECT p FROM DoctrineExtensions\Query\BlogPost p WHERE DATEDIFF(CURRENT_TIME(), p.created) < 7 
+        return $this->createQueryBuilder('p')
+            //    ->andWhere('p.createAt = :val')
+            ->andWhere('p.designation like  :val')
+            ->setParameter('val', '%' . $attr . '%')
+            // ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
 
     /**
      * @return Produit[] Returns an array of Produit objects
@@ -129,6 +128,15 @@ class ProduitRepository extends ServiceEntityRepository
         HAVING COUNT(*) > 1
         ORDER BY p.id DESC
         ";
+
+        // et si on prenait les 20 premiers produits les plus vendus A voir après
+        $sql2 = "
+        SELECT p.* FROM produit p, commande_produit f
+        WHERE p.id = f.produit_id 
+        GROUP BY f.produit_id
+        ORDER BY COUNT(*) DESC
+        LIMIT 20
+        ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
 
@@ -183,6 +191,37 @@ class ProduitRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function price_desc()
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = " SELECT * FROM produit order by IFNULL(nouveau_prix, 0) desc, ancien_prix desc ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function price_asc()
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = " SELECT * FROM produit order by IFNULL(nouveau_prix, 0) asc, ancien_prix asc";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 
     //    public function findOneBySomeField($value): ?Produit
     //    {

@@ -16,6 +16,7 @@ use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\SousCategorieRepository;
+<<<<<<< HEAD
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,17 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+=======
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\SerializerInterface;
+>>>>>>> cb7c55fdd6e243d9ed13ba43b3c384d66cda6d37
 
 // #[Route('/admin')]
 class HomeController extends AbstractController
@@ -133,16 +145,15 @@ class HomeController extends AbstractController
 
 
     #[Route('/getProduit/{id}', name: 'app_get_produit', methods: ['GET'])]
-    public function getProduit(Produit $produit,SerializerInterface $serializer): JsonResponse
+    public function getProduit(Produit $produit, SerializerInterface $serializer): JsonResponse
     {
 
         $json = $serializer->serialize($produit, 'json', ['groups' => ['prod:read']]);
         // dd($this->json($res));
         // dd($t);
         // dd($json);
-        $json=json_decode($json);
+        $json = json_decode($json);
         return $this->json($json);
-
     }
 
 
@@ -208,7 +219,12 @@ class HomeController extends AbstractController
         // if ($v) {
         //     dd($v);
         // }
-
+        $priceAsc = $produitRepository->price_asc();
+        // dd($priceAsc);
+        $priceDesc = $produitRepository->price_desc();
+        // dd($priceDesc);
+        $popular = $produitRepository->PopularProducts();
+        // dd($popular);
         $produits = $produitRepository->findRecentProduct();
 
         return $this->render('frontend/shoplist.html.twig', [
@@ -222,23 +238,23 @@ class HomeController extends AbstractController
     {
         // dd($val);
         // dd($attr);
-        $res = "";
+        // $res = [];
         // dd("je suis bien arriver dans le controller");
         switch ($val) {
             case 'default':
-                $res = $produitRepository->findRecentProduct();
+                $res = [];
                 break;
             case 'populaire':
-                $res = $produitRepository->findRecentProduct();
+                $res = $produitRepository->BestSellers();
                 break;
             case 'new':
-                $res = "def";
+                $res = $produitRepository->findRecentProduct();
                 break;
             case 'price_asc':
-                $res = "def";
+                $res = $produitRepository->price_asc();
                 break;
             case 'price_desc':
-                $res = "def";
+                $res = $produitRepository->price_desc();
                 break;
         }
 
@@ -253,7 +269,26 @@ class HomeController extends AbstractController
         // dd($t);
         // dd($json);
         return $this->json($json);
+        // return $this->render('frontend/shoplist.html.twig', [
+        //     'res' => $res
+        // ]);
     }
+
+    #[ROUTE('/search/{val}', name: 'app_search_by', methods: ['GET'])]
+    public function search($val, ProduitRepository $produitRepository, SerializerInterface $serializer): JsonResponse
+    {
+        // $search = $request->get('q');
+        // dd($search);
+        // return $this->render('');
+        // if ($search) {
+        $res = $produitRepository->findBySearch($val);
+
+        // dd($res);
+        $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
+    //}
 
 
 
@@ -328,6 +363,9 @@ class HomeController extends AbstractController
         $bestSellers = $produitRepository->BestSellers();
         // dd($bestSellers);
         $plusVendus = $produitRepository->MostBuy();
+
+        // $findsearch = $produitRepository->findBySearch('ome');
+        // dd($findsearch);
         // dd($plusVendus);
         return $this->render('frontend/home.html.twig', [
             'produits' => $produitRepository->findAll(),
