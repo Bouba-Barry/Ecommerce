@@ -20,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -74,16 +75,15 @@ class HomeController extends AbstractController
 
 
     #[Route('/getProduit/{id}', name: 'app_get_produit', methods: ['GET'])]
-    public function getProduit(Produit $produit,SerializerInterface $serializer): JsonResponse
+    public function getProduit(Produit $produit, SerializerInterface $serializer): JsonResponse
     {
 
         $json = $serializer->serialize($produit, 'json', ['groups' => ['prod:read']]);
         // dd($this->json($res));
         // dd($t);
         // dd($json);
-        $json=json_decode($json);
+        $json = json_decode($json);
         return $this->json($json);
-
     }
 
 
