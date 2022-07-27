@@ -26,7 +26,7 @@ class Reduction
     #[Groups(['prod:read'])]
     private $pourcentage;
 
-   
+
 
     #[ORM\ManyToMany(targetEntity: Produit::class, mappedBy: 'reduction')]
     // #[Groups(['prod:read'])] on met pas ici le groups!
@@ -83,17 +83,7 @@ class Reduction
         return $this;
     }
 
-    public function getPeriode(): ?string
-    {
-        return $this->periode;
-    }
 
-    public function setPeriode(?string $periode): self
-    {
-        $this->periode = $periode;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Produit>
