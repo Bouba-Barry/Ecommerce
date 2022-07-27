@@ -2496,8 +2496,20 @@ Top Products Area CSS
 .top-products-item .products-image .sale span {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #ffffff;
-  color: #111111;
+  background-color: #f35320;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 5px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.sale span {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #f35320;
+  color: #ffffff;
   font-size: 15px;
   font-weight: 500;
   border-radius: 5px;
@@ -3117,8 +3129,8 @@ Featured Products Area CSS
 .featured-products-item .products-image .new span {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #ffffff;
-  color: #111111;
+  background-color: #f35320;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 500;
   border-radius: 5px;
@@ -3182,6 +3194,7 @@ Featured Products Area CSS
   -webkit-transform: rotate(1deg) scale(1.1);
   transform: rotate(1deg) scale(1.1);
 }
+
 
 .featured-products-item:hover .products-image .new span {
   background-color: #f35320;

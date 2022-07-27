@@ -15,7 +15,7 @@ btn.addEventListener("click", () => {
         // whatever you want to do here. Let's console.log the response
         // console.log(json[0].id); // should show your ['success'=> $request->id]
         console.log(json);
-        // giveSearch(json);
+        giveSearch(json);
         //   addProduct(json);
       },
     });
@@ -24,7 +24,7 @@ btn.addEventListener("click", () => {
   // }}
 });
 let block = document.querySelector("#blockSearch");
-function giveSearch($res) {
+function giveSearch(res) {
   if (res.length > 0) {
     block.innerHTML = "";
     let ch = "";

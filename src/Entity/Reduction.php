@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ReductionRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ReductionRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ReductionRepository::class)]
 class Reduction
@@ -13,25 +15,41 @@ class Reduction
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['prod:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['prod:read'])]
     private $designation;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['prod:read'])]
     private $pourcentage;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['prod:read'])]
     private $periode;
 
     #[ORM\ManyToMany(targetEntity: Produit::class, mappedBy: 'reduction')]
+    // #[Groups(['prod:read'])] on met pas ici le groups!
     private $produits;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['prod:read'])]
     private $create_at;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['prod:read'])]
     private $update_at;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date_debut = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date_fin = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $etat = null;
 
     public function __construct()
     {
@@ -134,6 +152,42 @@ class Reduction
     public function setUpdateAt(?\DateTimeImmutable $update_at): self
     {
         $this->update_at = $update_at;
+
+        return $this;
+    }
+
+    public function getDateDebut(): ?\DateTimeInterface
+    {
+        return $this->date_debut;
+    }
+
+    public function setDateDebut(\DateTimeInterface $date_debut): self
+    {
+        $this->date_debut = $date_debut;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->date_fin;
+    }
+
+    public function setDateFin(\DateTimeInterface $date_fin): self
+    {
+        $this->date_fin = $date_fin;
+
+        return $this;
+    }
+
+    public function getEtat(): ?string
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(string $etat): self
+    {
+        $this->etat = $etat;
 
         return $this;
     }

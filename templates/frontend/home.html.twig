@@ -87,19 +87,32 @@
               </li>
             </ul>
 
+            {% if produit.getReduction()|length != 0 %}
             <div class="sale">
-              <span>Sale</span>
+              <span>
+                {% for produit_reduction in produit.getReduction() %} -{{
+                  produit_reduction.getPourcentage()
+                }}
+                {% endfor %}
+              </span>
             </div>
+            {% endif %}
           </div>
 
           <div class="products-content">
             <h3>
               <a href="shop-details.html">{{ produit.designation }}</a>
             </h3>
+            {% if produit.getReduction()|length != 0 %}
             <div class="price">
               <span class="new-price"> {{ produit.nouveauPrix }}Dhs</span>
               <span class="old-price">{{ produit.ancienPrix }}Dhs</span>
             </div>
+            {% else %}
+            <div class="price">
+              <span class="new-price">{{ produit.ancienPrix }}Dhs</span>
+            </div>
+            {% endif %}
             <ul class="rating">
               <li>
                 <i class="bx bxs-star"></i>

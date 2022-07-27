@@ -49,7 +49,7 @@ class Produit
 
     // #[Assert\Positive]
     #[ORM\Column(type: 'bigint')]
-    // #[Groups(['prod:read'])]
+    #[Groups(['prod:read'])]
     private $qte_stock;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'produits')]
@@ -61,6 +61,7 @@ class Produit
     private $sous_categorie;
 
     #[ORM\ManyToMany(targetEntity: Reduction::class, inversedBy: 'produits')]
+    #[Groups(['prod:read'])]
     private $reduction;
 
     #[ORM\ManyToMany(targetEntity: Variation::class, inversedBy: 'produits')]

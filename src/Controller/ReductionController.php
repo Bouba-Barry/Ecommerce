@@ -36,6 +36,8 @@ class ReductionController extends AbstractController
             $produit = $form->get('produits')->getData();
 
             foreach ($produit as $var) {
+                $prix=str_replace("%","",$reduction->getPourcentage());
+                $var->setNouveauPrix($var->getAncienPrix()-($prix*$var->getAncienPrix()/100));                 
                 $reduction->addProduit($var);
             }
 
@@ -69,6 +71,8 @@ class ReductionController extends AbstractController
             $produit = $form->get('produits')->getData();
 
             foreach ($produit as $var) {
+                $prix=str_replace("%","",$reduction->getPourcentage());
+                $var->setNouveauPrix($var->getAncienPrix()-($prix*$var->getAncienPrix()/100));  
                 $reduction->addProduit($var);
             }
 

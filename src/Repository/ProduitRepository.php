@@ -38,6 +38,23 @@ class ProduitRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+  
+
+    public function get_produit_reduction(){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql=("SELECT * FROM produit_reduction  ");
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        $d=$resultSet->fetchAllAssociative();
+
+        return json_encode($d);
+
+    }
+     
+
+
+
 
     /**
      * @return Produit Returns an array of Produit objects

@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Messenger\Transport\Serialization\Serializer;
 
 // #[Route('/admin')]
 class HomeController extends AbstractController
@@ -188,13 +189,15 @@ class HomeController extends AbstractController
 
         $produits_en_relation = $produitRepository->findBy(['sous_categorie' => $sous_categories]);
 
+        $popular_products=$produitRepository->PopularProducts();
         // dd($produits_en_relation);
         // dd($produits_similaires);
 
         return $this->render('frontend/shop-details.html.twig', [
             'produit' => $produit,
             'produits_similaires' => $produits_similaires,
-            'produits_en_relation' => $produits_en_relation
+            'produits_en_relation' => $produits_en_relation,
+            'popular_products' => $popular_products
         ]);
     }
 
@@ -273,7 +276,7 @@ class HomeController extends AbstractController
 
         // dd($res);
         $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
-        $json = json_decode($json);
+       
         return $this->json($json);
     }
     //}
@@ -341,7 +344,7 @@ class HomeController extends AbstractController
 
 
     #[Route('', name: 'app_home')]
-    public function home(ProduitRepository $produitRepository): Response
+    public function home(ProduitRepository $produitRepository,SerializerInterface $serializer): Response
     {
         $totalSalesMonth = $produitRepository->TOTALSALESMONTH(); // pour la partie admin
         // dd($totalSalesMonth[0]['total']);
@@ -355,8 +358,15 @@ class HomeController extends AbstractController
         // $findsearch = $produitRepository->findBySearch('ome');
         // dd($findsearch);
         // dd($plusVendus);
+        $produits=$produitRepository->findAll();
+       
+        $produits_reduction=$produitRepository->get_produit_reduction();
+        // dd($produits_reduction);
+        // $json = $serializer->serialize($produits, 'json', ['groups' => ['prod:read']]);
+        
+
         return $this->render('frontend/home.html.twig', [
-            'produits' => $produitRepository->findAll(),
+            'produits' => $produits,
             'mostSaleMonth' => $MostSalesMonth,
             'NewProduct' => $NewProduct,
             'bestSellers' => $bestSellers

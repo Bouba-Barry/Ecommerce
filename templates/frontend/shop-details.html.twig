@@ -45,6 +45,16 @@
               <div class="price">
                 <span class="new-price">{{ produit.getNouveauPrix() }} DH</span>
                 <span class="old-price">{{ produit.getAncienPrix() }}DH</span>
+                {% if produit.getReduction()|length != 0 %}
+                <div class="sale">
+                  <span>
+                    {% for produit_reduction in produit.getReduction() %} -{{
+                      produit_reduction.getPourcentage()
+                    }}
+                    {% endfor %}
+                  </span>
+                </div>
+                {% endif %}
               </div>
               <div class="product-review">
                 <div class="rating">
@@ -369,23 +379,44 @@
                     </li>
                   </ul>
 
+                  {% if produit_similaire.getReduction()|length != 0 %}
                   <div class="sale">
-                    <span>Sale</span>
+                    <span>
+                      {% for produit_reduction in
+                      produit_similaire.getReduction() %} -{{
+                        produit_reduction.getPourcentage()
+                      }}
+                      {% endfor %}
+                    </span>
                   </div>
+                  {% endif %}
                 </div>
 
                 <div class="products-content">
                   <h3>
-                    <a href="shop-details.html">{{
-                      produit_similaire.designation
-                    }}</a>
+                    <a
+                      href="{{
+                        path('app_shop_details', { id: produit_similaire.id })
+                      }}"
+                      >{{ produit_similaire.designation }}</a
+                    >
                   </h3>
+                  {% if produit_similaire.getReduction()|length != 0 %}
                   <div class="price">
-                    <span class="new-price">{{
-                      produit.getNouveauPrix()
-                    }}</span>
-                    <span class="old-price">{{ produit.getAncienPrix() }}</span>
+                    <span class="new-price">
+                      {{ produit_similaire.nouveauPrix }}Dhs</span
+                    >
+                    <span class="old-price"
+                      >{{ produit_similaire.ancienPrix }}Dhs</span
+                    >
                   </div>
+                  {% else %}
+                  <div class="price">
+                    <span class="new-price"
+                      >{{ produit_similaire.ancienPrix }}Dhs</span
+                    >
+                  </div>
+                  {% endif %}
                   <ul class="rating">
                     <li>
                       <i class="bx bxs-star"></i>
@@ -437,15 +468,52 @@
 
           <section class="widget widget_popular_products">
             <h3 class="widget-title">Popular Products</h3>
+            {% for popular_product in popular_products %}
 
             <article class="item">
-              <a href="#" class="thumb">
-                <span class="fullimage cover bg1" role="img"></span>
+              <a
+                href="{{
+                  path('app_shop_details', { id: popular_product.id })
+                }}"
+                class="thumb"
+              >
+                {# <span class="fullimage cover bg1" role="img"></span> #}
+                <img
+                  src="{{ asset('uploads/produits/' ~ popular_product.getImageProduit() ) }}"
+                  alt=""
+                />
               </a>
               <div class="info">
-                <span>$49.00</span>
+                {% if popular_product.getReduction()|length != 0 %}
+                <div class="price">
+                  <span class="new-price">
+                    {{ popular_product.nouveauPrix }}Dhs</span
+                  >
+                  <span class="old-price"
+                    >{{ popular_product.ancienPrix }}Dhs</span
+                  >
+                </div>
+                <div class="sale">
+                  <span>
+                    {% for produit_reduction in popular_product.getReduction()
+                    %} -{{ produit_reduction.getPourcentage() }}
+                    {% endfor %}
+                  </span>
+                </div>
+                {% else %}
+                <div class="price">
+                  <span class="new-price"
+                    >{{ popular_product.ancienPrix }}Dhs</span
+                  >
+                </div>
+                {% endif %} {# <span>{{ popular_product. }}</span> #}
                 <h4 class="title usmall">
-                  <a href="#">Random Romance Novel Title Generator</a>
+                  <a
+                    href="{{
+                      path('app_shop_details', { id: popular_product.id })
+                    }}"
+                    >{{ popular_product.designation }}</a
+                  >
                 </h4>
                 <div class="rating">
                   <i class="bx bxs-star"></i>
@@ -457,43 +525,7 @@
               </div>
             </article>
 
-            <article class="item">
-              <a href="#" class="thumb">
-                <span class="fullimage cover bg2" role="img"></span>
-              </a>
-              <div class="info">
-                <span>$59.00</span>
-                <h4 class="title usmall">
-                  <a href="#">Writing Exercises Story Title Ideas</a>
-                </h4>
-                <div class="rating">
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                </div>
-              </div>
-            </article>
-
-            <article class="item">
-              <a href="#" class="thumb">
-                <span class="fullimage cover bg3" role="img"></span>
-              </a>
-              <div class="info">
-                <span>$69.00</span>
-                <h4 class="title usmall">
-                  <a href="#">Amaze Story Kitt Net's Book Ideas</a>
-                </h4>
-                <div class="rating">
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                </div>
-              </div>
-            </article>
+            {% endfor %}
           </section>
 
           <section class="widget widget_tag_cloud">
@@ -578,25 +610,42 @@
               </li>
             </ul>
 
+            {% if produit_en_relation.getReduction()|length != 0 %}
             <div class="new">
-              <span>New</span>
+              <span>
+                {% for produit_reduction in produit_en_relation.getReduction()
+                %} -{{ produit_reduction.getPourcentage() }}
+                {% endfor %}
+              </span>
             </div>
+            {% endif %}
           </div>
 
           <div class="products-content">
             <h3>
-              <a href="shop-details.html">{{
-                produit_en_relation.designation
-              }}</a>
+              <a
+                href="{{
+                  path('app_shop_details', { id: produit_en_relation.id })
+                }}"
+                >{{ produit_en_relation.designation }}</a
+              >
             </h3>
+            {% if produit_en_relation.getReduction()|length != 0 %}
             <div class="price">
-              <span class="new-price"
-                >{{ produit_en_relation.getNouveauPrix() }} DH</span
+              <span class="new-price">
+                {{ produit_en_relation.nouveauPrix }}Dhs</span
               >
               <span class="old-price"
-                >{{ produit_en_relation.getAncienPrix() }} DH</span
+                >{{ produit_en_relation.ancienPrix }}Dhs</span
               >
             </div>
+            {% else %}
+            <div class="price">
+              <span class="new-price"
+                >{{ produit_en_relation.ancienPrix }}Dhs</span
+              >
+            </div>
+            {% endif %}
             <ul class="rating">
               <li>
                 <i class="bx bxs-star"></i>

@@ -225,16 +225,16 @@
                 </div>
 
                 <div class="option-item">
-                  <form class="search-box">
+                  <div class="search-box">
                     <input
                       type="text"
                       class="form-control"
                       placeholder="Search"
                     />
-                    <button type="submit">
+                    <button>
                       <i class="flaticon-search"></i>
                     </button>
-                  </form>
+                  </div>
                 </div>
 
                 <div class="option-item">
@@ -283,16 +283,17 @@
                 </div>
 
                 <div class="option-item">
-                  <form class="search-box">
+                  <div class="search-box">
                     <input
+                      id="inputSearch"
                       type="text"
                       class="form-control"
                       placeholder="Search"
                     />
-                    <button type="submit">
+                    <button id="submit">
                       <i class="flaticon-search"></i>
                     </button>
-                  </form>
+                  </div>
                 </div>
 
                 <div class="option-item">
@@ -461,6 +462,7 @@
         </span>
       </div>
     </div>
+
     <!-- End Sidebar Modal -->
     {% block content %} {% endblock %}
     <!-- Start Footer Area -->
@@ -877,7 +879,7 @@
     <!-- Custom JS -->
     <script src=" {{ asset('FrontOffice/assets/js/main.js') }} "></script>
     <script src="{{ asset('js/panier2.js') }}"></script>
-
+    <script src="{{ asset('FrontOffice/other/search.js') }}"></script>
     {% block javascripts %}{% endblock %}
   </body>
 </html>
