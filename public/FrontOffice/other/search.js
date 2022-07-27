@@ -1,7 +1,8 @@
 let btn = document.querySelector("#submit");
 let inputSearch = document.querySelector("#inputSearch");
+// console.log(" lskdjfmslfjms");
 console.log(btn);
-btn.addEventListener("click", () => {
+btn.addEventListener("click", function () {
   let val = inputSearch.value;
   console.log(val);
   if (val != "") {
@@ -20,9 +21,9 @@ btn.addEventListener("click", () => {
       },
     });
   }
-
-  // }}
 });
+// }}
+// });
 let block = document.querySelector("#blockSearch");
 function giveSearch(res) {
   if (res.length > 0) {
