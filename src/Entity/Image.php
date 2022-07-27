@@ -14,7 +14,7 @@ class Image
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $urlImage;
+    private $url;
 
     #[ORM\ManyToOne(targetEntity: Produit::class, inversedBy: 'images')]
     private $produit;

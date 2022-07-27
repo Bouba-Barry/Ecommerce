@@ -1,0 +1,95 @@
+{% extends 'admin.html.twig' %}
+{# {% block title %}Ajouter Produit{% endblock
+%} #}
+{% block content %}
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<div
+			class="container-full">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="d-flex align-items-center">
+					<div class="mr-auto">
+						<h3 class="page-title">Ajouter Des Images</h3>
+						<div class="d-inline-block align-items-center">
+							<nav>
+								<ol class="breadcrumb">
+
+									<li>
+										<a href="{{ path('app_image_index') }}" class="btn btn-primary btn-md">
+											Retour à la Liste</a>
+									</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="row">
+					<div class="col-12">
+						<div class="box">
+							<div class="box-body">
+								<div class="form-group row">
+									<label class="col-form-label col-md-2">Images Pour le produit</label>
+									<div class="mb-3 col-md-10">
+
+										{{ form_row(form.photo) }}
+										<span class="form-text text-muted">{{
+                    form_errors(form.photo)
+                  }}</span>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label class="col-form-label col-md-2">Variation Asscocié</label>
+									<div
+										class="mb-3 col-md-10">
+										{#
+																																																																																																																																		                  <input class="form-control" type="datetime" name="datetime" />
+																																																																																																																																		                  #}
+										{{ form_row(form.variation) }}
+										<span class="form-text text-muted">{{
+                    form_errors(form.variation)
+                  }}</span>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label class="col-form-label col-md-2">Produit Associé</label>
+									<div
+										class="mb-3 col-md-10">
+										{#
+																																																																																																																																		                  <input class="form-control" type="datetime" name="datetime" />
+																																																																																																																																		                  #}
+										{{ form_row(form.produit) }}
+										<span class="form-text text-muted">{{
+                    form_errors(form.produit)
+                  }}</span>
+									</div>
+								</div>
+
+								<div class="mb-3 col-12">
+									<button class="btn btn-info btn-rounded margin-top-10">
+										{{ button_label|default('Ajouter') }}
+									</button>
+								</div>
+							</div>
+
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+					</div>
+					<!-- ./col -->
+				</div>
+				<!-- /.row -->
+			</section>
+			<!-- /.content -->
+		</div>
+	</div>
+	<!-- /.content-wrapper -->
+{% endblock %}
