@@ -25,7 +25,7 @@ class ReductionType extends AbstractType
             ->add('pourcentage', TextType::class, array('label' => false, 'attr' => ['placeholder' => 'Ex: 50%', 'class' => 'form-control']))
             // ->add('periode', TextType::class, array('label' => false, 'attr' => ['placeholder' => 'Ex: 10Jours', 'class' => 'form-control']))
             // ->add('date_debut', DateTimeType::class, array('label' => false, 'attr' => ['class' => 'form-control']))
-            ->add('date_fin', DateTimeImmutable::class, array('label' => false, 'attr' => ['class' => 'form-control']))
+            ->add('date_fin', DateTimeType::class, array('input' => 'datetime_immutable', 'label' => false, 'attr' => ['class' => 'form-control']))
             // ->add('etat', ChoiceType::class, [
             //     'choices' => [
             //         'valide' => 'valide',
