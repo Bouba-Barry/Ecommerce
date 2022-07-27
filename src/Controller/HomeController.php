@@ -13,6 +13,7 @@ use App\Entity\SousCategorie;
 use App\Repository\UserRepository;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
+use App\Repository\ReductionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\SousCategorieRepository;
@@ -69,22 +70,6 @@ class HomeController extends AbstractController
         $json = json_decode($json);
         return $this->$json($json);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -150,27 +135,12 @@ class HomeController extends AbstractController
 
 
 
-
-
-
-
-
-    #[Route('/exp/{id}', name: 'app_exp', methods: ['GET'])]
-    public function exp(Panier $panier, PanierRepository $panierRepository, ProduitRepository $produitRepository)
+    #[Route('/delete_reduction', name: 'app_delete_reduction', methods: ['GET'])]
+    public function delete_reduction(ReductionRepository $reductionRepository)
     {
-
-        $preferenc = [];
-        foreach ($panier->getProduit() as $preference) {
-            array_push($preferenc, $preference);
-        }
-        dd($preferenc[0]);
-        return $this->render(
-            'home.html.twig',
-            [
-                'produits' => $produitRepository->findAll(),
-            ]
-
-        );
+        
+        $reductionRepository->delete_reduction();
+        
     }
 
     #[Route('/shop_details/{id}', name: 'app_shop_details', methods: ['GET'])]
@@ -217,7 +187,8 @@ class HomeController extends AbstractController
         // dd($priceDesc);
         $popular = $produitRepository->PopularProducts();
         // dd($popular);
-        $produits = $produitRepository->findRecentProduct();
+        $produits_recent = $produitRepository->findRecentProduct();
+        $produits=$produitRepository->findAll();
 
         return $this->render('frontend/shoplist.html.twig', [
             'produits' => $produits
@@ -392,7 +363,7 @@ class HomeController extends AbstractController
 
 
     #[Route('', name: 'app_home')]
-    public function home(ProduitRepository $produitRepository,SerializerInterface $serializer): Response
+    public function home(ProduitRepository $produitRepository,ReductionRepository $reductionRepository,SerializerInterface $serializer): Response
     {
         $totalSalesMonth = $produitRepository->TOTALSALESMONTH(); // pour la partie admin
         // dd($totalSalesMonth[0]['total']);
@@ -403,6 +374,7 @@ class HomeController extends AbstractController
         // dd($bestSellers);
         $plusVendus = $produitRepository->MostBuy();
 
+
         // $findsearch = $produitRepository->findBySearch('ome');
         // dd($findsearch);
         // dd($plusVendus);
@@ -411,6 +383,7 @@ class HomeController extends AbstractController
         $produits_reduction=$produitRepository->get_produit_reduction();
         // dd($produits_reduction);
         // $json = $serializer->serialize($produits, 'json', ['groups' => ['prod:read']]);
+     
         
 
         return $this->render('frontend/home.html.twig', [

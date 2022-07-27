@@ -39,6 +39,18 @@ class ReductionRepository extends ServiceEntityRepository
         }
     }
 
+    public function delete_reduction(){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql=("DELETE from  reduction where TIMEDIFF(CURRENT_TIMESTAMP(),date_fin)>=0 ");
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+
+        return true;
+
+    }
+
 //    /**
 //     * @return Reduction[] Returns an array of Reduction objects
 //     */

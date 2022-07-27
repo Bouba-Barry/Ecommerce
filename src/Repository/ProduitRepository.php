@@ -96,7 +96,7 @@ class ProduitRepository extends ServiceEntityRepository
     /**
      * @return Produit[] Returns an array of Produit objects
      */
-    public function findRecentProduct()
+    public function findRecentProduct() 
     {
         $conn = $this->getEntityManager()->getConnection();
 
