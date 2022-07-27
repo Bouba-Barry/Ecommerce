@@ -33,9 +33,13 @@ class Variation
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $update_at;
 
+    #[ORM\OneToMany(mappedBy: 'variation', targetEntity: Image::class)]
+    private $images;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -133,6 +137,36 @@ class Variation
     public function setUpdateAt(?\DateTimeImmutable $update_at): self
     {
         $this->update_at = $update_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Image>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setVariation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getVariation() === $this) {
+                $image->setVariation(null);
+            }
+        }
 
         return $this;
     }

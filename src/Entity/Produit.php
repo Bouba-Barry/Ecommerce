@@ -79,6 +79,9 @@ class Produit
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updateAt;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Image::class)]
+    private $images;
+
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable('now');
@@ -88,6 +91,7 @@ class Produit
         $this->variation = new ArrayCollection();
         $this->commandes = new ArrayCollection();
         $this->paniers = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -312,6 +316,36 @@ class Produit
     public function setUpdateAt(?\DateTimeImmutable $updateAt): self
     {
         $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Image>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getProduit() === $this) {
+                $image->setProduit(null);
+            }
+        }
 
         return $this;
     }
