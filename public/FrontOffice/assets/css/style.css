@@ -3138,6 +3138,18 @@ Featured Products Area CSS
   transition: 0.5s;
 }
 
+.new span {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #f35320;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 5px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
 .featured-products-item .products-content {
   margin-top: 25px;
 }
