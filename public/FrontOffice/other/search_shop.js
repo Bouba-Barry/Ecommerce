@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // if (lists.value != "default") {
       $.ajax({
         url: `http://127.0.0.1:8000/search`,
-        method: "GET",
+        method: "POST",
         dataType: "json", // we expect a json response
         data: { choice_val: lists.value },
         success: function (response) {
