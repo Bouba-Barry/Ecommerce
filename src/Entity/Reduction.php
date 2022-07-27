@@ -26,9 +26,7 @@ class Reduction
     #[Groups(['prod:read'])]
     private $pourcentage;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['prod:read'])]
-    private $periode;
+   
 
     #[ORM\ManyToMany(targetEntity: Produit::class, mappedBy: 'reduction')]
     // #[Groups(['prod:read'])] on met pas ici le groups!
