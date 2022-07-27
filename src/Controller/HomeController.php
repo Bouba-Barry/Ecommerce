@@ -241,7 +241,7 @@ class HomeController extends AbstractController
         }
         // dd($tab);
 
-        if ($choice) {
+        if ($choice && (!empty($tab))) {
             switch ($choice) {
                 case 'default':
                     $ret = [];
@@ -310,20 +310,20 @@ class HomeController extends AbstractController
         // ]);
     }
 
-    #[ROUTE('/search/{val}', name: 'app_search_by', methods: ['GET'])]
-    public function search($val, ProduitRepository $produitRepository, SerializerInterface $serializer): JsonResponse
-    {
-        // $search = $request->get('q');
-        // dd($search);
-        // return $this->render('');
-        // if ($search) {
-        $res = $produitRepository->findBySearch($val);
+    // #[ROUTE('/search/{val}', name: 'app_search_by', methods: ['GET'])]
+    // public function search($val, ProduitRepository $produitRepository, SerializerInterface $serializer): JsonResponse
+    // {
+    //     // $search = $request->get('q');
+    //     // dd($search);
+    //     // return $this->render('');
+    //     // if ($search) {
+    //     $res = $produitRepository->findBySearch($val);
 
-        // dd($res);
-        $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
-        // $json = json_decode($json);
-        return $this->json($json);
-    }
+    //     // dd($res);
+    //     $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
+    //     // $json = json_decode($json);
+    //     return $this->json($json);
+    // }
     //}
 
 
