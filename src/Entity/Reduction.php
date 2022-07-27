@@ -40,14 +40,11 @@ class Reduction
     #[Groups(['prod:read'])]
     private $update_at;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date_debut = null;
+    // #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    // private ?\DateTimeInterface $date_debut = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date_fin = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $etat = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $date_fin;
 
     public function __construct()
     {
@@ -154,38 +151,15 @@ class Reduction
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
-    {
-        return $this->date_debut;
-    }
 
-    public function setDateDebut(\DateTimeInterface $date_debut): self
-    {
-        $this->date_debut = $date_debut;
-
-        return $this;
-    }
-
-    public function getDateFin(): ?\DateTimeInterface
+    public function getDateFin(): ?\DateTimeImmutable
     {
         return $this->date_fin;
     }
 
-    public function setDateFin(\DateTimeInterface $date_fin): self
+    public function setDateFin(?\DateTimeImmutable $date_fin): self
     {
         $this->date_fin = $date_fin;
-
-        return $this;
-    }
-
-    public function getEtat(): ?string
-    {
-        return $this->etat;
-    }
-
-    public function setEtat(string $etat): self
-    {
-        $this->etat = $etat;
 
         return $this;
     }

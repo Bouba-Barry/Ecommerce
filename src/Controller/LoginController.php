@@ -44,9 +44,9 @@ class LoginController extends AbstractController
 
 
 
-    if ($error) {
-      dd($error);
-    }
+    // if ($error) {
+    //   dd($error);
+    // }
 
     if ($request->getPathInfo() === "/login") {
       return $this->render('login/index.html.twig', [

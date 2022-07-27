@@ -1,107 +1,116 @@
-{% extends 'admin.html.twig' %} 
+{% extends 'admin.html.twig' %}
 {# {% block title %}Ajouter Produit{% endblock %} #}
 {% block content %}
- {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-	  <div class="container-full">
-		<!-- Content Header (Page header) -->
-		<div class="content-header">
-			<div class="d-flex align-items-center">
-				<div class="mr-auto">
-					<h3 class="page-title">Ajouter Une Reduction</h3>
-					<div class="d-inline-block align-items-center">
-						<nav>
-							<ol class="breadcrumb">
-								{# <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li> #}
-								{# <li class="breadcrumb-item" aria-current="page">Forms</li>
-								 #}
-								 <li><a href="{{ path('app_reduction_index') }}" class="btn btn-primary btn-md">Retour à la Liste</a></li>
-							</ol>
-						</nav>
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<div
+			class="container-full">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="d-flex align-items-center">
+					<div class="mr-auto">
+						<h3 class="page-title">Ajouter Une Reduction</h3>
+						<div class="d-inline-block align-items-center">
+							<nav>
+								<ol class="breadcrumb">
+									{# <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li> #}
+									{# <li class="breadcrumb-item" aria-current="page">Forms</li>
+																																																																																																																				 #}
+										<li>
+											<a href="{{ path('app_reduction_index') }}" class="btn btn-primary btn-md"> Retour à la Liste</a>
+									</li>
+								</ol>
+							</nav>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<!-- Main content -->
-		<section class="content">
+			<!-- Main content -->
+			<section class="content">
 
-		  <div class="row">
+				<div class="row">
 
-			<div class="col-12">
-			  <div class="box">
-				  
-				{# <div class="box-header">
-					<h4 class="box-title">Type options</h4>  
-				</div> #}
-				<div class="box-body">
-					<div class="form-group row">
-						<label class="col-form-label col-md-2">Désignation</label>
-						<div class=" mb-3 col-md-10">
-							{# <input class="form-control" type="datetime" name="datetime"> #}
-                            
-							{{ form_row(form.designation) }}
-                           
-							{# <span class="form-text text-muted">{{ form_errors(form) }}</span> #}
+					<div class="col-12">
+						<div
+							class="box">
+
+							{# <div class="box-header">
+																																																																																									<h4 class="box-title">Type options</h4>  
+																																																																																								</div> #}
+							<div class="box-body">
+								<div class="form-group row">
+									<label class="col-form-label col-md-2">Désignation</label>
+									<div
+										class=" mb-3 col-md-10">
+										{# <input class="form-control" type="datetime" name="datetime"> #}
+
+										{{ form_row(form.designation) }}
+
+										{# <span class="form-text text-muted">{{ form_errors(form) }}</span> #}
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label class="col-form-label col-md-2">Pourcentage</label>
+									<div
+										class=" mb-3 col-md-10">
+										{# <input class="form-control" type="datetime" name="datetime"> #}
+
+										{{ form_row(form.pourcentage) }}
+
+										{# <span class="form-text text-muted">{{ form_errors(form) }}</span> #}
+									</div>
+								</div>
+
+
+								<div class="form-group row">
+									<label class="col-form-label col-md-2">Date de Fin</label>
+									<div
+										class=" mb-3 col-md-10">
+										{# <input class="form-control" type="datetime" name="datetime"> #}
+
+										{{ form_row(form.date_fin) }}
+
+										{# <span class="form-text text-muted">{{ form_errors(form) }}</span> #}
+									</div>
+								</div>
+
+
+								<div class="form-group row">
+									<label class="col-form-label col-md-2">produits Reliée</label>
+									{# <div class="row"> #}
+									<div
+										class=" mb-3 col-md-10">
+										{# <input class="form-control" type="datetime" name="datetime"> #}
+										{{ form_row(form.produits) }}
+
+										{# <span class="form-text text-muted">{{ form_errors(form) }}</span> #}
+									</div>
+									{# </div> #}
+								</div>
+
+								<div class=" mb-3 col-12">
+									<button class="btn btn-info btn-rounded margin-top-10">
+										{{ button_label|default('Ajouter') }}
+									</button>
+								</div>
+
+
+							</div>
+
+							<!-- /.box-body -->
 						</div>
+						<!-- /.box -->
 					</div>
-
-					<div class="form-group row">
-						<label class="col-form-label col-md-2">Pourcentage</label>
-						<div class=" mb-3 col-md-10">
-							{# <input class="form-control" type="datetime" name="datetime"> #}
-                            
-							{{ form_row(form.pourcentage) }}
-                           
-							{# <span class="form-text text-muted">{{ form_errors(form) }}</span> #}
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-form-label col-md-2">Periode</label>
-						<div class=" mb-3 col-md-10">
-							{# <input class="form-control" type="datetime" name="datetime"> #}
-                            
-							{{ form_row(form.periode) }}
-                           
-							{# <span class="form-text text-muted">{{ form_errors(form) }}</span> #}
-						</div>
-					</div>
-
-                    	<div class="form-group row">
-						<label class="col-form-label col-md-2">produits Reliée</label>
-						<div class=" mb-3 col-md-10">
-							{# <input class="form-control" type="datetime" name="datetime"> #}
-							{{ form_row(form.produits) }}
-                           
-							{# <span class="form-text text-muted">{{ form_errors(form) }}</span> #}
-						</div>
-					</div>
-					
-					<div class=" mb-3 col-12">
-                  <button
-                    class="btn btn-info btn-rounded margin-top-10"
-                  >
-                  {{ button_label|default('Ajouter') }}
-                  </button>
-                </div>
-
-
-					
-				  </div>
-
-				<!-- /.box-body -->
-			  </div>
-			  <!-- /.box -->
-			</div>
-			<!-- ./col -->
-		  </div>
-		  <!-- /.row -->
-		</section>
+					<!-- ./col -->
+				</div>
+				<!-- /.row -->
+			</section>
 			<!-- /.content -->
 		</div>
-  </div>
-  <!-- /.content-wrapper -->
+	</div>
+	<!-- /.content-wrapper -->
 {% endblock %}
