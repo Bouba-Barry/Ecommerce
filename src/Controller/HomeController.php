@@ -27,6 +27,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Messenger\Transport\Serialization\Serializer;
 
+
 // #[Route('/admin')]
 class HomeController extends AbstractController
 {
@@ -35,39 +36,39 @@ class HomeController extends AbstractController
     #[Route('/checkout/{id}', name: 'app_checkout', methods: ['GET'])]
     public function checkout(User $user, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
     {
-        $panier=$panierRepository->findOneBy(['user' => $user ]);  
+        $panier = $panierRepository->findOneBy(['user' => $user]);
         $panier_produit = $panierRepository->find_produit_panier($panier->getId());
         $vals = [];
         $obj = json_decode($panier_produit);
         $length = 0;
         foreach ($obj as $panier_prod) {
             $length = $length + $panier_prod->qte_produit;
-        } 
+        }
         foreach ($obj as $val) {
             array_push($vals, $val->produit_id);
             // $length=$length+$panier_produit;
         }
         // dd($vals);
-        $produits = $produitRepository->findBy(['id' => $vals]); 
- 
+        $produits = $produitRepository->findBy(['id' => $vals]);
+
         return $this->render('frontend/checkout.html.twig', [
             'panier_produits' => $obj,
             'produits' => $produits,
             'length' => $length
         ]);
-    }  
-    
-    
+    }
+
+
     #[Route('/getVilles/{id}', name: 'app_getVilles', methods: ['GET'])]
-    public function getVilles(Region $region, SerializerInterface $serializer,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine):JsonResponse
+    public function getVilles(Region $region, SerializerInterface $serializer, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
     {
-       
-        $region_villes=$region->getVilles();
+
+        $region_villes = $region->getVilles();
         $json = $serializer->serialize($region_villes, 'json', ['groups' => ['ville']]);
 
-         $json=json_decode($json);
+        $json = json_decode($json);
         return $this->$json($json);
-    } 
+    }
 
 
 
@@ -223,6 +224,53 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[ROUTE('/search', name: 'app_search_shop', methods: ['GET', 'POST'])]
+    public function shoplist_search(SerializerInterface $serializer, ProduitRepository $produitRepository, Request $request): Response
+    {
+        $value = $request->get('searchInput');
+
+        $choice = $request->get('choice_val');
+
+        // dd($value);
+        $res = $produitRepository->findBySearch($value);
+        // dd($res);
+        // dd($res);
+
+        $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
+        $json = json_decode($json);
+        $tab = array();
+        for ($i = 0; $i < count($json); $i++) {
+            array_push($tab, $json[$i]->id);
+        }
+        // dd($tab);
+
+        if ($choice) {
+            switch ($choice) {
+                case 'default':
+                    $ret = [];
+                    break;
+                case 'populaire':
+                    $ret = $produitRepository->findMostPopulareInSearch($tab);
+                    break;
+                case 'new':
+                    $ret = $produitRepository->find_recent_inSearch($tab);
+                    break;
+                case 'price_asc':
+                    $ret = $produitRepository->find_price_asc_inSearch($tab);
+                    break;
+                case 'price_desc':
+                    $ret = $produitRepository->find_price_asc_inSearch($tab);
+                    break;
+            }
+            return $this->json($ret);
+        }
+
+
+        return $this->render('frontend/shoplist_search.html.twig', [
+            'produits' => $json,
+            'size' => count($json)
+        ]);
+    }
 
     #[ROUTE('/shortProduct/{val}', name: 'app_short_by', methods: ['GET'])]
     public function shortBy($val,  SerializerInterface $serializer, ProduitRepository $produitRepository): JsonResponse

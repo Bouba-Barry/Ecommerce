@@ -57,7 +57,7 @@ class ProduitRepository extends ServiceEntityRepository
 
 
     /**
-     * @return Produit Returns an array of Produit objects
+     * @return Produit[] Returns an array of Produit objects
      */
     public function findBySearch($attr): array
     {
@@ -69,6 +69,28 @@ class ProduitRepository extends ServiceEntityRepository
             // ->setMaxResults(10)
             ->getQuery()
             ->getResult();
+    }
+
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function findMostPopulareInSearch($json)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
+        $sql = "
+            SELECT p.* FROM produit p, commande_produit c 
+            WHERE p.id = c.produit_id and p.id IN (" . implode(',', $json) . ")  
+            GROUP BY c.produit_id
+            ORDER BY SUM(c.qte_cmd) DESC
+            LIMIT 1
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
     }
 
     /**
@@ -249,4 +271,46 @@ class ProduitRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function find_recent_inSearch($json)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
+        $sql = "
+            SELECT p.* FROM produit p, commande_produit c 
+            WHERE p.id = c.produit_id and p.id IN (" . implode(',', $json) . ") and DATEDIFF(CURRENT_TIMESTAMP(), p.create_at)  BETWEEN 0 and 15
+            Group by c.produit_id
+            ORDER BY p.id ASC
+            LIMIT 10
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function find_price_asc_inSearch($json)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
+        $sql = "
+            SELECT p.* FROM produit p, commande_produit c 
+            WHERE p.id = c.produit_id and p.id IN (" . implode(',', $json) . ") 
+            Group by c.produit_id
+            order by IFNULL(nouveau_prix, 0) asc, ancien_prix asc
+            LIMIT 10
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 }
