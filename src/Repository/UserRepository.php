@@ -82,6 +82,23 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
+    /** 
+     * @return User[] Returns an array of User objects
+     */
+    public function findAdmin()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "
+       SELECT * FROM user u
+       WHERE  JSON_CONTAINS(`roles`, '\"ROLE_SUPER_ADMIN\"')
+       ORDER BY u.id ASC
+       ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 
     /**
      * @return User[] Returns an array of User objects

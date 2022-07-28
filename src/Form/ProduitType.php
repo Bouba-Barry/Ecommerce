@@ -2,10 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Attribut;
 use App\Entity\Produit;
 use App\Entity\SousCategorie;
 use App\Entity\User;
 use App\Entity\Variation;
+use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,14 +20,18 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ProduitType extends AbstractType
 {
+    private $admin;
+
+    public function getAdmin(UserRepository $userRepository)
+    {
+        $admin = $userRepository->findAdmin();
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('designation', TextType::class, array('label' => false, 'attr' => ['placeholder' => 'designation', 'class' => 'form-control']))
             ->add('description', TextareaType::class, array('label' => false, 'attr' => ['placeholder' => 'description', 'class' => 'form-control']))
             ->add('ancien_prix', NumberType::class, array('label' => false, 'attr' => ['placeholder' => 'Old Prix', 'class' => 'form-control']))
-            ->add('nouveau_prix', NumberType::class, array('label' => false, 'attr' => ['placeholder' => 'New Prix', 'class' => 'form-control']))
-            // ->add('image_produit')
             ->add('qte_stock', NumberType::class, array('label' => false, 'attr' => ['placeholder' => 'Quantité En Stock', 'class' => 'form-control']))
             ->add('user', EntityType::class, [
                 'class' => User::class,
@@ -39,16 +45,14 @@ class ProduitType extends AbstractType
                 'label' => false,
                 'attr' => ['placeholder' => 'Sous Catégorie Produit', 'class' => 'form-control']
             ])
-            // ->add('reduction', EntityType::class, [
-
-            // ])
-            // ->add('variation', EntityType::class, [
-            //     'class' => Variation::class,
-            //     'choice_label' => 'nom',
-            //     'expanded' => true,
-            //     'multiple' => true
-            // ])
-            // ->add('commandes')
+            ->add('attributs', EntityType::class, [
+                'class' => Attribut::class,
+                'choice_label' => 'nom',
+                'expanded' => true,
+                'multiple' => true,
+                'label' => false,
+                'attr' => ['class' => 'form-control']
+            ])
             ->add('photo', FileType::class, [
                 'label' => false,
 

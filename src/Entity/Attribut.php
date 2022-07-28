@@ -27,12 +27,16 @@ class Attribut
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $update_at;
 
+    #[ORM\ManyToMany(targetEntity: Produit::class, mappedBy: 'attributs')]
+    private $produits;
+
     public function __construct()
     {
         $this->create_at = new \DateTimeImmutable('now');
         $this->update_at = new \DateTimeImmutable('now');
 
         $this->variations = new ArrayCollection();
+        $this->produits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,6 +106,33 @@ class Attribut
     public function setUpdateAt(?\DateTimeImmutable $update_at): self
     {
         $this->update_at = $update_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produit>
+     */
+    public function getProduits(): Collection
+    {
+        return $this->produits;
+    }
+
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits[] = $produit;
+            $produit->addAttribut($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): self
+    {
+        if ($this->produits->removeElement($produit)) {
+            $produit->removeAttribut($this);
+        }
 
         return $this;
     }

@@ -82,6 +82,9 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Image::class)]
     private $images;
 
+    #[ORM\ManyToMany(targetEntity: Attribut::class, inversedBy: 'produits')]
+    private $attributs;
+
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable('now');
@@ -92,6 +95,7 @@ class Produit
         $this->commandes = new ArrayCollection();
         $this->paniers = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->attributs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -346,6 +350,30 @@ class Produit
                 $image->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Attribut>
+     */
+    public function getAttributs(): Collection
+    {
+        return $this->attributs;
+    }
+
+    public function addAttribut(Attribut $attribut): self
+    {
+        if (!$this->attributs->contains($attribut)) {
+            $this->attributs[] = $attribut;
+        }
+
+        return $this;
+    }
+
+    public function removeAttribut(Attribut $attribut): self
+    {
+        $this->attributs->removeElement($attribut);
 
         return $this;
     }

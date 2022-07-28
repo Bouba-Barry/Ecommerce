@@ -13,16 +13,7 @@
           <div class="d-inline-block align-items-center">
             <nav>
               <ol class="breadcrumb">
-                {#
-                <li class="breadcrumb-item">
-                  <a href="#"><i class="mdi mdi-home-outline"></i></a>
-                </li>
-                #} {#
-                <li class="breadcrumb-item" aria-current="page">Forms</li>
-                <li class="breadcrumb-item active" aria-current="page">
-                  Advanced Form Elements
-                </li>
-                #}
+      
                 <li>
                   <a
                     href="{{ path('app_produit_index') }}"
@@ -42,18 +33,12 @@
       <div class="row">
         <div class="col-12">
           <div class="box">
-            {#
-            <div class="box-header">
-              <h4 class="box-title">Type options</h4>
-            </div>
-            #}
+  
             <div class="box-body">
               <div class="form-group row">
                 <label class="col-form-label col-md-2">Désignation</label>
                 <div class="mb-3 col-md-10">
-                  {#
-                  <input class="form-control" type="datetime" name="datetime" />
-                  #}
+         
                   {{ form_row(form.designation) }}
                   <span class="form-text text-muted">{{
                     form_errors(form.designation)
@@ -64,9 +49,7 @@
               <div class="form-group row">
                 <label class="col-form-label col-md-2">Description</label>
                 <div class="mb-3 col-md-10">
-                  {#
-                  <input class="form-control" type="datetime" name="datetime" />
-                  #}
+              
                   {{ form_row(form.description) }}
                   <span class="form-text text-muted">{{
                     form_errors(form.description)
@@ -77,9 +60,7 @@
               <div class="form-group row">
                 <label class="col-form-label col-md-2">Prix Produit</label>
                 <div class="mb-3 col-md-10">
-                  {#
-                  <input class="form-control" type="datetime" name="datetime" />
-                  #}
+            
                   {{ form_row(form.ancien_prix) }}
                   <span class="form-text text-muted">{{
                     form_errors(form.ancien_prix)
@@ -87,27 +68,11 @@
                 </div>
               </div>
 
-              <div class="form-group row">
-                <label class="col-form-label col-md-2">Prix Reduit</label>
-                <div class="mb-3 col-md-10">
-                  {#
-                  <input class="form-control" type="datetime" name="datetime" />
-                  #}
-                  {{ form_row(form.nouveau_prix) }}
-                  {#
-                  <span class="form-text text-muted">{{
-                    form_errors(form.nouveau_prix)
-                  }}</span>
-                  #}
-                </div>
-              </div>
+          
 
               <div class="form-group row">
                 <label class="col-form-label col-md-2">Quantite En Stock</label>
                 <div class="mb-3 col-md-10">
-                  {#
-                  <input class="form-control" type="datetime" name="datetime" />
-                  #}
                   {{ form_row(form.qte_stock) }}
                   <span class="form-text">{{
                     form_errors(form.qte_stock)
@@ -118,14 +83,11 @@
               <div class="form-group row">
                 <label class="col-form-label col-md-2">User</label>
                 <div class="mb-3 col-md-10">
-                  {#
-                  <input class="form-control" type="datetime" name="datetime" />
-                  #}
                   {{ form_row(form.user) }}
                   {#
                   <span
                     class="form-text text-muted"
-                    >{{ form_errors(form.) }}</span
+                    >{{ form_errors(form.user) }}</span
                   >
                   #}
                 </div>
@@ -134,10 +96,19 @@
               <div class="form-group row">
                 <label class="col-form-label col-md-2">Sous Catégorie</label>
                 <div class="mb-3 col-md-10">
-                  {#
-                  <input class="form-control" type="datetime" name="datetime" />
-                  #}
                   {{ form_row(form.sous_categorie) }}
+                  {#
+                  <span class="form-text text-muted"
+                    >Using <code>input type="datetime"</code></span
+                  >
+                  #}
+                </div>
+              </div>
+
+                 <div class="form-group row">
+                <label class="col-form-label col-md-2">Attributs</label>
+                <div class="mb-3 col-md-10">
+                  {{ form_row(form.attributs) }}
                   {#
                   <span class="form-text text-muted"
                     >Using <code>input type="datetime"</code></span
@@ -149,9 +120,6 @@
               <div class="form-group row">
                 <label class="col-form-label col-md-2">Image du Produit</label>
                 <div class="mb-3 col-md-10">
-                  {#
-                  <input class="form-control" type="datetime" name="datetime" />
-                  #}
                   {{ form_row(form.photo) }}
                   {#
                   <span class="form-text text-muted"

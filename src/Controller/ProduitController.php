@@ -6,6 +6,7 @@ use App\Entity\Produit;
 use App\Form\ProduitType;
 use Doctrine\ORM\Mapping\Id;
 use App\Repository\ProduitRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,6 +43,12 @@ class ProduitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
+
+            $attribut_produit = $form->get('attributs')->getData();
+
+            foreach ($attribut_produit as $var) {
+                $produit->addAttribut($var);
+            }
 
             // dd($form);
             /** @var UploadedFile $brochureFile */
@@ -91,13 +98,11 @@ class ProduitController extends AbstractController
     public function show(Produit $produit): Response
     {
         // if($produit->getUser()==$this->getUser()){
-       
-        
+
+
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
         ]);
-    
-
     }
 
     #[Route('/admin/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
@@ -107,6 +112,12 @@ class ProduitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
+
+            $attribut_produit = $form->get('attributs')->getData();
+
+            foreach ($attribut_produit as $var) {
+                $produit->addAttribut($var);
+            }
 
             // dd($form);
             /** @var UploadedFile $brochureFile */

@@ -67,15 +67,11 @@ content %}
 												<td>{{ image.variation.nom }}</td>
 												{% if image.produit.user.id == app.user.id %}
 													<td>
-														<a href="{{ path('app_image_show', {'id': image.id}) }}" class="btn btn-md btn-primary">
-															<i class="fa fa-eye"></i>
-														</a>
-														<a href="{{ path('app_image_edit', {'id': image.id}) }}" class="btn btn-md btn-warning">
+														
+														<a href="{{ path('app_image_edit', {'id': image.id}) }}" class="btn btn-md btn-warning mb-5">
 															<i class="fa fa-edit"></i>
 														</a>
-														<a href="{{ path('app_image_delete', {'id': image.id}) }}" class="btn btn-md btn-danger">
-															<i class="fa fa-trash"></i>
-														</a>
+														{{ include('image/_delete_form.html.twig') }}
 													</td>
 												{% else %}
 													<td></td>
