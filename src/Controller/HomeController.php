@@ -139,7 +139,9 @@ class HomeController extends AbstractController
     public function delete_reduction(ReductionRepository $reductionRepository)
     {
         
-        $reductionRepository->delete_reduction();
+        $reduction=$reductionRepository->delete_reduction();
+
+        return true ;
         
     }
 
