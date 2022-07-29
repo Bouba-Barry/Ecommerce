@@ -23,8 +23,10 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class ProduitController extends AbstractController
 {
     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
-    public function index(ProduitRepository $produitRepository): Response
+    public function index(ProduitRepository $produitRepository, UserRepository $userRepository): Response
     {
+
+        // dd($userRepository->findRecentClient());
         return $this->render('produit/index.html.twig', [
             'produits' => $produitRepository->findAll(),
         ]);
@@ -36,10 +38,7 @@ class ProduitController extends AbstractController
     {
         $produit = new Produit();
 
-        $form = $this->createForm(ProduitType::class, $produit, [
-            'action' => $this->generateUrl('app_produit_new'),
-            'method' => 'POST',
-        ]);
+        $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
