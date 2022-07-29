@@ -86,6 +86,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Ville $ville = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: FeadBack::class)]
+    private Collection $feadBacks;
+
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable('now');
@@ -93,6 +96,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->produits = new ArrayCollection();
         $this->commandes = new ArrayCollection();
         $this->paniers = new ArrayCollection();
+        $this->feadBacks = new ArrayCollection();
     }
 
 
@@ -358,6 +362,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVille(?Ville $ville): self
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FeadBack>
+     */
+    public function getFeadBacks(): Collection
+    {
+        return $this->feadBacks;
+    }
+
+    public function addFeadBack(FeadBack $feadBack): self
+    {
+        if (!$this->feadBacks->contains($feadBack)) {
+            $this->feadBacks[] = $feadBack;
+            $feadBack->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeadBack(FeadBack $feadBack): self
+    {
+        if ($this->feadBacks->removeElement($feadBack)) {
+            // set the owning side to null (unless already changed)
+            if ($feadBack->getUser() === $this) {
+                $feadBack->setUser(null);
+            }
+        }
 
         return $this;
     }

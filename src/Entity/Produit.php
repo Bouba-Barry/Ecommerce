@@ -85,6 +85,9 @@ class Produit
     #[ORM\ManyToMany(targetEntity: Attribut::class, inversedBy: 'produits')]
     private $attributs;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: FeadBack::class)]
+    private Collection $feadBacks;
+
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable('now');
@@ -96,6 +99,7 @@ class Produit
         $this->paniers = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->attributs = new ArrayCollection();
+        $this->feadBacks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -374,6 +378,36 @@ class Produit
     public function removeAttribut(Attribut $attribut): self
     {
         $this->attributs->removeElement($attribut);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FeadBack>
+     */
+    public function getFeadBacks(): Collection
+    {
+        return $this->feadBacks;
+    }
+
+    public function addFeadBack(FeadBack $feadBack): self
+    {
+        if (!$this->feadBacks->contains($feadBack)) {
+            $this->feadBacks[] = $feadBack;
+            $feadBack->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeadBack(FeadBack $feadBack): self
+    {
+        if ($this->feadBacks->removeElement($feadBack)) {
+            // set the owning side to null (unless already changed)
+            if ($feadBack->getProduit() === $this) {
+                $feadBack->setProduit(null);
+            }
+        }
 
         return $this;
     }
