@@ -8,8 +8,11 @@ use App\Entity\SousCategorie;
 use App\Entity\User;
 use App\Entity\Variation;
 use App\Repository\UserRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\Factory\Cache\ChoiceLabel;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -17,15 +20,17 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Doctrine\Extension\Functions\DQL\UDF\JsonContains;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\EntityResult;
+use Doctrine\ORM\Query\Expr\OrderBy;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 class ProduitType extends AbstractType
 {
-    private $admin;
 
-    public function getAdmin(UserRepository $userRepository)
-    {
-        $admin = $userRepository->findAdmin();
-    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -35,10 +40,14 @@ class ProduitType extends AbstractType
             ->add('qte_stock', NumberType::class, array('label' => false, 'attr' => ['placeholder' => 'Quantité En Stock', 'class' => 'form-control']))
             ->add('user', EntityType::class, [
                 'class' => User::class,
+                'query_builder' => function (UserRepository $er) {
+                    return $er->findByAdmin("ROLE_SUPER_ADMIN");
+                },
                 'choice_label' => 'nom',
                 'label' => false,
                 'attr' => ['placeholder' => 'User qui a ajouter', 'class' => 'form-control']
             ])
+
             ->add('sous_categorie', EntityType::class, [
                 'class' => SousCategorie::class,
                 'choice_label' => 'titre',

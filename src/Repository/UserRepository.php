@@ -3,11 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -56,21 +57,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->add($user, true);
     }
 
+
+
     /**
      * @return User[] Returns an array of User objects
      */
-    public function findRoles()
+    public function findByRoles()
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        // $x = "ROLE_USER";
-        // return $this->createQueryBuilder('u')
-        //     ->andWhere(' :x in (u.roles) ')
-        //     ->setParameter('x', $x)
-        //     // ->orderBy('u.id', 'ASC')
-        //     //    ->setMaxResults(10)
-        //     ->getQuery()
-        //     ->getResult();
         $sql = "
         SELECT * FROM user u
         WHERE  JSON_CONTAINS(`roles`, '\"ROLE_USER\"')
@@ -78,26 +73,26 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
-
+        $result = $resultSet->fetchAllAssociative();
         // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
+        return $result;
     }
     /** 
-     * @return User[] Returns an array of User objects
+     * @return \App\Entity\User[] Returns an array of User objects
      */
     public function findAdmin()
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = "
-       SELECT * FROM user u
-       WHERE  JSON_CONTAINS(`roles`, '\"ROLE_SUPER_ADMIN\"')
-       ORDER BY u.id ASC
-       ";
+           SELECT * FROM user u
+           WHERE  JSON_CONTAINS(`roles`, '\"ROLE_SUPER_ADMIN\"')
+           ORDER BY u.id ASC
+           ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
 
         // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
+        return $resultSet->fetchAllKeyValue();
     }
 
     /**
@@ -109,7 +104,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         $sql = "
         SELECT * FROM user u
-        WHERE  (DATEDIFF(CURRENT_TIMESTAMP(), u.create_at)  BETWEEN 1 and 31)
+        WHERE  (DATEDIFF(CURRENT_TIMESTAMP(), u.create_at)  BETWEEN 1 and 31) and JSON_CONTAINS(`roles`, '\"ROLE_USER\"')
         ORDER BY u.id ASC
         ";
         $stmt = $conn->prepare($sql);
@@ -119,12 +114,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $resultSet->fetchAllAssociative();
     }
 
-    // public function findOneBySomeField($value): ?User
-    // {
-    //     return $this->createQueryBuilder('u')
-    //         ->andWhere('u.nom = :val')
-    //         ->setParameter('val', $value)
-    //         ->getQuery()
-    //         ->getOneOrNullResult();
-    // }
+    public function findByAdmin($role)
+    {
+
+        $queryBuilder = $this->createQueryBuilder('u')
+            ->where("JSON_CONTAINS(u.roles, :role) = true")
+            ->setParameter('role', sprintf('"%s"', $role));
+        return $queryBuilder;
+    }
 }

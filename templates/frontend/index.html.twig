@@ -66,6 +66,7 @@
       rel="stylesheet"
       href=" {{ asset('FrontOffice/assets/css/responsive.css') }} "
     />
+    {% block style %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
     <link
       rel="icon"
@@ -217,9 +218,9 @@
               <div class="others-options d-flex align-items-center">
                 <div class="option-item">
                   <div class="cart-btn">
-                    <a
+                    {# <a
                       href="{{ path('app_panier_infos', { id: app.user.id }) }}"
-                    >
+                    > #}
                       <i class="flaticon-shopping-cart"></i>
                       <span id="panier">0</span>
                     </a>

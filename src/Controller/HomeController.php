@@ -168,11 +168,10 @@ class HomeController extends AbstractController
     #[Route('/delete_reduction', name: 'app_delete_reduction', methods: ['GET'])]
     public function delete_reduction(ReductionRepository $reductionRepository)
     {
-        
-        $reduction=$reductionRepository->delete_reduction();
 
-        return true ;
-        
+        $reduction = $reductionRepository->delete_reduction();
+
+        return true;
     }
 
     #[Route('/shop_details/{id}', name: 'app_shop_details', methods: ['GET'])]
@@ -192,7 +191,7 @@ class HomeController extends AbstractController
 
         $produits_en_relation = $produitRepository->findBy(['sous_categorie' => $sous_categories]);
 
-        $popular_products=$produitRepository->PopularProducts();
+        $popular_products = $produitRepository->PopularProducts();
         // dd($produits_en_relation);
         // dd($produits_similaires);
 
@@ -220,7 +219,7 @@ class HomeController extends AbstractController
         $popular = $produitRepository->PopularProducts();
         // dd($popular);
         $produits_recent = $produitRepository->findRecentProduct();
-        $produits=$produitRepository->findAll();
+        $produits = $produitRepository->findAll();
 
         return $this->render('frontend/shoplist.html.twig', [
             'produits' => $produits
@@ -362,7 +361,7 @@ class HomeController extends AbstractController
         $clientRecent = $userRepository->findRecentClient();
         $membreRecent = count($clientRecent);
 
-        $clientTotal = $userRepository->findRoles();
+        $clientTotal = $userRepository->findByRoles("ROLE_USER");
         $totalClient = count($clientTotal);
 
         $pourcentage = ($membreRecent * 100) / $totalClient;
@@ -395,7 +394,7 @@ class HomeController extends AbstractController
 
 
     #[Route('', name: 'app_home')]
-    public function home(ProduitRepository $produitRepository,ReductionRepository $reductionRepository,SerializerInterface $serializer): Response
+    public function home(ProduitRepository $produitRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
     {
         $totalSalesMonth = $produitRepository->TOTALSALESMONTH(); // pour la partie admin
         // dd($totalSalesMonth[0]['total']);
@@ -416,8 +415,8 @@ class HomeController extends AbstractController
         $reductions=$reductionRepository->findAll();
         // dd($produits_reduction);
         // $json = $serializer->serialize($produits, 'json', ['groups' => ['prod:read']]);
-     
-        
+
+
 
         return $this->render('frontend/home.html.twig', [
             'produits' => $produits,
