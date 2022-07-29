@@ -74,7 +74,17 @@ class PanierRepository extends ServiceEntityRepository
 
 
 
+    public function check($produit_id,$panier_id){
 
+        $conn = $this->getEntityManager()->getConnection();
+        $sql=("SELECT * FROM panier_produit where produit_id=:produit_id and panier_id=:panier_id ");
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['produit_id' => $produit_id , 'panier_id' => $panier_id ]);
+        $d=$resultSet->fetchAllAssociative();
+
+        return json_encode($d);
+
+    }
 
   
 

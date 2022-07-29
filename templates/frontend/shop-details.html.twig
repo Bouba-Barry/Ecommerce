@@ -38,6 +38,12 @@
                   alt=""
                 />
               </a>
+              <img
+                id="image_principale_hidden"
+                style="display: none"
+                src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
+                alt=""
+              />
             </div>
           </div>
 
@@ -76,13 +82,19 @@
                 <a href="#" class="rating-count">3 reviews</a>
               </div>
               <div class="product-review">
-                {% if produit.getVariation()|length !=0 %} {% for
-                produit_variation in produit.getVariation() %}
+                {% if produit.getAttributs()|length !=0 %} {% for
+                produit_attribut in produit.getAttributs() %} {% if
+                produit_attribut.getVariations()|length != 0 %}
                 <h5>
-                  {{ produit_variation.getAttribut().nom }}: &nbsp;
-                  <p style="display: inline">{{ produit_variation.nom }}</p>
-                </h5>
+                  {{ produit_attribut.nom }} : &nbsp; {% for produit_variation
+                  in produit_attribut.getVariations() %} {% if produit in
+                  produit_variation.getProduits() %}
+                  <p style="display: inline" id="variation_nom"></p>
 
+                  <p style="display: none" class="hidden_variation_nom">
+                    {{ produit_variation.nom }}
+                  </p>
+                </h5>
                 {% for image in produit_variation.getImages() %} {% if
                 produit==image.getProduit() %}
                 <a href="#image_principale">
@@ -93,7 +105,16 @@
                     alt=""
                   />
                 </a>
-                {% endif %} {% endfor %} {% endfor %} {% endif %}
+                {% endif %} {% endfor %} {% endif %} {% endfor %}
+                <a href="#image_principale">
+                  <img
+                    class="image"
+                    style="width: 40px; height: 40px"
+                    src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
+                    alt=""
+                  />
+                </a>
+                {% endif %} {% endfor %} {% endif %}
               </div>
               <p>
                 {{ produit.description }}
@@ -370,7 +391,8 @@
                   <ul class="products-action">
                     <li>
                       <a
-                        href="cart.html"
+                        id="addtocart{{ produit_similaire.id }}"
+                        class="addtocart"
                         data-tooltip="tooltip"
                         data-placement="top"
                         title="Add to Cart"
@@ -601,7 +623,8 @@
             <ul class="products-action">
               <li>
                 <a
-                  href="cart.html"
+                  id="addtocart{{ produit_en_relation.id }}"
+                  class="addtocart"
                   data-tooltip="tooltip"
                   data-placement="top"
                   title="Add to Cart"

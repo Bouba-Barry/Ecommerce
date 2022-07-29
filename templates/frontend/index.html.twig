@@ -762,6 +762,10 @@
                   </div>
                   <a href="#" class="rating-count">5 reviews</a>
                 </div>
+                <div class="buy-checkbox-btn" id="product_review"></div>
+                {#
+                <div class="product-review" id="product_review_images"></div>
+                #}
                 <p id="description_produit">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et.
@@ -884,6 +888,7 @@
     <script src="{{ asset('js/panier2.js') }}"></script>
     <script src="{{ asset('js/delete_reduction.js') }}"></script>
     <script src="{{ asset('FrontOffice/other/search_shop.js') }}"></script>
-    {% block javascripts %}{% endblock %}
+    <script src="{{ asset('js/panier4.js') }}"></script>
+    {% block javascripts %} {% endblock %}
   </body>
 </html>

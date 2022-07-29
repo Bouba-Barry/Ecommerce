@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\AttributRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AttributRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AttributRepository::class)]
 class Attribut
@@ -13,15 +14,19 @@ class Attribut
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['prod:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['prod:read'])]
     private $nom;
 
     #[ORM\OneToMany(mappedBy: 'attribut', targetEntity: Variation::class)]
+    #[Groups(['prod:read'])]
     private $variations;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['prod:read'])]
     private $create_at;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]

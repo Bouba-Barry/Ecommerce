@@ -65,24 +65,31 @@ class Produit
     private $reduction;
 
     #[ORM\ManyToMany(targetEntity: Variation::class, inversedBy: 'produits')]
+    #[Groups(['prod:read'])]
     private $variation;
 
     #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'produit')]
+    #[Groups(['prod:read'])]
     private $commandes;
 
     #[ORM\ManyToMany(targetEntity: Panier::class, mappedBy: 'produit')]
+    #[Groups(['prod:read'])]
     private $paniers;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['prod:read'])]
     private $createAt;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['prod:read'])]
     private $updateAt;
 
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Image::class)]
+    #[Groups(['prod:read'])]
     private $images;
 
     #[ORM\ManyToMany(targetEntity: Attribut::class, inversedBy: 'produits')]
+    #[Groups(['prod:read'])]
     private $attributs;
 
     public function __construct()

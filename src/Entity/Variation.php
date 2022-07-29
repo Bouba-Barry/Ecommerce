@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\VariationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\VariationRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: VariationRepository::class)]
 class Variation
@@ -13,12 +14,15 @@ class Variation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['prod:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['prod:read'])]
     private $nom;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['prod:read'])]
     private $code;
 
     #[ORM\ManyToOne(targetEntity: Attribut::class, inversedBy: 'variations')]
@@ -34,6 +38,7 @@ class Variation
     private $update_at;
 
     #[ORM\OneToMany(mappedBy: 'variation', targetEntity: Image::class)]
+    #[Groups(['prod:read'])]
     private $images;
 
     public function __construct()

@@ -59,6 +59,35 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[Route('/panier_check/{id}/{id_user}', name: 'app_panier_check', methods: ['GET'])]
+    public function check_panier($id,$id_user,UserRepository $userRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine):JsonResponse
+    {
+
+     $panier=$panierRepository->findOneBy(['user'=> $userRepository->findOneBy(['id'=> $id_user])  ]);
+  
+     $panier=$panierRepository->check($id,$panier->getId());
+
+     $panier=json_decode($panier);
+     
+     if(count($panier)>0){
+        return $this->json(1);
+     }
+     else{
+        return $this->json(0);
+     }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
 
     #[Route('/getVilles/{id}', name: 'app_getVilles', methods: ['GET'])]
     public function getVilles(Region $region, SerializerInterface $serializer, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
@@ -126,8 +155,9 @@ class HomeController extends AbstractController
         $json = $serializer->serialize($produit, 'json', ['groups' => ['prod:read']]);
         // dd($this->json($res));
         // dd($t);
-        // dd($json);
+      
         $json = json_decode($json);
+       
         return $this->json($json);
     }
 
@@ -383,6 +413,7 @@ class HomeController extends AbstractController
         $produits=$produitRepository->findAll();
        
         $produits_reduction=$produitRepository->get_produit_reduction();
+        $reductions=$reductionRepository->findAll();
         // dd($produits_reduction);
         // $json = $serializer->serialize($produits, 'json', ['groups' => ['prod:read']]);
      
@@ -392,7 +423,8 @@ class HomeController extends AbstractController
             'produits' => $produits,
             'mostSaleMonth' => $MostSalesMonth,
             'NewProduct' => $NewProduct,
-            'bestSellers' => $bestSellers
+            'bestSellers' => $bestSellers,
+            'reductions' => $reductions
 
         ]);
     }

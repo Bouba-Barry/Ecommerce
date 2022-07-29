@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let new_price = document.getElementById("new_price");
   let old_price = document.getElementById("old_price");
   let description_produit = document.getElementById("description_produit");
+  let product_review = document.getElementById("product_review");
 
   for (let but of search) {
     but.addEventListener("click", (e) => {
@@ -42,12 +43,37 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    function getinfos_produits(data, i) {
+    function getinfos_produits(data) {
       titre_produit.innerHTML = data.designation;
       new_price.innerHTML = data.nouveau_prix;
       old_price.innerHTML = data.ancien_prix + "DH";
       image_produit.style.backgroundImage =
         "url(../../../uploads/produits/" + data.image_produit + ")";
+
+      if (data.attributs.length != 0) {
+        for (let produit_attribut of data.attributs) {
+          if (produit_attribut.variations.length != 0) {
+            for (let produit_variation of produit_attribut.variations) {
+              for (let data_variation of data.variation) {
+                if (data_variation.id == produit_variation.id) {
+                  product_review.innerHTML = `<div class="item"><a href="${data.id}" class="btn btn-light">Voir variations ! </a></div>`;
+                  // for (let image of produit_variation.images) {
+                  //   for (let data_image of data.images) {
+                  //     if (data_image.id == image.id) {
+                  //       product_review_images.innerHTML +=
+                  //         '<a href="#" ><img class="image1" src="../uploads/others/' +
+                  //         image.url +
+                  //         '"style="height:50px;width:60px;margin-right:10px;"></a>';
+                  //     }
+                  //   }
+                  // }
+                }
+              }
+            }
+          }
+        }
+      }
+
       description_produit.innerHTML = data.description;
       addcard[1].setAttribute("id", "addcard" + data.id);
       progressbtn1[1].setAttribute("id", "progressbtn1" + data.id);

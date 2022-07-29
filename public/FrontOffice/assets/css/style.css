@@ -3347,6 +3347,15 @@ Testimonial Area CSS
   margin: auto;
 }
 
+.testimonial-item1 {
+  background-color: #c7bfbb;
+  padding: 30px 50px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 850px;
+  margin: auto;
+}
+
 .testimonial-item .info {
   margin-bottom: 20px;
 }

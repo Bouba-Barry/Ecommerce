@@ -53,7 +53,8 @@
             <ul class="products-action">
               <li>
                 <a
-                  href="cart.html"
+                  id="addtocart{{ produit.id }}"
+                  class="addtocart"
                   data-tooltip="tooltip"
                   data-placement="top"
                   title="Add to Cart"
@@ -670,34 +671,41 @@ Area -
 
 <!-- Start Overview Area -->
 <section class="overview-area ptb-100">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 col-sm-6">
-        <div class="overview-content">
-          <h3>50% Off In This week</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua quis
-            ipsum suspendisse
-          </p>
+  <div class="testimonial-slider owl-carousel owl-theme">
+    {% for reduction in reductions %}
+    <div class="container testimonial-item1">
+      <div class="row align-items-center">
+        <div class="col-lg-6 col-sm-6">
+          <div class="overview-content">
+            <h3>
+              50% Jusqu A le {{ reduction.datefin|date('Y-m-d \\HH:i:s') }}
+            </h3>
+            <p>
+              {{ reduction.designation }}
+            </p>
 
-          <div class="overview-btn">
-            <a href="shop-1.html" class="default-btn">Discover Now</a>
+            <div class="overview-btn">
+              <a href="shop-1.html" class="default-btn">Discover Products </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-sm-6">
+          <div class="overview-video">
+            <a
+              href="https://www.youtube.com/watch?v=Jh5oX0VRnzk"
+              class="video-btn popup-youtube"
+            >
+              <i
+                style="font-size: 35px; position: absolute; top: 30%; left: 10%"
+                >-{{ reduction.pourcentage }}</i
+              >
+            </a>
           </div>
         </div>
       </div>
-
-      <div class="col-lg-6 col-sm-6">
-        <div class="overview-video">
-          <a
-            href="https://www.youtube.com/watch?v=Jh5oX0VRnzk"
-            class="video-btn popup-youtube"
-          >
-            <i class="bx bxl-youtube"></i>
-          </a>
-        </div>
-      </div>
     </div>
+    {% endfor %}
   </div>
 </section>
 <!-- End Overview Area -->
