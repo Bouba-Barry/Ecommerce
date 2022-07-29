@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FeadBack{% endblock %}
+
+{% block body %}
+    <h1>FeadBack</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ fead_back.id }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ fead_back.content }}</td>
+            </tr>
+            <tr>
+                <th>Create_at</th>
+                <td>{{ fead_back.createAt ? fead_back.createAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Update_at</th>
+                <td>{{ fead_back.updateAt ? fead_back.updateAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Pseudo</th>
+                <td>{{ fead_back.pseudo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_fead_back_index') }}">back to list</a>
+
+    <a href="{{ path('app_fead_back_edit', {'id': fead_back.id}) }}">edit</a>
+
+    {{ include('fead_back/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,1028 +1,863 @@
-{% extends 'frontend/index.html.twig' %} {% block content %}
-{% block style %}  <link
-      rel="stylesheet"
-      href=" {{ asset('FrontOffice/other/slide.css') }} "
-    />
-  {% endblock %}
-<!-- Start Main Banner Area -->
-    {# <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="d-block w-100" src="https://i.postimg.cc/bNQp0RDW/1.jpg" alt="First slide">
-        <div class="carousel-caption d-none d-md-block">
-          <h5><a href="#">click here</a></h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi quas vero.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="https://i.postimg.cc/pVzg3LWn/2.jpg" alt="Second slide">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Slider One Item</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi quas vero.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="https://i.postimg.cc/0y2F6Gpp/3.jpg" alt="Third slide">
-        <div class="carousel-caption d-none d-md-block">
-          <h5><a href="#">click here</a></h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi quas vero.</p>
-        </div>
-      </div>
-    </div>
-    <a class="carousel-control-prev" href="#" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="precedent">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="suivant">Next</span>
-    </a>
-  </div> #}
+{% extends 'frontend/index.html.twig' %}
+{% block content %}
+	{% block style %}
+		<link rel="stylesheet" href=" {{ asset('FrontOffice/other/slide.css') }} "/>
+	{% endblock %}
+	<!-- Start Main Banner Area -->
+	{# <div class="carousel-inner">
+																							      <div class="carousel-item active">
+																							        <img class="d-block w-100" src="https://i.postimg.cc/bNQp0RDW/1.jpg" alt="First slide">
+																							        <div class="carousel-caption d-none d-md-block">
+																							          <h5><a href="#">click here</a></h5>
+																							          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi quas vero.</p>
+																							        </div>
+																							      </div>
+																							      <div class="carousel-item">
+																							        <img class="d-block w-100" src="https://i.postimg.cc/pVzg3LWn/2.jpg" alt="Second slide">
+																							        <div class="carousel-caption d-none d-md-block">
+																							          <h5>Slider One Item</h5>
+																							          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi quas vero.</p>
+																							        </div>
+																							      </div>
+																							      <div class="carousel-item">
+																							        <img class="d-block w-100" src="https://i.postimg.cc/0y2F6Gpp/3.jpg" alt="Third slide">
+																							        <div class="carousel-caption d-none d-md-block">
+																							          <h5><a href="#">click here</a></h5>
+																							          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi quas vero.</p>
+																							        </div>
+																							      </div>
+																							    </div>
+																							    <a class="carousel-control-prev" href="#" role="button" data-slide="prev">
+																							      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+																							      <span class="precedent">Previous</span>
+																							    </a>
+																							    <a class="carousel-control-next" href="#" role="button" data-slide="next">
+																							      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+																							      <span class="suivant">Next</span>
+																							    </a>
+																							  </div> #}
 
-   <!-- Carousel Start -->
- <div class="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s">
-    <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-               <img class="d-block w-100" src="https://i.postimg.cc/bNQp0RDW/1.jpg" alt="First slide">
-                <div class="carousel-caption">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-6">
-                                <h5 class="display-2 text-light mb-5 animated slideInDown">Reduction </h1>
-                                <a href="" class="btn btn-warning btn-sm py-sm-2 px-sm-3">Add to Cart</a>
-                                <a href="" class="btn btn-light btn-sm py-sm-2 px-sm-3 ms-3">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="https://i.postimg.cc/pVzg3LWn/2.jpg" alt="Second slide">
-                <div class="carousel-caption">
-                    <div class="container">
-                        <div class="row justify-content-center mt-10">
-                            <div class="col-lg-6">
-                                <h5 class="display-2 text-light mb-5 animated slideInDown">Safe Driving Is Our Top Priority</h1>
-                                <a href="" class="btn btn-warning btn-sm py-sm-2 px-sm-3">Add to cart</a>
-                                <a href="" class="btn btn-light btn-sm py-sm-2 px-sm-3 ms-3">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-control-prev" data-bs-target="#header-carousel"
-            data-bs-slide="prev">
-            {# <span class="carousel-control-prev-icon precedent" aria-hidden="true"></span> #}
-            <span class="carousel-control-prev-icon precedent" aria-hidden="true"></span>
-            <span class="precedent"></span>
-        </div>
-        <div class="carousel-control-next" data-bs-target="#header-carousel"
-            data-bs-slide="next">
-            {# <span class="carousel-control-prev-icon precedent" aria-hidden="true"></span> #}
-            <span class="carousel-control-next-icon suivant" aria-hidden="true"></span>
-            <span class="suivant"></span>
-        </div>
-    </div>
-</div>
-  
-  
-<!-- End Main Banner Area -->
+	<!-- Carousel Start -->
+		<div class="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s"> <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img class="d-block w-100" src="https://i.postimg.cc/bNQp0RDW/1.jpg" alt="First slide">
+					<div class="carousel-caption">
+						<div class="container">
+							<div class="row justify-content-center">
+								<div class="col-lg-6">
+									<h5 class="display-2 text-light mb-5 animated slideInDown">Reduction
+									</h1>
+									<a href="" class="btn btn-warning btn-sm py-sm-2 px-sm-3">Add to Cart</a>
+									<a href="" class="btn btn-light btn-sm py-sm-2 px-sm-3 ms-3">Buy Now</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img class="d-block w-100" src="https://i.postimg.cc/pVzg3LWn/2.jpg" alt="Second slide">
+					<div class="carousel-caption">
+						<div class="container">
+							<div class="row justify-content-center mt-10">
+								<div class="col-lg-6">
+									<h5 class="display-2 text-light mb-5 animated slideInDown">Safe Driving Is Our Top Priority</h1>
+									<a href="" class="btn btn-warning btn-sm py-sm-2 px-sm-3">Add to cart</a>
+									<a href="" class="btn btn-light btn-sm py-sm-2 px-sm-3 ms-3">Buy Now</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div
+				class="carousel-control-prev" data-bs-target="#header-carousel" data-bs-slide="prev">
+				{# <span class="carousel-control-prev-icon precedent" aria-hidden="true"></span> #}
+				<span class="carousel-control-prev-icon precedent" aria-hidden="true"></span>
+				<span class="precedent"></span>
+			</div>
+			<div
+				class="carousel-control-next" data-bs-target="#header-carousel" data-bs-slide="next">
+				{# <span class="carousel-control-prev-icon precedent" aria-hidden="true"></span> #}
+				<span class="carousel-control-next-icon suivant" aria-hidden="true"></span>
+				<span class="suivant"></span>
+			</div>
+		</div>
+	</div>
 
-<!-- Start Top Products Area -->
-<section class="top-products-area pt-100 pb-70">
-  <div class="container">
-    <div class="section-title">
-      <h2>Trending Products</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-        suspendisse
-      </p>
-    </div>
 
-    <div class="row">
-      {% for produit in produits %}
+	<!-- End Main Banner Area -->
 
-      <div class="col-lg-3 col-md-6">
-        <div class="top-products-item">
-          <div class="products-image">
-            <a href="{{ path('app_shop_details', { id: produit.id }) }}"
-              ><img
-                src="{{ asset('uploads/produits/' ~ produit.imageProduit) }}"
-                style="width: 250px; height: 200px"
-            /></a>
+	<!-- Start Top Products Area -->
+	<section class="top-products-area pt-100 pb-70">
+		<div class="container">
+			<div class="section-title">
+				<h2>Trending Products</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+																																																																																																																			        tempor incididunt ut labore et dolore magna aliqua quis ipsum
+																																																																																																																			        suspendisse
+				</p>
+			</div>
 
-            <ul class="products-action">
-              <li>
-                <a
-                  href="cart.html"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Add to Cart"
-                >
-                  <i class="flaticon-shopping-cart"></i>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Add to Wishlist"
-                >
-                  <i class="flaticon-heart"></i>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  data-tooltip="tooltip"
-                  id="searchbtn{{ produit.id }}"
-                  class="search"
-                  data-placement="top"
-                  title="Quick View"
-                  data-toggle="modal"
-                  data-target="#productsQuickView"
-                >
-                  <i class="flaticon-search"></i>
-                </a>
-              </li>
-            </ul>
+			<div class="row">
+				{% for produit in produits %}
 
-            {% if produit.getReduction()|length != 0 %}
-            <div class="sale">
-              <span>
-                {% for produit_reduction in produit.getReduction() %} -{{
+					<div class="col-lg-3 col-md-6">
+						<div class="top-products-item">
+							<div class="products-image">
+								<a href="{{ path('app_shop_details', { id: produit.id }) }}"><img src="{{ asset('uploads/produits/' ~ produit.imageProduit) }}" style="width: 250px; height: 200px"/></a>
+
+								<ul class="products-action">
+									<li>
+										<a href="cart.html" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+											<i class="flaticon-shopping-cart"></i>
+										</a>
+									</li>
+									<li>
+										<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+											<i class="flaticon-heart"></i>
+										</a>
+									</li>
+									<li>
+										<a href="#" data-tooltip="tooltip" id="searchbtn{{ produit.id }}" class="search" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+											<i class="flaticon-search"></i>
+										</a>
+									</li>
+								</ul>
+
+								{% if produit.getReduction()|length != 0 %}
+									<div class="sale">
+										<span>
+											{% for produit_reduction in produit.getReduction() %}
+												-{{
                   produit_reduction.getPourcentage()
                 }}
-                {% endfor %}
-              </span>
-            </div>
-            {% endif %}
-          </div>
-
-          <div class="products-content">
-            <h3>
-              <a href="shop-details.html">{{ produit.designation }}</a>
-            </h3>
-            {% if produit.getReduction()|length != 0 %}
-            <div class="price">
-              <span class="new-price"> {{ produit.nouveauPrix }}Dhs</span>
-              <span class="old-price">{{ produit.ancienPrix }}Dhs</span>
-            </div>
-            {% else %}
-            <div class="price">
-              <span class="new-price">{{ produit.ancienPrix }}Dhs</span>
-            </div>
-            {% endif %}
-            <ul class="rating">
-              <li>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bx-star"></i>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{# ---------------------------------------------------------- End Top Products
-Area -
-------------------------------------------------------------------------------------------#}
-
-<!-- Start Detox Water Area -->
-<section class="detox-water-area ptb-100">
-  <div class="container">
-    <div class="section-title">
-      <h2>Produits Le plus Achété Du Mois</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-        suspendisse
-      </p>
-    </div>
-
-    <div class="detox-water-image">
-      <img
-        src=" {{
-          asset('FrontOffice/assets/img/detox-water/detox-water-main.png')
-        }} "
-        alt="image"
-      />
-    </div>
-  </div>
-
-  <div class="detox-water-shape">
-    <div class="shape1">
-      <img
-        src=" {{
-          asset('FrontOffice/assets/img/detox-water/detox-water-1.png')
-        }} "
-        alt="image"
-      />
-    </div>
-
-    <div class="shape2">
-      <img
-        src=" {{
-          asset('FrontOffice/assets/img/detox-water/detox-water-2.png')
-        }} "
-        alt="image"
-      />
-    </div>
-
-    <div class="shape3">
-      <img
-        src=" {{
-          asset('FrontOffice/assets/img/detox-water/detox-water-3.png')
-        }} "
-        alt="image"
-      />
-    </div>
-
-    <div class="shape4">
-      <img
-        src=" {{
-          asset('FrontOffice/assets/img/detox-water/detox-water-4.png')
-        }} "
-        alt="image"
-      />
-    </div>
-  </div>
-</section>
-<!-- End Detox Water Area -->
-
-<!-- Start Department Area -->
-<section class="department-area pt-100 pb-70">
-  <div class="container">
-    <div class="section-title">
-      <h2>Nos Categories Les Plus Populaires</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-        suspendisse
-      </p>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-4 col-md-6">
-        <div class="single-department">
-          <div class="department-image">
-            <a href="#">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/department/department-1.jpg')
-                }} "
-                alt="image"
-              />
-            </a>
-
-            <div class="content">
-              <h3>
-                <a href="#">Fresh Milk</a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="single-department">
-          <div class="department-image">
-            <a href="#">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/department/department-2.jpg')
-                }} "
-                alt="image"
-              />
-            </a>
-
-            <div class="content">
-              <h3>
-                <a href="#">Fresh Beef</a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="single-department">
-          <div class="department-image">
-            <a href="#">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/department/department-3.jpg')
-                }} "
-                alt="image"
-              />
-            </a>
-
-            <div class="content">
-              <h3>
-                <a href="#">Chicken Meat</a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="single-department">
-          <div class="department-image">
-            <a href="#">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/department/department-4.jpg')
-                }} "
-                alt="image"
-              />
-            </a>
-
-            <div class="content">
-              <h3>
-                <a href="#">Fresh Fruits</a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="single-department">
-          <div class="department-image">
-            <a href="#">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/department/department-5.jpg')
-                }} "
-                alt="image"
-              />
-            </a>
-
-            <div class="content">
-              <h3>
-                <a href="#">Fresh Fish</a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="single-department">
-          <div class="department-image">
-            <a href="#">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/department/department-6.jpg')
-                }} "
-                alt="image"
-              />
-            </a>
-
-            <div class="content">
-              <h3>
-                <a href="#">Vegetables</a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Department Area -->
-
-<!-- Start Why Choose Area -->
-<section class="why-choose-area pt-100">
-  <div class="container">
-    <div class="why-choose-item">
-      <div class="content">
-        <span>Why Choose Us</span>
-        <h3>We are Ensure of These Types</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum
-          suspendisse
-        </p>
-      </div>
-
-      <div class="inner-content">
-        <div class="icon">
-          <i class="flaticon-leaf"></i>
-        </div>
-        <h4>Organic</h4>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum
-          suspendisse
-        </p>
-      </div>
-
-      <div class="inner-content">
-        <div class="icon">
-          <i class="flaticon-heart"></i>
-        </div>
-        <h4>Fast and Easy</h4>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum
-          suspendisse
-        </p>
-      </div>
-
-      <div class="inner-content">
-        <div class="icon">
-          <i class="flaticon-plant"></i>
-        </div>
-        <h4>High Quality</h4>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum
-          suspendisse
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Why Choose Area -->
-
-<!-- Start Featured Products Area -->
-<section class="featured-products-area pt-100 pb-70">
-  <div class="container">
-    <div class="section-title">
-      <h2>Nouvelles Arrivages Dans Le Stock</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-        suspendisse
-      </p>
-    </div>
-
-    <div class="row">
-      {% for newproduct in NewProduct %}
-
-      <div class="col-lg-3 col-md-6">
-        <div class="featured-products-item">
-          <div class="products-image">
-            <a href="shop-details.html"
-              ><img
-                src=" {{
-                  asset(
-                    'FrontOffice/assets/img/featured-products/featured-products-8.jpg'
-                  )
-                }} "
-                alt="image"
-            /></a>
-
-            <ul class="products-action">
-              <li>
-                <a
-                  href="cart.html"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Add to Cart"
-                >
-                  <i class="flaticon-shopping-cart"></i>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Add to Wishlist"
-                >
-                  <i class="flaticon-heart"></i>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Quick View"
-                  data-toggle="modal"
-                  data-target="#productsQuickView"
-                >
-                  <i class="flaticon-search"></i>
-                </a>
-              </li>
-            </ul>
-
-            <div class="new">
-              <span>New</span>
-            </div>
-          </div>
-
-          <div class="products-content">
-            <h3>
-              <a href="shop-details.html">{{ newproduct.designation }}</a>
-            </h3>
-            <div class="price">
-              <span class="new-price">{{ newproduct.nouveau_prix }}</span>
-              <span class="old-price">{{ newproduct.ancien_prix }}</span>
-            </div>
-            <ul class="rating">
-              <li>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bx-star"></i>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      {% else %}
-      <div class="col-lg-12 col-md-6">Aucun Arrivage Disponible</div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-<!-- End Featured Products Area -->
-
-<!-- Start Testimonial Area -->
-<section class="testimonial-area ptb-100">
-  <div class="container">
-    <div class="section-title">
-      <h2>Client’s Feedback</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-        suspendisse
-      </p>
-    </div>
-
-    <div class="testimonial-slider owl-carousel owl-theme">
-      <div class="testimonial-item">
-        <div class="info">
-          <img
-            src=" {{ asset('FrontOffice/assets/img/client/client-1.jpg') }} "
-            alt="image"
-          />
-          <h3>Ken Morris</h3>
-          <span>Organic Farmer</span>
-        </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-          voluptate velit esse fugiat nulla pariatur. Excepteur sint occaecat
-          cupidatat non proident sunt in culpa qui officia deserunt mollit anim
-          id est laborum. Sed ut perspiciatis unde omnis iste.
-        </p>
-
-        <div class="icon">
-          <i class="flaticon-right-quotes-symbol"></i>
-        </div>
-      </div>
-
-      <div class="testimonial-item">
-        <div class="info">
-          <img
-            src=" {{ asset('FrontOffice/assets/img/client/client-2.jpg') }} "
-            alt="image"
-          />
-          <h3>Johansen Lisa</h3>
-          <span>Organic Farmer</span>
-        </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-          voluptate velit esse fugiat nulla pariatur. Excepteur sint occaecat
-          cupidatat non proident sunt in culpa qui officia deserunt mollit anim
-          id est laborum. Sed ut perspiciatis unde omnis iste.
-        </p>
-
-        <div class="icon">
-          <i class="flaticon-right-quotes-symbol"></i>
-        </div>
-      </div>
-
-      <div class="testimonial-item">
-        <div class="info">
-          <img
-            src=" {{ asset('FrontOffice/assets/img/client/client-3.jpg') }} "
-            alt="image"
-          />
-          <h3>Lodi Kheda</h3>
-          <span>Organic Farmer</span>
-        </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-          voluptate velit esse fugiat nulla pariatur. Excepteur sint occaecat
-          cupidatat non proident sunt in culpa qui officia deserunt mollit anim
-          id est laborum. Sed ut perspiciatis unde omnis iste.
-        </p>
-
-        <div class="icon">
-          <i class="flaticon-right-quotes-symbol"></i>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Testimonial Area -->
-
-<!-- Start Best Sellers Products Area -->
-<section class="top-products-area pt-100 pb-100">
-  <div class="container">
-    <div class="section-title">
-      <h2>Best Sellers Products</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-        suspendisse
-      </p>
-    </div>
-
-    <div class="top-products-slider owl-carousel owl-theme">
-      {% for bestSeller in bestSellers %}
-      <div class="top-products-item">
-        <div class="products-image">
-          <a href="shop-details.html"
-            ><img
-              src=" {{
-                asset('FrontOffice/assets/img/top-products/top-products-8.jpg')
-              }} "
-              alt="image"
-          /></a>
-
-          <ul class="products-action">
-            <li>
-              <a
-                href="cart.html"
-                data-tooltip="tooltip"
-                data-placement="top"
-                title="Add to Cart"
-              >
-                <i class="flaticon-shopping-cart"></i>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                data-tooltip="tooltip"
-                data-placement="top"
-                title="Add to Wishlist"
-              >
-                <i class="flaticon-heart"></i>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                data-tooltip="tooltip"
-                data-placement="top"
-                title="Quick View"
-                data-toggle="modal"
-                data-target="#productsQuickView"
-              >
-                <i class="flaticon-search"></i>
-              </a>
-            </li>
-          </ul>
-
-          <div class="sale">
-            <span>Sale</span>
-          </div>
-        </div>
-
-        <div class="products-content">
-          <h3>
-            <a href="shop-details.html">{{ bestSeller.designation }}</a>
-          </h3>
-          <div class="price">
-            <span class="new-price">{{ bestSeller.nouveau_prix }}</span>
-            <span class="old-price">{{ bestSeller.ancien_prix }}</span>
-          </div>
-          <ul class="rating">
-            <li>
-              <i class="bx bxs-star"></i>
-              <i class="bx bxs-star"></i>
-              <i class="bx bxs-star"></i>
-              <i class="bx bxs-star"></i>
-              <i class="bx bx-star"></i>
-            </li>
-          </ul>
-        </div>
-      </div>
-      {% else %}
-      <div>Aucun Best Sellers Dans le site</div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-<!-- End Best Sellers Products Area -->
-
-<!-- Start Overview Area -->
-<section class="overview-area ptb-100">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 col-sm-6">
-        <div class="overview-content">
-          <h3>50% Off In This week</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua quis
-            ipsum suspendisse
-          </p>
-
-          <div class="overview-btn">
-            <a href="shop-1.html" class="default-btn">Discover Now</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-6 col-sm-6">
-        <div class="overview-video">
-          <a
-            href="https://www.youtube.com/watch?v=Jh5oX0VRnzk"
-            class="video-btn popup-youtube"
-          >
-            <i class="bx bxl-youtube"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Overview Area -->
-
-<!-- Start Most Viewed Products Area -->
-<section class="featured-products-area bg-fafafa pt-100 pb-100">
-  <div class="container">
-    <div class="section-title">
-      <h2>Most Viewed Products This Month</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-        suspendisse
-      </p>
-    </div>
-
-    <div class="featured-products-slider owl-carousel owl-theme">
-      {# {% for item in items %}{% endfor %} #}
-      <div class="featured-products-item">
-        <div class="products-image">
-          <a href="shop-details.html"
-            ><img
-              src=" {{
-                asset(
-                  'FrontOffice/assets/img/featured-products/featured-products-8.jpg'
-                )
-              }} "
-              alt="image"
-          /></a>
-
-          <ul class="products-action">
-            <li>
-              <a
-                href="cart.html"
-                data-tooltip="tooltip"
-                data-placement="top"
-                title="Add to Cart"
-              >
-                <i class="flaticon-shopping-cart"></i>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                data-tooltip="tooltip"
-                data-placement="top"
-                title="Add to Wishlist"
-              >
-                <i class="flaticon-heart"></i>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                data-tooltip="tooltip"
-                data-placement="top"
-                title="Quick View"
-                data-toggle="modal"
-                data-target="#productsQuickView"
-              >
-                <i class="flaticon-search"></i>
-              </a>
-            </li>
-          </ul>
-
-          <div class="new">
-            <span>New</span>
-          </div>
-        </div>
-
-        <div class="products-content">
-          <h3>
-            <a href="shop-details.html">Mint</a>
-          </h3>
-          <div class="price">
-            <span class="new-price">$49.00</span>
-            <span class="old-price">$133.00</span>
-          </div>
-          <ul class="rating">
-            <li>
-              <i class="bx bxs-star"></i>
-              <i class="bx bxs-star"></i>
-              <i class="bx bxs-star"></i>
-              <i class="bx bxs-star"></i>
-              <i class="bx bx-star"></i>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Most Viewed Products Area -->
-
-<!-- Start Blog Area -->
-<section class="blog-area pt-100 pb-70">
-  <div class="container">
-    <div class="section-title">
-      <h2>Latest Blog</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-        suspendisse
-      </p>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-4 col-md-6">
-        <div class="single-blog-item">
-          <div class="image">
-            <a href="blog-details.html"
-              ><img
-                src=" {{ asset('FrontOffice/assets/img/blog/blog-1.jpg') }} "
-                alt="image"
-            /></a>
-
-            <div class="date">
-              <span>20 December 2020</span>
-            </div>
-          </div>
-          <div class="content">
-            <h3>
-              <a href="blog-details.html"
-                >What You Should Know About Detox Water</a
-              >
-            </h3>
-            <a href="blog-details.html" class="blog-btn">Read More +</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="single-blog-item">
-          <div class="image">
-            <a href="blog-details.html"
-              ><img
-                src=" {{ asset('FrontOffice/assets/img/blog/blog-2.jpg') }} "
-                alt="image"
-            /></a>
-
-            <div class="date">
-              <span>24 December 2020</span>
-            </div>
-          </div>
-          <div class="content">
-            <h3>
-              <a href="blog-details.html"
-                >Better Hot Drink Elegant You Can Order By Online</a
-              >
-            </h3>
-            <a href="blog-details.html" class="blog-btn">Read More +</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 offset-lg-0 offset-md-3">
-        <div class="single-blog-item">
-          <div class="image">
-            <a href="blog-details.html"
-              ><img
-                src=" {{ asset('FrontOffice/assets/img/blog/blog-3.jpg') }} "
-                alt="image"
-            /></a>
-
-            <div class="date">
-              <span>29 December 2020</span>
-            </div>
-          </div>
-          <div class="content">
-            <h3>
-              <a href="blog-details.html"
-                >Role of Genetics in Treating Low-grade Glioma</a
-              >
-            </h3>
-            <a href="blog-details.html" class="blog-btn">Read More +</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Blog Area -->
-
-<!-- Start Newsletter Area -->
-<div class="newsletter-area ptb-100">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6">
-        <div class="newsletter-content">
-          <h2>Subscribe To Our Newsletter</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua quis
-            ipsum suspendisse
-          </p>
-        </div>
-      </div>
-
-      <div class="col-lg-6">
-        <form class="newsletter-form">
-          <input
-            type="email"
-            class="input-newsletter"
-            placeholder="Enter Email Address"
-            name="EMAIL"
-            required
-            autocomplete="off"
-          />
-
-          <button type="submit">Subscribe Now</button>
-
-          <div id="validator-newsletter" class="form-result"></div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Newsletter Area -->
-
-<!-- Start Partner Area -->
-<div class="partner-area ptb-100">
-  <div class="container">
-    <div class="partner-slider owl-carousel owl-theme">
-      <div class="partner-item">
-        <img
-          src=" {{ asset('FrontOffice/assets/img/partner/partner-1.png') }} "
-          alt="image"
-        />
-      </div>
-
-      <div class="partner-item">
-        <img
-          src=" {{ asset('FrontOffice/assets/img/partner/partner-2.png') }} "
-          alt="image"
-        />
-      </div>
-
-      <div class="partner-item">
-        <img
-          src=" {{ asset('FrontOffice/assets/img/partner/partner-3.png') }} "
-          alt="image"
-        />
-      </div>
-
-      <div class="partner-item">
-        <img
-          src=" {{ asset('FrontOffice/assets/img/partner/partner-4.png') }} "
-          alt="image"
-        />
-      </div>
-
-      <div class="partner-item">
-        <img
-          src=" {{ asset('FrontOffice/assets/img/partner/partner-5.png') }} "
-          alt="image"
-        />
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Partner Area -->
-{% endblock %} {% block javascripts %}
-<script src="{{ asset('js/panier3.js') }}"></script>
-<script src="{{ asset('FrontOffice/other/slide.js') }}"></script>
+											{% endfor %}
+										</span>
+									</div>
+								{% endif %}
+							</div>
+
+							<div class="products-content">
+								<h3>
+									<a href="shop-details.html">{{ produit.designation }}</a>
+								</h3>
+								{% if produit.getReduction()|length != 0 %}
+									<div class="price">
+										<span class="new-price">
+											{{ produit.nouveauPrix }}Dhs</span>
+										<span class="old-price">{{ produit.ancienPrix }}Dhs</span>
+									</div>
+								{% else %}
+									<div class="price">
+										<span class="new-price">{{ produit.ancienPrix }}Dhs</span>
+									</div>
+								{% endif %}
+								<ul class="rating">
+									<li>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bx-star"></i>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	{# ---------------------------------------------------------- End Top Products
+																							Area -
+																							------------------------------------------------------------------------------------------#}
+
+	<!-- Start Detox Water Area -->
+	<section class="detox-water-area ptb-100">
+		<div class="container">
+			<div class="section-title">
+				<h2>Produits Le plus Achété Du Mois</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+																																																																																																																			        tempor incididunt ut labore et dolore magna aliqua quis ipsum
+																																																																																																																			        suspendisse
+				</p>
+			</div>
+
+			<div class="detox-water-image">
+				<img src=" {{
+																																																																																																																			          asset('FrontOffice/assets/img/detox-water/detox-water-main.png')
+																																																																																																																			        }} " alt="image"/>
+			</div>
+		</div>
+
+		<div class="detox-water-shape">
+			<div class="shape1">
+				<img src=" {{
+																																																																																																																			          asset('FrontOffice/assets/img/detox-water/detox-water-1.png')
+																																																																																																																			        }} " alt="image"/>
+			</div>
+
+			<div class="shape2">
+				<img src=" {{
+																																																																																																																			          asset('FrontOffice/assets/img/detox-water/detox-water-2.png')
+																																																																																																																			        }} " alt="image"/>
+			</div>
+
+			<div class="shape3">
+				<img src=" {{
+																																																																																																																			          asset('FrontOffice/assets/img/detox-water/detox-water-3.png')
+																																																																																																																			        }} " alt="image"/>
+			</div>
+
+			<div class="shape4">
+				<img src=" {{
+																																																																																																																			          asset('FrontOffice/assets/img/detox-water/detox-water-4.png')
+																																																																																																																			        }} " alt="image"/>
+			</div>
+		</div>
+	</section>
+	<!-- End Detox Water Area -->
+
+	<!-- Start Department Area -->
+	<section class="department-area pt-100 pb-70">
+		<div class="container">
+			<div class="section-title">
+				<h2>Nos Categories Les Plus Populaires</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+																																																																																																																			        tempor incididunt ut labore et dolore magna aliqua quis ipsum
+																																																																																																																			        suspendisse
+				</p>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4 col-md-6">
+					<div class="single-department">
+						<div class="department-image">
+							<a href="#">
+								<img src=" {{
+																																																																																																																																																																																																															                  asset('FrontOffice/assets/img/department/department-1.jpg')
+																																																																																																																																																																																																															                }} " alt="image"/>
+							</a>
+
+							<div class="content">
+								<h3>
+									<a href="#">Fresh Milk</a>
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-6">
+					<div class="single-department">
+						<div class="department-image">
+							<a href="#">
+								<img src=" {{
+																																																																																																																																																																																																															                  asset('FrontOffice/assets/img/department/department-2.jpg')
+																																																																																																																																																																																																															                }} " alt="image"/>
+							</a>
+
+							<div class="content">
+								<h3>
+									<a href="#">Fresh Beef</a>
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-6">
+					<div class="single-department">
+						<div class="department-image">
+							<a href="#">
+								<img src=" {{
+																																																																																																																																																																																																															                  asset('FrontOffice/assets/img/department/department-3.jpg')
+																																																																																																																																																																																																															                }} " alt="image"/>
+							</a>
+
+							<div class="content">
+								<h3>
+									<a href="#">Chicken Meat</a>
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-6">
+					<div class="single-department">
+						<div class="department-image">
+							<a href="#">
+								<img src=" {{
+																																																																																																																																																																																																															                  asset('FrontOffice/assets/img/department/department-4.jpg')
+																																																																																																																																																																																																															                }} " alt="image"/>
+							</a>
+
+							<div class="content">
+								<h3>
+									<a href="#">Fresh Fruits</a>
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-6">
+					<div class="single-department">
+						<div class="department-image">
+							<a href="#">
+								<img src=" {{
+																																																																																																																																																																																																															                  asset('FrontOffice/assets/img/department/department-5.jpg')
+																																																																																																																																																																																																															                }} " alt="image"/>
+							</a>
+
+							<div class="content">
+								<h3>
+									<a href="#">Fresh Fish</a>
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-6">
+					<div class="single-department">
+						<div class="department-image">
+							<a href="#">
+								<img src=" {{
+																																																																																																																																																																																																															                  asset('FrontOffice/assets/img/department/department-6.jpg')
+																																																																																																																																																																																																															                }} " alt="image"/>
+							</a>
+
+							<div class="content">
+								<h3>
+									<a href="#">Vegetables</a>
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Department Area -->
+
+	<!-- Start Why Choose Area -->
+	<section class="why-choose-area pt-100">
+		<div class="container">
+			<div class="why-choose-item">
+				<div class="content">
+					<span>Why Choose Us</span>
+					<h3>We are Ensure of These Types</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+																																																																																																																																										          eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum
+																																																																																																																																										          suspendisse
+					</p>
+				</div>
+
+				<div class="inner-content">
+					<div class="icon">
+						<i class="flaticon-leaf"></i>
+					</div>
+					<h4>Organic</h4>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+																																																																																																																																										          eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum
+																																																																																																																																										          suspendisse
+					</p>
+				</div>
+
+				<div class="inner-content">
+					<div class="icon">
+						<i class="flaticon-heart"></i>
+					</div>
+					<h4>Fast and Easy</h4>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+																																																																																																																																										          eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum
+																																																																																																																																										          suspendisse
+					</p>
+				</div>
+
+				<div class="inner-content">
+					<div class="icon">
+						<i class="flaticon-plant"></i>
+					</div>
+					<h4>High Quality</h4>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+																																																																																																																																										          eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum
+																																																																																																																																										          suspendisse
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Why Choose Area -->
+
+	<!-- Start Featured Products Area -->
+	<section class="featured-products-area pt-100 pb-70">
+		<div class="container">
+			<div class="section-title">
+				<h2>Nouvelles Arrivages Dans Le Stock</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+																																																																																																																			        tempor incididunt ut labore et dolore magna aliqua quis ipsum
+																																																																																																																			        suspendisse
+				</p>
+			</div>
+
+			<div class="row">
+				{% for newproduct in NewProduct %}
+
+					<div class="col-lg-3 col-md-6">
+						<div class="featured-products-item">
+							<div class="products-image">
+								<a href="shop-details.html"><img src=" {{
+																																																																																																																																																																																																															                  asset(
+																																																																																																																																																																																																															                    'FrontOffice/assets/img/featured-products/featured-products-8.jpg'
+																																																																																																																																																																																																															                  )
+																																																																																																																																																																																																															                }} " alt="image"/></a>
+
+								<ul class="products-action">
+									<li>
+										<a href="cart.html" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+											<i class="flaticon-shopping-cart"></i>
+										</a>
+									</li>
+									<li>
+										<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+											<i class="flaticon-heart"></i>
+										</a>
+									</li>
+									<li>
+										<a href="#" data-tooltip="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+											<i class="flaticon-search"></i>
+										</a>
+									</li>
+								</ul>
+
+								<div class="new">
+									<span>New</span>
+								</div>
+							</div>
+
+							<div class="products-content">
+								<h3>
+									<a href="shop-details.html">{{ newproduct.designation }}</a>
+								</h3>
+								<div class="price">
+									<span class="new-price">{{ newproduct.nouveau_prix }}</span>
+									<span class="old-price">{{ newproduct.ancien_prix }}</span>
+								</div>
+								<ul class="rating">
+									<li>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bx-star"></i>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				{% else %}
+					<div class="col-lg-12 col-md-6">Aucun Arrivage Disponible</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	<!-- End Featured Products Area -->
+
+	<!-- Start Testimonial Area -->
+	<section class="testimonial-area ptb-100">
+		<div class="container">
+			<div class="section-title">
+				<h2>Client’s Feedback</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+																																																																																																																			        tempor incididunt ut labore et dolore magna aliqua quis ipsum
+																																																																																																																			        suspendisse
+				</p>
+			</div>
+
+			<div class="testimonial-slider owl-carousel owl-theme">
+				<div class="testimonial-item">
+					<div class="info">
+						<img src=" {{ asset('FrontOffice/assets/img/client/client-1.jpg') }} " alt="image"/>
+						<h3>Ken Morris</h3>
+						<span>Organic Farmer</span>
+					</div>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+																																																																																																																																										          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+																																																																																																																																										          minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip
+																																																																																																																																										          ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+																																																																																																																																										          voluptate velit esse fugiat nulla pariatur. Excepteur sint occaecat
+																																																																																																																																										          cupidatat non proident sunt in culpa qui officia deserunt mollit anim
+																																																																																																																																										          id est laborum. Sed ut perspiciatis unde omnis iste.
+					</p>
+
+					<div class="icon">
+						<i class="flaticon-right-quotes-symbol"></i>
+					</div>
+				</div>
+
+				<div class="testimonial-item">
+					<div class="info">
+						<img src=" {{ asset('FrontOffice/assets/img/client/client-2.jpg') }} " alt="image"/>
+						<h3>Johansen Lisa</h3>
+						<span>Organic Farmer</span>
+					</div>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+																																																																																																																																										          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+																																																																																																																																										          minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip
+																																																																																																																																										          ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+																																																																																																																																										          voluptate velit esse fugiat nulla pariatur. Excepteur sint occaecat
+																																																																																																																																										          cupidatat non proident sunt in culpa qui officia deserunt mollit anim
+																																																																																																																																										          id est laborum. Sed ut perspiciatis unde omnis iste.
+					</p>
+
+					<div class="icon">
+						<i class="flaticon-right-quotes-symbol"></i>
+					</div>
+				</div>
+
+				<div class="testimonial-item">
+					<div class="info">
+						<img src=" {{ asset('FrontOffice/assets/img/client/client-3.jpg') }} " alt="image"/>
+						<h3>Lodi Kheda</h3>
+						<span>Organic Farmer</span>
+					</div>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+																																																																																																																																										          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+																																																																																																																																										          minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip
+																																																																																																																																										          ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+																																																																																																																																										          voluptate velit esse fugiat nulla pariatur. Excepteur sint occaecat
+																																																																																																																																										          cupidatat non proident sunt in culpa qui officia deserunt mollit anim
+																																																																																																																																										          id est laborum. Sed ut perspiciatis unde omnis iste.
+					</p>
+
+					<div class="icon">
+						<i class="flaticon-right-quotes-symbol"></i>
+					</div>
+				</div>
+			</div>
+			{% if app.user %}
+				<a class="btn btn-warning" style="position: absolute; bottom: 10px; right: 15px" href="{{ path('app_client_feedback') }}">Donnez Votre Avis</a>
+			{% endif %}
+		</div>
+	</section>
+	<!-- End Testimonial Area -->
+
+	<!-- Start Best Sellers Products Area -->
+	<section class="top-products-area pt-100 pb-100">
+		<div class="container">
+			<div class="section-title">
+				<h2>Best Sellers Products</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+																																																																																																																			        tempor incididunt ut labore et dolore magna aliqua quis ipsum
+																																																																																																																			        suspendisse
+				</p>
+			</div>
+
+			<div class="top-products-slider owl-carousel owl-theme">
+				{% for bestSeller in bestSellers %}
+					<div class="top-products-item">
+						<div class="products-image">
+							<a href="shop-details.html"><img src=" {{
+																																																																																																																																																																																								                asset('FrontOffice/assets/img/top-products/top-products-8.jpg')
+																																																																																																																																																																																								              }} " alt="image"/></a>
+
+							<ul class="products-action">
+								<li>
+									<a href="cart.html" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+										<i class="flaticon-shopping-cart"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+										<i class="flaticon-heart"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#" data-tooltip="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+										<i class="flaticon-search"></i>
+									</a>
+								</li>
+							</ul>
+
+							<div class="sale">
+								<span>Sale</span>
+							</div>
+						</div>
+
+						<div class="products-content">
+							<h3>
+								<a href="shop-details.html">{{ bestSeller.designation }}</a>
+							</h3>
+							<div class="price">
+								<span class="new-price">{{ bestSeller.nouveau_prix }}</span>
+								<span class="old-price">{{ bestSeller.ancien_prix }}</span>
+							</div>
+							<ul class="rating">
+								<li>
+									<i class="bx bxs-star"></i>
+									<i class="bx bxs-star"></i>
+									<i class="bx bxs-star"></i>
+									<i class="bx bxs-star"></i>
+									<i class="bx bx-star"></i>
+								</li>
+							</ul>
+						</div>
+					</div>
+				{% else %}
+					<div>Aucun Best Sellers Dans le site</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	<!-- End Best Sellers Products Area -->
+
+	<!-- Start Overview Area -->
+	<section class="overview-area ptb-100">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-6 col-sm-6">
+					<div class="overview-content">
+						<h3>50% Off In This week</h3>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+																																																																																																																																																																	            eiusmod tempor incididunt ut labore et dolore magna aliqua quis
+																																																																																																																																																																	            ipsum suspendisse
+						</p>
+
+						<div class="overview-btn">
+							<a href="shop-1.html" class="default-btn">Discover Now</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-6 col-sm-6">
+					<div class="overview-video">
+						<a href="https://www.youtube.com/watch?v=Jh5oX0VRnzk" class="video-btn popup-youtube">
+							<i class="bx bxl-youtube"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Overview Area -->
+
+	<!-- Start Most Viewed Products Area -->
+	<section class="featured-products-area bg-fafafa pt-100 pb-100">
+		<div class="container">
+			<div class="section-title">
+				<h2>Most Viewed Products This Month</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+																																																																																																																			        tempor incididunt ut labore et dolore magna aliqua quis ipsum
+																																																																																																																			        suspendisse
+				</p>
+			</div>
+
+			<div
+				class="featured-products-slider owl-carousel owl-theme">
+				{# {% for item in items %}{% endfor %} #}
+				<div class="featured-products-item">
+					<div class="products-image">
+						<a href="shop-details.html"><img src=" {{
+																																																																																																																																																																	                asset(
+																																																																																																																																																																	                  'FrontOffice/assets/img/featured-products/featured-products-8.jpg'
+																																																																																																																																																																	                )
+																																																																																																																																																																	              }} " alt="image"/></a>
+
+						<ul class="products-action">
+							<li>
+								<a href="cart.html" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+									<i class="flaticon-shopping-cart"></i>
+								</a>
+							</li>
+							<li>
+								<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+									<i class="flaticon-heart"></i>
+								</a>
+							</li>
+							<li>
+								<a href="#" data-tooltip="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+									<i class="flaticon-search"></i>
+								</a>
+							</li>
+						</ul>
+
+						<div class="new">
+							<span>New</span>
+						</div>
+					</div>
+
+					<div class="products-content">
+						<h3>
+							<a href="shop-details.html">Mint</a>
+						</h3>
+						<div class="price">
+							<span class="new-price">$49.00</span>
+							<span class="old-price">$133.00</span>
+						</div>
+						<ul class="rating">
+							<li>
+								<i class="bx bxs-star"></i>
+								<i class="bx bxs-star"></i>
+								<i class="bx bxs-star"></i>
+								<i class="bx bxs-star"></i>
+								<i class="bx bx-star"></i>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Most Viewed Products Area -->
+
+	<!-- Start Blog Area -->
+	<section class="blog-area pt-100 pb-70">
+		<div class="container">
+			<div class="section-title">
+				<h2>Latest Blog</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+																																																																																																																			        tempor incididunt ut labore et dolore magna aliqua quis ipsum
+																																																																																																																			        suspendisse
+				</p>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4 col-md-6">
+					<div class="single-blog-item">
+						<div class="image">
+							<a href="blog-details.html"><img src=" {{ asset('FrontOffice/assets/img/blog/blog-1.jpg') }} " alt="image"/></a>
+
+							<div class="date">
+								<span>20 December 2020</span>
+							</div>
+						</div>
+						<div class="content">
+							<h3>
+								<a href="blog-details.html">What You Should Know About Detox Water</a>
+							</h3>
+							<a href="blog-details.html" class="blog-btn">Read More +</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-6">
+					<div class="single-blog-item">
+						<div class="image">
+							<a href="blog-details.html"><img src=" {{ asset('FrontOffice/assets/img/blog/blog-2.jpg') }} " alt="image"/></a>
+
+							<div class="date">
+								<span>24 December 2020</span>
+							</div>
+						</div>
+						<div class="content">
+							<h3>
+								<a href="blog-details.html">Better Hot Drink Elegant You Can Order By Online</a>
+							</h3>
+							<a href="blog-details.html" class="blog-btn">Read More +</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-6 offset-lg-0 offset-md-3">
+					<div class="single-blog-item">
+						<div class="image">
+							<a href="blog-details.html"><img src=" {{ asset('FrontOffice/assets/img/blog/blog-3.jpg') }} " alt="image"/></a>
+
+							<div class="date">
+								<span>29 December 2020</span>
+							</div>
+						</div>
+						<div class="content">
+							<h3>
+								<a href="blog-details.html">Role of Genetics in Treating Low-grade Glioma</a>
+							</h3>
+							<a href="blog-details.html" class="blog-btn">Read More +</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Blog Area -->
+
+	<!-- Start Newsletter Area -->
+	<div class="newsletter-area ptb-100">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-6">
+					<div class="newsletter-content">
+						<h2>Subscribe To Our Newsletter</h2>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+																																																																																																																																																																	            eiusmod tempor incididunt ut labore et dolore magna aliqua quis
+																																																																																																																																																																	            ipsum suspendisse
+						</p>
+					</div>
+				</div>
+
+				<div class="col-lg-6">
+					<form class="newsletter-form">
+						<input type="email" class="input-newsletter" placeholder="Enter Email Address" name="EMAIL" required autocomplete="off"/>
+
+						<button type="submit">Subscribe Now</button>
+
+						<div id="validator-newsletter" class="form-result"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Newsletter Area -->
+
+	<!-- Start Partner Area -->
+	<div class="partner-area ptb-100">
+		<div class="container">
+			<div class="partner-slider owl-carousel owl-theme">
+				<div class="partner-item">
+					<img src=" {{ asset('FrontOffice/assets/img/partner/partner-1.png') }} " alt="image"/>
+				</div>
+
+				<div class="partner-item">
+					<img src=" {{ asset('FrontOffice/assets/img/partner/partner-2.png') }} " alt="image"/>
+				</div>
+
+				<div class="partner-item">
+					<img src=" {{ asset('FrontOffice/assets/img/partner/partner-3.png') }} " alt="image"/>
+				</div>
+
+				<div class="partner-item">
+					<img src=" {{ asset('FrontOffice/assets/img/partner/partner-4.png') }} " alt="image"/>
+				</div>
+
+				<div class="partner-item">
+					<img src=" {{ asset('FrontOffice/assets/img/partner/partner-5.png') }} " alt="image"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Partner Area -->
+{% endblock %}
+{% block javascripts %}
+	<script src="{{ asset('js/panier3.js') }}"></script>
+	<script src="{{ asset('FrontOffice/other/slide.js') }}"></script>
 {% endblock %}

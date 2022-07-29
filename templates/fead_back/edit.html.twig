@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit FeadBack{% endblock %}
+
+{% block body %}
+    <h1>Edit FeadBack</h1>
+
+    {{ include('fead_back/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_fead_back_index') }}">back to list</a>
+
+    {{ include('fead_back/_delete_form.html.twig') }}
+{% endblock %}

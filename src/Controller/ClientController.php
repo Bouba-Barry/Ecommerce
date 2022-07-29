@@ -23,12 +23,12 @@ class ClientController extends AbstractController
 {
 
     #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,PanierRepository $panierRepository ,UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request, PanierRepository $panierRepository, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(ClientType::class, $user);
         $form->handleRequest($request);
-        $panier=new Panier();
+        $panier = new Panier();
         $panier->setUser($user);
         $panierRepository->add($panier);
 
@@ -118,4 +118,15 @@ class ClientController extends AbstractController
             'form' => $form
         ]);
     }
+
+    // #[Route('/feedback/{id}', name: 'app_client_feedback', methods: ['GET', 'POST'])]
+    // public function feedbackUser(Request $request): Response
+    // {
+    //     if ($request->isMethod('POST')) {
+    //         $name = $request->get('name');
+    //         $subject = $request->get('msg_subject');
+    //         $msg = $request->get('message');
+    //     }
+    //     return $this->render('frontend/feedback.html.twig', []);
+    // }
 }

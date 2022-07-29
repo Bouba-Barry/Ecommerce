@@ -1,0 +1,82 @@
+{% extends "frontend/index.html.twig" %}
+
+{% block content %}
+
+
+	<!-- Start Contact Area -->
+	<section class="contact-area ptb-100">
+		<div class="container">
+			<div class="section-title">
+				<h2>Partager Votre Expérience Avec Les Autres</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum suspendisse</p>
+			</div>
+
+			<div
+				class="contact-form">
+				{# <form action=" {{ path('app_client_feedback',{'id': app.user.id }) }}" method="post"> #}
+				{{ form_start(form)}}
+				<div class="row">
+					<div class="col-lg-6 col-md-6">
+						<div class="form-group">
+							<label>Pseudo Or Name *</label>
+							{# <input type="text" name="name" id="name" class="form-control" required data-error="Please enter your name"> #}
+							{{ form_row(form.pseudo) }}
+							<div class="help-block with-errors"></div>
+						</div>
+					</div>
+
+					{# <div class="col-lg-6 col-md-6">
+																																																																							<div class="form-group">
+																																																																								<label>Last Name*</label>
+																																																																								<input type="text" name="name" id="name" class="form-control" required data-error="Please enter your name">
+																																																																								<div class="help-block with-errors"></div>
+																																																																							</div>
+																																																																						</div> #}
+
+					{# <div class="col-lg-6 col-md-6">
+																																																																																																											<div class="form-group">
+																																																																																																												<label>Your Email*</label>
+																																																																																																												<input type="email" name="email" id="email" class="form-control" required data-error="Please enter your email">
+																																																																																																												<div class="help-block with-errors"></div>
+																																																																																																											</div>
+																																																																																																										</div> #}
+
+					{# <div class="col-lg-6 col-md-6">
+																																																																																																					<div class="form-group">
+																																																																																																						<label>Your Phone*</label>
+																																																																																																						<input type="text" name="phone_number" id="phone_number" required data-error="Please enter your number" class="form-control">
+																																																																																																						<div class="help-block with-errors"></div>
+																																																																																																					</div>
+																																																																																																				</div> #}
+
+						<div class="col-lg-6 col-md-6"> <div class="form-group">
+							<label>Your Subject*</label>
+							<input type="text" name="msg_subject" id="msg_subject" class="form-control" required data-error="Please enter your subject">
+							<div class="help-block with-errors"></div>
+						</div>
+					</div>
+
+					<div class="col-lg-12 col-md-12">
+						<div class="form-group">
+							<label>Your Message*</label>
+							{# <textarea name="message" class="form-control" id="message" cols="30" rows="6" required data-error="Write your message"></textarea> #}
+							{{ form_row(form.content) }}
+							<div class="help-block with-errors"></div>
+						</div>
+					</div>
+
+					<div class="col-lg-12 col-md-12">
+						<button class="btn btn-warning">{{ button_label|default('Send') }}</button>
+
+
+						<div id="msgSubmit" class="h3 text-center hidden"></div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				{# </form> #}
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</section>
+	<!-- End Contact Area -->
+{% endblock %}
