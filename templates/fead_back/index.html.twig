@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FeadBack index{% endblock %}
+
+{% block body %}
+    <h1>FeadBack index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Content</th>
+                <th>Create_at</th>
+                <th>Update_at</th>
+                <th>Pseudo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fead_back in fead_backs %}
+            <tr>
+                <td>{{ fead_back.id }}</td>
+                <td>{{ fead_back.content }}</td>
+                <td>{{ fead_back.createAt ? fead_back.createAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ fead_back.updateAt ? fead_back.updateAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ fead_back.pseudo }}</td>
+                <td>
+                    <a href="{{ path('app_fead_back_show', {'id': fead_back.id}) }}">show</a>
+                    <a href="{{ path('app_fead_back_edit', {'id': fead_back.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_fead_back_new') }}">Create new</a>
+{% endblock %}

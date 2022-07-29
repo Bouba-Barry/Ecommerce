@@ -29,6 +29,15 @@ class FeadBack
     #[ORM\ManyToOne(inversedBy: 'feadBacks')]
     private ?Produit $produit = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pseudo = null;
+
+    public function __construct()
+    {
+        $this->create_at = new \DateTimeImmutable('now');
+        $this->update_at = new \DateTimeImmutable('now');
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +99,18 @@ class FeadBack
     public function setProduit(?Produit $produit): self
     {
         $this->produit = $produit;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(?string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }
