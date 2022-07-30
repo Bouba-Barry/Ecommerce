@@ -83,23 +83,20 @@ class HomeController extends AbstractController
     }
 
     #[Route('/panier_check/{id}/{id_user}', name: 'app_panier_check', methods: ['GET'])]
-    public function check_panier($id,$id_user,UserRepository $userRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine):JsonResponse
+    public function check_panier($id, $id_user, UserRepository $userRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
     {
 
-     $panier=$panierRepository->findOneBy(['user'=> $userRepository->findOneBy(['id'=> $id_user])  ]);
-  
-     $panier=$panierRepository->check($id,$panier->getId());
+        $panier = $panierRepository->findOneBy(['user' => $userRepository->findOneBy(['id' => $id_user])]);
 
-     $panier=json_decode($panier);
-     
-     if(count($panier)>0){
-        return $this->json(1);
-     }
-     else{
-        return $this->json(0);
-     }
+        $panier = $panierRepository->check($id, $panier->getId());
 
+        $panier = json_decode($panier);
 
+        if (count($panier) > 0) {
+            return $this->json(1);
+        } else {
+            return $this->json(0);
+        }
     }
 
 
@@ -178,9 +175,9 @@ class HomeController extends AbstractController
         $json = $serializer->serialize($produit, 'json', ['groups' => ['prod:read']]);
         // dd($this->json($res));
         // dd($t);
-      
+
         $json = json_decode($json);
-       
+
         return $this->json($json);
     }
 
@@ -203,7 +200,7 @@ class HomeController extends AbstractController
         // dd($produit);
 
         $produit = $produitRepository->find($id);
-
+        // dd($produit);
 
         $produits_similaires = $produitRepository->findBy(['sous_categorie' => $produit->getSousCategorie()]);
 
@@ -218,6 +215,7 @@ class HomeController extends AbstractController
         $reviews=$feadBackRepository->findAll();
         // dd($produits_en_relation);
         // dd($produits_similaires);
+        // dd($popular_products);
 
         return $this->render('frontend/shop-details.html.twig', [
             'produit' => $produit,
@@ -434,10 +432,10 @@ class HomeController extends AbstractController
         // $findsearch = $produitRepository->findBySearch('ome');
         // dd($findsearch);
         // dd($plusVendus);
-        $produits=$produitRepository->findAll();
-       
-        $produits_reduction=$produitRepository->get_produit_reduction();
-        $reductions=$reductionRepository->findAll();
+        $produits = $produitRepository->findAll();
+
+        $produits_reduction = $produitRepository->get_produit_reduction();
+        $reductions = $reductionRepository->findAll();
         // dd($produits_reduction);
         // $json = $serializer->serialize($produits, 'json', ['groups' => ['prod:read']]);
 

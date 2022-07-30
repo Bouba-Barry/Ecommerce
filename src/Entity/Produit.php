@@ -95,6 +95,9 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: FeadBack::class)]
     private Collection $feadBacks;
 
+    #[ORM\ManyToMany(targetEntity: Wishlist::class, mappedBy: 'produit')]
+    private Collection $wishlists;
+
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable('now');
@@ -107,6 +110,7 @@ class Produit
         $this->images = new ArrayCollection();
         $this->attributs = new ArrayCollection();
         $this->feadBacks = new ArrayCollection();
+        $this->wishlists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -414,6 +418,33 @@ class Produit
             if ($feadBack->getProduit() === $this) {
                 $feadBack->setProduit(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Wishlist>
+     */
+    public function getWishlists(): Collection
+    {
+        return $this->wishlists;
+    }
+
+    public function addWishlist(Wishlist $wishlist): self
+    {
+        if (!$this->wishlists->contains($wishlist)) {
+            $this->wishlists[] = $wishlist;
+            $wishlist->addProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWishlist(Wishlist $wishlist): self
+    {
+        if ($this->wishlists->removeElement($wishlist)) {
+            $wishlist->removeProduit($this);
         }
 
         return $this;
