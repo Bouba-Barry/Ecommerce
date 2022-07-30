@@ -721,14 +721,14 @@ Area -
         <div class="col-lg-6 col-sm-6">
           <div class="overview-content">
             <h3>
-              50% Jusqu A le {{ reduction.datefin|date('Y-m-d \\HH:i:s') }}
+              {{ reduction.pourcentage }} Jusqu A le {{ reduction.datefin|date('Y-m-d \\HH:i:s') }}
             </h3>
             <p>
               {{ reduction.designation }}
             </p>
 
             <div class="overview-btn">
-              <a href="shop-1.html" class="default-btn">Discover Products </a>
+              <a href="{{ path('app_discover_product', { id : reduction.id } ) }}" class="default-btn">Discover Products </a>
             </div>
           </div>
         </div>

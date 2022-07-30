@@ -219,6 +219,7 @@
                   </div>
                 </div>
 
+                <!-- start reviews -->
                 <div class="tabs_item">
                   <div class="products-details-tab-content">
                     <div class="product-review-form">
@@ -235,6 +236,7 @@
                         <a href="#" class="default-btn"> Write a Review </a>
                       </div>
                       <div class="review-comments">
+                        {% for review in reviews %}
                         <div class="review-item">
                           <div class="rating">
                             <i class="bx bxs-star"></i>
@@ -243,67 +245,19 @@
                             <i class="bx bxs-star"></i>
                             <i class="bx bxs-star"></i>
                           </div>
-                          <h3>Good</h3>
+                          <h3>{{ review.titre }}</h3>
                           <span
-                            ><strong>Admin</strong> on
-                            <strong>Sep 21, 2020</strong></span
+                            ><strong>{{ review.getUser().nom }}</strong> on
+                            <strong>{{ review.create_at }}</strong></span
                           >
                           <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation.
+                            {{ review.content }}
                           </p>
                           <a href="#" class="review-report-link"
                             >Report as Inappropriate</a
                           >
                         </div>
-                        <div class="review-item">
-                          <div class="rating">
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                          </div>
-                          <h3>Good</h3>
-                          <span
-                            ><strong>Admin</strong> on
-                            <strong>Sep 21, 2020</strong></span
-                          >
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation.
-                          </p>
-                          <a href="#" class="review-report-link"
-                            >Report as Inappropriate</a
-                          >
-                        </div>
-                        <div class="review-item">
-                          <div class="rating">
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                          </div>
-                          <h3>Good</h3>
-                          <span
-                            ><strong>Admin</strong> on
-                            <strong>Sep 21, 2020</strong></span
-                          >
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation.
-                          </p>
-                          <a href="#" class="review-report-link"
-                            >Report as Inappropriate</a
-                          >
-                        </div>
+                        {% endfor %}
                       </div>
                       <div class="review-form">
                         <h3>Write a Review</h3>
@@ -365,6 +319,7 @@
                     </div>
                   </div>
                 </div>
+                <!-- end reviews -->
               </div>
             </div>
           </div>

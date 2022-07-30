@@ -32,6 +32,9 @@ class FeadBack
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $pseudo = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $titre = null;
+
     public function __construct()
     {
         $this->create_at = new \DateTimeImmutable('now');
@@ -111,6 +114,18 @@ class FeadBack
     public function setPseudo(?string $pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(?string $titre): self
+    {
+        $this->titre = $titre;
 
         return $this;
     }

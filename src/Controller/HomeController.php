@@ -8,8 +8,10 @@ use App\Entity\Ville;
 use App\Entity\Panier;
 use App\Entity\Region;
 use App\Entity\Produit;
+use App\Entity\Reduction;
 use Doctrine\ORM\Mapping\Id;
 use App\Entity\SousCategorie;
+use App\Repository\FeadBackRepository;
 use App\Repository\UserRepository;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
@@ -32,6 +34,27 @@ use Symfony\Component\Messenger\Transport\Serialization\Serializer;
 // #[Route('/admin')]
 class HomeController extends AbstractController
 {
+
+    #[Route('/discover_product/{id}', name: 'app_discover_product', methods: ['GET'])]
+    public function discover_product(Reduction $reduction,SerializerInterface $serializer , ProduitRepository $produitRepository, PanierRepository $panierRepository)
+    {
+       
+        $products=$reduction->getProduits();
+        // $json = $serializer->serialize($products, 'json', ['groups' => ['prod:read']]);
+        
+
+        return $this->render('frontend/discover_product.html.twig', [
+            'produits' => $products
+        ]);
+      
+
+
+
+    }
+
+
+
+
 
 
     #[Route('/checkout/{id}', name: 'app_checkout', methods: ['GET'])]
@@ -175,7 +198,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/shop_details/{id}', name: 'app_shop_details', methods: ['GET'])]
-    public function shop_details($id, ProduitRepository $produitRepository, SousCategorieRepository $sousCategorieRepository)
+    public function shop_details($id, FeadBackRepository $feadBackRepository ,ProduitRepository $produitRepository, SousCategorieRepository $sousCategorieRepository)
     {
         // dd($produit);
 
@@ -192,6 +215,7 @@ class HomeController extends AbstractController
         $produits_en_relation = $produitRepository->findBy(['sous_categorie' => $sous_categories]);
 
         $popular_products = $produitRepository->PopularProducts();
+        $reviews=$feadBackRepository->findAll();
         // dd($produits_en_relation);
         // dd($produits_similaires);
 
@@ -199,7 +223,8 @@ class HomeController extends AbstractController
             'produit' => $produit,
             'produits_similaires' => $produits_similaires,
             'produits_en_relation' => $produits_en_relation,
-            'popular_products' => $popular_products
+            'popular_products' => $popular_products,
+            'reviews' => $reviews
         ]);
     }
 
