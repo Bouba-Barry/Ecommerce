@@ -1,0 +1,34 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block content %}
+
+
+      <div class="container mt-5">
+                <h2 class="bg-light text-primary text-center mt-3 fs-5 p-4">Information Relative à votre payment :</h2>
+                <table class="table table-hover table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nom Payer</th>
+                            <th scope="col">Email Payer </th>
+                            <th scope="col">Montant</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Date Payment</th>
+                            <th scope="col">Livraison</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">{{ detail_facture.nom }}</th>
+                            <td>{{ detail_facture.email }}</td>
+                            <td>{{ detail_facture.montant }}$</td>
+                             <td>{{ detail_facture.status }}</td>
+                             <td>{{detail_facture.date_pay | date("d/m/Y", "Europe/Paris") }}</td>
+                            <td>{{ commande.getAdresseLivraison()  }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+{% endblock %}

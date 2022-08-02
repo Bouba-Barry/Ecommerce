@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\CommandeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 class Commande
@@ -13,34 +14,44 @@ class Commande
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['cmd:read'])]
     private $id;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(['cmd:read'])]
     private $date_cmd;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['cmd:read'])]
     private $adresse_livraison;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['cmd:read'])]
     private $method_payement;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'commandes')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['cmd:read'])]
     private $user;
 
     #[ORM\ManyToMany(targetEntity: Produit::class, inversedBy: 'commandes')]
+    // #[Groups(['cmd:read'])]
     private $produit;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['cmd:read'])]
     private $create_at;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['cmd:read'])]
     private $update_at;
 
     public function __construct()
     {
         $this->create_at = new \DateTimeImmutable('now');
         $this->update_at = new \DateTimeImmutable('now');
+
+        $this->date_cmd = new \DateTimeImmutable('now');
 
         $this->produit = new ArrayCollection();
     }

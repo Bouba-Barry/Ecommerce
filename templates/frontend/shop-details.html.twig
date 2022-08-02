@@ -1,672 +1,569 @@
-{% extends 'frontend/index.html.twig' %} {% block content %}
+{% extends 'frontend/index.html.twig' %}
+{% block content %}
 
-<!-- End Sidebar Modal -->
-<p id="user_id" style="display: none">
-  {% if app.user %} {{ app.user.id }} {% endif %}
-</p>
-<!-- Start Page Banner -->
-<div class="page-banner-area item-bg4">
-  <div class="d-table">
-    <div class="d-table-cell">
-      <div class="container">
-        <div class="page-banner-content">
-          <h2>Shop Details</h2>
-          <ul>
-            <li>
-              <a href="{{ path('app_home') }}">Home</a>
-            </li>
-            <li>Shop Details</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Page Banner -->
+	<!-- End Sidebar Modal -->
+	<p id="user_id" style="display: none">
+		{% if app.user %}
+			{{ app.user.id }}
+		{% endif %}
+	</p>
+	<!-- Start Page Banner -->
+	<div class="page-banner-area item-bg4">
+		<div class="d-table">
+			<div class="d-table-cell">
+				<div class="container">
+					<div class="page-banner-content">
+						<h2>Shop Details</h2>
+						<ul>
+							<li>
+								<a href="{{ path('app_home') }}">Home</a>
+							</li>
+							<li>Shop Details</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Page Banner -->
 
-<!-- Start Product Details Area -->
-<section class="product-details-area pt-100 pb-70">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8">
-        <div class="row">
-          <div class="col-lg-6 col-md-12">
-            <div class="product-details-image">
-              <a href="#" id="image_principale">
-                <img
-                  src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
-                  alt=""
-                />
-              </a>
-              <img
-                id="image_principale_hidden"
-                style="display: none"
-                src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
-                alt=""
-              />
-            </div>
-          </div>
+	<!-- Start Product Details Area -->
+	<section class="product-details-area pt-100 pb-70">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="row">
+						<div class="col-lg-6 col-md-12">
+							<div class="product-details-image">
+								{% if produit %}
+									<a href="#" id="image_principale">
 
-          <div class="col-lg-6 col-md-12">
-            <div class="product-details-desc">
-              <h3>{{ produit.designation }}</h3>
-              <div class="price">
-                {% if produit.getReduction()|length != 0 %}
-                <div class="price">
-                  <span class="new-price"> {{ produit.nouveauPrix }}Dhs</span>
-                  <span class="old-price">{{ produit.ancienPrix }}Dhs</span>
-                </div>
-                {% else %}
-                <div class="price">
-                  <span class="new-price">{{ produit.ancienPrix }}Dhs</span>
-                </div>
-                {% endif %} {% if produit.getReduction()|length != 0 %}
-                <div class="sale">
-                  <span>
-                    {% for produit_reduction in produit.getReduction() %} -{{
+
+										<img src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}" alt=""/>
+									</a>
+									<img id="image_principale_hidden" style="display: none" src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}" alt=""/>
+								</div>
+							{% endif %}
+						</div>
+
+						<div class="col-lg-6 col-md-12">
+							<div class="product-details-desc">
+								<h3>{{ produit.designation }}</h3>
+								<div class="price">
+									{% if produit.getReduction()|length != 0 %}
+										<div class="price">
+											<span class="new-price">
+												{{ produit.nouveauPrix }}Dhs</span>
+											<span class="old-price">{{ produit.ancienPrix }}Dhs</span>
+										</div>
+									{% else %}
+										<div class="price">
+											<span class="new-price">{{ produit.ancienPrix }}Dhs</span>
+										</div>
+									{% endif %}
+									{% if produit.getReduction()|length != 0 %}
+										<div class="sale">
+											<span>
+												{% for produit_reduction in produit.getReduction() %}
+													-{{
                       produit_reduction.getPourcentage()
                     }}
-                    {% endfor %}
-                  </span>
-                </div>
-                {% endif %}
-              </div>
-              <div class="product-review">
-                <div class="rating">
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                </div>
-                <a href="#" class="rating-count">3 reviews</a>
-              </div>
-              <div class="product-review">
-                {% if produit.getAttributs()|length !=0 %} {% for
-                produit_attribut in produit.getAttributs() %} {% if
+												{% endfor %}
+											</span>
+										</div>
+									{% endif %}
+								</div>
+								<div class="product-review">
+									<div class="rating">
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+									</div>
+									<a href="#" class="rating-count">3 reviews</a>
+								</div>
+								<div class="product-review">
+									{% if produit.getAttributs()|length !=0 %}
+										{% for
+                produit_attribut in produit.getAttributs() %}
+											{% if
                 produit_attribut.getVariations()|length != 0 %}
-                <h5>
-                  {{ produit_attribut.nom }} : &nbsp; {% for produit_variation
-                  in produit_attribut.getVariations() %} {% if produit in
+												<h5>
+													{{ produit_attribut.nom }}
+													: &nbsp;
+													{% for produit_variation
+                  in produit_attribut.getVariations() %}
+														{% if produit in
                   produit_variation.getProduits() %}
-                  <p style="display: inline" id="variation_nom"></p>
+															<p style="display: inline" id="variation_nom"></p>
 
-                  <p style="display: none" class="hidden_variation_nom">
-                    {{ produit_variation.nom }}
-                  </p>
-                </h5>
-                {% for image in produit_variation.getImages() %} {% if
+															<p style="display: none" class="hidden_variation_nom">
+																{{ produit_variation.nom }}
+															</p>
+														</h5>
+														{% for image in produit_variation.getImages() %}
+															{% if
                 produit==image.getProduit() %}
-                <a href="#image_principale">
-                  <img
-                    class="image"
-                    style="width: 40px; height: 40px"
-                    src="{{ asset('uploads/others/' ~ image.url) }}"
-                    alt=""
-                  />
-                </a>
-                {% endif %} {% endfor %} {% endif %} {% endfor %}
-                <a href="#image_principale">
-                  <img
-                    class="image"
-                    style="width: 40px; height: 40px"
-                    src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
-                    alt=""
-                  />
-                </a>
-                {% endif %} {% endfor %} {% endif %}
-              </div>
-              <p>
-                {{ produit.description }}
-              </p>
-              <div class="product-add-to-cart">
-                <div class="input-counter">
-                  <span
-                    id="progressbtn2{{ produit.id }}"
-                    class="minus-btn progressbtn2"
-                  >
-                    <i class="bx bx-minus"></i>
-                  </span>
-                  <input class="valprogress" type="text" min="0" value="1" />
-                  <span
-                    class="plus-btn progressbtn1"
-                    id="progressbtn1{{ produit.id }}"
-                  >
-                    <i class="bx bx-plus"></i>
-                  </span>
-                </div>
-                <button
-                  type="submit"
-                  id="addcard{{ produit.id }}"
-                  class="default-btn addcard"
-                >
-                  Add to cart
-                  <span></span>
-                </button>
-              </div>
+																<a href="#image_principale">
+																	<img class="image" style="width: 40px; height: 40px" src="{{ asset('uploads/others/' ~ image.url) }}" alt=""/>
+																</a>
+															{% endif %}
+														{% endfor %}
+													{% endif %}
+												{% endfor %}
+												<a href="#image_principale">
+													<img class="image" style="width: 40px; height: 40px" src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}" alt=""/>
+												</a>
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								</div>
+								<p>
+									{{ produit.description }}
+								</p>
+								<div class="product-add-to-cart">
+									<div class="input-counter">
+										<span id="progressbtn2{{ produit.id }}" class="minus-btn progressbtn2">
+											<i class="bx bx-minus"></i>
+										</span>
+										<input class="valprogress" type="text" min="0" value="1"/>
+										<span class="plus-btn progressbtn1" id="progressbtn1{{ produit.id }}">
+											<i class="bx bx-plus"></i>
+										</span>
+									</div>
+									<button type="submit" id="addcard{{ produit.id }}" class="default-btn addcard">
+										Add to cart
+										<span></span>
+									</button>
+								</div>
 
-              <div class="buy-checkbox-btn">
-                <div class="item">
-                  <input class="inp-cbx" id="cbx" type="checkbox" />
-                  <label class="cbx" for="cbx">
-                    <span>
-                      <svg width="12px" height="10px" viewbox="0 0 12 10">
-                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                      </svg>
-                    </span>
-                    <span>I agree with the terms and conditions</span>
-                  </label>
-                </div>
-                <div class="item">
-                  <a href="#" class="btn btn-light">Buy it now!</a>
-                </div>
-              </div>
+								<div class="buy-checkbox-btn">
+									<div class="item">
+										<input class="inp-cbx" id="cbx" type="checkbox"/>
+										<label class="cbx" for="cbx">
+											<span>
+												<svg width="12px" height="10px" viewbox="0 0 12 10">
+													<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+												</svg>
+											</span>
+											<span>I agree with the terms and conditions</span>
+										</label>
+									</div>
+									<div class="item">
+										<a href="#" class="btn btn-light">Buy it now!</a>
+									</div>
+								</div>
 
-              <div class="products-share">
-                <ul class="social">
-                  <li><span>Share:</span></li>
-                  <li>
-                    <a href="#" class="facebook" target="_blank"
-                      ><i class="bx bxl-facebook"></i
-                    ></a>
-                  </li>
-                  <li>
-                    <a href="#" class="twitter" target="_blank"
-                      ><i class="bx bxl-twitter"></i
-                    ></a>
-                  </li>
-                  <li>
-                    <a href="#" class="linkedin" target="_blank"
-                      ><i class="bx bxl-linkedin"></i
-                    ></a>
-                  </li>
-                  <li>
-                    <a href="#" class="instagram" target="_blank"
-                      ><i class="bx bxl-instagram"></i
-                    ></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+								<div class="products-share">
+									<ul class="social">
+										<li>
+											<span>Share:</span>
+										</li>
+										<li>
+											<a href="#" class="facebook" target="_blank">
+												<i class="bx bxl-facebook"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" class="twitter" target="_blank">
+												<i class="bx bxl-twitter"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" class="linkedin" target="_blank">
+												<i class="bx bxl-linkedin"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" class="instagram" target="_blank">
+												<i class="bx bxl-instagram"></i>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
 
-        <div class="tab products-details-tab">
-          <div class="row">
-            <div class="col-lg-12 col-md-12">
-              <ul class="tabs">
-                <li>
-                  <a href="#">
-                    <div class="dot"></div>
-                    Description
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="dot"></div>
-                    Reviews
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div class="col-lg-12 col-md-12">
-              <div class="tab_content">
-                <div class="tabs_item">
-                  <div class="products-details-tab-content">
-                    <p>
-                      {{ produit.description }}
-                    </p>
-                  </div>
-                </div>
+					<div class="tab products-details-tab">
+						<div class="row">
+							<div class="col-lg-12 col-md-12">
+								<ul class="tabs">
+									<li>
+										<a href="#">
+											<div class="dot"></div>
+											Description
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="dot"></div>
+											Reviews
+										</a>
+									</li>
+								</ul>
+							</div>
+							<div class="col-lg-12 col-md-12">
+								<div class="tab_content">
+									<div class="tabs_item">
+										<div class="products-details-tab-content">
+											<p>
+												{{ produit.description }}
+											</p>
+										</div>
+									</div>
 
-                <!-- start reviews -->
-                <div class="tabs_item">
-                  <div class="products-details-tab-content">
-                    <div class="product-review-form">
-                      <h3>Customer Reviews</h3>
-                      <div class="review-title">
-                        <div class="rating">
-                          <i class="bx bxs-star"></i>
-                          <i class="bx bxs-star"></i>
-                          <i class="bx bxs-star"></i>
-                          <i class="bx bxs-star"></i>
-                          <i class="bx bxs-star"></i>
-                        </div>
-                        <p>Based on 3 reviews</p>
-                        <a href="#" class="default-btn"> Write a Review </a>
-                      </div>
-                      <div class="review-comments">
-                        {% for review in reviews %}
-                        <div class="review-item">
-                          <div class="rating">
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                          </div>
-                          <h3>{{ review.titre }}</h3>
-                          <span
-                            ><strong>{{ review.getUser().nom }}</strong> on
-                            <strong>{{ review.create_at }}</strong></span
-                          >
-                          <p>
-                            {{ review.content }}
-                          </p>
-                          <a href="#" class="review-report-link"
-                            >Report as Inappropriate</a
-                          >
-                        </div>
-                        {% endfor %}
-                      </div>
-                      <div class="review-form">
-                        <h3>Write a Review</h3>
-                        <form>
-                          <div class="row">
-                            <div class="col-lg-6 col-md-6">
-                              <div class="form-group">
-                                <input
-                                  type="text"
-                                  id="name"
-                                  name="name"
-                                  placeholder="Enter your name"
-                                  class="form-control"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                              <div class="form-group">
-                                <input
-                                  type="email"
-                                  id="email"
-                                  name="email"
-                                  placeholder="Enter your email"
-                                  class="form-control"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                              <div class="form-group">
-                                <input
-                                  type="text"
-                                  id="review-title"
-                                  name="review-title"
-                                  placeholder="Enter your review a title"
-                                  class="form-control"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                              <div class="form-group">
-                                <textarea
-                                  name="review-body"
-                                  id="review-body"
-                                  cols="30"
-                                  rows="7"
-                                  placeholder="Write your comments here"
-                                  class="form-control"
-                                ></textarea>
-                              </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                              <button type="submit" class="default-btn">
-                                Submit Review
-                              </button>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- end reviews -->
-              </div>
-            </div>
-          </div>
-        </div>
+									<!-- start reviews -->
+									<div class="tabs_item">
+										<div class="products-details-tab-content">
+											<div class="product-review-form">
+												<h3>Customer Reviews</h3>
+												<div class="review-title">
+													<div class="rating">
+														<i class="bx bxs-star"></i>
+														<i class="bx bxs-star"></i>
+														<i class="bx bxs-star"></i>
+														<i class="bx bxs-star"></i>
+														<i class="bx bxs-star"></i>
+													</div>
+													<p>Based on 3 reviews</p>
+													<a href="#" class="default-btn">
+														Write a Review
+													</a>
+												</div>
+												<div class="review-comments">
+													{% for review in reviews %}
+														<div class="review-item">
+															<div class="rating">
+																<i class="bx bxs-star"></i>
+																<i class="bx bxs-star"></i>
+																<i class="bx bxs-star"></i>
+																<i class="bx bxs-star"></i>
+																<i class="bx bxs-star"></i>
+															</div>
+															<h3>{{ review.titre }}</h3>
+															<span>
+																<strong>{{ review.getUser().nom }}</strong>
+																on
+																{# <strong>{{ review.create_at }}</strong> #}
+															</span>
+															<p>
+																{{ review.content }}
+															</p>
+															<a href="#" class="review-report-link">Report as Inappropriate</a>
+														</div>
+													{% endfor %}
+												</div>
+												<div class="review-form">
+													<h3>Write a Review</h3>
+													{# <form id="reviewForm"> #}
+														<div class="row">
+															<div class="col-lg-6 col-md-6">
+																<div class="form-group">
+																	<input type="text" id="name" name="name" placeholder="Enter your pseudo or Name" class="form-control"/>
+																	<span id="error_name"></span>
+																</div>
+															</div>
+															<input type="hidden" id="prod" name="prod" value={{ produit.id }} class="form-control"/>
 
-        <div class="related-shop">
-          <h4>Produits similaires</h4>
-          <p>les Produits De meme sous categorie que ce Produit</p>
-          <div class="row">
-            {% for produit_similaire in produits_similaires %} {% if
+															<div class="col-lg-12 col-md-12">
+																<div class="form-group">
+																	<input type="text" id="review-title" name="review-title" placeholder="Enter your review a title" class="form-control"/>
+																	<span id="error_title"></span>
+																</div>
+															</div>
+															<div class="col-lg-12 col-md-12">
+																<div class="form-group">
+																	<textarea name="review-body" id="review-body" cols="30" rows="7" placeholder="Write your comments here" class="form-control"></textarea>
+																	<span id="error_body"></span>
+																</div>
+															</div>
+															<div class="col-lg-12 col-md-12">
+																<button type="submit" id="submit" class="default-btn">
+																	Submit Review
+																</button>
+															</div>
+															<div class="col-lg-12 col-md-12" id="response"></div>
+														</div>
+													{# </form> #}
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- end reviews -->
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="related-shop">
+						<h4>Produits similaires</h4>
+						<p>les Produits De meme sous categorie que ce Produit</p>
+						<div class="row">
+							{% for produit_similaire in produits_similaires %}
+								{% if
             produit_similaire != produit %}
-            <div class="col-lg-6 col-md-6">
-              <div class="top-products-item">
-                <div class="products-image">
-                  <a
-                    href="{{
-                      path('app_shop_details', { id: produit_similaire.id })
-                    }}"
-                    ><img
-                      src="{{ asset('uploads/produits/' ~ produit_similaire.getImageProduit() ) }}"
-                      alt="image"
-                  /></a>
+									<div class="col-lg-6 col-md-6">
+										<div class="top-products-item">
+											<div class="products-image">
+												<a href="{{ path('app_shop_details', { id: produit_similaire.id }) }}"><img src="{{ asset('uploads/produits/' ~ produit_similaire.getImageProduit() ) }}" alt="image"/></a>
 
-                  <ul class="products-action">
-                    <li>
-                      <a
-                        id="addtocart{{ produit_similaire.id }}"
-                        class="addtocart"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Add to Cart"
-                        ><i class="flaticon-shopping-cart"></i
-                      ></a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Add to Wishlist"
-                        ><i class="flaticon-heart"></i
-                      ></a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        id="searchbtn{{ produit_similaire.id }}"
-                        class="search"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Quick View"
-                        data-toggle="modal"
-                        data-target="#productsQuickView"
-                      >
-                        <i class="flaticon-search"></i>
-                      </a>
-                    </li>
-                  </ul>
+												<ul class="products-action">
+													<li>
+														<a id="addtocart{{ produit_similaire.id }}" class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+															<i class="flaticon-shopping-cart"></i>
+														</a>
+													</li>
+													<li>
+														<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+															<i class="flaticon-heart"></i>
+														</a>
+													</li>
+													<li>
+														<a href="#" id="searchbtn{{ produit_similaire.id }}" class="search" data-tooltip="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+															<i class="flaticon-search"></i>
+														</a>
+													</li>
+												</ul>
 
-                  {% if produit_similaire.getReduction()|length != 0 %}
-                  <div class="sale">
-                    <span>
-                      {% for produit_reduction in
-                      produit_similaire.getReduction() %} -{{
+												{% if produit_similaire.getReduction()|length != 0 %}
+													<div class="sale">
+														<span>
+															{% for produit_reduction in
+                      produit_similaire.getReduction() %}
+																-{{
                         produit_reduction.getPourcentage()
                       }}
-                      {% endfor %}
-                    </span>
-                  </div>
-                  {% endif %}
-                </div>
+															{% endfor %}
+														</span>
+													</div>
+												{% endif %}
+											</div>
 
-                <div class="products-content">
-                  <h3>
-                    <a
-                      href="{{
-                        path('app_shop_details', { id: produit_similaire.id })
-                      }}"
-                      >{{ produit_similaire.designation }}</a
-                    >
-                  </h3>
-                  {% if produit_similaire.getReduction()|length != 0 %}
-                  <div class="price">
-                    <span class="new-price">
-                      {{ produit_similaire.nouveauPrix }}Dhs</span
-                    >
-                    <span class="old-price"
-                      >{{ produit_similaire.ancienPrix }}Dhs</span
-                    >
-                  </div>
-                  {% else %}
-                  <div class="price">
-                    <span class="new-price"
-                      >{{ produit_similaire.ancienPrix }}Dhs</span
-                    >
-                  </div>
-                  {% endif %}
-                  <ul class="rating">
-                    <li>
-                      <i class="bx bxs-star"></i>
-                      <i class="bx bxs-star"></i>
-                      <i class="bx bxs-star"></i>
-                      <i class="bx bxs-star"></i>
-                      <i class="bx bx-star"></i>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            {% endif %} {% endfor %}
-          </div>
-        </div>
-      </div>
+											<div class="products-content">
+												<h3>
+													<a href="{{ path('app_shop_details', { id: produit_similaire.id }) }}">{{ produit_similaire.designation }}</a>
+												</h3>
+												{% if produit_similaire.getReduction()|length != 0 %}
+													<div class="price">
+														<span class="new-price">
+															{{ produit_similaire.nouveauPrix }}Dhs</span>
+														<span class="old-price">{{ produit_similaire.ancienPrix }}Dhs</span>
+													</div>
+												{% else %}
+													<div class="price">
+														<span class="new-price">{{ produit_similaire.ancienPrix }}Dhs</span>
+													</div>
+												{% endif %}
+												<ul class="rating">
+													<li>
+														<i class="bx bxs-star"></i>
+														<i class="bx bxs-star"></i>
+														<i class="bx bxs-star"></i>
+														<i class="bx bxs-star"></i>
+														<i class="bx bx-star"></i>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								{% endif %}
+							{% endfor %}
+						</div>
+					</div>
+				</div>
 
-      <div class="col-lg-4 col-md-12">
-        <aside class="widget-area">
-          {#
-          <section class="widget widget_search">
-            <h3 class="widget-title">Search</h3>
+				<div class="col-lg-4 col-md-12">
+					<aside class="widget-area">
+						{#
+																																																																																																																																																																																																																								          <section class="widget widget_search">
+																																																																																																																																																																																																																								            <h3 class="widget-title">Search</h3>
+																																																																																																																																																																																																																								
+																																																																																																																																																																																																																								            <form class="search-form">
+																																																																																																																																																																																																																								              <label>
+																																																																																																																																																																																																																								                <span class="screen-reader-text">Search for:</span>
+																																																																																																																																																																																																																								                <input
+																																																																																																																																																																																																																								                  type="search"
+																																																																																																																																																																																																																								                  class="search-field"
+																																																																																																																																																																																																																								                  placeholder="Search..."
+																																																																																																																																																																																																																								                />
+																																																																																																																																																																																																																								              </label>
+																																																																																																																																																																																																																								              <button type="submit">
+																																																																																																																																																																																																																								                <i class="flaticon-search"></i>
+																																																																																																																																																																																																																								              </button>
+																																																																																																																																																																																																																								            </form>
+																																																																																																																																																																																																																								          </section>
+																																																																																																																																																																																																																								          #}
+						{#
+																																																																																																																																																																																																																								          <section class="widget price_list_widget">
+																																																																																																																																																																																																																								            <h3 class="widget-title">Price</h3>
+																																																																																																																																																																																																																								
+																																																																																																																																																																																																																								            <form>
+																																																																																																																																																																																																																								              <div class="form-group">
+																																																																																																																																																																																																																								                <input type="text" class="form-control" placeholder="$10" />
+																																																																																																																																																																																																																								              </div>
+																																																																																																																																																																																																																								            </form>
+																																																																																																																																																																																																																								          </section>
+																																																																																																																																																																																																																								          #}
 
-            <form class="search-form">
-              <label>
-                <span class="screen-reader-text">Search for:</span>
-                <input
-                  type="search"
-                  class="search-field"
-                  placeholder="Search..."
-                />
-              </label>
-              <button type="submit">
-                <i class="flaticon-search"></i>
-              </button>
-            </form>
-          </section>
-          #} {#
-          <section class="widget price_list_widget">
-            <h3 class="widget-title">Price</h3>
+							<section class="widget widget_popular_products"> <h3 class="widget-title">Popular Products</h3>
+							{% for popular_product in popular_products %}
+								{% if popular_product %}
+									<article
+										class="item">
+										{# {{ popular_product | json_encode(constant('JSON_PRETTY_PRINT')) }} #}
 
-            <form>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="$10" />
-              </div>
-            </form>
-          </section>
-          #}
+										<a
+											href="{{ path('app_shop_details', { id: popular_product.id }) }}" class="thumb">
+											{# <span class="fullimage cover bg1" role="img"></span> #}
+											<img src="{{ asset('uploads/produits/' ~ popular_product.image_produit ) }}" alt=""/>
+										</a>
+										<div class="info">
+											{# {% if popular_product.getReduction() %}
+																																																																														<div class="price">
+																																																																															<span class="new-price">
+																																																																																{{ popular_product.nouveauPrix }}Dhs</span>
+																																																																															<span class="old-price">{{ popular_product.ancienPrix }}Dhs</span>
+																																																																														</div>
+																																																																														<div class="sale">
+																																																																															<span>
+																																																																																{% for produit_reduction in popular_product.getReduction()
+																																																																		                    %}
+																																																																																	-{{ produit_reduction.getPourcentage() }}
+																																																																																{% endfor %}
+																																																																															</span>
+																																																																														</div>
+																																																																													{% else %}
+																																																																														<div class="price">
+																																																																															<span class="new-price">{{ popular_product.ancienPrix }}Dhs</span>
+																																																																														</div>
+																																																																													{% endif %} #}
+											{# <span>{{ popular_product. }}</span> #}
+												<h4 class="title usmall"> <a href="{{ path('app_shop_details', { id: popular_product.id }) }}">{{ popular_product.designation }}</a>
+											</h4>
+											<div class="rating">
+												<i class="bx bxs-star"></i>
+												<i class="bx bxs-star"></i>
+												<i class="bx bxs-star"></i>
+												<i class="bx bxs-star"></i>
+												<i class="bx bxs-star"></i>
+											</div>
+										</div>
+									</article>
+								{% endif %}
+							{% endfor %}
+						</section>
 
-          <section class="widget widget_popular_products">
-            <h3 class="widget-title">Popular Products</h3>
-            {% for popular_product in popular_products %}
+						<section class="widget widget_tag_cloud">
+							<h3 class="widget-title">Popular Tags</h3>
 
-            <article class="item">
-              <a
-                href="{{
-                  path('app_shop_details', { id: popular_product.id })
-                }}"
-                class="thumb"
-              >
-                {# <span class="fullimage cover bg1" role="img"></span> #}
-                <img
-                  src="{{ asset('uploads/produits/' ~ popular_product.getImageProduit() ) }}"
-                  alt=""
-                />
-              </a>
-              <div class="info">
-                {% if popular_product.getReduction()|length != 0 %}
-                <div class="price">
-                  <span class="new-price">
-                    {{ popular_product.nouveauPrix }}Dhs</span
-                  >
-                  <span class="old-price"
-                    >{{ popular_product.ancienPrix }}Dhs</span
-                  >
-                </div>
-                <div class="sale">
-                  <span>
-                    {% for produit_reduction in popular_product.getReduction()
-                    %} -{{ produit_reduction.getPourcentage() }}
-                    {% endfor %}
-                  </span>
-                </div>
-                {% else %}
-                <div class="price">
-                  <span class="new-price"
-                    >{{ popular_product.ancienPrix }}Dhs</span
-                  >
-                </div>
-                {% endif %} {# <span>{{ popular_product. }}</span> #}
-                <h4 class="title usmall">
-                  <a
-                    href="{{
-                      path('app_shop_details', { id: popular_product.id })
-                    }}"
-                    >{{ popular_product.designation }}</a
-                  >
-                </h4>
-                <div class="rating">
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                </div>
-              </div>
-            </article>
+							<div class="tagcloud">
+								<a href="#">Architecture</a>
+								<a href="#">Interior Design</a>
+								<a href="#">Designing</a>
+								<a href="#">Construction</a>
+								<a href="#">Buildings</a>
+								<a href="#">Industrial Factory</a>
+								<a href="#">Material</a>
+								<a href="#">Organic</a>
+								<a href="#">Food</a>
+								<a href="#">Tasty</a>
+							</div>
+						</section>
+					</aside>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Product Details Area -->
 
-            {% endfor %}
-          </section>
+	<!-- Start Featured Products Area -->
+	<section class="featured-products-area pb-70">
+		<div class="container">
+			<div class="section-title">
+				<h2>Produits en Relation</h2>
+				<p>Les Produits de Meme Categorie que ce Produit</p>
+			</div>
 
-          <section class="widget widget_tag_cloud">
-            <h3 class="widget-title">Popular Tags</h3>
-
-            <div class="tagcloud">
-              <a href="#">Architecture</a>
-              <a href="#">Interior Design</a>
-              <a href="#">Designing</a>
-              <a href="#">Construction</a>
-              <a href="#">Buildings</a>
-              <a href="#">Industrial Factory</a>
-              <a href="#">Material</a>
-              <a href="#">Organic</a>
-              <a href="#">Food</a>
-              <a href="#">Tasty</a>
-            </div>
-          </section>
-        </aside>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Product Details Area -->
-
-<!-- Start Featured Products Area -->
-<section class="featured-products-area pb-70">
-  <div class="container">
-    <div class="section-title">
-      <h2>Produits en Relation</h2>
-      <p>Les Produits de Meme Categorie que ce Produit</p>
-    </div>
-
-    <div class="row">
-      {% for produit_en_relation in produits_en_relation %} {% if
+			<div class="row">
+				{% for produit_en_relation in produits_en_relation %}
+					{% if
       produit_en_relation != produit and produit_en_relation not in
       produits_similaires %}
-      <div class="col-lg-3 col-md-6">
-        <div class="featured-products-item">
-          <div class="products-image">
-            <a
-              href="{{
-                path('app_shop_details', { id: produit_en_relation.id })
-              }}"
-              ><img
-                src="{{ asset('uploads/produits/' ~ produit_en_relation.getImageProduit()) }}"
-                alt="image"
-            /></a>
+						<div class="col-lg-3 col-md-6">
+							<div class="featured-products-item">
+								<div class="products-image">
+									<a href="{{ path('app_shop_details', { id: produit_en_relation.id }) }}"><img src="{{ asset('uploads/produits/' ~ produit_en_relation.getImageProduit()) }}" alt="image"/></a>
 
-            <ul class="products-action">
-              <li>
-                <a
-                  id="addtocart{{ produit_en_relation.id }}"
-                  class="addtocart"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Add to Cart"
-                  ><i class="flaticon-shopping-cart"></i
-                ></a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Add to Wishlist"
-                  ><i class="flaticon-heart"></i
-                ></a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  id="searchbtn{{ produit_en_relation.id }}"
-                  class="search"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Quick View"
-                  data-toggle="modal"
-                  data-target="#productsQuickView"
-                >
-                  <i class="flaticon-search"></i>
-                </a>
-              </li>
-            </ul>
+									<ul class="products-action">
+										<li>
+											<a id="addtocart{{ produit_en_relation.id }}" class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+												<i class="flaticon-shopping-cart"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+												<i class="flaticon-heart"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" id="searchbtn{{ produit_en_relation.id }}" class="search" data-tooltip="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+												<i class="flaticon-search"></i>
+											</a>
+										</li>
+									</ul>
 
-            {% if produit_en_relation.getReduction()|length != 0 %}
-            <div class="new">
-              <span>
-                {% for produit_reduction in produit_en_relation.getReduction()
-                %} -{{ produit_reduction.getPourcentage() }}
-                {% endfor %}
-              </span>
-            </div>
-            {% endif %}
-          </div>
+									{% if produit_en_relation.getReduction()|length != 0 %}
+										<div class="new">
+											<span>
+												{% for produit_reduction in produit_en_relation.getReduction()
+                %}
+													-{{ produit_reduction.getPourcentage() }}
+												{% endfor %}
+											</span>
+										</div>
+									{% endif %}
+								</div>
 
-          <div class="products-content">
-            <h3>
-              <a
-                href="{{
-                  path('app_shop_details', { id: produit_en_relation.id })
-                }}"
-                >{{ produit_en_relation.designation }}</a
-              >
-            </h3>
-            {% if produit_en_relation.getReduction()|length != 0 %}
-            <div class="price">
-              <span class="new-price">
-                {{ produit_en_relation.nouveauPrix }}Dhs</span
-              >
-              <span class="old-price"
-                >{{ produit_en_relation.ancienPrix }}Dhs</span
-              >
-            </div>
-            {% else %}
-            <div class="price">
-              <span class="new-price"
-                >{{ produit_en_relation.ancienPrix }}Dhs</span
-              >
-            </div>
-            {% endif %}
-            <ul class="rating">
-              <li>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bx-star"></i>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      {% endif %} {% endfor %}
-    </div>
-  </div>
-</section>
-<!-- End Featured Products Area -->
+								<div class="products-content">
+									<h3>
+										<a href="{{ path('app_shop_details', { id: produit_en_relation.id }) }}">{{ produit_en_relation.designation }}</a>
+									</h3>
+									{% if produit_en_relation.getReduction()|length != 0 %}
+										<div class="price">
+											<span class="new-price">
+												{{ produit_en_relation.nouveauPrix }}Dhs</span>
+											<span class="old-price">{{ produit_en_relation.ancienPrix }}Dhs</span>
+										</div>
+									{% else %}
+										<div class="price">
+											<span class="new-price">{{ produit_en_relation.ancienPrix }}Dhs</span>
+										</div>
+									{% endif %}
+									<ul class="rating">
+										<li>
+											<i class="bx bxs-star"></i>
+											<i class="bx bxs-star"></i>
+											<i class="bx bxs-star"></i>
+											<i class="bx bxs-star"></i>
+											<i class="bx bx-star"></i>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	<!-- End Featured Products Area -->
 
-{% endblock %} {% block javascripts %}
-<script src="{{ asset('js/panier.js') }}"></script>
-<script src="{{ asset('js/variation.js') }}"></script>
+{% endblock %}
+{% block javascripts %}
+	<script src="{{ asset('js/panier.js') }}"></script>
+	<script src="{{ asset('js/variation.js') }}"></script>
+	<script src="{{ asset('FrontOffice/other/review_form.js') }}"></script>
 
 {% endblock %}

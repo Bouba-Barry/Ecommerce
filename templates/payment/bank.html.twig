@@ -1,0 +1,31 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block content %}
+ <div class="container mt-20">
+                <h2 class="bg-light text-primary text-center mt-3 fs-5 p-4">Information Relative à votre Commande :</h2>
+                <table class="table table-hover table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Date de la Commande</th>
+                            <th scope="col">Adresse de Livraison</th>
+                            {# <th scope="col">Produit concerné</th> #}
+                            <th scope="col">Montant Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">{{ commandes.getDateCmd() | date("d/m/Y", "Europe/Paris") }}</th>
+                            <td>{{ commandes.getAdresseLivraison()  }}</td>
+                            <td>{{ total }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+    <div id="paypal-button-container" class="text-center "></div>
+
+        </div>
+
+
+{% endblock %}
+{% block javascripts %}
+ {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Commande;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +40,37 @@ class CommandeRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Commande[] Returns an array of Commande objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //   /**
+    //      * @return Produit[] Returns an array of Produit objects
+    //      */
+    public function ajout_produit($cmd, $prod, $qte_cmd, $total)
+    {
 
-//    public function findOneBySomeField($value): ?Commande
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = " INSERT INTO commande_produit(commande_id, produit_id, qte_cmd, create_at)
+        VALUES(:cmd, :prod, :qte, :ldate)
+        ";
+        $stmt = $conn->prepare($sql);
+        $stmt->executeQuery([
+            'cmd' => $cmd,
+            'prod' => $prod,
+            'qte' => $qte_cmd,
+            'ldate' => new DateTime(),
+            // 'total' => $total
+        ]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        // return $resultSet->fetchAllAssociative();
+    }
+
+    //    public function findOneBySomeField($value): ?Commande
+    //    {
+    //        return $this->createQueryBuilder('c')
+    //            ->andWhere('c.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

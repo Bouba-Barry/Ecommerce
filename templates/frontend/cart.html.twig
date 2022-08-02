@@ -139,7 +139,7 @@
                 <span><b id="total"></b></span>
               </li>
             </ul>
-            <a href="#" class="default-btn"> Proceed to Checkout </a>
+            <a href="{{ path('app_checkout', {'id': app.user.id}) }}" class="default-btn"> Proceed to Checkout </a>
           </div>
         </form>
       </div>
