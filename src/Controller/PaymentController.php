@@ -8,7 +8,9 @@ use App\Entity\User;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
 use App\Repository\PanierRepository;
+use App\Repository\ProduitRepository;
 use App\Repository\UserRepository;
+use App\Services\PdfService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,6 +46,9 @@ class PaymentController extends AbstractController
         $session = $this->requestStack->getSession();
         $commandes = $session->get('commande');
         $total = $session->get('total');
+
+        $request->cookies->set('total', $total);
+
         // $commande = \json_decode($commandes);
         // dd($foo->getUser());
         // dd($foo);
@@ -61,7 +66,29 @@ class PaymentController extends AbstractController
     }
 
     #[Route('/bank', name: 'app_bank', methods: ['GET', 'POST'])]
-    public function bank(Request $request, CommandeRepository $commandeRepository)
+    public function bank(Request $request, UserRepository $userRepository, CommandeRepository $commandeRepository): Response
+    {
+        // $commandes = $request->query->get('commande');
+        $session = $this->requestStack->getSession();
+        $commandes = $session->get('commande');
+        $total = $session->get('total');
+
+        $request->cookies->set('total', $total);
+
+        $user = $commandes->getUser(); //user lié à la commande
+        //  dd($user); // panier de ce user
+
+        $panier = $user->getPaniers();
+        // dd($panier);
+        return $this->renderForm('payment/bank.html.twig', [
+            'commandes' => $commandes,
+            'panier' => $panier,
+            'total' => $total
+        ]);
+    }
+
+    #[Route('/stripe', name: 'app_stripe', methods: ['GET', 'POST'])]
+    public function stripe(Request $request, PanierRepository $panierRepository, CommandeRepository $commandeRepository)
     {
 
         // $commandes = $request->query->get('commande');
@@ -71,68 +98,106 @@ class PaymentController extends AbstractController
 
 
         $user = $commandes->getUser(); //user lié à la commande
-        $key =  "sk_test_51LS3Z6B4pa87HJY2RvFzEsuMWP6lDNov4EbzLHNTMJqFE45FRf2609THNAuZbIusETmRUhLUneFiXgOID0Si4mL600t4o4uzur";
+        // $key =  "sk_test_51LS3Z6B4pa87HJY2RvFzEsuMWP6lDNov4EbzLHNTMJqFE45FRf2609THNAuZbIusETmRUhLUneFiXgOID0Si4mL600t4o4uzur";
         $panier = $user->getPaniers();
         // dd($panier);
-        \Stripe\Stripe::setApiKey($key);
-
+        \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY_TEST']);
+        if ($this->getUser())
+            $user = $this->getUser();
+        $panier =  $user->getPaniers();
         $session = \Stripe\Checkout\Session::create([
+            // $session = Session::create([
+            // foreach($panier as $p) {
+            //     foreach ($p->getProduit() as $prod) {
+            //         $price = 0;
+            //         $qte = $panierRepository->getQteProd($p->getId(), $prod->getId());
+            //         // dd($qte[0]['qte_produit']);
+            //         if ($prod->getNouveauPrix() != null) {
+            //             $price = $prod->getNouveauPrix();
+            //         } else {
+            //             $price = $prod->getAncienPrix();
+            //         }
             'line_items' => [[
                 'price_data' => [
                     'currency' => 'usd',
                     'product_data' => [
-                        'name' => 'T-shirt',
+                        'name' => '',
                     ],
-                    'unit_amount' => 2000,
+                    'unit_amount' => $total,
                 ],
-                'quantity' => 1,
+                // 'quantity' => $qte[0]['qte_produit'],
             ]],
+            //     }
+            // }
             'mode' => 'payment',
             'success_url' => $this->generateUrl('success_url', [], UrlGeneratorInterface::ABSOLUTE_URL),
             'cancel_url' =>  $this->generateUrl('cancel_url', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ]);
 
         return $this->redirect($session->url, 303);
-        // return $this->renderForm('payment/bank.html.twig', [
-        //     'commandes' => $commandes,
-        //     'panier' => $panier,
-        //     'total' => $total
-        // ]);
     }
 
-    #[Route('/facture', name: 'app_fact', methods: ['GET', 'POST'])]
-    public function facture(Request $request, UserRepository $userRepository, CommandeRepository $commandeRepository): Response
+
+
+    #[Route('/success-url', name: 'success_url', methods: ['GET', 'POST'])]
+    public function facture(Request $request, PdfService $pdf, ProduitRepository $produitRepository, PanierRepository $panierRepository, UserRepository $userRepository, CommandeRepository $commandeRepository): Response
     {
-        $cookie = $request->cookies->get('val');
+        // $cookie = $request->cookies->get('val');
 
 
         $session = $this->requestStack->getSession();
         $commandes = $session->get('commande');
-
+        // $res = json_decode($cookie);
         // $cmd = $commandeRepository->find($commandes);
+
+        // dd($res->status);
+        // if ($res->status == "COMPLETED") {
+
 
         if ($this->getUser()) {
             $user = $this->getUser();
             // dd($user->getId());
             // dd($user->getPaniers());
+            $array = [];
             $user = $userRepository->find($user->getId());
             $panier =  $user->getPaniers();
+
             foreach ($panier as $p) {
                 foreach ($p->getProduit() as $prod) {
+                    $total = 0;
+                    // foreach($panierRepository->selectPanierProd($panier->))
+                    $qte = $panierRepository->getQteProd($p->getId(), $prod->getId());
+                    // dd($qte[0]['qte_produit']);
                     // dd($prod);
-                    $commandes->ajout_prod($commandes->getId(), $prod->getId(), $prod->qte_produit);
-                    $p->removeProduit($prod);
+                    if ($prod->getNouveauPrix() != null) {
+                        $total = $qte[0]['qte_produit'] * $prod->getNouveauPrix();
+                    } else {
+                        $total = $qte[0]['qte_produit'] * $prod->getAncienPrix();
+                    }
+                    // dd($prod->getId());
+                    // dd($total);
+                    // array_push($array, $prod);
+                    $commandeRepository->ajout_produit($commandes->getId(), $prod->getId(), $qte[0]['qte_produit'], $total, $prod->getDesignation());
+                    $produitRepository->UpdateProduit($prod->getId(), $qte[0]['qte_produit']);
+                    // $p->removeProduit($prod)
+
+                    $panierRepository->RemoveProd($p->getId(), $prod->getId());
+                    // dd($val);
                 }
             }
-            // foreach($panier->getProduit() as $prod){
-            //     $panier->Remov
-            // }
-            // dd($panier['id']);
         }
-        // dd($cookie);
-        // return $this->json($data);
+
+
+        $facture = $commandeRepository->getFacture($commandes->getId());
+        // dd($facture);
+        $html = $this->render('payment/facture.html.twig', [
+            'commande' => $commandes,
+            'factures' => $facture
+        ]);
+        $pdf->showPdfFile($html);
+
         return $this->render('payment/facture.html.twig', [
-            'detail_facture' => $cookie,
+            'factures' => $facture,
             'commande' => $commandes
         ]);
     }
@@ -140,25 +205,22 @@ class PaymentController extends AbstractController
     #[Route('/cash', name: 'app_cash', methods: ['GET', 'POST'])]
     public function cash(Request $request, CommandeRepository $commandeRepository): Response
     {
-        $commande = new Commande();
-        $form = $this->createForm(CommandeType::class, $commande);
-        $form->handleRequest($request);
+        $session = $this->requestStack->getSession();
+        $commandes = $session->get('commande');
+        $total = $session->get('total');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $commandeRepository->add($commande, true);
+        $request->cookies->set('total', $total);
 
-            return $this->redirectToRoute('app_commande_index', [], Response::HTTP_SEE_OTHER);
-        }
+        $user = $commandes->getUser(); //user lié à la commande
+        //  dd($user); // panier de ce user
 
-        return $this->renderForm('commande/new.html.twig', [
-            'commande' => $commande,
-            'form' => $form,
+        $panier = $user->getPaniers();
+        // dd($panier);
+        return $this->renderForm('payment/cash.html.twig', [
+            'commandes' => $commandes,
+            'panier' => $panier,
+            'total' => $total
         ]);
-    }
-    #[Route('/success-url', name: 'success_url', methods: ['GET', 'POST'])]
-    public function successUrl(): Response
-    {
-        return $this->render('payment/success.html.twig');
     }
 
     #[Route('/cancel-url', name: 'cancel_url', methods: ['GET', 'POST'])]

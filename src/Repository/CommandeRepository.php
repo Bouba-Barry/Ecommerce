@@ -43,25 +43,46 @@ class CommandeRepository extends ServiceEntityRepository
     //   /**
     //      * @return Produit[] Returns an array of Produit objects
     //      */
-    public function ajout_produit($cmd, $prod, $qte_cmd, $total)
+    public function ajout_produit($cmd, $prod, $qte_cmd, $total, $nomProd)
     {
 
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = " INSERT INTO commande_produit(commande_id, produit_id, qte_cmd, create_at)
-        VALUES(:cmd, :prod, :qte, :ldate)
+        $sql = " INSERT INTO commande_produit(commande_id, produit_id, nom_produit ,qte_cmd, create_at, update_at, total_vente)
+        VALUES(:cmd, :prod, :nomProd ,:qte, :ldate, :lupdate ,:total)
         ";
         $stmt = $conn->prepare($sql);
         $stmt->executeQuery([
             'cmd' => $cmd,
             'prod' => $prod,
+            'nomProd' => $nomProd,
             'qte' => $qte_cmd,
-            'ldate' => new DateTime(),
-            // 'total' => $total
+            'ldate' => date('y-m-d h:i:s'),
+            'lupdate' => date('y-m-d h:i:s'),
+            'total' => $total
         ]);
 
         // returns an array of arrays (i.e. a raw data set)
         // return $resultSet->fetchAllAssociative();
+    }
+
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function getFacture($cmd)
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT * FROM commande_produit WHERE commande_id = :cmd";
+        $stmt = $conn->prepare($sql);
+        $resultSet =   $stmt->executeQuery([
+            'cmd' => $cmd,
+        ]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
     }
 
     //    public function findOneBySomeField($value): ?Commande

@@ -1,6 +1,7 @@
 {% extends 'frontend/index.html.twig' %}
 
 {% block content %}
+{% set clientiD = "AVwH2qMsF-DucjPxKqUEA1sbdrf7nEoRF7copwTquI5qsXiqzObavtTs1j8wvCiSoLkiwnixryORhxs6" %}
  <div class="container mt-20" id="container">
                 <h2 class="bg-light text-primary text-center mt-3 fs-5 p-4">Information Relative à votre Commande :</h2>
                 <table class="table table-hover table-bordered">
@@ -21,14 +22,12 @@
                     </tbody>
                 </table>
 
-                <form action="{{ path('app_stripe') }}" method="POST">
-        <button type="submit" id="checkout-button">Passer Au Paiement</button>
-      </form>
+    <a href="{{ path('success_url') }}" id="Valider" class="text-center btn btn-warning">Valider Votre Commande</a>
+    <a href="{{ path('cancel_url') }}" id="annuller" class="text-center btn btn-danger">Annuler Votre Commande </a>
         </div>
 
 
 {% endblock %}
 {% block javascripts %}
-<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
-    <script src="https://js.stripe.com/v3/"></script>
+
  {% endblock %}

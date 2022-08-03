@@ -7,27 +7,33 @@
                 <h2 class="bg-light text-primary text-center mt-3 fs-5 p-4">Information Relative à votre payment :</h2>
                 <table class="table table-hover table-bordered">
                     <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Nom Payer</th>
-                            <th scope="col">Email Payer </th>
+                
+                            <th scope="col">Commande N°</th>
+                                   <th scope="col">Date Commande</th>
+                            <th scope="col">Produit </th>
+                            <th scope="col">quantité</th>
                             <th scope="col">Montant</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Date Payment</th>
-                            <th scope="col">Livraison</th>
+                            <th scope="col">Livraison</th></tr>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">{{ detail_facture.nom }}</th>
-                            <td>{{ detail_facture.email }}</td>
-                            <td>{{ detail_facture.montant }}$</td>
-                             <td>{{ detail_facture.status }}</td>
-                             <td>{{detail_facture.date_pay | date("d/m/Y", "Europe/Paris") }}</td>
+                            <th scope="row">{{ commande.getId() }}</th>
+                             <td>{{ commande.getDateCmd() | date("d/m/Y", "Europe/Paris") }}</td>
+                          <td>
+                           {% for facture in factures %}
+                          {# <td> #}
+                         
+                                <td>{{ facture.nom_produit }}</td>
+                          
+                           <td>{{ facture.qte_cmd }}</td>
+                           <td>{{ facture.total_vente }}</td>
+                            {% endfor %}
                             <td>{{ commande.getAdresseLivraison()  }}</td>
                         </tr>
                     </tbody>
                 </table>
-
+            {# <a href="{{ path('app_fact') }}" >Telecharger Facture</a> #}
             </div>
 
 

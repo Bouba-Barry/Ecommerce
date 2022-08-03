@@ -312,4 +312,18 @@ class ProduitRepository extends ServiceEntityRepository
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
+
+
+    public function UpdateProduit($prod, $qte)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "
+        UPDATE produit SET qte_stock = qte_stock - $qte WHERE id = $prod
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return true;
+    }
 }

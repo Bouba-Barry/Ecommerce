@@ -1,3 +1,24 @@
+// let total = document.getElementById("total");
+// console.log(total);
+
+// function getCookie(cname) {
+//   let name = cname + "=";
+//   let decodedCookie = decodeURIComponent(document.cookie);
+//   let ca = decodedCookie.split(";");
+//   for (let i = 0; i < ca.length; i++) {
+//     let c = ca[i];
+//     while (c.charAt(0) == " ") {
+//       c = c.substring(1);
+//     }
+//     if (c.indexOf(name) == 0) {
+//       return c.substring(name.length, c.length);
+//     }
+//   }
+//   return "";
+// }
+// total = getCookie("total");
+// console.log(clientiD);
+// console.log(total);
 paypal
   .Buttons({
     // Sets up the transaction when a payment button is clicked
@@ -129,5 +150,11 @@ paypal
         window.location.href = `http://127.0.0.1:8000/payment/facture/`;
       });
     },
+    // style: {
+    //   layout: "horizontal",
+    //   color: "blue",
+    //   shape: "rect",
+    //   label: "paypal",
+    // },
   })
   .render("#paypal-button-container");
