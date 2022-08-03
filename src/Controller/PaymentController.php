@@ -189,18 +189,66 @@ class PaymentController extends AbstractController
 
 
         $facture = $commandeRepository->getFacture($commandes->getId());
-        // dd($facture);
+        // // dd($facture);
         $html = $this->render('payment/facture.html.twig', [
-            'commande' => $commandes,
+            'commandes' => $commandes,
             'factures' => $facture
         ]);
         $pdf->showPdfFile($html);
 
         return $this->render('payment/facture.html.twig', [
             'factures' => $facture,
-            'commande' => $commandes
+            'commandes' => $commandes
         ]);
     }
+
+    #[Route('/pdf', name: 'app_pdf', methods: ['GET', 'POST'])]
+    public function pdfFacture(Request $request, PdfService $pdf, ProduitRepository $produitRepository, PanierRepository $panierRepository, UserRepository $userRepository, CommandeRepository $commandeRepository)
+    {
+
+
+        $session = $this->requestStack->getSession();
+        $commandes = $session->get('commande');
+        if ($this->getUser()) {
+            $user = $this->getUser();
+            $user = $userRepository->find($user->getId());
+            $panier =  $user->getPaniers();
+
+            foreach ($panier as $p) {
+                foreach ($p->getProduit() as $prod) {
+                    $total = 0;
+                    // foreach($panierRepository->selectPanierProd($panier->))
+                    $qte = $panierRepository->getQteProd($p->getId(), $prod->getId());
+                    // dd($qte[0]['qte_produit']);
+                    // dd($prod);
+                    if ($prod->getNouveauPrix() != null) {
+                        $total = $qte[0]['qte_produit'] * $prod->getNouveauPrix();
+                    } else {
+                        $total = $qte[0]['qte_produit'] * $prod->getAncienPrix();
+                    }
+                    // dd($prod->getId());
+                    // dd($total);
+                    // array_push($array, $prod);
+                    $commandeRepository->ajout_produit($commandes->getId(), $prod->getId(), $qte[0]['qte_produit'], $total, $prod->getDesignation());
+                    $produitRepository->UpdateProduit($prod->getId(), $qte[0]['qte_produit']);
+                    // $p->removeProduit($prod)
+
+                    $panierRepository->RemoveProd($p->getId(), $prod->getId());
+                    // dd($val);
+                }
+            }
+        }
+
+
+        $facture = $commandeRepository->getFacture($commandes->getId());
+        // dd($facture);
+        $html = $this->render('payment/facture.html.twig', [
+            'commandes' => $commandes,
+            'factures' => $facture
+        ]);
+        $pdf->showPdfFile($html);
+    }
+
 
     #[Route('/cash', name: 'app_cash', methods: ['GET', 'POST'])]
     public function cash(Request $request, CommandeRepository $commandeRepository): Response
