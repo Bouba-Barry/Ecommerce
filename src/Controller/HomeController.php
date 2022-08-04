@@ -52,20 +52,16 @@ class HomeController extends AbstractController
 
 
     #[Route('/discover_product/{id}', name: 'app_discover_product', methods: ['GET'])]
-    public function discover_product(Reduction $reduction,SerializerInterface $serializer , ProduitRepository $produitRepository, PanierRepository $panierRepository)
+    public function discover_product(Reduction $reduction, SerializerInterface $serializer, ProduitRepository $produitRepository, PanierRepository $panierRepository)
     {
-       
-        $products=$reduction->getProduits();
+
+        $products = $reduction->getProduits();
         // $json = $serializer->serialize($products, 'json', ['groups' => ['prod:read']]);
-        
+
 
         return $this->render('frontend/discover_product.html.twig', [
             'produits' => $products
         ]);
-      
-
-
-
     }
 
 
@@ -233,7 +229,7 @@ class HomeController extends AbstractController
 
 
     #[Route('/shop_details/{id}', name: 'app_shop_details', methods: ['GET'])]
-    public function shop_details($id,FeadBackRepository $feadBackRepository ,ProduitRepository $produitRepository, SousCategorieRepository $sousCategorieRepository)
+    public function shop_details($id, FeadBackRepository $feadBackRepository, SerializerInterface $serializer, ProduitRepository $produitRepository, SousCategorieRepository $sousCategorieRepository)
     {
         // dd($produit);
 
@@ -246,21 +242,23 @@ class HomeController extends AbstractController
 
         $sous_categories = $sousCategorieRepository->findBy(['categorie' => $produit->getSousCategorie()->getCategorie()]);
 
-
-
         $produits_en_relation = $produitRepository->findBy(['sous_categorie' => $sous_categories]);
 
         $popular_products = $produitRepository->PopularProducts();
-        $reviews=$feadBackRepository->findAll();
+        $reviews = $feadBackRepository->findbyProduct();
+        // dd($reviews);
         // dd($produits_en_relation);
         // dd($produits_similaires);
         // dd($popular_products);
+        $json = $serializer->serialize($popular_products, 'json', ['groups' => ['prod:read']]);
+        $json = json_decode($json);
+        // dd($json);
 
         return $this->render('frontend/shop-details.html.twig', [
             'produit' => $produit,
             'produits_similaires' => $produits_similaires,
             'produits_en_relation' => $produits_en_relation,
-            'popular_products' => $popular_products,
+            'popular_products' => $json,
             'reviews' => $reviews
         ]);
     }
@@ -456,7 +454,7 @@ class HomeController extends AbstractController
 
 
     #[Route('', name: 'app_home')]
-    public function home(ProduitRepository $produitRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
+    public function home(ProduitRepository $produitRepository, FeadBackRepository $feadBackRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
     {
         $totalSalesMonth = $produitRepository->TOTALSALESMONTH(); // pour la partie admin
         // dd($totalSalesMonth[0]['total']);
@@ -473,6 +471,9 @@ class HomeController extends AbstractController
         // dd($plusVendus);
         $produits = $produitRepository->findAll();
 
+        $reviews = $feadBackRepository->findFeedback();
+        // dd($reviews);
+
         $produits_reduction = $produitRepository->get_produit_reduction();
         $reductions = $reductionRepository->findAll();
         // dd($produits_reduction);
@@ -485,7 +486,8 @@ class HomeController extends AbstractController
             'mostSaleMonth' => $MostSalesMonth,
             'NewProduct' => $NewProduct,
             'bestSellers' => $bestSellers,
-            'reductions' => $reductions
+            'reductions' => $reductions,
+            'reviews' => $reviews
 
         ]);
     }

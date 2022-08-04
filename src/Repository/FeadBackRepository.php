@@ -39,28 +39,41 @@ class FeadBackRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return FeadBack[] Returns an array of FeadBack objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('f.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return FeadBack[] Returns an array of FeadBack objects
+     */
+    public function findbyProduct(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.produit IS NOT NULL ')
+            // ->setParameter('val', $value)
+            ->orderBy('f.id', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
+    /**
+     * @return FeadBack[] Returns an array of FeadBack objects
+     */
+    public function findFeedback(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.produit IS NULL ')
+            // ->setParameter('val', $value)
+            ->orderBy('f.id', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?FeadBack
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
+    //    public function findOneBySomeField($value): ?FeadBack
+    //    {
+    //        return $this->createQueryBuilder('f')
+    //            ->andWhere('f.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

@@ -7,6 +7,7 @@ use App\Repository\AttributRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AttributRepository::class)]
 class Attribut
@@ -19,6 +20,13 @@ class Attribut
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['prod:read','variation'])]
+    #[Assert\Length(
+        min: 3,
+        minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
+    )]
+    #[Assert\Unique(
+        message: "La designation de l'attribut existe déjà"
+    )]
     private $nom;
 
     #[ORM\OneToMany(mappedBy: 'attribut', targetEntity: Variation::class)]

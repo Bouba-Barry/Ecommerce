@@ -36,12 +36,21 @@
         </div>
       </div>
     </div>
-    <form>
+    {# <form> #}
+    {# {% if message is not empty %}
+    <div class="alert alert-infos">{{ message }}</div>
+    {% endif %} #}
+    <form action="{{ path('app_commande_new') }}" method="post">
       <div class="row">
         <div class="col-lg-6 col-md-12">
           <div class="billing-details">
             <h3 class="title">Billing Details</h3>
             <div class="row">
+<<<<<<< HEAD
+=======
+            
+            
+>>>>>>> 58dd99cf1371fe2a1c1ff85bd8947ec0018ec57d
               <div class="col-lg-6 col-md-6">
                 <div class="form-group">
                   <label>First Name <span class="required">*</span></label>
@@ -84,6 +93,7 @@
                     type="text"
                     value="{{ app.user.adresse }}"
                     class="form-control"
+                    name="adresse"
                   />
                 </div>
               </div>
@@ -117,6 +127,7 @@
                     type="checkbox"
                     class="form-check-input"
                     id="ship-different-address"
+                   
                   />
                   <label class="form-check-label" for="ship-different-address"
                     >Ship to a different address?</label
@@ -128,53 +139,53 @@
                 style="display: none"
                 class="col-lg-12 col-md-6"
               >
-                <div class="col-lg-12 col-md-12">
-                  <div class="form-group">
-                    <label> Region <span class="required">*</span></label>
-                    <div class="select-box">
-                      <select
-                        id="select_region"
-                        onchange="func()"
-                        class="form-control"
-                      >
-                        <option value="0">Choisissez une Region</option>
-                        <option value="1">Tanger-Tetouan-Al Hoceima</option>
-                        <option value="2">Oriental</option>
-                        <option value="3">Fès-Meknès</option>
-                        <option value="4">Rabat-Salé-Kénitra</option>
-                        <option value="5">Béni Mellal-Khénifra</option>
-                        <option value="6">Casablanca-Settat</option>
-                        <option value="7">Marrakesh-Safi</option>
-                        <option value="8">Drâa-Tafilalet</option>
-                        <option value="9">Souss-Massa</option>
-                        <option value="10">Guelmim-Oued Noun</option>
-                        <option value="11">Laâyoune-Sakia El Hamra</option>
-                        <option value="12">Dakhla-Oued Ed-Dahab</option>
-                      </select>
-                    </div>
-                    <label> Ville <span class="required">*</span></label>
-                    <div id="select_ville" class="select-box">
-                      <select name="ville" class="form-control">
-                        <option>choisissez une ville</option>
-                      </select>
-                    </div>
+              <div class="form-group">
+              <div class="col-lg-12 col-md-12">
+              
+                
+                  <label> Region <span class="required">*</span></label>
+                  <div class="select-box">
+                    <select
+                      id="select_region"
+                      onchange="func()"
+                      class="form-control"
+                      name="region"
+                    >
+                      <option value="0">Choisissez une Region</option>
+                      <option value="1">Tanger-Tetouan-Al Hoceima</option>
+                      <option value="2">Oriental</option>
+                      <option value="3">Fès-Meknès</option>
+                      <option value="4">Rabat-Salé-Kénitra</option>
+                      <option value="5">Béni Mellal-Khénifra</option>
+                      <option value="6">Casablanca-Settat</option>
+                      <option value="7">Marrakesh-Safi</option>
+                      <option value="8">Drâa-Tafilalet</option>
+                      <option value="9">Souss-Massa</option>
+                      <option value="10">Guelmim-Oued Noun</option>
+                      <option value="11">Laâyoune-Sakia El Hamra</option>
+                      <option value="12">Dakhla-Oued Ed-Dahab</option>
+                    </select>
+                  </div>
+                  <label> Ville <span class="">*</span></label>
+                  <div id="select_ville" class="select-box">
+                    <select name="ville" class="form-control">
+                      <option>choisissez une ville</option>
+                    </select>
                   </div>
                 </div>
-
-                <div class="col-lg-12 col-md-12">
-                  <div class="form-group">
-                    <label
-                      >Address de livraision
-                      <span class="required">*</span></label
-                    >
-                    <input type="text" class="form-control" />
-                  </div>
+              </div>
+                <div class="form-group">
+                  <label
+                    >Address de livraision
+                    <span class="required">*</span></label
+                  >
+                  <input type="text" class="form-control"  name="other_adresse" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-
+ {% set Montant = 0 %}
         <div class="col-lg-6 col-md-12">
           <div class="order-details">
             <h3 class="title">Your Order</h3>
@@ -182,29 +193,45 @@
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">Total A payer</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Total + TVA</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="product-total">
                       <span class="subtotal-amount">
+                      {% if produit.getNouveauPrix() != NULL %}
+                      {% set total = 0 %}
+                        {% set total = total + produit.getNouveauPrix() * panier_produit.qte_produit %}
+                        {# <input type="text" class="form-control"  name="total" value =" {{ produit.getNouveauPrix() * panier_produit.qte_produit }}" DH  #}
                         {{ total }}
+                        {% set Montant = Montant + total %}
+                        {% else %}
+                        {% set total = 0 %}
+                            {% set total = total + produit.getAncienPrix() * panier_produit.qte_produit %}
+                         {# <input type="text" class="form-control"  name="total" value =" {{ produit.AncienPrix() * panier_produit.qte_produit }}" DH  #}
+                     {{ total }}
+                     {% set Montant = Montant + total %}
+                      {% endif %}
                       </span>
                     </td>
                   </tr>
                 </tbody>
+                {# {{ total}} #}
               </table>
             </div>
-
+              <input type="hidden" name="total" value=" {{ Montant }} " />
             <div class="payment-box">
               <div class="payment-method">
                 <p>
                   <input
                     type="radio"
                     id="direct-bank-transfer"
-                    name="radio-group"
+                    name="choice[]"
                     checked
+                    value="bank"
                   />
                   <label for="direct-bank-transfer">Direct Bank Transfer</label>
                   Make your payment directly into our bank account. Please use
@@ -212,19 +239,20 @@
                   shipped until the funds have cleared in our account.
                 </p>
                 <p>
-                  <input type="radio" id="paypal" name="radio-group" />
+                  <input type="radio" id="paypal" name="choice[]" value="paypal" />
                   <label for="paypal">PayPal</label>
                 </p>
                 <p>
                   <input
                     type="radio"
                     id="cash-on-delivery"
-                    name="radio-group"
+                    name="choice[]"
+                    value="cash"
                   />
                   <label for="cash-on-delivery">Cash on Delivery</label>
                 </p>
               </div>
-              <a href="#" class="default-btn"> Place Order </a>
+              <input type="submit" class="btn btn-default" value="Place Order "/>
             </div>
           </div>
         </div>
@@ -236,4 +264,5 @@
 
 {% endblock %} {% block javascripts %}
 <script src="{{ asset('js/checkout.js') }}"></script>
+<script src="{{ asset('js/payment.js') }}"> </script>
 {% endblock %}

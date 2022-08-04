@@ -5,16 +5,27 @@ namespace App\Controller;
 use App\Entity\Commande;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\Expr\Value;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Cookie;
 
 #[Route('/commande')]
-#[Security("is_granted('ROLE_ADMIN')")]
+// #[Security("is_granted('ROLE_ADMIN')")]
 class CommandeController extends AbstractController
 {
+    private $requestStack;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
+
     #[Route('/', name: 'app_commande_index', methods: ['GET'])]
     public function index(CommandeRepository $commandeRepository): Response
     {
@@ -23,22 +34,71 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_commande_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CommandeRepository $commandeRepository): Response
+    #[Route('/new', name: 'app_commande_new')]
+    public function new(Request $request, SerializerInterface $serializer, CommandeRepository $commandeRepository): Response
     {
         $commande = new Commande();
-        $form = $this->createForm(CommandeType::class, $commande);
-        $form->handleRequest($request);
+        $user = $this->getUser();
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        // $region =  
+        $route = "";
+        // $submit = $request->get('submit');
+        if ($_POST) {
+            // dd("its ok");
+            $adresse = $request->get('other_adresse');
+            $payment = $request->get('choice', 0)[0];
+            if ($adresse && strlen($adresse) > 0) {
+                $commande->setAdresseLivraison($adresse);
+            } else {
+                $commande->setAdresseLivraison($request->get('adresse'));
+            }
+
+            // dd($payment);
+            $total = $request->get('total');
+            // dd($total);
+            $commande->setMethodPayement($payment);
+            $commande->setUser($user);
+
             $commandeRepository->add($commande, true);
+            // dd($commande);
+            $produits = $commande->getProduit();
 
-            return $this->redirectToRoute('app_commande_index', [], Response::HTTP_SEE_OTHER);
+
+            $session = $this->requestStack->getSession();
+            $session->set('commande', $commande);
+            $session->set('total', $total);
+
+            switch ($payment) {
+                case 'paypal':
+                    $route = "app_paypal";
+                    break;
+                case 'cash':
+                    $route = "app_cash";
+                    break;
+                case 'bank':
+                    $route = "app_bank";
+                    break;
+            }
+            // $array = [
+            //     'commande' => $commande,
+            // ];
+
+            // $json = $serializer->serialize($commande, 'json', ['groups' => ['cmd:read', 'prod:read']]);
+            // $json = json_decode($json);
+            // dd($json);
+
+            return $this->redirectToRoute($route, ['produits' => $produits], Response::HTTP_SEE_OTHER);
+
+            // return $this->render('payment/paypal.html.twig', ['commande' => $json, 'produits' => $produits]);
         }
-
-        return $this->renderForm('commande/new.html.twig', [
-            'commande' => $commande,
-            'form' => $form,
+        $msg = "Vérifiez Vos champs SVP";
+        // $response = new Response();
+        // $response->setContent(json_encode([
+        //     'data' => 123,
+        // ]));
+        // $response->headers->set('Content-Type', 'application/json');
+        return $this->render('frontend/checkout.html.twig', [
+            'message' => $msg,
         ]);
     }
 
@@ -71,7 +131,7 @@ class CommandeController extends AbstractController
     #[Route('/{id}', name: 'app_commande_delete', methods: ['POST'])]
     public function delete(Request $request, Commande $commande, CommandeRepository $commandeRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$commande->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $commande->getId(), $request->request->get('_token'))) {
             $commandeRepository->remove($commande, true);
         }
 

@@ -15,7 +15,7 @@ class Panier
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    
+
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $create_at;
@@ -45,7 +45,7 @@ class Panier
         return $this->id;
     }
 
-  
+
 
 
     public function getUser(): ?User
@@ -105,6 +105,11 @@ class Panier
     {
         $this->update_at = $update_at;
 
+        return $this;
+    }
+
+    public function __toString()
+    {
         return $this;
     }
 }

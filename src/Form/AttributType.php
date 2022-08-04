@@ -20,6 +20,7 @@ class AttributType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Attribut::class,
+            'csrf_protection' => false,
         ]);
     }
 }

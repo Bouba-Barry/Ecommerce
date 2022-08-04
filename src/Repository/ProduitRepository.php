@@ -38,20 +38,20 @@ class ProduitRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-  
 
-    public function get_produit_reduction(){
+
+    public function get_produit_reduction()
+    {
 
         $conn = $this->getEntityManager()->getConnection();
-        $sql=("SELECT * FROM produit_reduction  ");
+        $sql = ("SELECT * FROM produit_reduction  ");
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
-        $d=$resultSet->fetchAllAssociative();
+        $d = $resultSet->fetchAllAssociative();
 
         return json_encode($d);
-
     }
-     
+
 
 
 
@@ -139,7 +139,7 @@ class ProduitRepository extends ServiceEntityRepository
     /**
      * @return Produit[] Returns an array of Produit objects
      */
-    public function findRecentProduct() 
+    public function findRecentProduct()
     {
         $conn = $this->getEntityManager()->getConnection();
 
@@ -263,7 +263,6 @@ class ProduitRepository extends ServiceEntityRepository
         WHERE p.id = f.produit_id 
         GROUP BY f.produit_id
         ORDER BY SUM(f.qte_cmd) DESC
-        LIMIT 30
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
@@ -355,5 +354,19 @@ class ProduitRepository extends ServiceEntityRepository
 
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
+    }
+
+
+    public function UpdateProduit($prod, $qte)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "
+        UPDATE produit SET qte_stock = qte_stock - $qte WHERE id = $prod
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return true;
     }
 }

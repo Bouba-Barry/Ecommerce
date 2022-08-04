@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Commande;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +40,58 @@ class CommandeRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Commande[] Returns an array of Commande objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //   /**
+    //      * @return Produit[] Returns an array of Produit objects
+    //      */
+    public function ajout_produit($cmd, $prod, $qte_cmd, $total, $nomProd)
+    {
 
-//    public function findOneBySomeField($value): ?Commande
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = " INSERT INTO commande_produit(commande_id, produit_id, nom_produit ,qte_cmd, create_at, update_at, total_vente)
+        VALUES(:cmd, :prod, :nomProd ,:qte, :ldate, :lupdate ,:total)
+        ";
+        $stmt = $conn->prepare($sql);
+        $stmt->executeQuery([
+            'cmd' => $cmd,
+            'prod' => $prod,
+            'nomProd' => $nomProd,
+            'qte' => $qte_cmd,
+            'ldate' => date('y-m-d h:i:s'),
+            'lupdate' => date('y-m-d h:i:s'),
+            'total' => $total
+        ]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        // return $resultSet->fetchAllAssociative();
+    }
+
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function getFacture($cmd)
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT * FROM commande_produit WHERE commande_id = :cmd";
+        $stmt = $conn->prepare($sql);
+        $resultSet =   $stmt->executeQuery([
+            'cmd' => $cmd,
+        ]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    //    public function findOneBySomeField($value): ?Commande
+    //    {
+    //        return $this->createQueryBuilder('c')
+    //            ->andWhere('c.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
