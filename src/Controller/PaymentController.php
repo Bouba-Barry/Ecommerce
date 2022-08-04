@@ -10,6 +10,7 @@ use App\Repository\CommandeRepository;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\UserRepository;
+use App\Services\CurrencyConvert;
 use App\Services\PdfService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,27 +41,56 @@ class PaymentController extends AbstractController
     }
 
     #[Route('/paypal', name: 'app_paypal', methods: ['GET', 'POST'])]
-    public function paypal(Request $request, UserRepository $userRepository, CommandeRepository $commandeRepository): Response
+    public function paypal(Request $request, PanierRepository $panierRepository, UserRepository $userRepository, CommandeRepository $commandeRepository): Response
     {
         // $commandes = $request->query->get('commande');
         $session = $this->requestStack->getSession();
         $commandes = $session->get('commande');
-        $total = $session->get('total');
+        $totalDh = $session->get('total');
 
-        $request->cookies->set('total', $total);
-
-        // $commande = \json_decode($commandes);
-        // dd($foo->getUser());
-        // dd($foo);
+        $request->cookies->set('total', $totalDh);
 
         $user = $commandes->getUser(); //user lié à la commande
         //  dd($user); // panier de ce user
+        $arrayProd = [];
+        if ($this->getUser()) {
+            // $user = $userRepository->find($user->getId());
+            $panier =  $user->getPaniers();
 
+            foreach ($panier as $p) {
+                foreach ($p->getProduit() as $prod) {
+                    $total = 0;
+                    // foreach($panierRepository->selectPanierProd($panier->))
+                    $qte = $panierRepository->getQteProd($p->getId(), $prod->getId());
+                    // dd($qte[0]['qte_produit']);
+                    // dd($prod);
+                    if ($prod->getNouveauPrix() != null) {
+                        $total = $qte[0]['qte_produit'] * $prod->getNouveauPrix();
+                    } else {
+                        $total = $qte[0]['qte_produit'] * $prod->getAncienPrix();
+                    }
+                    $nom = $prod->getDesignation();
+                    $qte = $qte[0]['qte_produit'];
+                    $total = $total;
+                    $array = [
+                        'nom' => $nom,
+                        'qte' => $qte,
+                        'total' => $total,
+                    ];
+                    $val = json_encode($array);
+                    array_push($arrayProd, $val);
+                }
+            }
+        }
+        // dd($arrayProd);
+        $currency = new CurrencyConvert();
+        $total = round($currency->thmx_currency_convert($totalDh, 'MAD', 'USD'));
         $panier = $user->getPaniers();
         // dd($panier);
         return $this->renderForm('payment/paypal.html.twig', [
             'commandes' => $commandes,
             'panier' => $panier,
+            'totalDh' => $totalDh,
             'total' => $total
         ]);
     }
@@ -96,6 +126,8 @@ class PaymentController extends AbstractController
         $commandes = $session->get('commande');
         $total = $session->get('total');
 
+        $currency = new CurrencyConvert();
+        $total = round($currency->thmx_currency_convert($total, 'MAD', 'USD'));
 
         $user = $commandes->getUser(); //user lié à la commande
         // $key =  "sk_test_51LS3Z6B4pa87HJY2RvFzEsuMWP6lDNov4EbzLHNTMJqFE45FRf2609THNAuZbIusETmRUhLUneFiXgOID0Si4mL600t4o4uzur";
@@ -121,11 +153,11 @@ class PaymentController extends AbstractController
                 'price_data' => [
                     'currency' => 'usd',
                     'product_data' => [
-                        'name' => '',
+                        'name' => 'commande N°' . $commandes->getId(),
                     ],
-                    'unit_amount' => $total,
+                    'unit_amount' => $total * 100,
                 ],
-                // 'quantity' => $qte[0]['qte_produit'],
+                'quantity' => 1,
             ]],
             //     }
             // }
@@ -189,14 +221,7 @@ class PaymentController extends AbstractController
 
 
         $facture = $commandeRepository->getFacture($commandes->getId());
-        // // dd($facture);
-        $html = $this->render('payment/facture.html.twig', [
-            'commandes' => $commandes,
-            'factures' => $facture
-        ]);
-        $pdf->showPdfFile($html);
-
-        return $this->render('payment/facture.html.twig', [
+        return $this->render('payment/success.html.twig', [
             'factures' => $facture,
             'commandes' => $commandes
         ]);
@@ -205,40 +230,8 @@ class PaymentController extends AbstractController
     #[Route('/pdf', name: 'app_pdf', methods: ['GET', 'POST'])]
     public function pdfFacture(Request $request, PdfService $pdf, ProduitRepository $produitRepository, PanierRepository $panierRepository, UserRepository $userRepository, CommandeRepository $commandeRepository)
     {
-
-
         $session = $this->requestStack->getSession();
         $commandes = $session->get('commande');
-        if ($this->getUser()) {
-            $user = $this->getUser();
-            $user = $userRepository->find($user->getId());
-            $panier =  $user->getPaniers();
-
-            foreach ($panier as $p) {
-                foreach ($p->getProduit() as $prod) {
-                    $total = 0;
-                    // foreach($panierRepository->selectPanierProd($panier->))
-                    $qte = $panierRepository->getQteProd($p->getId(), $prod->getId());
-                    // dd($qte[0]['qte_produit']);
-                    // dd($prod);
-                    if ($prod->getNouveauPrix() != null) {
-                        $total = $qte[0]['qte_produit'] * $prod->getNouveauPrix();
-                    } else {
-                        $total = $qte[0]['qte_produit'] * $prod->getAncienPrix();
-                    }
-                    // dd($prod->getId());
-                    // dd($total);
-                    // array_push($array, $prod);
-                    $commandeRepository->ajout_produit($commandes->getId(), $prod->getId(), $qte[0]['qte_produit'], $total, $prod->getDesignation());
-                    $produitRepository->UpdateProduit($prod->getId(), $qte[0]['qte_produit']);
-                    // $p->removeProduit($prod)
-
-                    $panierRepository->RemoveProd($p->getId(), $prod->getId());
-                    // dd($val);
-                }
-            }
-        }
-
 
         $facture = $commandeRepository->getFacture($commandes->getId());
         // dd($facture);

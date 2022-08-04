@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use App\Services\CurrencyConvert;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 // #[Security("is_granted('ROLE_USER')")]
@@ -41,6 +42,12 @@ class LoginController extends AbstractController
     // } else {
     //     dd('Incorrect Password!');
     // } 
+
+    // $currency = new CurrencyConvert();
+    // // $res = $currency->convertCurrency(100, 'USD', 'MAD');
+    // $res = $currency->thmx_currency_convert(1000, 'MAD', 'USD');
+
+    // dd($res);
 
 
 

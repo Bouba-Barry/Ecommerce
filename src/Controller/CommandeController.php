@@ -52,6 +52,7 @@ class CommandeController extends AbstractController
             } else {
                 $commande->setAdresseLivraison($request->get('adresse'));
             }
+
             // dd($payment);
             $total = $request->get('total');
             // dd($total);

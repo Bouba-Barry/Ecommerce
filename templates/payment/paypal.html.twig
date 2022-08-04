@@ -9,7 +9,6 @@
                         <tr>
                             <th scope="col">Date de la Commande</th>
                             <th scope="col">Adresse de Livraison</th>
-                            {# <th scope="col">Produit concerné</th> #}
                             <th scope="col">Montant Total</th>
                         </tr>
                     </thead>
@@ -17,11 +16,13 @@
                         <tr>
                             <th scope="row">{{ commandes.getDateCmd() | date("d/m/Y", "Europe/Paris") }}</th>
                             <td>{{ commandes.getAdresseLivraison()  }}</td>
-                            <td id="total">{{ total }}</td>
+                            <td id="total">{{ totalDh }} Dhs</td>
                         </tr>
                     </tbody>
                 </table>
-
+           <div class="row">
+                </div> 
+                </div> 
     <div id="paypal-button-container" class="text-center "></div>
 
         </div>
@@ -42,7 +43,7 @@
         purchase_units: [
           {
             amount: {
-              value: 10 ,// à decommenter {{ total}}, //Can also reference a variable or function
+              value: {{ total}}, //Can also reference a variable or function
             },
           },
         ],
@@ -119,7 +120,7 @@
           document.cookie = name + "=" + value + expires + "; path=/";
         }
 
-        if(status === "COMPLETED"){
+        if(status == "COMPLETED"){
                   window.location.href = `http://127.0.0.1:8000/payment/success-url`;
         }
         else{

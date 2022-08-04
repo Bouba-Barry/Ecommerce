@@ -1,44 +1,11 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8"/>
-		<meta
-		name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-		<!-- Bootstrap CSS -->
-		<link
-		rel="stylesheet" href="{{ asset('FrontOffice/assets/css/bootstrap.min.css') }}"/>
-		<!-- Animate CSS -->
+{% extends 'frontend/index.html.twig' %}
 
-        <style>
-.height {
-    min-height: 200px;
-}
-
-.icon {
-    font-size: 47px;
-    color: #5CB85C;
-}
-
-.iconbig {
-    font-size: 77px;
-    color: #5CB85C;
-}
-
-.table > tbody > tr > .emptyrow {
-    border-top: none;
-}
-
-.table > thead > tr > .emptyrow {
-    border-bottom: none;
-}
-
-.table > tbody > tr > .highrow {
-    border-top: 3px solid;
-}
-</style>
-		<title>Facture</title>
-	</head>
-    	<body>
+{% block style %}
+<link 
+rel="stylesheet" href=" {{ asset('FrontOffice/other/facture.css') }}"/>
+		<!-- Odometer CSS -->
+{% endblock %}
+{% block content %}
 {% set tot = 0 %}
 {% set totalTva = 0 %}
       <div class="container mt-5">
@@ -95,7 +62,7 @@
                                     <td class="highrow"></td>
                                     <td class="highrow"></td>
                                     <td class="highrow text-center"><strong>Subtotal</strong></td>
-                                    <td class="highrow text-right">${{ tot }}</td>
+                                    <td class="highrow text-right">DHs {{ tot }}</td>
                                 </tr>
                                 <tr>
                                     <td class="emptyrow"></td>
@@ -108,17 +75,19 @@
                                     <td class="emptyrow"><i class="fa fa-barcode iconbig"></i></td>
                                     <td class="emptyrow"></td>
                                     <td class="emptyrow text-center"><strong>Total</strong></td>
-                                    <td class="emptyrow text-right">${{ totalTva }}</td>
+                                    <td class="emptyrow text-right">Dhs {{ totalTva }}</td>
                                 </tr>
                             </tbody>
                 </table>
+                            <a href="{{ path('app_pdf') }}" class="btn btn-warning" >Telecharger Facture</a>
+
                 </div> 
                 </div> 
                 {# end row #}
-            <a href="{{ path('app_pdf') }}" class="btn btn-warning" >Telecharger Facture</a>
             {# </div> #}
  </div>
-
+{% endblock %}
+{% block javascript %}
 		<!-- Jquery Slim JS -->
 		<script src=" {{ asset('FrontOffice/assets/js/jquery.min.js') }}"></script>
 		<!-- Popper JS -->
@@ -127,4 +96,4 @@
 		<script src=" {{
 						        asset('FrontOffice/assets/js/bootstrap.min.js')
 						      }} "></script>
-</body>
+{% endblock %}

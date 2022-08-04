@@ -16,7 +16,6 @@ class PdfService
         $pdfOptions = new Options();
 
         $pdfOptions->set('defaultFont', 'Garamond');
-        $this->domPdf->setPaper('A4', 'landscape');
 
         $this->domPdf->setOptions($pdfOptions);
     }
@@ -26,7 +25,7 @@ class PdfService
         $this->domPdf->loadHtml($html);
         $this->domPdf->render();
         $this->domPdf->stream("facture.pdf", [
-            'Attachement' => false
+            'Attachement' => true
         ]);
     }
 
