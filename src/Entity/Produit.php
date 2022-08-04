@@ -20,10 +20,10 @@ class Produit
 
 
 
-    // #[Assert\Length(
-    //     min: 3,
-    //     minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
-    // )]
+    #[Assert\Length(
+        min: 3,
+        minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
+    )]
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['prod:read'])]
