@@ -14,11 +14,11 @@ class Attribut
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read'])]
+    #[Groups(['prod:read','variation'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['prod:read'])]
+    #[Groups(['prod:read','variation'])]
     private $nom;
 
     #[ORM\OneToMany(mappedBy: 'attribut', targetEntity: Variation::class)]

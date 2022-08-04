@@ -9,6 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -116,7 +117,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function findByAdmin($role)
     {
-
         $queryBuilder = $this->createQueryBuilder('u')
             ->where("JSON_CONTAINS(u.roles, :role) = true")
             ->setParameter('role', sprintf('"%s"', $role));

@@ -36,6 +36,7 @@
                 <tr>
                   <th scope="col">Product</th>
                   <th scope="col">Name</th>
+                  <th scope="col">Variations</th>
                   <th scope="col">Unit Price</th>
                   <th scope="col">Quantity</th>
                   <th scope="col">Total</th>
@@ -56,14 +57,52 @@
                   <td class="product-name">
                     <a href="shop-details.html">{{ produit.designation }}</a>
                   </td>
+                  <td style="display: none">{{ produit.id }}</td>
+                  {% if panier_produit.variations != "" %}
+                  <td class="product-name">
+                    <a href="#">{{ panier_produit.variations }} </a>
+                  </td>
+                  {% else %}
+                  <td class="product-name">
+                    <a href="#"></a>
+                  </td>
+                  {% endif %}
                   <td class="product-price">
                     <span class="unit-amount prix">
-                      {% if produit.getNouveauPrix() == null %}{{
-                        produit.getAncienPrix()
-                      }}DH {% else %} {{ produit.getNouveauPrix() }}DH {% endif
+                      {% if produit.getReduction()|length != 0 %}{{
+                        produit.getNouveauPrix()
+                      }}DH {% else %} {{ produit.getAncienPrix() }}DH {% endif
                       %}</span
                     >
                   </td>
+                  {% if panier_produit.variations != "" %}
+                  <td class="product-quantity">
+                    <div class="input-counter variation-nom">
+                      <span
+                        id="progressbtn2{{ produit.id }}{{
+                          panier_produit.variations
+                        }}"
+                        class="minus-btn progressbtn2"
+                      >
+                        <i class="bx bx-minus"></i>
+                      </span>
+                      <input
+                        min="1"
+                        type="text"
+                        class="valprogress"
+                        value="{{ panier_produit.qte_produit }}"
+                      />
+                      <span
+                        class="plus-btn progressbtn1"
+                        id="progressbtn1{{ produit.id }}{{
+                          panier_produit.variations
+                        }}"
+                      >
+                        <i class="bx bx-plus"></i>
+                      </span>
+                    </div>
+                  </td>
+                  {% else %}
                   <td class="product-quantity">
                     <div class="input-counter">
                       <span
@@ -86,15 +125,31 @@
                       </span>
                     </div>
                   </td>
+                  {% endif %}
                   <td class="product-subtotal">
-                    <span class="subtotal-amount total_par_produit"
-                      >{% if produit.getNouveauPrix() == null %}{{
-                        panier_produit.qte_produit * produit.getAncienPrix()
+                    <span class="subtotal-amount total_par_produit">
+                      {% if produit.getReduction()|length != 0 %}{{
+                        panier_produit.qte_produit * produit.getNouveauPrix()
                       }}DH {% else %}
                       {{
-                        panier_produit.qte_produit * produit.getNouveauPrix()
+                        panier_produit.qte_produit * produit.getAncienPrix()
                       }}DH {% endif %}
                     </span>
+                    {% if panier_produit.variations != "" %}
+                    <a
+                    href="{{
+                      path('app_panier_delete_variations', {
+                        id: produit.id,
+                        user_id: app.user.id,
+                        variations : panier_produit.variations,
+                      })
+                    }}"
+                    class="remove"
+                  >
+                    <i class="bx bx-trash"></i>
+                  </a>
+                </td>
+                    {% else %}
                     <a
                       href="{{
                         path('app_panier_delete', {
@@ -107,6 +162,7 @@
                       <i class="bx bx-trash"></i>
                     </a>
                   </td>
+                  {% endif %}
                 </tr>
                 {% endif %} {% endfor %} {% endfor %}
               </tbody>
@@ -115,10 +171,9 @@
           <div class="cart-buttons">
             <div class="row align-items-center">
               <div class="col-lg-7 col-sm-7 col-md-7">
-                <a href="shop-1.html" class="default-btn"> Back to Shop </a>
-              </div>
-              <div class="col-lg-5 col-sm-5 col-md-5 text-right">
-                <a href="#" class="default-btn"> Update Cart </a>
+                <a href="{{ path('app_home') }}" class="default-btn">
+                  Back to Home
+                </a>
               </div>
             </div>
           </div>
@@ -139,7 +194,9 @@
                 <span><b id="total"></b></span>
               </li>
             </ul>
-            <a href="#" class="default-btn"> Proceed to Checkout </a>
+            <a href="#" id="checkout_process" class="default-btn">
+              Proceed to Checkout
+            </a>
           </div>
         </form>
       </div>

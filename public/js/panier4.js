@@ -6,9 +6,11 @@ console.log(top_products_item);
 
 for (let butt of top_products_item) {
   butt.addEventListener("mouseover", (e) => {
+    console.log(butt);
     let element =
-      butt.firstElementChild.lastElementChild.firstElementChild
-        .firstElementChild;
+      butt.firstElementChild.children[1].firstElementChild.firstElementChild;
+    console.log(element);
+
     let vals = [];
     vals.push(element.id.charAt(element.id.length - 1));
     fetch(

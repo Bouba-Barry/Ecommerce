@@ -31,7 +31,7 @@
 			<div class="orgo-grid-sorting row align-items-center">
 				<div class="col-lg-6 col-md-6 result-count">
 					<p>We found
-						<span class="count">{{size}}</span>
+						<span class="count"></span>
 						products available for you</p>
 				</div>
 
@@ -64,7 +64,7 @@
 				<div class="col-lg-3 col-md-6">
 					<div class="top-products-item">
 						<div class="products-image">
-							<a href="shop-details.html"><img src="{{ asset('FrontOffice/assets/img/top-products/top-products-8.jpg') }} "  style="width: 250px; height: 200px" alt="image"></a>
+							<a href="shop-details.html"><img src="{{ asset('uploads/produits/' ~ produit.getImageProduit() ) }} "  style="width: 250px; height: 200px" alt="image"></a>
 
 							<ul class="products-action">
 								<li>
@@ -84,14 +84,14 @@
 								</li>
 							</ul>
 
-							{% if produit.getReduction()|length != 0 %}
+                            {% if produit.getReduction()|length != 0 %}
                             <div class="sale">
                                 <span>
                                     {% for produit_reduction in produit.getReduction() %}
                                         -{{
-                                   produit_reduction.getPourcentage()
-                                           }}
-                                    {% endfor %}
+          produit_reduction.getPourcentage()
+        }}
+        {% endfor %}
       </span>
     </div>
     {% endif %}
@@ -101,7 +101,7 @@
 							<h3>
 								<a href="shop-details.html">{{ produit.designation }}</a>
 							</h3>
-							{% if produit.getReduction()|length != 0 %}
+                            {% if produit.getReduction()|length != 0 %}
                             <div class="price">
                               <span class="new-price"> {{ produit.nouveauPrix }}Dhs</span>
                               <span class="old-price">{{ produit.ancienPrix }}Dhs</span>

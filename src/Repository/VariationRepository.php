@@ -30,6 +30,32 @@ class VariationRepository extends ServiceEntityRepository
         }
     }
 
+
+
+
+    public function findVariations($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        // // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
+        $sql = "
+            SELECT v.variation_id FROM produit_variation v
+            where v.produit_id=:id            
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['id' => $id]);
+        $result=$resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('v')
+            ->where('v.id in (:result) ')
+            ->setParameter(':result',$result);
+       
+        return $queryBuilder;
+    }
+
+
+
+
+
+
     public function remove(Variation $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

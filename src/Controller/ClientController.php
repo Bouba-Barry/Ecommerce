@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Panier;
+use App\Entity\Wishlist;
 use App\Form\UserType;
 use App\Form\ClientType;
 use App\Repository\UserRepository;
 use App\Repository\PanierRepository;
+use App\Repository\WishlistRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,18 +25,26 @@ class ClientController extends AbstractController
 {
 
     #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PanierRepository $panierRepository, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request,WishlistRepository $wishlistRepository ,PanierRepository $panierRepository, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
+        
         $user = new User();
+    
         $form = $this->createForm(ClientType::class, $user);
         $form->handleRequest($request);
-        $panier = new Panier();
-        $panier->setUser($user);
-        $panierRepository->add($panier);
+        
 
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() ) {
             // dd($form);
+            
+            $panier = new Panier();
+            $wish=new Wishlist();
+            $panier->setUser($user);
+            $panierRepository->add($panier);
+            $wish->setUser($user);
+            $wishlistRepository->add($wish);
+
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $user->getPassword()
@@ -46,7 +56,7 @@ class ClientController extends AbstractController
 
             $userRepository->add($user, true);
 
-            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_login', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('frontend/register.html.twig', [

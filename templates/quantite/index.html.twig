@@ -39,6 +39,9 @@
       <div class="row">
         <div class="col-12">
           <div class="box">
+            <div class="box-header">
+              <h4 class="box-title">Complex headers (rowspan and colspan)</h4>
+            </div>
             <div class="box-body">
               <div class="table-responsive">
                 <table
@@ -48,55 +51,49 @@
                 >
                   <thead>
                     <tr>
-                      <th rowspan="2">Nom Complet</th>
-                      <th colspan="2">HR Information</th>
-                      <th colspan="2">Contact</th>
+                      <th rowspan="2">Produits</th>
+                      <th colspan="1">quantite en Stock</th>
+                      <th colspan="1" style="border-right: 1px solid #d5dfea">
+                        Variations
+                      </th>
                       <th rowspan="2"></th>
-                    </tr>
-                    <tr>
-                      <th>Adresse</th>
-                      <th>Roles</th>
-                      <th>Telephone</th>
-                      <th style="border-right: 1px solid #d5dfea">E-mail</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for user in users %}
+                    {% for quantite in quantites %}
                     <tr>
-                      <td>{{ user.Nom }} {{ user.prenom }}</td>
-                      <td>{{ user.adresse }}</td>
                       <td>
-                        <select size="1" id="row-1-office" name="row-1-office">
-                          <option value="Roles" selected="selected">
-                            Roles Here
-                          </option>
-                          {% for role in user.roles %}
-
-                          <option value="{{ role }}">
-                            {{ role }}
-                          </option>
-
-                          {% endfor %}
-                        </select>
+                        {{ quantite.getProduit().designation }}
                       </td>
-                      <td>{{ user.telephone }}</td>
-                      <td>{{ user.email }}</td>
+                      <td>{{ quantite.getQteStock() }}</td>
+                      <td>
+                        {% for quantit_variations in quantite.getVariations() %}
+                        <a>{{ quantit_variations }},</a>
+                        {% endfor %}
+                      </td>
+
                       <td>
                         <a
-                          href="{{ path('app_user_show', { id: user.id }) }}"
                           class="btn btn-md btn-primary"
+                          href="{{
+                            path('app_quantite_show', { id: quantite.id })
+                          }}"
                         >
                           <i class="fa fa-eye"></i>
                         </a>
                         <a
-                          href="{{ path('app_user_edit', { id: user.id }) }}"
                           class="btn btn-md btn-warning"
+                          href="{{
+                            path('app_quantite_edit', { id: quantite.id })
+                          }}"
                         >
                           <i class="fa fa-edit"></i>
                         </a>
                         <a
-                          href="{{ path('app_user_delete', { id: user.id }) }}"
                           class="btn btn-md btn-danger"
+                          href="{{
+                            path('app_quantite_show', { id: quantite.id })
+                          }}"
                         >
                           <i class="fa fa-trash"></i>
                         </a>
@@ -104,15 +101,6 @@
                     </tr>
                     {% endfor %}
                   </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>Name</th>
-                      <th>Position</th>
-                      <th>Salary</th>
-                      <th>Office</th>
-                      <th style="border-right: 1px solid #d5dfea">Extn.</th>
-                    </tr>
-                  </tfoot>
                 </table>
               </div>
             </div>

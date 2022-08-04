@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let old_price = document.getElementById("old_price");
   let description_produit = document.getElementById("description_produit");
   let product_review = document.getElementById("product_review");
+  let variation_choisi = document.getElementsByClassName("variation-choisi");
+  let message = document.getElementById("message");
 
   for (let but of search) {
     but.addEventListener("click", (e) => {
@@ -179,17 +181,46 @@ document.addEventListener("DOMContentLoaded", function () {
       // console.log(matches[0]);
 
       //   sessionStorage.setItem("clone", matches[0]);
-      // vals.push(matches[0]);
-      addcard[i].innerHTML = "added to card";
-      setTimeout(function () {
-        addcard[i].innerHTML = "";
-      }, 2000);
-      setTimeout(function () {
-        addcard[i].style.display = "none";
-      }, 2000);
-      addcard[i].style.backgroundColor = "#28a745";
-      addcard[i].style.border = "none";
-      addcard[i].style.outline = "none";
+      let verified = 0;
+      if (variation_choisi.length != 0) {
+        for (let j = 0; j < variation_choisi.length; j = j + 2) {
+          console.log(variation_choisi[j]);
+          if (variation_choisi[j].innerHTML != "") {
+            verified = 1;
+          } else verified = 0;
+          console.log("verified:" + verified);
+        }
+        if (verified == 0) {
+          message.innerHTML =
+            "vous devez choisir les variations que vous voulez";
+          message.style.display = "block";
+          setTimeout(function () {
+            message.style.display = "none";
+          }, 5000);
+        } else {
+          addcard[i].innerHTML = "added to card";
+          setTimeout(function () {
+            addcard[i].innerHTML = "";
+          }, 2000);
+          setTimeout(function () {
+            addcard[i].style.display = "none";
+          }, 2000);
+          addcard[i].style.backgroundColor = "#28a745";
+          addcard[i].style.border = "none";
+          addcard[i].style.outline = "none";
+        }
+      } else {
+        addcard[i].innerHTML = "added to card";
+        setTimeout(function () {
+          addcard[i].innerHTML = "";
+        }, 2000);
+        setTimeout(function () {
+          addcard[i].style.display = "none";
+        }, 2000);
+        addcard[i].style.backgroundColor = "#28a745";
+        addcard[i].style.border = "none";
+        addcard[i].style.outline = "none";
+      }
     }
   }
 
@@ -205,56 +236,73 @@ document.addEventListener("DOMContentLoaded", function () {
       // noti.classList.add("zero");
       let vals = [];
       let qte = [];
-      console.log(progressbtn1);
-      vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
-      console.log("voila : " + progressbtn1[i].id);
-      qte.push(Number(valprogress[i].value));
-      fetch(
-        `http://127.0.0.1:8000/panier/${vals}/${qte}/${parseInt(
-          user_id.innerHTML
-        )}`
-      )
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            console.log("mauvaise réponse!");
+      if (variation_choisi.length != 0) {
+        let verified = 0;
+
+        for (let j = 0; j < variation_choisi.length; j = j + 2) {
+          if (variation_choisi[j].innerHTML != "") {
+            verified = 1;
+          } else verified = 0;
+        }
+        if (verified == 0) {
+          message.innerHTML =
+            "vous devez choisir les variations que vous voulez";
+          message.style.display = "block";
+          setTimeout(function () {
+            message.style.display = "none";
+          }, 5000);
+        } else {
+          let vals = [];
+          let qte = [];
+          let variations = [];
+          vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+          console.log("voila : " + progressbtn1[i].id);
+          for (let choisi of variation_choisi) {
+            if (choisi.innerHTML != "") {
+              variations.push(choisi.innerHTML.trim());
+            }
           }
-        })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log("error");
-        });
-      noti.innerHTML = parseInt(noti.innerHTML) + Number(valprogress[i].value);
-    });
-  }
-  //progress
-  for (let but of progressbtn1) {
-    but.addEventListener("click", (e) => {
-      // console.log(but.id);
-      i = findindex1(but);
+          // qte.push(Number(valprogress[i].value));
+          // console.log("qte : " + qte[0]);
 
-      console.log(addcard[i].style.display);
+          qte.push(Number(valprogress[i].value));
+          console.log("qte : " + qte[0]);
 
-      if (
-        addcard[i].textContent.includes("Add to cart") == false ||
-        addcard[i].style.display == "none"
-      ) {
-        let vals = [];
-        let qte = [];
+          fetch(
+            `http://127.0.0.1:8000/quantite/panier/${vals}/${qte}/${variations}/${parseInt(
+              user_id.innerHTML
+            )}`
+          )
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                console.log("mauvaise réponse!");
+              }
+            })
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((err) => {
+              console.log("error");
+            });
+          noti.innerHTML =
+            parseInt(noti.innerHTML) + Number(valprogress[i].value);
+        }
+      } else {
         vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+        console.log("voila : " + progressbtn1[i].id);
         qte.push(Number(valprogress[i].value));
+        console.log("qte : " + qte[0]);
 
         fetch(
-          `http://127.0.0.1:8000/panier_edit/${vals}/${qte}/${parseInt(
+          `http://127.0.0.1:8000/panier/${vals}/${qte}/${parseInt(
             user_id.innerHTML
           )}`
         )
           .then((response) => {
             if (response.ok) {
-              return response;
+              return response.json();
             } else {
               console.log("mauvaise réponse!");
             }
@@ -265,10 +313,96 @@ document.addEventListener("DOMContentLoaded", function () {
           .catch((err) => {
             console.log("error");
           });
+        noti.innerHTML =
+          parseInt(noti.innerHTML) + Number(valprogress[i].value);
+      }
+    });
+  }
+  //progress
+  for (let but of progressbtn1) {
+    but.addEventListener("click", (e) => {
+      // console.log(but.id);
+      i = findindex1(but);
+      //hadi hta t3awd tchofha
+      console.log("panier : " + valprogress[i].max);
+      if (Number(valprogress[i].value) > Number(valprogress[i].max)) {
+        valprogress[i].value = valprogress[i].value - 1;
+        noti.innerHTML = Number(noti.innerHTML) - 1;
+        console.log("nadi");
+      }
+      //ha la fin dylha
 
-        console.log(valprogress[i].value);
-        console.log(noti.innerHTML);
-        noti.innerHTML = Number(noti.innerHTML) + 1;
+      console.log(addcard[i].style.display);
+
+      if (
+        addcard[i].textContent.includes("Add to cart") == false ||
+        addcard[i].style.display == "none"
+      ) {
+        if (variation_choisi.length != 0) {
+          let vals = [];
+          let qte = [];
+          let variations = [];
+          vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+          console.log("voila : " + progressbtn1[i].id);
+          for (let choisi of variation_choisi) {
+            if (choisi.innerHTML != "") {
+              variations.push(choisi.innerHTML.trim());
+            }
+          }
+          // qte.push(Number(valprogress[i].value));
+          // console.log("qte : " + qte[0]);
+          qte.push(Number(valprogress[i].value));
+          console.log("qte : " + qte[0]);
+
+          fetch(
+            `http://127.0.0.1:8000/quantite/panier_edit/${vals}/${qte}/${variations}/${parseInt(
+              user_id.innerHTML
+            )}`
+          )
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                console.log("mauvaise réponse!");
+              }
+            })
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((err) => {
+              console.log("error");
+            });
+          noti.innerHTML =
+            parseInt(noti.innerHTML) + Number(valprogress[i].value);
+        } else {
+          let vals = [];
+          let qte = [];
+          vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+          qte.push(Number(valprogress[i].value));
+
+          fetch(
+            `http://127.0.0.1:8000/panier_edit/${vals}/${qte}/${parseInt(
+              user_id.innerHTML
+            )}`
+          )
+            .then((response) => {
+              if (response.ok) {
+                return response;
+              } else {
+                console.log("mauvaise réponse!");
+              }
+            })
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((err) => {
+              console.log("error");
+            });
+
+          console.log(valprogress[i].value);
+          console.log(noti.innerHTML);
+          noti.innerHTML = Number(noti.innerHTML) + 1;
+        }
       }
 
       // valprogress[i].innerHTML++;

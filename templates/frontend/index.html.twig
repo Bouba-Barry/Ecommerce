@@ -210,6 +210,17 @@
                   </a>
                 </li>
 
+                {% if app.user %}
+                <li class="nav-item">
+                  <a
+                    href="{{ path('app_wish', { id: app.user.id }) }}"
+                    class="nav-link"
+                  >
+                    Wish List
+                  </a>
+                </li>
+                {% endif %}
+
                 <li class="nav-item">
                   <a href="contact.html" class="nav-link"> Contact </a>
                 </li>
@@ -218,12 +229,19 @@
               <div class="others-options d-flex align-items-center">
                 <div class="option-item">
                   <div class="cart-btn">
+                    {% if app.user %}
                     <a
                       href="{{ path('app_panier_infos', { id: app.user.id }) }}"
                     >
                       <i class="flaticon-shopping-cart"></i>
                       <span id="panier">0</span>
                     </a>
+                    {% else %}
+                    <a href="#">
+                      <i class="flaticon-shopping-cart"></i>
+                      <span id="panier">0</span>
+                    </a>
+                    {% endif %}
                   </div>
                 </div>
 
@@ -890,6 +908,7 @@
     <script src="{{ asset('js/delete_reduction.js') }}"></script>
     <script src="{{ asset('FrontOffice/other/search_shop.js') }}"></script>
     <script src="{{ asset('js/panier4.js') }}"></script>
+    <script src="{{ asset('js/panier5.js') }}"></script>
     {% block javascripts %} {% endblock %}
   </body>
 </html>

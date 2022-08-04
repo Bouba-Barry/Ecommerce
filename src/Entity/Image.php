@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ImageRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -15,7 +16,7 @@ class Image
     #[Groups(['prod:read'])]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255 , nullable: true)]
     #[Groups(['prod:read'])]
     private $url;
 
@@ -24,6 +25,11 @@ class Image
 
     #[ORM\ManyToOne(targetEntity: Variation::class, inversedBy: 'images')]
     private $variation;
+
+    #[ORM\Column(type: Types::BIGINT)]
+    private ?string $qte_stock = null;
+
+   
 
     public function getId(): ?int
     {
@@ -65,4 +71,18 @@ class Image
 
         return $this;
     }
+
+    public function getQteStock(): ?string
+    {
+        return $this->qte_stock;
+    }
+
+    public function setQteStock(string $qte_stock): self
+    {
+        $this->qte_stock = $qte_stock;
+
+        return $this;
+    }
+
+ 
 }

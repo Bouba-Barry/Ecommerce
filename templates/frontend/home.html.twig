@@ -110,12 +110,14 @@
 
 								<ul class="products-action">
 									<li>
-										<a href="cart.html" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+										<a    id="addtocart{{ produit.id }}"
+                    class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
 											<i class="flaticon-shopping-cart"></i>
 										</a>
 									</li>
 									<li>
-										<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+										<a  id="addtowish{{ produit.id }}"
+                    class="addtowish" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
 											<i class="flaticon-heart"></i>
 										</a>
 									</li>

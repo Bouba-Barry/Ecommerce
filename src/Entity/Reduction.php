@@ -15,7 +15,7 @@ class Reduction
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read'])]
+    #[Groups(['prod:read','prod:check'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

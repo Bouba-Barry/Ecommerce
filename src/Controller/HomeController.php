@@ -35,6 +35,22 @@ use Symfony\Component\Messenger\Transport\Serialization\Serializer;
 class HomeController extends AbstractController
 {
 
+
+    // #[Route('/quantite_produit_panier/{id}/{slug}', name: 'app_quantite_produit_panier', methods: ['GET'])]
+    // public function quantite_produit_panier($id,$slug, UserRepository $userRepository ,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    // {
+
+    //     $panier = $panierRepository->findOneBy(['user' => $userRepository->find($slug)]);
+    //     $produit_panier=$panierRepository->find_one_produit_panier($panier->getId(),$id);
+        
+          
+    //     $json = json_encode($produit_panier);
+    //     return $this->json($json);
+    // }
+
+
+
+
     #[Route('/discover_product/{id}', name: 'app_discover_product', methods: ['GET'])]
     public function discover_product(Reduction $reduction,SerializerInterface $serializer , ProduitRepository $produitRepository, PanierRepository $panierRepository)
     {
@@ -57,8 +73,8 @@ class HomeController extends AbstractController
 
 
 
-    #[Route('/checkout/{id}', name: 'app_checkout', methods: ['GET'])]
-    public function checkout(User $user, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
+    #[Route('/checkout/{id}/{slug}', name: 'app_checkout', methods: ['GET'])]
+    public function checkout(User $user,$slug,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
     {
         $panier = $panierRepository->findOneBy(['user' => $user]);
         $panier_produit = $panierRepository->find_produit_panier($panier->getId());
@@ -78,7 +94,8 @@ class HomeController extends AbstractController
         return $this->render('frontend/checkout.html.twig', [
             'panier_produits' => $obj,
             'produits' => $produits,
-            'length' => $length
+            'length' => $length,
+            'total'=> $slug
         ]);
     }
 
@@ -117,7 +134,7 @@ class HomeController extends AbstractController
         $json = $serializer->serialize($region_villes, 'json', ['groups' => ['ville']]);
 
         $json = json_decode($json);
-        return $this->$json($json);
+        return $this->json($json);
     }
 
 
@@ -194,12 +211,34 @@ class HomeController extends AbstractController
         return true;
     }
 
+    // #[Route('/check_reduction', name: 'app_check_reduction', methods: ['GET'])]
+    // public function check_reduction(ProduitRepository $produitRepository,SerializerInterface $serializer)
+    // {
+    //     $json = $serializer->serialize($produitRepository->findAll(), 'json', ['groups' => ['prod:check']]);
+          
+    //     $json=json_decode($json);
+    //     foreach($json as $array){
+    //         if(count($array->variation())){
+    //            $array->setNouveauPrix(0);
+    //         }
+    //         else
+    //         continue;
+    //     }
+    //     dd($json);
+
+    // }
+
+
+
+
+
     #[Route('/shop_details/{id}', name: 'app_shop_details', methods: ['GET'])]
-    public function shop_details($id, FeadBackRepository $feadBackRepository ,ProduitRepository $produitRepository, SousCategorieRepository $sousCategorieRepository)
+    public function shop_details($id,FeadBackRepository $feadBackRepository ,ProduitRepository $produitRepository, SousCategorieRepository $sousCategorieRepository)
     {
         // dd($produit);
 
         $produit = $produitRepository->find($id);
+        
         // dd($produit);
 
         $produits_similaires = $produitRepository->findBy(['sous_categorie' => $produit->getSousCategorie()]);
@@ -471,21 +510,18 @@ class HomeController extends AbstractController
         $panier_id = $panier->getId();
 
         // $val->array_push($produit->getId());
-        $d = str_split($id);
-        $f = str_split($slug);
+
         //  $panier_id=$panier->getId();
         // $array_ids = [];
-        for ($i = 0; $i < count($d); $i++) {
-            if ($d[$i] !== "," && $f[$i] !== ",") {
+       
                 // $produit=$produitRepository->find($d[$i]);
                 // $panier->addProduit($produit);
 
 
-                $panierRepository->add_to_produit_panier($panier_id, $d[$i], $f[$i]);
-            }
-        }
+                $panierRepository->add_to_produit_panier($panier_id, $id, $slug);
+        
         //  dd("fin am3lm");      
-        $panier_produit = $panierRepository->find_one_produit_panier($panier_id, $d[0]);
+        $panier_produit = $panierRepository->find_one_produit_panier($panier_id, $id);
 
         return $this->json($panier_produit);
         // return $this->redirectToRoute('app_panier_infos', ['id' => $user_id ], Response::HTTP_SEE_OTHER);
@@ -543,21 +579,18 @@ class HomeController extends AbstractController
         $panier_id = $panier->getId();
 
         // $val->array_push($produit->getId());
-        $d = str_split($id);
-        $f = str_split($slug);
+       
         //  $panier_id=$panier->getId();
         // $array_ids = [];
-        for ($i = 0; $i < count($d); $i++) {
-            if ($d[$i] !== "," && $f[$i] !== ",") {
+    
                 // $produit=$produitRepository->find($d[$i]);
                 // $panier->addProduit($produit);
 
 
-                $panierRepository->edit_produit_panier($panier_id, $d[$i], $f[$i]);
-            }
-        }
+                $panierRepository->edit_produit_panier($panier_id, $id, $slug);
+       
         //  dd($panier);     
-        $panier_produit = $panierRepository->find_one_produit_panier($panier_id, $d[0]);
+        $panier_produit = $panierRepository->find_one_produit_panier($panier_id, $id);
 
         return $this->json($panier_produit);
 
@@ -587,10 +620,10 @@ class HomeController extends AbstractController
     {
 
         $panier = $panierRepository->findOneBy(['user' => $user]);
-        //    dd($panier->getId());
+           
         $panier_produit = $panierRepository->find_produit_panier($panier->getId());
         $obj = json_decode($panier_produit);
-
+        
         return $this->json($obj);
     }
 

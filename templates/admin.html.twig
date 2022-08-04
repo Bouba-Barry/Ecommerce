@@ -405,6 +405,54 @@
 									</li>
 								</ul>
 							</li>
+							<li class="treeview">
+								<a href="#">
+									<i data-feather="server"></i>
+									<span>Tables</span>
+									<span class="pull-right-container">
+										<i class="fa fa-angle-right pull-right"></i>
+									</span>
+								</a>
+
+								{% if 'ROLE_ADMIN' in app.user.ROLES %}
+									<ul class="treeview-menu">
+										<li>
+											<a href="{{ path('app_produit_index') }}">
+												<i class="ti-more"></i>Liste Des Produits</a>
+										</li>
+										{% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
+											<li>
+												<a href="{{ path('app_user_index') }}">
+													<i class="ti-more"></i>Liste Users</a>
+											</li>
+										{% endif %}
+										<li>
+											<a href="{{ path('app_categorie_index') }}">
+												<i class="ti-more"></i>Liste Categorie</a>
+										</li>
+										<li>
+											<a href="{{ path('app_sous_categorie_index') }}">
+												<i class="ti-more"></i>Liste sous_categorie</a>
+										</li>
+										<li>
+											<a href="{{ path('app_reduction_index') }}">
+												<i class="ti-more"></i>Liste des Reduction</a>
+										</li>
+										<li>
+											<a href="{{ path('app_variation_index') }}">
+												<i class="ti-more"></i>Liste des variation</a>
+										</li>
+										<li>
+											<a href="{{ path('app_attribut_index') }}">
+												<i class="ti-more"></i>Liste des Attributs</a>
+										</li>
+									</ul>
+								{% endif %}
+							</li>
+
+
+
+
 
 							<li class="treeview">
 								<a href="#">
@@ -466,6 +514,12 @@
 											<a href="{{ path('app_produit_new') }}">
 												<i class="ti-more"></i>Ajout Produit</a>
 										</li>
+                                        
+										<li>
+											<a href="{{ path('app_quantite_new') }}">
+												<i class="ti-more"></i>Gerer les Variations</a>
+										</li>
+
 										<li>
 											<a href="{{ path('app_categorie_new') }}">
 												<i class="ti-more"></i>Ajout Categorie</a>
@@ -502,50 +556,7 @@
 									</ul>
 								{% endif %}
 							</li>
-							<li class="treeview">
-								<a href="#">
-									<i data-feather="server"></i>
-									<span>Tables</span>
-									<span class="pull-right-container">
-										<i class="fa fa-angle-right pull-right"></i>
-									</span>
-								</a>
-
-								{% if 'ROLE_ADMIN' in app.user.ROLES %}
-									<ul class="treeview-menu">
-										<li>
-											<a href="{{ path('app_produit_index') }}">
-												<i class="ti-more"></i>Liste Des Produits</a>
-										</li>
-										{% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
-											<li>
-												<a href="{{ path('app_user_index') }}">
-													<i class="ti-more"></i>Liste Users</a>
-											</li>
-										{% endif %}
-										<li>
-											<a href="{{ path('app_categorie_index') }}">
-												<i class="ti-more"></i>Liste Categorie</a>
-										</li>
-										<li>
-											<a href="{{ path('app_sous_categorie_index') }}">
-												<i class="ti-more"></i>Liste sous_categorie</a>
-										</li>
-										<li>
-											<a href="{{ path('app_reduction_index') }}">
-												<i class="ti-more"></i>Liste des Reduction</a>
-										</li>
-										<li>
-											<a href="{{ path('app_variation_index') }}">
-												<i class="ti-more"></i>Liste des variation</a>
-										</li>
-										<li>
-											<a href="{{ path('app_attribut_index') }}">
-												<i class="ti-more"></i>Liste des Attributs</a>
-										</li>
-									</ul>
-								{% endif %}
-							</li>
+							
 
 							<li class="treeview">
 								<a href="#">

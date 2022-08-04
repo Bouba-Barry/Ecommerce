@@ -93,6 +93,49 @@ class ProduitRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    public function findByUser($user)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
+        $sql = "
+            SELECT p.* FROM produit p, produit_variation v
+            where p.id=v.produit_id            
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        $result=$resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.user =:user ')
+            ->andWhere('p in (:result)')
+            ->setParameter('user',$user)
+            ->setParameter(':result',$result);
+       
+        return $queryBuilder;
+    }
+
+    public function findProduitBy($id)
+    {
+        // $conn = $this->getEntityManager()->getConnection();
+        // // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
+        // $sql = "
+        //     SELECT p.* FROM produit p, produit_variation v
+        //     where p.id=v.produit_id            
+        // ";
+        // $stmt = $conn->prepare($sql);
+        // $resultSet = $stmt->executeQuery();
+        // $result=$resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.id =:id ')
+            ->setParameter('id',$id);
+
+       
+        return $queryBuilder;
+    }
+
+
+
+
+
     /**
      * @return Produit[] Returns an array of Produit objects
      */

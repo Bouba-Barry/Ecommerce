@@ -26,7 +26,6 @@ class ClientType extends AbstractType
             "type" => PasswordType::class,
             "first_options" => ["label" => false, 'attr' => ['placeholder' => 'Mot de passe', 'class' => 'form-control']],
             "second_options" => ["label" => false, 'attr' => ['placeholder' => 'Confirmation', 'class' => 'form-control']],
-
             ]);
     }
 

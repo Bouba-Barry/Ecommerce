@@ -12,8 +12,74 @@ document.addEventListener("DOMContentLoaded", function () {
   let somme_subtotal = 0;
   let somme_total = 0;
   let panier = document.getElementById("panier");
-  console.log(panier);
+  let checkout_process = document.getElementById("checkout_process");
+  let variation_nom = document.getElementsByClassName("variation-nom");
 
+  checkout_process.addEventListener("click", function () {
+    window.location.href =
+      "http://127.0.0.1:8000/checkout/" +
+      parseInt(user_id.innerHTML) +
+      "/" +
+      total.innerHTML;
+  });
+
+  for (let i = 0; i < valprogress.length - 1; i++) {
+    if (valprogress[i].parentElement.classList.contains("variation-nom")) {
+      console.log("22");
+      fetch(
+        `http://127.0.0.1:8000/quantite/variations_panier_check/${parseInt(
+          valprogress[i].parentElement.parentElement.previousElementSibling
+            .previousElementSibling.previousElementSibling.innerHTML
+        )}/${
+          valprogress[i].parentElement.parentElement.previousElementSibling
+            .previousElementSibling.firstElementChild.innerHTML
+        }`
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            console.log("mauvaise réponse!");
+          }
+        })
+        .then((data) => {
+          console.log(data[0].qte_stock + "and :" + i);
+          console.log(valprogress[i]);
+          valprogress[i].setAttribute("max", data[0].qte_stock);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      if (
+        parseInt(
+          valprogress[i].parentElement.parentElement.previousElementSibling
+            .previousElementSibling.previousElementSibling.innerHTML
+        ) != NaN
+      ) {
+        fetch(
+          `http://127.0.0.1:8000/getProduit/${parseInt(
+            valprogress[i].parentElement.parentElement.previousElementSibling
+              .previousElementSibling.previousElementSibling.innerHTML
+          )}`
+        )
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              console.log("mauvaise réponse!");
+            }
+          })
+          .then((data) => {
+            console.log(data);
+            valprogress[i].setAttribute("max", data.qte_stock);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }
+  }
   //panier number
   // panier.innerHTML = panierlength.innerHTML;
 
@@ -34,38 +100,75 @@ document.addEventListener("DOMContentLoaded", function () {
 
   for (let but of progressbtn1) {
     but.addEventListener("click", (e) => {
+      i = findindex1(but);
       let vals = [];
       let qte = [];
 
-      i = findindex1(but);
-      vals.push(progressbtn1[i].id.charAt(progressbtn1[i].id.length - 1));
-      qte.push(Number(valprogress[i].value));
-      //           valprogress[i].innerHTML++;
-      //         let prix = document
-      //   .getElementById("prix" + but.id.charAt(but.id.length - 1))
-      //   .innerHTML.replace("DHS", "");
-      console.log(vals);
-      console.log(qte);
-      console.log(parseInt(user_id.innerHTML));
-      fetch(
-        `http://127.0.0.1:8000/panier_edit/${vals}/${qte}/${parseInt(
-          user_id.innerHTML
-        )}`
-      )
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            console.log("mauvaise réponse!");
-          }
-        })
-        .then((data) => {
-          console.log(data);
-          update_total_par_produit(data);
-        })
-        .catch((err) => {
-          console.log("error");
-        });
+      if (Number(valprogress[i].value) > Number(valprogress[i].max)) {
+        valprogress[i].value = valprogress[i].value - 1;
+        noti.innerHTML = Number(noti.innerHTML) - 1;
+        console.log("nadi");
+      }
+
+      if (but.parentElement.classList.contains("variation-nom")) {
+        let variations = valprogress[
+          i
+        ].parentElement.parentElement.previousElementSibling.previousElementSibling.firstElementChild.innerHTML.replace(
+          '["',
+          ""
+        );
+        variations = variations.replace('"]', "");
+
+        variations = variations.replace('"', "");
+        variations = variations.replace('"', "");
+        variations = variations.replace(" ", "");
+        console.log(variations);
+        fetch(
+          `http://127.0.0.1:8000/quantite/panier_edit/${parseInt(
+            valprogress[i].parentElement.parentElement.previousElementSibling
+              .previousElementSibling.previousElementSibling.innerHTML
+          )}/${valprogress[i].value}/${variations}/${parseInt(
+            user_id.innerHTML
+          )}`
+        )
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              console.log("mauvaise réponse!");
+            }
+          })
+          .then((data) => {
+            console.log(data);
+            update_total_par_produit(data);
+          })
+          .catch((err) => {
+            console.log("error");
+          });
+      } else {
+        vals.push(progressbtn1[i].id.charAt(progressbtn1[i].id.length - 1));
+        qte.push(Number(valprogress[i].value));
+        console.log(parseInt(user_id.innerHTML));
+        fetch(
+          `http://127.0.0.1:8000/panier_edit/${vals}/${qte}/${parseInt(
+            user_id.innerHTML
+          )}`
+        )
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              console.log("mauvaise réponse!");
+            }
+          })
+          .then((data) => {
+            console.log(data);
+            update_total_par_produit(data);
+          })
+          .catch((err) => {
+            console.log("error");
+          });
+      }
 
       function update_total_par_produit(data) {
         console.log(valprogress[i].value);
@@ -108,28 +211,65 @@ document.addEventListener("DOMContentLoaded", function () {
       let qte = [];
       i = findindex2(but);
 
-      vals.push(progressbtn2[i].id.charAt(progressbtn2[i].id.length - 1));
-      qte.push(Number(valprogress[i].value));
+      if (but.parentElement.classList.contains("variation-nom")) {
+        let variations = valprogress[
+          i
+        ].parentElement.parentElement.previousElementSibling.previousElementSibling.firstElementChild.innerHTML.replace(
+          '["',
+          ""
+        );
+        variations = variations.replace('"]', "");
 
-      fetch(
-        `http://127.0.0.1:8000/panier_edit/${vals}/${qte}/${parseInt(
-          user_id.innerHTML
-        )}`
-      )
-        .then((response) => {
-          if (response.ok) {
-            return response;
-          } else {
-            console.log("mauvaise réponse!");
-          }
-        })
-        .then((data) => {
-          console.log(data);
-          update_total_par_produit(data);
-        })
-        .catch((err) => {
-          console.log("error");
-        });
+        variations = variations.replace('"', "");
+        variations = variations.replace('"', "");
+        variations = variations.replace(" ", "");
+        console.log(variations);
+        fetch(
+          `http://127.0.0.1:8000/quantite/panier_edit/${parseInt(
+            valprogress[i].parentElement.parentElement.previousElementSibling
+              .previousElementSibling.previousElementSibling.innerHTML
+          )}/${valprogress[i].value}/${variations}/${parseInt(
+            user_id.innerHTML
+          )}`
+        )
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              console.log("mauvaise réponse!");
+            }
+          })
+          .then((data) => {
+            console.log(data);
+            update_total_par_produit(data);
+          })
+          .catch((err) => {
+            console.log("error");
+          });
+      } else {
+        vals.push(progressbtn2[i].id.charAt(progressbtn2[i].id.length - 1));
+        qte.push(Number(valprogress[i].value));
+
+        fetch(
+          `http://127.0.0.1:8000/panier_edit/${vals}/${qte}/${parseInt(
+            user_id.innerHTML
+          )}`
+        )
+          .then((response) => {
+            if (response.ok) {
+              return response;
+            } else {
+              console.log("mauvaise réponse!");
+            }
+          })
+          .then((data) => {
+            console.log(data);
+            update_total_par_produit(data);
+          })
+          .catch((err) => {
+            console.log("error");
+          });
+      }
 
       function update_total_par_produit(data) {
         console.log(valprogress[i].value);

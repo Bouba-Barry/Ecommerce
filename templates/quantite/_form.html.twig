@@ -9,16 +9,15 @@
     <div class="content-header">
       <div class="d-flex align-items-center">
         <div class="mr-auto">
-          <h3 class="page-title">Ajouter Des Images</h3>
+          <h3 class="page-title">Ajouter Produit</h3>
           <div class="d-inline-block align-items-center">
             <nav>
               <ol class="breadcrumb">
                 <li>
                   <a
-                    href="{{ path('app_image_index') }}"
+                    href="{{ path('app_produit_index') }}"
                     class="btn btn-primary btn-md"
-                  >
-                    Retour à la Liste</a
+                    >Retour à la Liste</a
                   >
                 </li>
               </ol>
@@ -35,53 +34,33 @@
           <div class="box">
             <div class="box-body">
               <div class="form-group row">
-                <label class="col-form-label col-md-2"
-                  >Images Pour le produit</label
-                >
+                <label class="col-form-label col-md-2">Produit Concerne</label>
                 <div class="mb-3 col-md-10">
-                  {{ form_row(form.photo) }}
-                  <span class="form-text text-muted">{{
-                    form_errors(form.photo)
-                  }}</span>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-form-label col-md-2"
-                  >Variation Asscocié</label
-                >
-                <div class="mb-3 col-md-10">
-                  {#
-                  <input class="form-control" type="datetime" name="datetime" />
-                  #}
-                  {{ form_row(form.variation) }}
-                  <span class="form-text text-muted">{{
-                    form_errors(form.variation)
-                  }}</span>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-form-label col-md-2">Produit Associé</label>
-                <div class="mb-3 col-md-10">
-                  {#
-                  <input class="form-control" type="datetime" name="datetime" />
-                  #}
                   {{ form_row(form.produit) }}
                   <span class="form-text text-muted">{{
                     form_errors(form.produit)
                   }}</span>
                 </div>
               </div>
+
               <div class="form-group row">
-                <label class="col-form-label col-md-2">Produit Associé</label>
+                <label class="col-form-label col-md-2">Qantite En Stock</label>
                 <div class="mb-3 col-md-10">
-                  {#
-                  <input class="form-control" type="datetime" name="datetime" />
-                  #}
                   {{ form_row(form.qte_stock) }}
                   <span class="form-text text-muted">{{
                     form_errors(form.qte_stock)
+                  }}</span>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-form-label col-md-2"
+                  >Combinaison des Variations</label
+                >
+                <div class="mb-3 col-md-10">
+                  {{ form_row(form.variations) }}
+                  <span class="form-text text-muted">{{
+                    form_errors(form.variations)
                   }}</span>
                 </div>
               </div>
@@ -105,4 +84,6 @@
   </div>
 </div>
 <!-- /.content-wrapper -->
+{% endblock %} {% block javascript %}
+<script src="{{ asset('js/variation-combinaison.js') }}"></script>
 {% endblock %}

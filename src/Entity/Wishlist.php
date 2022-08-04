@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\WishlistRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\WishlistRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: WishlistRepository::class)]
 class Wishlist
@@ -13,6 +14,7 @@ class Wishlist
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
+    #[Groups(['prod:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'wishlists')]

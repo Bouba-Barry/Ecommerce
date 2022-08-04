@@ -5,12 +5,14 @@ namespace App\Form;
 use App\Entity\Image;
 use App\Entity\Produit;
 use App\Entity\Variation;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class ImageType extends AbstractType
 {
@@ -53,6 +55,9 @@ class ImageType extends AbstractType
                 'choice_label' => 'nom',
                 'label' => false,
                 'attr' => ['placeholder' => 'Variation associé', 'class' => 'form-control']
+            ])
+            ->add('qte_stock', NumberType::class, [
+                'attr' => ['placeholder' => 'quantite', 'class' => 'form-control']
             ]);
     }
 

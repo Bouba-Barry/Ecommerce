@@ -23,7 +23,11 @@
   </div>
 </div>
 <!-- End Page Banner -->
-
+{% if produit.getVariation()|length != 0 and produit.getAttributs()|length != 0 %}
+<button id="message" class="btn btn-info btn-lg btn-block">
+  veuillez chosir la variation que vous voulez
+</button>
+{% endif %}
 <!-- Start Product Details Area -->
 <section class="product-details-area pt-100 pb-70">
   <div class="container">
@@ -31,19 +35,35 @@
       <div class="col-lg-8">
         <div class="row">
           <div class="col-lg-6 col-md-12">
+         
             <div class="product-details-image">
+              {# {% if produit.getImages()|length == 0 %} #}
+             
               <a href="#" id="image_principale">
                 <img
                   src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
                   alt=""
                 />
               </a>
-              <img
+              {# {% else %}
+              
+              {# {% for image_var in produit.getImages() %} 
+            
+              <a href="#" id="image_principale">
+                <img
+                  src="{{ asset('uploads/others/' ~ produit.getImages()|first .getUrl() ) }}"
+                  alt=""
+                />
+              </a>
+              
+              {# {% endfor %} 
+              {% endif %} #}
+              {# <img
                 id="image_principale_hidden"
                 style="display: none"
                 src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
                 alt=""
-              />
+              /> #}
             </div>
           </div>
 
@@ -85,18 +105,31 @@
                 {% if produit.getAttributs()|length !=0 %} {% for
                 produit_attribut in produit.getAttributs() %} {% if
                 produit_attribut.getVariations()|length != 0 %}
+                
                 <h5>
+                  <p style="display: none;" class="attribut"  >{{ produit_attribut.id }}</p>
                   {{ produit_attribut.nom }} : &nbsp; {% for produit_variation
                   in produit_attribut.getVariations() %} {% if produit in
-                  produit_variation.getProduits() %}
-                  <p style="display: inline" id="variation_nom"></p>
-
-                  <p style="display: none" class="hidden_variation_nom">
+                  produit_variation.getProduits() %} {% if
+                  produit_variation.getImages()|length !=0 %}
+                  
+                  <p style="display: inline"  class="variation-choisi" id="variation-choisi{{ produit_attribut.id }}" ></p>
+                  <p style="display: none" class="variation_nom variation-choisi{{ produit_attribut.id }}">
                     {{ produit_variation.nom }}
                   </p>
                 </h5>
+                  {% else %}
+                  <p style="display: inline" class="variation-choisi" id="variation-choisi{{ produit_attribut.id }}"></p>
+                </h5>
+                  <p style="display: inline;margin-right:10px"  class="btn btn-light variation_nom variation-choisi{{ produit_attribut.id }}">
+                    {{ produit_variation.nom }}
+                  </p>
+                  {% endif %}
+              
+
                 {% for image in produit_variation.getImages() %} {% if
                 produit==image.getProduit() %}
+
                 <a href="#image_principale">
                   <img
                     class="image"
@@ -105,21 +138,28 @@
                     alt=""
                   />
                 </a>
+
+                <p class="qte_image" style="display: none">
+                  {{ image.getQteStock() }}
+                </p>
                 {% endif %} {% endfor %} {% endif %} {% endfor %}
-                <a href="#image_principale">
-                  <img
-                    class="image"
-                    style="width: 40px; height: 40px"
-                    src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
-                    alt=""
-                  />
-                </a>
                 {% endif %} {% endfor %} {% endif %}
               </div>
+              {% if produit.getVariation()|length ==0 %}
+              <strong id="qte_reste"
+                >il reste {{ produit.getQteStock() }} en stock</strong
+              >
+              {% else %}
+              <strong id="qte_reste"
+              ></strong
+            >
+              {% endif %}
               <p>
                 {{ produit.description }}
               </p>
-              <div class="product-add-to-cart">
+
+              {% if produit.getVariation()|length != 0 and produit.getAttributs()|length != 0 %}
+              <div id="product-add-to-cart" style="display:none ;" class="product-add-to-cart">
                 <div class="input-counter">
                   <span
                     id="progressbtn2{{ produit.id }}"
@@ -127,7 +167,13 @@
                   >
                     <i class="bx bx-minus"></i>
                   </span>
-                  <input class="valprogress" type="text" min="0" value="1" />
+                  <input
+                    class="valprogress"
+                    type="text"
+                    min="0"
+                    max="{{ produit.getQteStock() }}"
+                    value="1"
+                  />
                   <span
                     class="plus-btn progressbtn1"
                     id="progressbtn1{{ produit.id }}"
@@ -144,7 +190,39 @@
                   <span></span>
                 </button>
               </div>
-
+              {% else %}
+              <div class="product-add-to-cart">
+                <div class="input-counter">
+                  <span
+                    id="progressbtn2{{ produit.id }}"
+                    class="minus-btn progressbtn2"
+                  >
+                    <i class="bx bx-minus"></i>
+                  </span>
+                  <input
+                    class="valprogress"
+                    type="text"
+                    min="0"
+                    max="{{ produit.getQteStock() }}"
+                    value="1"
+                  />
+                  <span
+                    class="plus-btn progressbtn1"
+                    id="progressbtn1{{ produit.id }}"
+                  >
+                    <i class="bx bx-plus"></i>
+                  </span>
+                </div>
+                <button
+                  type="submit"
+                  id="addcard{{ produit.id }}"
+                  class="default-btn addcard"
+                >
+                  Add to cart
+                  <span></span>
+                </button>
+              </div>
+              {% endif %}
               <div class="buy-checkbox-btn">
                 <div class="item">
                   <input class="inp-cbx" id="cbx" type="checkbox" />
@@ -666,7 +744,7 @@
 <!-- End Featured Products Area -->
 
 {% endblock %} {% block javascripts %}
-<script src="{{ asset('js/panier.js') }}"></script>
 <script src="{{ asset('js/variation.js') }}"></script>
+<script src="{{ asset('js/panier.js') }}"></script>
 
 {% endblock %}

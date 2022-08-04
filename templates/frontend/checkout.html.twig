@@ -42,42 +42,11 @@
           <div class="billing-details">
             <h3 class="title">Billing Details</h3>
             <div class="row">
-              <div class="col-lg-12 col-md-12">
-                <div class="form-group">
-                  <label> Region <span class="required">*</span></label>
-                  <div class="select-box">
-                    <select
-                      id="select_region"
-                      onchange="func()"
-                      class="form-control"
-                    >
-                      <option value="0">Choisissez une Region</option>
-                      <option value="1">Tanger-Tetouan-Al Hoceima</option>
-                      <option value="2">Oriental</option>
-                      <option value="3">Fès-Meknès</option>
-                      <option value="4">Rabat-Salé-Kénitra</option>
-                      <option value="5">Béni Mellal-Khénifra</option>
-                      <option value="6">Casablanca-Settat</option>
-                      <option value="7">Marrakesh-Safi</option>
-                      <option value="8">Drâa-Tafilalet</option>
-                      <option value="9">Souss-Massa</option>
-                      <option value="10">Guelmim-Oued Noun</option>
-                      <option value="11">Laâyoune-Sakia El Hamra</option>
-                      <option value="12">Dakhla-Oued Ed-Dahab</option>
-                    </select>
-                  </div>
-                  <label> Ville <span class="required">*</span></label>
-                  <div id="select_ville" class="select-box">
-                    <select name="ville" class="form-control">
-                      <option>choisissez une ville</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
               <div class="col-lg-6 col-md-6">
                 <div class="form-group">
                   <label>First Name <span class="required">*</span></label>
                   <input
+                    readonly
                     type="text"
                     value="{{ app.user.prenom }}"
                     class="form-control"
@@ -88,6 +57,7 @@
                 <div class="form-group">
                   <label>Last Name <span class="required">*</span></label>
                   <input
+                    readonly
                     type="text"
                     value="{{ app.user.nom }}"
                     class="form-control"
@@ -97,8 +67,20 @@
 
               <div class="col-lg-12 col-md-6">
                 <div class="form-group">
+                  <label>Ville<span class="required">*</span></label>
+                  <input
+                    readonly
+                    type="text"
+                    value="{{ app.user.getVille().getNomVille() }}"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-6">
+                <div class="form-group">
                   <label>Address <span class="required">*</span></label>
                   <input
+                    readonly
                     type="text"
                     value="{{ app.user.adresse }}"
                     class="form-control"
@@ -111,6 +93,7 @@
                   <label>Email Address<span class="required">*</span></label>
                   <input
                     type="email"
+                    readonly
                     value="{{ app.user.email }}"
                     class="form-control"
                   />
@@ -121,6 +104,7 @@
                   <label>Phone <span class="required">*</span></label>
                   <input
                     type="text"
+                    readonly
                     value="{{ app.user.telephone }}"
                     class="form-control"
                   />
@@ -144,12 +128,47 @@
                 style="display: none"
                 class="col-lg-12 col-md-6"
               >
-                <div class="form-group">
-                  <label
-                    >Address de livraision
-                    <span class="required">*</span></label
-                  >
-                  <input type="text" class="form-control" />
+                <div class="col-lg-12 col-md-12">
+                  <div class="form-group">
+                    <label> Region <span class="required">*</span></label>
+                    <div class="select-box">
+                      <select
+                        id="select_region"
+                        onchange="func()"
+                        class="form-control"
+                      >
+                        <option value="0">Choisissez une Region</option>
+                        <option value="1">Tanger-Tetouan-Al Hoceima</option>
+                        <option value="2">Oriental</option>
+                        <option value="3">Fès-Meknès</option>
+                        <option value="4">Rabat-Salé-Kénitra</option>
+                        <option value="5">Béni Mellal-Khénifra</option>
+                        <option value="6">Casablanca-Settat</option>
+                        <option value="7">Marrakesh-Safi</option>
+                        <option value="8">Drâa-Tafilalet</option>
+                        <option value="9">Souss-Massa</option>
+                        <option value="10">Guelmim-Oued Noun</option>
+                        <option value="11">Laâyoune-Sakia El Hamra</option>
+                        <option value="12">Dakhla-Oued Ed-Dahab</option>
+                      </select>
+                    </div>
+                    <label> Ville <span class="required">*</span></label>
+                    <div id="select_ville" class="select-box">
+                      <select name="ville" class="form-control">
+                        <option>choisissez une ville</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12">
+                  <div class="form-group">
+                    <label
+                      >Address de livraision
+                      <span class="required">*</span></label
+                    >
+                    <input type="text" class="form-control" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -163,30 +182,17 @@
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Total</th>
+                    <th scope="col">Total A payer</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {% for panier_produit in panier_produits %} {% for produit in
-                  produits %} {% if panier_produit.produit_id == produit.id %}
                   <tr>
-                    <td class="product-name">
-                      <a href="#">{{ produit.designation }}</a>
-                    </td>
                     <td class="product-total">
                       <span class="subtotal-amount">
-                        {% if produit.getNouveauPrix() != NULL %}
-                        {{
-                          produit.getNouveauPrix() * panier_produit.qte_produit
-                        }}DH {% else %}
-                        {{
-                          produit.getAncienPrix() * panier_produit.qte_produit
-                        }}DH {% endif %}
+                        {{ total }}
                       </span>
                     </td>
                   </tr>
-                  {% endif %} {% endfor %} {% endfor %}
                 </tbody>
               </table>
             </div>

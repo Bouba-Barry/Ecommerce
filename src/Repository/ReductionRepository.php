@@ -46,7 +46,6 @@ class ReductionRepository extends ServiceEntityRepository
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
 
-
         return true;
 
     }

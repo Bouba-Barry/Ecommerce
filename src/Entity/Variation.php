@@ -14,11 +14,11 @@ class Variation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read'])]
+    #[Groups(['prod:read','variation'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['prod:read'])]
+    #[Groups(['prod:read','variation'])]
     private $nom;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -26,6 +26,7 @@ class Variation
     private $code;
 
     #[ORM\ManyToOne(targetEntity: Attribut::class, inversedBy: 'variations')]
+    #[Groups(['variation'])]
     private $attribut;
 
     #[ORM\ManyToMany(targetEntity: Produit::class, mappedBy: 'variation')]
