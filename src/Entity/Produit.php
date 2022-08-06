@@ -15,7 +15,7 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read'])]
+    #[Groups(['prod:read', 'prod:check'])]
     private $id;
 
 
@@ -61,7 +61,7 @@ class Produit
     private $sous_categorie;
 
     #[ORM\ManyToMany(targetEntity: Reduction::class, inversedBy: 'produits')]
-    #[Groups(['prod:read'])]
+    #[Groups(['prod:read', 'prod:check'])]
     private $reduction;
 
     #[ORM\ManyToMany(targetEntity: Variation::class, inversedBy: 'produits')]
@@ -98,6 +98,9 @@ class Produit
     #[ORM\ManyToMany(targetEntity: Wishlist::class, mappedBy: 'produit')]
     private Collection $wishlists;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Quantite::class)]
+    private Collection $quantites;
+
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable('now');
@@ -111,6 +114,7 @@ class Produit
         $this->attributs = new ArrayCollection();
         $this->feadBacks = new ArrayCollection();
         $this->wishlists = new ArrayCollection();
+        $this->quantites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -445,6 +449,36 @@ class Produit
     {
         if ($this->wishlists->removeElement($wishlist)) {
             $wishlist->removeProduit($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quantite>
+     */
+    public function getQuantites(): Collection
+    {
+        return $this->quantites;
+    }
+
+    public function addQuantite(Quantite $quantite): self
+    {
+        if (!$this->quantites->contains($quantite)) {
+            $this->quantites[] = $quantite;
+            $quantite->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuantite(Quantite $quantite): self
+    {
+        if ($this->quantites->removeElement($quantite)) {
+            // set the owning side to null (unless already changed)
+            if ($quantite->getProduit() === $this) {
+                $quantite->setProduit(null);
+            }
         }
 
         return $this;
