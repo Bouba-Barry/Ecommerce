@@ -31,13 +31,13 @@ class ReductionController extends AbstractController
         $form = $this->createForm(ReductionType::class, $reduction);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $produit = $form->get('produits')->getData();
 
             foreach ($produit as $var) {
-                $prix=str_replace("%","",$reduction->getPourcentage());
-                $var->setNouveauPrix($var->getAncienPrix()-($prix*$var->getAncienPrix()/100));                 
+                $prix = str_replace("%", "", $reduction->getPourcentage());
+                $var->setNouveauPrix($var->getAncienPrix() - ($prix * $var->getAncienPrix() / 100));
                 $reduction->addProduit($var);
             }
 
@@ -66,13 +66,13 @@ class ReductionController extends AbstractController
         $form = $this->createForm(ReductionType::class, $reduction);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $produit = $form->get('produits')->getData();
 
             foreach ($produit as $var) {
-                $prix=str_replace("%","",$reduction->getPourcentage());
-                $var->setNouveauPrix($var->getAncienPrix()-($prix*$var->getAncienPrix()/100));  
+                $prix = str_replace("%", "", $reduction->getPourcentage());
+                $var->setNouveauPrix($var->getAncienPrix() - ($prix * $var->getAncienPrix() / 100));
                 $reduction->addProduit($var);
             }
 

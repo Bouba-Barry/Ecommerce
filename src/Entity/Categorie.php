@@ -7,8 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
+#[UniqueEntity(
+    fields: ['titre'],
+    message: 'The Title is already Taken, Choose another one.',
+)]
 class Categorie
 {
     #[ORM\Id]
@@ -18,7 +23,6 @@ class Categorie
 
     #[Assert\NotBlank(message: 'le champ est requis')]
     #[Assert\Length(min: 3, minMessage: 'Au Moins 3 caractères')]
-    // #[Assert\Unique(message: 'La Valeur existe déjà')]
     #[ORM\Column(type: 'string', length: 255)]
     private $titre;
 

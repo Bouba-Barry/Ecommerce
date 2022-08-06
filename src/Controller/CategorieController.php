@@ -30,7 +30,7 @@ class CategorieController extends AbstractController
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $categorieRepository->add($categorie, true);
 
             return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
@@ -56,7 +56,7 @@ class CategorieController extends AbstractController
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $categorieRepository->add($categorie, true);
 
             return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);

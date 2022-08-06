@@ -8,24 +8,27 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AttributRepository::class)]
+#[UniqueEntity(
+    fields: ['nom'],
+    errorPath: 'nom',
+    message: 'The name is already Taken.',
+)]
 class Attribut
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read','variation'])]
+    #[Groups(['prod:read', 'variation'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['prod:read','variation'])]
+    #[Groups(['prod:read', 'variation'])]
     #[Assert\Length(
         min: 3,
         minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
-    )]
-    #[Assert\Unique(
-        message: "La designation de l'attribut existe déjà"
     )]
     private $nom;
 

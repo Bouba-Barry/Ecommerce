@@ -23,9 +23,10 @@ class ClientType extends AbstractType
             ->add('adresse', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Marrakech, sidi abbad', 'class' => 'form-control']))
             ->add('telephone', TextType::class, array('label'   => false, 'attr' => ['placeholder' => '06---------', 'class' => 'form-control']))
             ->add('password', RepeatedType::class, [
-            "type" => PasswordType::class,
-            "first_options" => ["label" => false, 'attr' => ['placeholder' => 'Mot de passe', 'class' => 'form-control']],
-            "second_options" => ["label" => false, 'attr' => ['placeholder' => 'Confirmation', 'class' => 'form-control']],
+                "type" => PasswordType::class,
+                "first_options" => ["label" => false, 'attr' => ['placeholder' => 'Mot de passe', 'class' => 'form-control']],
+                "second_options" => ["label" => false, 'attr' => ['placeholder' => 'Confirmation', 'class' => 'form-control']],
+
             ]);
     }
 
@@ -33,6 +34,7 @@ class ClientType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'csrf_protection' => false,
         ]);
     }
 }
