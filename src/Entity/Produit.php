@@ -21,7 +21,7 @@ class Produit
 
 
     #[Assert\Length(
-        min: 3,
+        min: 1,
         minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
     )]
 
@@ -38,7 +38,7 @@ class Produit
     #[Groups(['prod:read'])]
     private $ancien_prix;
 
-    // #[Assert\GreaterThan(1)]
+
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['prod:read'])]
     private $nouveau_prix;
@@ -47,7 +47,11 @@ class Produit
     #[Groups(['prod:read'])]
     private $image_produit;
 
-    // #[Assert\Positive]
+
+    #[Assert\GreaterThanOrEqual(
+        value: 1,
+        message: 'la quantite doit être plus grand que 0'
+    )]
     #[ORM\Column(type: 'bigint')]
     #[Groups(['prod:read'])]
     private $qte_stock;

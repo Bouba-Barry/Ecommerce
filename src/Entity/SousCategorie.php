@@ -6,8 +6,15 @@ use App\Repository\SousCategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: SousCategorieRepository::class)]
+#[UniqueEntity(
+    fields: ['titre'],
+    errorPath: 'nom',
+    message: 'Ce Titre est déja pris, choisir un autre',
+)]
 class SousCategorie
 {
     #[ORM\Id]
@@ -15,6 +22,8 @@ class SousCategorie
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[Assert\NotBlank(message: 'le champ est requis')]
+    #[Assert\Length(min: 2, minMessage: 'Au Moins 2 caractères')]
     #[ORM\Column(type: 'string', length: 255)]
     private $titre;
 

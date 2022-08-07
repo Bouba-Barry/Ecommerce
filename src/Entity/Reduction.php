@@ -8,6 +8,7 @@ use App\Repository\ReductionRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReductionRepository::class)]
 class Reduction
@@ -15,13 +16,14 @@ class Reduction
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read','prod:check'])]
+    #[Groups(['prod:read', 'prod:check'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['prod:read'])]
     private $designation;
 
+    #[Assert\Regex('/^[0-9]{2}%$/', message: '{{ value }} ne correspond pas à l\'expression adaptée Ex: 50%')]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['prod:read'])]
     private $pourcentage;
@@ -43,6 +45,7 @@ class Reduction
     // #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     // private ?\DateTimeInterface $date_debut = null;
 
+    #[Assert\GreaterThanOrEqual('+1 hours', message: 'la data fin doit depasser d\'une heure la date actuelle')]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $date_fin;
 

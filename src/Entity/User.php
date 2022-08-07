@@ -20,8 +20,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[Assert\Email(
-        message: 'The email {{ value }} is not a valid email.',
+    #[Assert\Regex(
+        '/([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@gmail([\.])com/',
+        message: 'Ceci n\'est pas un compte gmail !'
     )]
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;
@@ -32,8 +33,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(
         min: 3,
         max: 255,
-        minMessage: 'Your last name must be at least {{ limit }} characters long',
-        maxMessage: 'Your last name cannot be longer than {{ limit }} characters',
+        minMessage: 'Votre Nom doit avoir {{ limit }} caractères de long',
+        maxMessage: 'Votre Nom doit ne dois pas depasser {{ limit }} caractères',
     )]
     #[ORM\Column(type: 'string', length: 180)]
     private $nom;
@@ -41,28 +42,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(
         min: 3,
         max: 255,
-        minMessage: 'Your first name must be at least {{ limit }} characters long',
-        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+        minMessage: 'Votre prenom doit avoir {{ limit }} caractères de long',
+        maxMessage: 'Votre prenom doit ne dois pas depasser {{ limit }} caractères',
     )]
     #[ORM\Column(type: 'string', length: 180)]
     private $prenom;
 
 
-
+    #[Assert\NotBlank(message: 'le champ est requis')]
     #[ORM\Column(type: 'string', length: 180)]
     private $adresse;
 
-    #[Assert\Length(
-        min: 10,
-        minMessage: 'votre Numero doit contenir au moins {{ limit }} ',
-    )]
+    // #[Assert\Length(
+    //     min: 10,
+    //     minMessage: 'votre Numero doit contenir au moins {{ limit }} ',
+    // )]
+    #[Assert\Regex('/^[0-9+]{10}$/', message: 'Veillez Entrez Un Numéro Valide')]
     #[ORM\Column(type: 'string', length: 255)]
     private $telephone;
 
-    #[Assert\Length(
-        min: 3,
-        minMessage: 'Au Moins {{ limit }} charactères',
-    )]
+    // #[Assert\Length(
+    //     min: 8,
+    //     minMessage: 'Au Moins {{ limit }} caractères',
+    // )]
+    #[Assert\Regex('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', message: 'password: 8 caractères Au moins 1')]
+    // #[Assert\Regex('/^[a-zA-Z0-9]\S{8}$/', message: 'Au Moins 8 caractères avec des lettres et chiffres')]
     #[ORM\Column(type: 'string')]
     private $password;
 
@@ -124,7 +128,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getTelephone(): ? string
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
