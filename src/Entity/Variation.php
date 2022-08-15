@@ -9,22 +9,24 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Filter\SoftDeleteable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VariationRepository::class)]
-#[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
+#[Gedmo\SoftDeleteable(fieldName: "deletedAt", timeAware: false)]
 class Variation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read','variation','attribut'])]
+    #[Groups(['prod:read', 'variation', 'attribut'])]
     private $id;
 
-    #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
-     private $deletedAt;
+    #[ORM\Column(name: "deletedAt", type: "datetime", nullable: true)]
+    private $deletedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['prod:read','variation','attribut'])]
+    #[Assert\NotBlank(message: 'le champ est requis')]
+    #[Groups(['prod:read', 'variation', 'attribut'])]
     private $nom;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

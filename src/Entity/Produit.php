@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
-#[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
+#[Gedmo\SoftDeleteable(fieldName: "deletedAt", timeAware: false)]
 class Produit
 {
     #[ORM\Id]
@@ -22,12 +22,12 @@ class Produit
     #[Groups(['prod:read', 'prod:check'])]
     private $id;
 
-    #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
+    #[ORM\Column(name: "deletedAt", type: "datetime", nullable: true)]
     private $deletedAt;
 
 
     #[Assert\Length(
-        min: 1,
+        min: 2,
         minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
     )]
 

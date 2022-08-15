@@ -13,7 +13,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
-#[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
+#[Gedmo\SoftDeleteable(fieldName: "deletedAt", timeAware: false)]
+#[UniqueEntity(
+    fields: ['titre'],
+    message: 'Le Titre est déjà prix, Choisissez un autre',
+)]
 class Categorie
 {
     #[ORM\Id]
@@ -22,7 +26,7 @@ class Categorie
     #[Groups(['categorie:read'])]
     private $id;
 
-    #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
+    #[ORM\Column(name: "deletedAt", type: "datetime", nullable: true)]
     private $deletedAt;
 
 
