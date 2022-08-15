@@ -3,73 +3,53 @@
 	{% block style %}
 		<link rel="stylesheet" href=" {{ asset('FrontOffice/other/slide.css') }} "/>
 	{% endblock %}
-	<!-- Start Main Banner Area -->
-	{# <div class="carousel-inner">
-																							      <div class="carousel-item active">
-																							        <img class="d-block w-100" src="https://i.postimg.cc/bNQp0RDW/1.jpg" alt="First slide">
-																							        <div class="carousel-caption d-none d-md-block">
-																							          <h5><a href="#">click here</a></h5>
-																							          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi quas vero.</p>
-																							        </div>
-																							      </div>
-																							      <div class="carousel-item">
-																							        <img class="d-block w-100" src="https://i.postimg.cc/pVzg3LWn/2.jpg" alt="Second slide">
-																							        <div class="carousel-caption d-none d-md-block">
-																							          <h5>Slider One Item</h5>
-																							          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi quas vero.</p>
-																							        </div>
-																							      </div>
-																							      <div class="carousel-item">
-																							        <img class="d-block w-100" src="https://i.postimg.cc/0y2F6Gpp/3.jpg" alt="Third slide">
-																							        <div class="carousel-caption d-none d-md-block">
-																							          <h5><a href="#">click here</a></h5>
-																							          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi quas vero.</p>
-																							        </div>
-																							      </div>
-																							    </div>
-																							    <a class="carousel-control-prev" href="#" role="button" data-slide="prev">
-																							      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-																							      <span class="precedent">Previous</span>
-																							    </a>
-																							    <a class="carousel-control-next" href="#" role="button" data-slide="next">
-																							      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-																							      <span class="suivant">Next</span>
-																							    </a>
-																							  </div> #}
-
+	
 	<!-- Carousel Start -->
 		<div class="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s"> <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
-			<div class="carousel-inner">
+      <div class="carousel-inner">
+    {# <div class="carousel-item active ">
+					{# <video class="d-block w-100 h-55" autoplay muted loop> <source src=" {{ asset('FrontOffice/video/slide.mp4') }} " type="video/mp4" >  </video> #}
+					                  					{# <img class="d-block" src=" {{ asset('images/other/PC.png') }} "  alt="First slide"> 
+
+          <div class="carousel-caption">
+						<div class="container">
+							<div class="row justify-content-center">
+								<div class="col-lg-6">
+									<h5 class="display-2 text-light mb-5 animated slideInDown">
+									</h5>
+                  					{# <img class="d-block" src=" {{ asset('images/other/PC.png') }} "  alt="First slide"> 
+									{# <a href="" class="btn btn-warning btn-sm py-sm-2 px-sm-3">Ajouter au Panier</a> 
+									<a href="#" class="default-btn py-sm-2 px-sm-3 ms-3">Voir Plus</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> #}
+        					 <video class="d-block w-100 h-55" autoplay muted loop> <source src=" {{ asset('FrontOffice/video/slide.mp4') }} " type="video/mp4" >  </video>
+  {% set val = 0 %}
+
+  {% for sous_categorie in sous_categories %}
+  {% if val == 0 %}
 				<div class="carousel-item active">
-					<img class="d-block w-100" src="https://i.postimg.cc/bNQp0RDW/1.jpg" alt="First slide">
+        {% else %}
+        <div class="carousel-item">
+        {% endif %}
+  {% set val = 1 %}
 					<div class="carousel-caption">
 						<div class="container">
 							<div class="row justify-content-center">
 								<div class="col-lg-6">
-									<h5 class="display-2 text-light mb-5 animated slideInDown">Reduction
-									</h1>
-									<a href="" class="btn btn-warning btn-sm py-sm-2 px-sm-3">Add to Cart</a>
-									<a href="" class="btn btn-light btn-sm py-sm-2 px-sm-3 ms-3">Buy Now</a>
+									<h5 class="display-2 text-light mb-5 animated slideInDown" style="color: red">{{ sous_categorie.titre }}
+									</h5>
+									{# <a href="" class="btn btn-warning btn-sm py-sm-2 px-sm-3">Ajouter au Panier</a> #}
+									<a href="{{ path('app_prod_sous_cat' ,{'id': sous_categorie.id }) }}" class="default-btn py-sm-2 px-sm-3 ms-3">Voir Plus</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="carousel-item">
-					<img class="d-block w-100" src="https://i.postimg.cc/pVzg3LWn/2.jpg" alt="Second slide">
-					<div class="carousel-caption">
-						<div class="container">
-							<div class="row justify-content-center mt-10">
-								<div class="col-lg-6">
-									<h5 class="display-2 text-light mb-5 animated slideInDown">Safe Driving Is Our Top Priority</h1>
-									<a href="" class="btn btn-warning btn-sm py-sm-2 px-sm-3">Add to cart</a>
-									<a href="" class="btn btn-light btn-sm py-sm-2 px-sm-3 ms-3">Buy Now</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+				
+      {% endfor %}
 			<div
 				class="carousel-control-prev" data-bs-target="#header-carousel" data-bs-slide="prev">
 				{# <span class="carousel-control-prev-icon precedent" aria-hidden="true"></span> #}
@@ -89,101 +69,42 @@
 	<!-- End Main Banner Area -->
 
 	<!-- Start Top Products Area -->
-	<section class="top-products-area pt-100 pb-70">
-		<div class="container">
-			<div class="section-title">
-				<h2>Trending Products</h2>
+
+ <section class="services-area pt-100 pb-100">
+            <div class="container">
+              <div class="section-title">
+				<h2>Nos Categories</h2>
 				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-																																																																																																																			        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-																																																																																																																			        suspendisse
+
 				</p>
 			</div>
+             
+                <div class="row">
+                  {% for categorie in categories %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="single-services-box">
+                            <div class="icon">
+                                <i class="flaticon-apple"></i>
+                            </div>
+                            <h3>{{ categorie.titre }}</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt.</p>
+                            <a href="{{ path('app_prod_by_cate', {'id': categorie.id }) }}" class="read-btn">Voir Les produits +</a>
+                        </div>
+                    </div>
 
-			<div class="row">
-				{% for produit in produits %}
-
-					<div class="col-lg-3 col-md-6">
-						<div class="top-products-item">
-							<div class="products-image">
-								<a href="{{ path('app_shop_details', { id: produit.id }) }}"><img src="{{ asset('uploads/produits/' ~ produit.imageProduit) }}" style="width: 250px; height: 200px"/></a>
-
-								<ul class="products-action">
-									<li>
-										<a    id="addtocart{{ produit.id }}"
-                    class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
-											<i class="flaticon-shopping-cart"></i>
-										</a>
-									</li>
-									<li>
-										<a  id="addtowish{{ produit.id }}"
-                    class="addtowish" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
-											<i class="flaticon-heart"></i>
-										</a>
-									</li>
-									<li>
-										<a href="#" data-tooltip="tooltip" id="searchbtn{{ produit.id }}" class="search" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
-											<i class="flaticon-search"></i>
-										</a>
-									</li>
-								</ul>
-
-								{% if produit.getReduction()|length != 0 %}
-									<div class="sale">
-										<span>
-											{% for produit_reduction in produit.getReduction() %}
-												-{{
-                  produit_reduction.getPourcentage()
-                }}
-                {% endfor %}
-              </span>
-            </div>
-            {% endif %}
-          </div>
-
-          <div class="products-content">
-            <h3>
-              <a href="shop-details.html">{{ produit.designation }}</a>
-            </h3>
-            {% if produit.getReduction()|length != 0 %}
-            <div class="price">
-              <span class="new-price"> {{ produit.nouveauPrix }}Dhs</span>
-              <span class="old-price">{{ produit.ancienPrix }}Dhs</span>
-            </div>
-            {% else %}
-            <div class="price">
-              <span class="new-price">{{ produit.ancienPrix }}Dhs</span>
-            </div>
-            {% endif %}
-            <ul class="rating">
-              <li>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bx-star"></i>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{# ---------------------------------------------------------- End Top Products
+                 {% endfor %}
+                </div>
+              </div>
+	{# ---------------------------------------------------------- End Top Products
 Area -
 ------------------------------------------------------------------------------------------#}
 
 <!-- Start Detox Water Area -->
-<section class="detox-water-area ptb-100">
+{# <section class="detox-water-area ptb-100">
   <div class="container">
     <div class="section-title">
       <h2>Produits Le plus Achété Du Mois</h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-        suspendisse
       </p>
     </div>
 
@@ -234,148 +155,90 @@ Area -
       />
     </div>
   </div>
-</section>
+</section> #}
 <!-- End Detox Water Area -->
 
 <!-- Start Department Area -->
 <section class="department-area pt-100 pb-70">
   <div class="container">
-    <div class="section-title">
-      <h2>Nos Categories Les Plus Populaires</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-        suspendisse
-      </p>
+
+  <div class="section-title">
+				<h2>Produits Les plus Vues Du Mois</h2>
+				<p>
+
+				</p>
+			</div>
+
+			<div class="row">
+				{% for prod in produits %}
+
+					<div class="col-lg-3 col-md-6">
+						<div class="top-products-item">
+							<div class="products-image">
+								<a href="{{ path('app_shop_details', { id: prod.id }) }}"><img src="{{ asset('uploads/produits/' ~ prod.imageProduit) }}" style="width: 250px; height: 200px"/></a>
+
+								<ul class="products-action">
+									<li>
+										<a    id="addtocart{{ prod.id }}"
+                    class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+											<i class="flaticon-shopping-cart"></i>
+										</a>
+									</li>
+									<li>
+										<a  id="addtowish{{ prod.id }}"
+                    class="addtowish" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+											<i class="flaticon-heart"></i>
+										</a>
+									</li>
+									<li>
+										<a href="#" data-tooltip="tooltip" id="searchbtn{{ prod.id }}" class="search" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+											<i class="flaticon-search"></i>
+										</a>
+									</li>
+								</ul>
+
+								{% if prod.getReduction()|length != 0 %}
+									<div class="">
+										<span>
+											{% for produit_reduction in prod.getReduction() %}
+												-{{
+                  produit_reduction.getPourcentage()
+                }}
+                {% endfor %}
+              </span>
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="products-content">
+            <h3>
+              <a href="shop-details.html">{{ prod.designation }}</a>
+            </h3>
+            {% if prod.getReduction()|length != 0 %}
+            <div class="price">
+              <span class="new-price"> {{ prod.nouveauPrix }}Dhs</span>
+              <span class="old-price">{{ prod.ancienPrix }}Dhs</span>
+            </div>
+            {% else %}
+            <div class="price">
+              <span class="new-price">{{ prod.ancienPrix }}Dhs</span>
+            </div>
+            {% endif %}
+            <ul class="rating">
+              <li>
+                <i class="bx bxs-star"></i>
+                <i class="bx bxs-star"></i>
+                <i class="bx bxs-star"></i>
+                <i class="bx bxs-star"></i>
+                <i class="bx bx-star"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
-
-    <div class="row">
-      <div class="col-lg-4 col-md-6">
-        <div class="single-department">
-          <div class="department-image">
-            <a href="#">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/department/department-1.jpg')
-                }} "
-                alt="image"
-              />
-            </a>
-
-            <div class="content">
-              <h3>
-                <a href="#">Fresh Milk</a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="single-department">
-          <div class="department-image">
-            <a href="#">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/department/department-2.jpg')
-                }} "
-                alt="image"
-              />
-            </a>
-
-            <div class="content">
-              <h3>
-                <a href="#">Fresh Beef</a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="single-department">
-          <div class="department-image">
-            <a href="#">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/department/department-3.jpg')
-                }} "
-                alt="image"
-              />
-            </a>
-
-            <div class="content">
-              <h3>
-                <a href="#">Chicken Meat</a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="single-department">
-          <div class="department-image">
-            <a href="#">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/department/department-4.jpg')
-                }} "
-                alt="image"
-              />
-            </a>
-
-            <div class="content">
-              <h3>
-                <a href="#">Fresh Fruits</a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="single-department">
-          <div class="department-image">
-            <a href="#">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/department/department-5.jpg')
-                }} "
-                alt="image"
-              />
-            </a>
-
-            <div class="content">
-              <h3>
-                <a href="#">Fresh Fish</a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="single-department">
-          <div class="department-image">
-            <a href="#">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/department/department-6.jpg')
-                }} "
-                alt="image"
-              />
-            </a>
-
-            <div class="content">
-              <h3>
-                <a href="#">Vegetables</a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+   
   </div>
 </section>
 <!-- End Department Area -->
@@ -385,12 +248,10 @@ Area -
   <div class="container">
     <div class="why-choose-item">
       <div class="content">
-        <span>Why Choose Us</span>
-        <h3>We are Ensure of These Types</h3>
+        <span>Pourquoi Nous Choisir ?</span>
+        <h3>Rétrouvez Tous Vos produits liés à l'informatique</h3>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum
-          suspendisse
+         
         </p>
       </div>
 
@@ -398,11 +259,10 @@ Area -
         <div class="icon">
           <i class="flaticon-leaf"></i>
         </div>
-        <h4>Organic</h4>
+        <h4>Qualité-Quantité-Nouveautés</h4>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum
-          suspendisse
+          Notre Société possède plusieurs Boutiques Dans plusieurs Localité,
+         Ces Boutiques Sont régulièrement Mis à jour et contiennent chaque Nouveautés de Produits
         </p>
       </div>
 
@@ -410,11 +270,9 @@ Area -
         <div class="icon">
           <i class="flaticon-heart"></i>
         </div>
-        <h4>Fast and Easy</h4>
+        <h4>Services Rapides</h4>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum
-          suspendisse
+          Nous prenons à coeurs toutes les commandes de nos clients et nous nous assurons de sa livraison
         </p>
       </div>
 
@@ -422,11 +280,9 @@ Area -
         <div class="icon">
           <i class="flaticon-plant"></i>
         </div>
-        <h4>High Quality</h4>
+        <h4>Securité-Garantie</h4>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum
-          suspendisse
+          Des Produits de qualités et Un paiement Sécurisé
         </p>
       </div>
     </div>
@@ -440,27 +296,19 @@ Area -
     <div class="section-title">
       <h2>Nouvelles Arrivages Dans Le Stock</h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-        suspendisse
+
       </p>
     </div>
 
     <div class="row">
-      {% for newproduct in NewProduct %}
+      {% for newproduct in NewProducts %}
 
       <div class="col-lg-3 col-md-6">
         <div class="featured-products-item">
           <div class="products-image">
-            <a href="shop-details.html"
-              ><img
-                src=" {{
-                  asset(
-                    'FrontOffice/assets/img/featured-products/featured-products-8.jpg'
-                  )
-                }} "
-                alt="image"
-            /></a>
+            <a href="{{ path('app_shop_details', { id: newproduct.id }) }}">
+            <img src="{{ asset('uploads/produits/' ~ newproduct.image_produit) }}" style="width: 250px; height: 200px"/>
+            </a>
 
             <ul class="products-action">
               <li>
@@ -504,11 +352,16 @@ Area -
 
           <div class="products-content">
             <h3>
-              <a href="shop-details.html">{{ newproduct.designation }}</a>
+              <a href="{{ path('app_shop_details', { id: newproduct.id }) }}">{{ newproduct.designation }}</a>
             </h3>
             <div class="price">
-              <span class="new-price">{{ newproduct.nouveau_prix }}</span>
-              <span class="old-price">{{ newproduct.ancien_prix }}</span>
+            {% if newproduct.nouveau_prix %}
+              <span class="new-price">{{ newproduct.nouveau_prix }}Dhs</span>
+              <span class="old-price">{{ newproduct.ancien_prix }}Dhs</span>
+              {% else %}
+               {# <span class="new-price">{{ newproduct.nouveau_prix }}Dhs</span> #}
+              <span class="new-price">{{ newproduct.ancien_prix }}Dhs</span>
+              {% endif %}
             </div>
             <ul class="rating">
               <li>
@@ -523,7 +376,7 @@ Area -
         </div>
       </div>
       {% else %}
-      <div class="col-lg-12 col-md-6">Aucun Arrivage Disponible</div>
+      <div class="">Aucun Arrivage Disponible</div>
       {% endfor %}
     </div>
   
@@ -535,7 +388,7 @@ Area -
 <section class="testimonial-area ptb-100">
   <div class="container">
     <div class="section-title">
-      <h2>Client’s Feedback</h2>
+      <h2>Les Avis De La Clientielle</h2>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua quis ipsum
@@ -579,11 +432,9 @@ Area -
 <section class="top-products-area pt-100 pb-100">
   <div class="container">
     <div class="section-title">
-      <h2>Best Sellers Products</h2>
+      <h2>Produits Les Plus Achétés</h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua quis ipsum
-        suspendisse
+        Voir Les Produits Les plus Achétés par Nos clients
       </p>
     </div>
 
@@ -591,21 +442,16 @@ Area -
       {% for bestSeller in bestSellers %}
       <div class="top-products-item">
         <div class="products-image">
-          <a href="shop-details.html"
-            ><img
-              src=" {{
-                asset('FrontOffice/assets/img/top-products/top-products-8.jpg')
-              }} "
-              alt="image"
-          /></a>
-
+           <a href="{{ path('app_shop_details', { id: bestSeller.id }) }}">
+            <img src="{{ asset('uploads/produits/' ~ bestSeller.image_produit) }}" style="width: 250px; height: 200px"/>
+            </a>
           <ul class="products-action">
             <li>
               <a
                 href="cart.html"
                 data-tooltip="tooltip"
                 data-placement="top"
-                title="Add to Cart"
+                title="Ajouter au Panier"
               >
                 <i class="flaticon-shopping-cart"></i>
               </a>
@@ -615,7 +461,7 @@ Area -
                 href="#"
                 data-tooltip="tooltip"
                 data-placement="top"
-                title="Add to Wishlist"
+                title="Ajouter comme Favoris"
               >
                 <i class="flaticon-heart"></i>
               </a>
@@ -641,11 +487,16 @@ Area -
 
         <div class="products-content">
           <h3>
-            <a href="shop-details.html">{{ bestSeller.designation }}</a>
+            <a href="{{ path('app_shop_details', { id: bestSeller.id }) }}">{{ bestSeller.designation }}</a>
           </h3>
           <div class="price">
-            <span class="new-price">{{ bestSeller.nouveau_prix }}</span>
-            <span class="old-price">{{ bestSeller.ancien_prix }}</span>
+             {% if bestSeller.nouveau_prix %}
+              <span class="new-price">{{ bestSeller.nouveau_prix }}Dhs</span>
+              <span class="old-price">{{ bestSeller.ancien_prix }}Dhs</span>
+              {% else %}
+               {# <span class="new-price">{{ newproduct.nouveau_prix }}Dhs</span> #}
+              <span class="new-price">{{ bestSeller.ancien_prix }}Dhs</span>
+              {% endif %}
           </div>
           <ul class="rating">
             <li>
@@ -667,6 +518,7 @@ Area -
 <!-- End Best Sellers Products Area -->
 
 <!-- Start Overview Area -->
+{% if reductions %}
 <section class="overview-area ptb-100">
   <div class="testimonial-slider owl-carousel owl-theme">
     {% for reduction in reductions %}
@@ -705,6 +557,7 @@ Area -
     {% endfor %}
   </div>
 </section>
+{% endif %}
 <!-- End Overview Area -->
 
 <!-- Start Most Viewed Products Area -->
@@ -798,7 +651,7 @@ Area -
 <!-- End Most Viewed Products Area -->
 
 <!-- Start Blog Area -->
-<section class="blog-area pt-100 pb-70">
+{# <section class="blog-area pt-100 pb-70">
   <div class="container">
     <div class="section-title">
       <h2>Latest Blog</h2>
@@ -884,7 +737,7 @@ Area -
     </div>
   </div>
 </section>
-<!-- End Blog Area -->
+<!-- End Blog Area --> #}
 
 <!-- Start Newsletter Area -->
 <div class="newsletter-area ptb-100">
@@ -892,7 +745,7 @@ Area -
     <div class="row align-items-center">
       <div class="col-lg-6">
         <div class="newsletter-content">
-          <h2>Subscribe To Our Newsletter</h2>
+          <h2>Abonnez-Vous à Notre Newsletter</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua quis

@@ -1,19 +1,26 @@
+/* .fadeIn{
+  width: 1250px;
+} */
+
 .carousel-inner{
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    width: 100%;
+    background: no-repeat center center scroll;
+    height: 70vh;
+    min-height: 250px;
+    -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
 }
 
 .carousel-item {
-    height: 70vh;
-    min-height: 300px;
-    background: no-repeat center center scroll;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+  position: absolute;
+  top:5px;
   }
   .carousel-caption {
-    bottom: 100px;
-    opacity: 0.8;
+    top:5px;
+
   }
   .suivant{
     cursor: pointer;
@@ -24,8 +31,10 @@
   .carousel-caption h5 {
     font-size: 45px;
     text-transform: uppercase;
+    color: black;
     letter-spacing: 2px;
-    margin-top: 25px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* margin-top: 50px; */
   }
   
   .carousel-caption p {
@@ -38,7 +47,7 @@
   .link-area
   {
     position:fixed;
-    bottom:20px;
+    bottom:5px;
     left:20px;  
     padding:15px;
     border-radius:40px;

@@ -57,6 +57,17 @@
                 </div>
               </div>
 
+                  <div class="form-group row">
+                <label class="col-form-label col-md-2">Description Minimale</label>
+                <div class="mb-3 col-md-10">
+              
+                  {{ form_row(form.description_detaille) }}
+                  <span class="form-text text-muted">{{
+                    form_errors(form.description_detaille)
+                  }}</span>
+                </div>
+              </div>
+
               <div class="form-group row">
                 <label class="col-form-label col-md-2">Prix Produit</label>
                 <div class="mb-3 col-md-10">

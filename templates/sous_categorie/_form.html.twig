@@ -58,6 +58,18 @@
 							<span class="form-text text-muted">{{ form_errors(form.categorie) }}</span>
 						</div>
 					</div>
+
+					 <div class="form-group row">
+                <label class="col-form-label col-md-2">Image de couverture</label>
+                <div class="mb-3 col-md-10">
+                  {{ form_row(form.photo) }}
+                  {#
+                  <span class="form-text text-muted"
+                    >Using <code>input type="datetime"</code></span
+                  >
+                  #}
+                </div>
+              </div>
 					
 					<div class=" mb-3 col-12">
                   <button

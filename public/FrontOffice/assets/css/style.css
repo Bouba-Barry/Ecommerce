@@ -2489,32 +2489,35 @@ Top Products Area CSS
 
 .top-products-item .products-image .sale {
   position: absolute;
-  left: 10px;
-  top: 10px;
+  left: 5px;
+  top: 5px;
 }
 
 .top-products-item .products-image .sale span {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #f35320;
+  background-color: #111111;
   color: #ffffff;
   font-size: 15px;
   font-weight: 500;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  border: none !important ;
 }
 
 .sale span {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #f35320;
+  background-color: #111110;
   color: #ffffff;
   font-size: 15px;
   font-weight: 500;
   border-radius: 5px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  opacity: 0.8;
+  border: none;
 }
 
 .top-products-item .products-content {
@@ -3122,14 +3125,14 @@ Featured Products Area CSS
 
 .featured-products-item .products-image .new {
   position: absolute;
-  left: 10px;
-  top: 10px;
+  left: 15px;
+  top: 5px;
 }
 
 .featured-products-item .products-image .new span {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #f35320;
+  background-color: #1d1c1c;
   color: #ffffff;
   font-size: 14px;
   font-weight: 500;
@@ -3140,14 +3143,15 @@ Featured Products Area CSS
 
 .new span {
   display: inline-block;
-  padding: 10px 20px;
-  background-color: #f35320;
-  color: #ffffff;
+  padding: 8px 15px;
+  background-color: #272726;
+  color: #f01d1d;
   font-size: 14px;
   font-weight: 500;
   border-radius: 5px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  opacity: 0.8;
 }
 
 .featured-products-item .products-content {

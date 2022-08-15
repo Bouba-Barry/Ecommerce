@@ -33,35 +33,36 @@ class PanierRepository extends ServiceEntityRepository
     }
 
 
-    public function add_to_produit_panier_variations($panier_id,$produit_id,$qte,$variations){
+    public function add_to_produit_panier_variations($panier_id, $produit_id, $qte, $variations)
+    {
 
         $conn = $this->getEntityManager()->getConnection();
-        $sql="INSERT INTO panier_produit(panier_id,produit_id,qte_produit,variations) VALUES(:panier_id,:produit_id ,:qte,:variations)";
+        $sql = "INSERT INTO panier_produit(panier_id,produit_id,qte_produit,variations) VALUES(:panier_id,:produit_id ,:qte,:variations)";
         $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['panier_id' => $panier_id,'produit_id' => $produit_id , 'qte' => $qte ,'variations' => $variations ]);
+        $resultSet = $stmt->executeQuery(['panier_id' => $panier_id, 'produit_id' => $produit_id, 'qte' => $qte, 'variations' => $variations]);
 
         return true;
-
     }
 
- 
-    public function edit_produit_panier_variations($panier_id,$produit_id,$qte,$variations){
+
+    public function edit_produit_panier_variations($panier_id, $produit_id, $qte, $variations)
+    {
 
         $conn = $this->getEntityManager()->getConnection();
-        $sql="UPDATE panier_produit
+        $sql = "UPDATE panier_produit
          SET qte_produit=:qte
          WHERE panier_id=:panier_id and produit_id=:produit_id and variations=:variations ";
         $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['panier_id' => $panier_id, 'variations' => $variations  ,'produit_id' => $produit_id , 'qte' => $qte ]);
+        $resultSet = $stmt->executeQuery(['panier_id' => $panier_id, 'variations' => $variations, 'produit_id' => $produit_id, 'qte' => $qte]);
         // $d=$resultSet->fetchAllAssociative();
         return true;
-
     }
 
 
 
 
-    public function edit_produit_panier($panier_id,$produit_id,$qte){
+    public function edit_produit_panier($panier_id, $produit_id, $qte)
+    {
 
         $conn = $this->getEntityManager()->getConnection();
         $sql = "UPDATE panier_produit
@@ -73,17 +74,17 @@ class PanierRepository extends ServiceEntityRepository
         return true;
     }
 
-    public function findquantite_panier($json,$panier)
+    public function findquantite_panier($json, $panier)
     {
         $conn = $this->getEntityManager()->getConnection();
         // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
         $sql = "
             SELECT p.* FROM panier_produit p
             WHERE p.variations=:json and p.panier_id=:panier  ";
-        
+
         $stmt = $conn->prepare($sql);
 
-        $resultSet = $stmt->executeQuery(['json' => $json,'panier' => $panier ]);
+        $resultSet = $stmt->executeQuery(['json' => $json, 'panier' => $panier]);
 
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
@@ -116,16 +117,16 @@ class PanierRepository extends ServiceEntityRepository
     }
 
 
-    public function delete_one_produit_panier_variations($panier_id,$produit_id,$variations){
+    public function delete_one_produit_panier_variations($panier_id, $produit_id, $variations)
+    {
 
         $conn = $this->getEntityManager()->getConnection();
-        $sql=("DELETE FROM panier_produit where panier_id=:panier_id and produit_id=:produit_id and variations=:variations ");
+        $sql = ("DELETE FROM panier_produit where panier_id=:panier_id and produit_id=:produit_id and variations=:variations ");
         $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['panier_id' => $panier_id , 'produit_id' => $produit_id , 'variations' => $variations ]);
+        $resultSet = $stmt->executeQuery(['panier_id' => $panier_id, 'produit_id' => $produit_id, 'variations' => $variations]);
         // $d=$resultSet->fetchAllAssociative();
 
         return true;
-
     }
 
 
@@ -241,4 +242,22 @@ class PanierRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    /**
+     * @return Query Returns an array of Produit objects
+     */
+    public function findMostViewMonth()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        SELECT p.* FROM produit p , panier_produit pp,  
+        WHERE p.id = pp.produit_id
+        group by p.id
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 }

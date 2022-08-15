@@ -103,13 +103,13 @@ class ProduitRepository extends ServiceEntityRepository
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
-        $result=$resultSet->fetchAllAssociative();
+        $result = $resultSet->fetchAllAssociative();
         $queryBuilder = $this->createQueryBuilder('p')
             ->where('p.user =:user ')
             ->andWhere('p in (:result)')
-            ->setParameter('user',$user)
-            ->setParameter(':result',$result);
-       
+            ->setParameter('user', $user)
+            ->setParameter(':result', $result);
+
         return $queryBuilder;
     }
 
@@ -126,13 +126,73 @@ class ProduitRepository extends ServiceEntityRepository
         // $result=$resultSet->fetchAllAssociative();
         $queryBuilder = $this->createQueryBuilder('p')
             ->where('p.id =:id ')
-            ->setParameter('id',$id);
+            ->setParameter('id', $id);
 
-       
+
         return $queryBuilder;
     }
 
 
+    // /**
+    //  * @return Produit[] Returns an array of Produit objects
+    //  */
+    public function findPopularCategory()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        SELECT s.categorie_id FROM produit p, commande_produit f, sous_categorie s
+        WHERE p.id = f.produit_id and p.sous_categorie_id = s.id 
+        GROUP BY s.id
+        ORDER BY COUNT(*) DESC
+        LIMIT 1
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    // /**
+    //  * @return array Returns an array of Produit objects
+    //  */
+    public function findPopularSousCategory()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        SELECT s.* FROM produit p, commande_produit f, sous_categorie s
+        WHERE p.id = f.produit_id and p.sous_categorie_id = s.id 
+        GROUP BY s.id
+        ORDER BY COUNT(*) DESC
+        LIMIT 3
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    /**
+     * @return Query Returns an array of Produit objects
+     */
+    public function findMostViewMonth()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        SELECT p.* FROM produit p , panier_produit pp,  
+        WHERE p.id = pp.produit_id
+        group by p.id
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 
 
 
@@ -145,8 +205,9 @@ class ProduitRepository extends ServiceEntityRepository
 
         $sql = "
         SELECT * FROM produit p
-        WHERE DATEDIFF(CURRENT_TIMESTAMP(), p.create_at)  BETWEEN 0 and 15
-        ORDER BY p.id ASC
+        WHERE DATEDIFF(CURRENT_TIMESTAMP(), p.create_at)  BETWEEN 0 and 27
+        ORDER BY p.id DESC
+        LIMIT 12
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
@@ -219,7 +280,7 @@ class ProduitRepository extends ServiceEntityRepository
         ORDER BY COUNT(*) DESC
         LIMIT 20
         ";
-        $stmt = $conn->prepare($sql);
+        $stmt = $conn->prepare($sql2);
         $resultSet = $stmt->executeQuery();
 
         // returns an array of arrays (i.e. a raw data set)
@@ -228,7 +289,7 @@ class ProduitRepository extends ServiceEntityRepository
 
 
     /**
-     * @return Produit[] Returns an array of Produit objects
+     * @return Produit Returns an array of Produit objects
      */
     public function MostBuy()
     {

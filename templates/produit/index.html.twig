@@ -49,11 +49,11 @@ content %}
 					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
 						<thead>
 							<tr>
-							<th col-1>ID</th>
-								<th>Désignation</th>
-								<th>Description</th>
-								<th>Prix Old</th>
-								<th>Image Produit</th>
+							<th class="col-1">ID</th>
+								<th class="col-1">Désignation</th>
+								<th class="col-4">Description</th>
+								<th class="col-1">Prix Old</th>
+								<th class="col-1">Image Produit</th>
 								<th class="col-1">Quantié Stocker</th>
 								<th class="col-3">Action</th>
 							</tr>
@@ -63,7 +63,7 @@ content %}
 							<tr>
 								<td class="col-1">{{ produit.id }}</td>
                					 <td>{{ produit.designation }}</td>
-                				<td>{{ produit.description }}</td>
+                				<td>{{ produit.getDescriptionDetaille()}}</td>
                 				<td>{{ produit.ancienPrix }}Dhs</td>
                 				{# <td>{{ produit.nouveauPrix }}Dhs</td> #}
                 				<td><img src= {{ asset('uploads/produits/' ~ produit.imageProduit ) }} width="80" height="70"></td>

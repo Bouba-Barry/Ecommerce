@@ -36,6 +36,7 @@ class ProduitType extends AbstractType
         $builder
             ->add('designation', TextType::class, array('label' => false, 'attr' => ['placeholder' => 'designation', 'class' => 'form-control']))
             ->add('description', TextareaType::class, array('label' => false, 'attr' => ['placeholder' => 'description', 'class' => 'form-control']))
+            ->add('description_detaille', TextareaType::class, array('label' => false, 'attr' => ['placeholder' => 'description detaillée', 'class' => 'form-control']))
             ->add('ancien_prix', NumberType::class, array('label' => false, 'attr' => ['placeholder' => 'Old Prix', 'class' => 'form-control']))
             ->add('qte_stock', NumberType::class, array('label' => false, 'attr' => ['placeholder' => 'Quantité En Stock', 'class' => 'form-control']))
             ->add('user', EntityType::class, [

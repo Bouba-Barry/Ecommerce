@@ -1,0 +1,153 @@
+{% extends "frontend/index.html.twig" %}
+{% block title %}Shop List
+{% endblock %}
+
+{% block javascript %}
+	<script src="https://kit.fontawesome.com/4c827d40eb.js" crossorigin="anonymous"></script>
+	<script src="{{ asset('FrontOffice/other/shop.js') }} "></script>
+{% endblock %}
+
+{% block content %}
+
+	<!-- Start Page Banner -->
+	<div class="page-banner-area">
+		<div class="d-table">
+			<div class="d-table-cell">
+				<div class="container">
+					<div class="page-banner-content">
+						<h2>Notre Collections de</h2>
+						<ul>
+							<li>
+								<a href="{{ path('app_home') }}">Retoure à l'accueil</a>
+							</li>
+							{# <li>Shop List One</li> #}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{#  End Page Banner #}
+	{# start the main block   #}
+
+	<!-- Start Top Products Area -->
+		<section class="top-products-area pt-100 pb-100"> <div class="container">
+			<div class="orgo-grid-sorting row align-items-center">
+				<div class="col-lg-6 col-md-6 result-count">
+					<p>
+                    Parcourez Les Produits
+				</div>
+
+				<div class="col-lg-6 col-md-6 ordering">
+					<div class="select-box">
+						<label>Sort By:</label>
+						<select
+						id="trieProd"/>
+						{# <op0t0ion value="" id="first"></option> #}
+						<option value="default">Default</option>
+						<option value="populaire">Popularity</option>
+						<option value="new">Latest</option>
+						<option value="price_asc">Price: low to high</option>
+						<option value="price_desc">Price: high to low</option>
+					</select>
+					{# <button id="shortBy">
+																																																																																																																																																		check</button> #}
+				</div>
+			</div>
+		</div>
+		{# <div id="blockProd"></div> #}
+
+
+		<div
+			class="row" id="row">
+
+
+			{# <div id="content"> #}
+			{% for produit in produits %}
+				<div class="col-lg-3 col-md-6">
+					<div class="top-products-item">
+						<div class="products-image">
+							<a href="{{ path('app_shop_details',{id : produit.id }) }}"><img style="width: 250px; height: 200px" src="{{ asset('uploads/produits/' ~ produit.image_produit) }} " alt="image"></a>
+
+							<ul class="products-action">
+								<li>
+									<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+										<i class="flaticon-shopping-cart"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+										<i class="flaticon-heart"></i>
+									</a>
+								</li>
+								<li>
+									<a
+									href="#"
+									data-tooltip="tooltip"
+									id="searchbtn{{ produit.id }}"
+									class="search"
+									data-placement="top"
+									title="Quick View"
+									data-toggle="modal"
+									data-target="#productsQuickView"
+								  >
+									<i class="flaticon-search"></i>
+								  </a>
+								</li>
+							</ul>
+
+							<div class="sale">
+							  <span>
+								sale
+							  </span>
+							</div>
+						</div>
+
+						<div class="products-content">
+							<h3>
+								<a href="{{ path('app_shop_details',{id : produit.id }) }}">{{ produit.designation }}</a>
+							</h3>
+							{% if produit.nouveau_prix %}
+							<div class="price">
+							  <span class="new-price">
+								{{ produit.nouveau_prix }}Dhs</span
+							  >
+							  <span class="old-price"
+								>{{ produit.ancien_prix }}Dhs</span
+							  >
+							</div>
+							{% else %}
+							<div class="price">
+							  <span class="new-price"
+								>{{ produit.ancien_prix }}Dhs</span
+							  >
+							</div>
+							{% endif %}
+							
+						</div>
+					</div>
+
+				</div>
+			{% else %}
+				<div>NO record found</div>
+			{% endfor %}
+			{# </div> #}
+
+			{# <div class="col-lg-3 col-md-12" id="pred"> <div class="pagination-area">
+											<a href="#" class="prev page-numbers">
+												<i class="flaticon-left-arrow"></i>
+											</a>
+											<a href="#" class="page-numbers">1</a>
+											<span class="page-numbers current" aria-current="page">2</span>
+											<a href="#" class="page-numbers">3</a>
+											<a href="#" class="page-numbers">4</a>
+											<a href="#" class="next page-numbers">
+												<i class="flaticon-right-arrow"></i>
+											</a>
+										</div> #}
+		</div>
+	</div>
+</div></section><!-- End Top Products Area -->{# end of the main block #}{% endblock %}
+{% block javascripts %}
+{# <script src="{{ asset('js/panier3.js') }}"></script> #}
+{% endblock %}

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -29,7 +30,7 @@ class Produit
     #[Groups(['prod:read'])]
     private $designation;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['prod:read'])]
     private $description;
 
@@ -104,6 +105,9 @@ class Produit
 
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Quantite::class)]
     private Collection $quantites;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description_detaille = null;
 
     public function __construct()
     {
@@ -484,6 +488,18 @@ class Produit
                 $quantite->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescriptionDetaille(): ?string
+    {
+        return $this->description_detaille;
+    }
+
+    public function setDescriptionDetaille(?string $description_detaille): self
+    {
+        $this->description_detaille = $description_detaille;
 
         return $this;
     }

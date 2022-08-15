@@ -11,6 +11,7 @@ use App\Entity\Produit;
 use App\Entity\Reduction;
 use Doctrine\ORM\Mapping\Id;
 use App\Entity\SousCategorie;
+use App\Repository\CategorieRepository;
 use App\Repository\FeadBackRepository;
 use App\Repository\UserRepository;
 use App\Repository\PanierRepository;
@@ -19,6 +20,7 @@ use App\Repository\ReductionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\SousCategorieRepository;
+use App\Services\MailerService;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +30,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Transport\Serialization\Serializer;
 
 
@@ -42,8 +45,8 @@ class HomeController extends AbstractController
 
     //     $panier = $panierRepository->findOneBy(['user' => $userRepository->find($slug)]);
     //     $produit_panier=$panierRepository->find_one_produit_panier($panier->getId(),$id);
-        
-          
+
+
     //     $json = json_encode($produit_panier);
     //     return $this->json($json);
     // }
@@ -70,7 +73,7 @@ class HomeController extends AbstractController
 
 
     #[Route('/checkout/{id}/{slug}', name: 'app_checkout', methods: ['GET'])]
-    public function checkout(User $user,$slug,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
+    public function checkout(User $user, $slug, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
     {
         $panier = $panierRepository->findOneBy(['user' => $user]);
         $panier_produit = $panierRepository->find_produit_panier($panier->getId());
@@ -91,7 +94,7 @@ class HomeController extends AbstractController
             'panier_produits' => $obj,
             'produits' => $produits,
             'length' => $length,
-            'total'=> $slug
+            'total' => $slug
         ]);
     }
 
@@ -211,7 +214,7 @@ class HomeController extends AbstractController
     // public function check_reduction(ProduitRepository $produitRepository,SerializerInterface $serializer)
     // {
     //     $json = $serializer->serialize($produitRepository->findAll(), 'json', ['groups' => ['prod:check']]);
-          
+
     //     $json=json_decode($json);
     //     foreach($json as $array){
     //         if(count($array->variation())){
@@ -234,7 +237,7 @@ class HomeController extends AbstractController
         // dd($produit);
 
         $produit = $produitRepository->find($id);
-        
+
         // dd($produit);
 
         $produits_similaires = $produitRepository->findBy(['sous_categorie' => $produit->getSousCategorie()]);
@@ -424,8 +427,13 @@ class HomeController extends AbstractController
         $clientTotal = $userRepository->findByRoles("ROLE_USER");
         $totalClient = count($clientTotal);
 
-        $pourcentage = ($membreRecent * 100) / $totalClient;
+        if ($totalClient > 0) {
 
+
+            $pourcentage = ($membreRecent * 100) / $totalClient;
+        } else {
+            $pourcentage = 0;
+        }
         $produits = $produitRepository->findAll();
 
         $salesMonth = count($produitRepository->findSalesMonth());
@@ -454,41 +462,46 @@ class HomeController extends AbstractController
 
 
     #[Route('', name: 'app_home')]
-    public function home(ProduitRepository $produitRepository, FeadBackRepository $feadBackRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
+    public function home(CategorieRepository $categorieRepository, CategorieRepository $cat, ProduitRepository $produitRepository, FeadBackRepository $feadBackRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
     {
-        $totalSalesMonth = $produitRepository->TOTALSALESMONTH(); // pour la partie admin
-        // dd($totalSalesMonth[0]['total']);
-        $MostSalesMonth = $produitRepository->findSalesMonth();
-        $NewProduct = $produitRepository->findRecentProduct(); //produit arriver il y'a 2 weeks et maxREsult 10
+        $NewProducts = $produitRepository->findRecentProduct(); //produit arriver il y'a 2 weeks et maxREsult 10
         // dd($NewProduct);
         $bestSellers = $produitRepository->BestSellers();
         // dd($bestSellers);
         $plusVendus = $produitRepository->MostBuy();
-
-
-        // $findsearch = $produitRepository->findBySearch('ome');
-        // dd($findsearch);
-        // dd($plusVendus);
         $produits = $produitRepository->findAll();
 
         $reviews = $feadBackRepository->findFeedback();
         // dd($reviews);
 
         $produits_reduction = $produitRepository->get_produit_reduction();
+
         $reductions = $reductionRepository->findAll();
         // dd($produits_reduction);
         // $json = $serializer->serialize($produits, 'json', ['groups' => ['prod:read']]);
+        $SouscatePopulaire = $produitRepository->findPopularSousCategory();
 
+        // dd($SouscatePopulaire);
+        $slideProducts = $produitRepository->findBy(['sous_categorie' => $SouscatePopulaire[0]['id']], ['createAt' => 'DESC'], 4);
 
+        // dd($slideProducts);
+
+        // $max = $produitRepository->findOneBy([], ['id' => 'desc']);
+        // $max = $max->getId();
+        // $min = $produitRepository->findOneBy([], ['id' => 'ASC']);
+        // $min = $min->getId();
+
+        $categories = $categorieRepository->findAll();
 
         return $this->render('frontend/home.html.twig', [
             'produits' => $produits,
-            'mostSaleMonth' => $MostSalesMonth,
-            'NewProduct' => $NewProduct,
+            'NewProducts' => $NewProducts,
             'bestSellers' => $bestSellers,
             'reductions' => $reductions,
-            'reviews' => $reviews
-
+            'reviews' => $reviews,
+            'plusVendu' => $plusVendus,
+            'sous_categories' => $SouscatePopulaire,
+            'categories' => $categories
         ]);
     }
 
@@ -515,13 +528,13 @@ class HomeController extends AbstractController
 
         //  $panier_id=$panier->getId();
         // $array_ids = [];
-       
-                // $produit=$produitRepository->find($d[$i]);
-                // $panier->addProduit($produit);
+
+        // $produit=$produitRepository->find($d[$i]);
+        // $panier->addProduit($produit);
 
 
-                $panierRepository->add_to_produit_panier($panier_id, $id, $slug);
-        
+        $panierRepository->add_to_produit_panier($panier_id, $id, $slug);
+
         //  dd("fin am3lm");      
         $panier_produit = $panierRepository->find_one_produit_panier($panier_id, $id);
 
@@ -546,6 +559,8 @@ class HomeController extends AbstractController
         // return $this->render('panier.html.twig', [
         //     'produits' => $produitRepository->findBy(['id' => $array_ids]),
         // ]);
+
+
     }
 
 
@@ -581,16 +596,16 @@ class HomeController extends AbstractController
         $panier_id = $panier->getId();
 
         // $val->array_push($produit->getId());
-       
+
         //  $panier_id=$panier->getId();
         // $array_ids = [];
-    
-                // $produit=$produitRepository->find($d[$i]);
-                // $panier->addProduit($produit);
+
+        // $produit=$produitRepository->find($d[$i]);
+        // $panier->addProduit($produit);
 
 
-                $panierRepository->edit_produit_panier($panier_id, $id, $slug);
-       
+        $panierRepository->edit_produit_panier($panier_id, $id, $slug);
+
         //  dd($panier);     
         $panier_produit = $panierRepository->find_one_produit_panier($panier_id, $id);
 
@@ -622,10 +637,10 @@ class HomeController extends AbstractController
     {
 
         $panier = $panierRepository->findOneBy(['user' => $user]);
-           
+
         $panier_produit = $panierRepository->find_produit_panier($panier->getId());
         $obj = json_decode($panier_produit);
-        
+
         return $this->json($obj);
     }
 
@@ -690,5 +705,30 @@ class HomeController extends AbstractController
         // return $this->render('panier.html.twig', [
         //     'produits' => $produitRepository->findBy(['id' => $array_ids]),
         // ]);
+    }
+
+    #[Route('/sous_categorie/{id}', name: 'app_prod_sous_cat', methods: ['GET'])]
+    public function ProductBySousCategory($id, ProduitRepository $prod, SousCategorieRepository $sousCategorieRepository)
+    {
+        $products = $sousCategorieRepository->findProducts($id);
+        // dd($prod->findMostViewMonth());
+        // dd($products);
+        // dd($prod->findAll());
+        $main = $sousCategorieRepository->findOneBy(['id' => $id]);
+        return $this->render('frontend/sous_categorie.html.twig', [
+            'products' => $products,
+            'main' => $main
+        ]);
+    }
+
+    #[Route('/category-product/{id}', name: 'app_prod_by_cate', methods: ['GET'])]
+    public function prodByCategory($id, CategorieRepository $categorieRepository, PanierRepository $pan)
+    {
+        // dd($categorieRepository->findProductsByCategory($id));
+        $produits = $categorieRepository->findProductsByCategory($id);
+        // dd($pan->findMostViewMonth());
+        return $this->render('frontend/produit_by_category.html.twig', [
+            'produits' => $produits,
+        ]);
     }
 }

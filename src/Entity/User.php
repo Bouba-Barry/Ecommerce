@@ -61,11 +61,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $telephone;
 
-    // #[Assert\Length(
-    //     min: 8,
-    //     minMessage: 'Au Moins {{ limit }} caractères',
-    // )]
-    #[Assert\Regex('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', message: 'password: 8 caractères Au moins 1')]
+    #[Assert\Length(
+        min: 8,
+        minMessage: 'Au Moins {{ limit }} caractères',
+    )]
+    // #[Assert\Regex('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', message: 'password: 8 caractères Au moins 1')]
     // #[Assert\Regex('/^[a-zA-Z0-9]\S{8}$/', message: 'Au Moins 8 caractères avec des lettres et chiffres')]
     #[ORM\Column(type: 'string')]
     private $password;
