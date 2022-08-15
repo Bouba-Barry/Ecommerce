@@ -15,9 +15,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-/**
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- */
+#[Gedmo\SoftDeleteable(fieldName: "deletedAt", timeAware: false)]
 #[ORM\Table(name: '`user`')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -27,11 +25,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
+    #[ORM\Column(name: "deletedAt", type: "datetime", nullable: true)]
     private $deletedAt;
 
-    #[Assert\Email(
-        message: 'The email {{ value }} is not a valid email.',
+    #[Assert\Regex(
+        '/([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@gmail([\.])com/',
+        message: 'Ceci n\'est pas un compte gmail !'
     )]
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;

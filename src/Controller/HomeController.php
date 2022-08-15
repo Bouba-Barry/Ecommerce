@@ -11,18 +11,20 @@ use App\Entity\Produit;
 use App\Entity\Reduction;
 use Doctrine\ORM\Mapping\Id;
 use App\Entity\SousCategorie;
-use App\Repository\AttributRepository;
-use App\Repository\FeadBackRepository;
+use App\Services\MailerService;
 use App\Repository\UserRepository;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
+use App\Repository\AttributRepository;
+use App\Repository\FeadBackRepository;
+use App\Repository\CategorieRepository;
 use App\Repository\ReductionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\SousCategorieRepository;
-use App\Services\MailerService;
-use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,7 +32,6 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Transport\Serialization\Serializer;
 
 
@@ -91,7 +92,7 @@ class HomeController extends AbstractController
         // dd($vals);
         $produits = $produitRepository->findBy(['id' => $vals]);
 
-        
+
         return $this->render('frontend/checkout.html.twig', [
             'panier_produits' => $obj,
             'produits' => $produits,
@@ -141,7 +142,7 @@ class HomeController extends AbstractController
 
 
     #[Route('/panier_infos/{id}', name: 'app_panier_infos', methods: ['GET'])]
-    public function panier_infos(User $user, AttributRepository $attributRepository,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
+    public function panier_infos(User $user, AttributRepository $attributRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
     {
 
 
@@ -178,14 +179,14 @@ class HomeController extends AbstractController
         $produits = $produitRepository->findBy(['id' => $vals]);
         // $obj1=json_encode($obj);
         // dd($obj[0]->variations);
-       
+
         // foreach($obj1 as $val){
         //     $val->variations=str_replace("[\"","",$val->variations);
         //     $val->variations=str_replace("\"]","",$val->variations);
         //     $val->variations=str_replace("\"","",$val->variations);
         //     $val->variations=explode(',',$val->variations);
         // }
-      
+
 
 
 

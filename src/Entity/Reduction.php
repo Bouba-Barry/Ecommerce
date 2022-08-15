@@ -10,9 +10,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Filter\SoftDeleteable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReductionRepository::class)]
-#[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
+#[Gedmo\SoftDeleteable(fieldName: "deletedAt", timeAware: false)]
 class Reduction
 {
     #[ORM\Id]
@@ -21,15 +22,14 @@ class Reduction
     #[Groups(['prod:read', 'prod:check'])]
     private $id;
 
-     #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
-     private $deletedAt;
+    #[ORM\Column(name: "deletedAt", type: "datetime", nullable: true)]
+    private $deletedAt;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['prod:read'])]
     private $designation;
 
-    #[Assert\Regex('/^[0-9]{2}%$/', message: '{{ value }} ne correspond pas à l\'expression adaptée Ex: 50%')]
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Regex('/^[0-9]{2}%$/', message: '{{ value }} ne correspond pas à l\'expression adaptée Ex: 50%')]    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['prod:read'])]
     private $pourcentage;
 

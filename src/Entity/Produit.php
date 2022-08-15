@@ -2,17 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\ProduitRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Serializer\Annotation\Groups;
+use App\Repository\ProduitRepository;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\Collection;
 use Gedmo\SoftDeleteable\Filter\SoftDeleteable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
-#[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
+#[Gedmo\SoftDeleteable(fieldName: "deletedAt", timeAware: false)]
 class Produit
 {
     #[ORM\Id]
@@ -21,12 +22,12 @@ class Produit
     #[Groups(['prod:read', 'prod:check'])]
     private $id;
 
-    #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
+    #[ORM\Column(name: "deletedAt", type: "datetime", nullable: true)]
     private $deletedAt;
 
 
     #[Assert\Length(
-        min: 1,
+        min: 2,
         minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
     )]
 
@@ -110,7 +111,7 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Quantite::class)]
     private Collection $quantites;
 
-    #[ORM\Column(length: 2000, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description_detaille = null;
 
     #[ORM\Column(length: 255)]
