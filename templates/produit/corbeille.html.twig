@@ -1,0 +1,137 @@
+{% extends 'admin.html.twig' %} {% block stylesheets %}
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+  integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+{% endblock %} {# {% block title %}Produit index{% endblock %} #} {% block
+content %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+	  <div class="container-full">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="d-flex align-items-center">
+				<div class="mr-auto">
+					<h3 class="page-title">Liste Produits Supprimes</h3>
+					<div class="d-inline-block align-items-center">
+					  <ol class="breadcrumb">
+						<li>
+						  <a
+							href="{{ path('app_produit_index') }}"
+							class="btn btn-primary btn-md"
+							>Liste Produits</a
+						  >
+						</li>
+					  </ol>
+					</div>
+				  </div>
+		
+			</div>
+		</div>
+
+		<!-- Main content -->
+		<section class="content">
+		  <div class="row">
+			  
+
+			<div class="col-12">
+
+			 <div class="box">
+		
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
+					
+					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
+						<thead>
+							<tr>
+							<th col-1>ID</th>
+								<th>Désignation</th>
+								<th>Description</th>
+								<th>Prix Old</th>
+								<th>Image Produit</th>
+								<th class="col-1">Quantié Stocker</th>
+								<th class="col-3">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							 {% for produit in produits %}
+							<tr>
+								<td class="col-1">{{ produit.id }}</td>
+               					 <td>{{ produit.designation }}</td>
+                				<td>{{ produit.description }}</td>
+                				<td>{{ produit.ancienPrix }}Dhs</td>
+                				{# <td>{{ produit.nouveauPrix }}Dhs</td> #}
+                				<td><img src= {{ asset('uploads/produits/' ~ produit.imageProduit ) }} width="80" height="70"></td>
+                				<td>{{ produit.qteStock }}</td>
+								{% if produit.user.id == app.user.id %}
+                				<td>
+                                    <a
+                                    href="{{ path('app_produit_restore', { id: produit.id }) }}"
+                                    class="btn btn-md btn-success"
+                                  >
+                                    Restore
+                                    <i class="fa-solid fa-trash-can-arrow-up"></i>
+                                  </a>
+                                  <a
+                                    href="{{
+                                      path('app_produit_delete_fromcorbeille', {
+                                        id: produit.id
+                                      })
+                                    }}"
+                                    class="btn btn-md btn-danger"
+                                  >
+                                    delete from trash
+                                    <i class="fa fa-trash"></i>
+                                  </a>
+							</td>
+							{% else %}
+								<td></td>
+							{% endif %}
+							</tr>
+							{% else %}
+            				<tr>
+                				<td colspan="9">no records found</td>
+            				</tr>
+        				{% endfor %}
+						</tbody>
+						<tfoot>
+							<tr>
+							<th>ID</th>
+								<th>Désignation</th>
+								<th>Description</th>
+								<th>Prix Old</th>
+								{# <th>New Prix</th> #}
+								<th>Images Produit</th>
+								<th style="border-right: 1px solid #d5dfea">Action</th>
+							</tr>
+						</tfoot>
+					</table>
+					</div>
+				</div>
+				<!-- /.box-body -->
+			  </div>
+			  <!-- /.box -->      
+			</div>  
+			<!-- /.col -->
+		  </div>
+		  <!-- /.row -->
+		</section>
+		<!-- /.content -->
+	  
+	  </div>
+  </div>
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %} {% block javascript %}
+<script src="{{
+    asset('assets/vendor_components/datatable/datatables.min.js')
+  }} "></script>
+<script src="{{ asset('main/js/pages/data-table.js') }}"></script>
+{% endblock %}

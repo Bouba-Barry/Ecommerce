@@ -1,101 +1,223 @@
-{% extends 'admin.html.twig' %} 
+{% extends 'admin.html.twig' %} {% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('main/css/my_style.css') }}" />
+{% endblock %} {# {% block title %}Produit index{% endblock %} #} {% block
+content %}
 
-{% block stylesheet %} {% endblock stylesheet %}
-{# {% block title %}Produit index{% endblock %}  #}
-{% block content %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <div class="container-full">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="page-title">Produit</h3>
+          <div class="d-inline-block align-items-center">
+            <ol class="breadcrumb">
+              <li>
+                <a
+                  href="{{ path('app_produit_index') }}"
+                  class="btn btn-primary btn-md"
+                  >Liste Produits</a
+                >
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-	  <div class="container-full">
-		<!-- Content Header (Page header) -->
-		<div class="content-header">
-			<div class="d-flex align-items-center">
-				<div class="mr-auto">
-					<h3 class="page-title">Produits</h3>
-					<div class="d-inline-block align-items-center">
-						<nav>
-							<ol class="breadcrumb">
-								{# <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li> #}
-								{# <li class="breadcrumb-item" aria-current="page"></li>
-								#}
-								
-							</ol>
-						</nav>
-					</div>
-				</div>
-			</div>
-		</div>
+    <!-- Main content -->
+    {#
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="table-responsive">
+                <table
+                  id="example5"
+                  class="table table-bordered table-striped"
+                  style="width: 100%"
+                >
+                  <thead>
+                    <tr>
+                      <th col-1>ID</th>
+                      <th>Désignation</th>
+                      <th>Description</th>
+                      <th>Prix Old</th>
+                      <th>Image Produit</th>
+                      <th>Quantié Stocker</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="col-1">{{ produit.id }}</td>
+                      <td>{{ produit.designation }}</td>
+                      <td>{{ produit.description }}</td>
+                      <td>{{ produit.ancienPrix }}Dhs</td>
+                      {#
+                      <td>{{ produit.nouveauPrix }}Dhs</td>
 
-		<!-- Main content -->
-		<section class="content">
-		  <div class="row">
-			  
+                      <td>
+                        <img src=
+                        {{ asset('uploads/produits/' ~ produit.imageProduit ) }}
+                        width="80" height="70">
+                      </td>
+                      <td>{{ produit.qteStock }}</td>
+                      <td>
+                        <a
+                          href="{{
+                            path('app_produit_edit', { id: produit.id })
+                          }}"
+                          class="btn btn-md btn-warning mb-5"
+                        >
+                          <i class="fa fa-edit"></i>
+                        </a>
+                        {{ include("produit/_delete_form.html.twig") }}
+                      </td>
+                    </tr>
+                  </tbody>
+                  {#
+                  <tfoot class="mb-5"></tfoot>
+                </table>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    #}
+    <!-- /.content -->
+    <section class="content">
+      <div class="container">
+        <div class="wrapper">
+          <div class="product-img">
+            <img
+              src="{{ asset('uploads/produits/' ~ produit.getImageProduit() ) }}"
+              height="auto"
+              width="327"
+            />
+          </div>
 
-			<div class="col-12">
+          <div class="product-info" id="product-info">
+            {% if produit.getVariation()|length > 0 %}
+            <script>
+              document.getElementById("product-info").style.position = "";
+            </script>
+            {% else %}
+            <script>
+              document.getElementById("product-info").style.position =
+                "absolute";
+              console.log("ddfjd");
+            </script>
+            {% endif %}
+            <div class="product-text">
+              <div style="position: absolute; right: 10px">
+                {{ include("produit/_delete_form.html.twig") }}
+              </div>
+              <h1>{{ produit.designation }}</h1>
+              <h2>{{ produit.description }}</h2>
+              <p>
+                {{ produit.getDescriptionDetaille() }}
+              </p>
+              {% if produit.getReduction()|length != 0 %}
+              <div class="row" style="margin-left: 20px">
+                <div class="col-md-12">
+                  <span class="new-price"> {{ produit.nouveauPrix }}Dhs</span>
+                  <span class="old-price">{{ produit.ancienPrix }}Dhs</span>
+                </div>
+              </div>
+              {% else %}
+              <div class="row" style="margin-left: 20px">
+                <div class="col-md-12">
+                  <span class="new-price">{{ produit.ancienPrix }}Dhs</span>
+                </div>
+              </div>
+              {% endif %}
+              <div class="row" style="margin-left: 20px">
+                <div class="col-md-12">
+                  <h4>{{ produit.qteStock }} en Stock</h4>
+                </div>
+                <div class="col-md-12">
+                  <h4>
+                    Sous Categorie : {{ produit.getSousCategorie().getTitre() }}
+                  </h4>
+                </div>
+                <div class="col-md-12">
+                  <h4>
+                    Categorie :
+                    {{ produit.getSousCategorie().getCategorie().getTitre() }}
+                  </h4>
+                </div>
+                {% if produit.getReduction()|length !=0 %}
+                <div class="col-md-12">
+                  <h4>Redductions</h4>
+                  <ul>
+                    {% for reduction in produit.getReduction() %}
 
-			 <div class="box">
-				<div class="box-header with-border">
-				  <h3 class="box-title">Detail Produit </h3>
-				</div>
-				<!-- /.box-header -->
-				<div class="box-body">
-					<div class="table-responsive">
+                    <li>
+                      {{ reduction.designation }}
+                    </li>
 
-                    <a class="btn btn-primary mb-15" href="{{ path('app_produit_index') }}">back to list</a>
+                    {% endfor %}
+                  </ul>
+                </div>
+                {% endif %} {% if produit.getAttributs()|length !=0 %} {% for
+                attribut in produit.getAttributs() %}
 
-					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
-						<thead>
-							<tr>
-							<th col-1>ID</th>
-								<th>Désignation</th>
-								<th>Description</th>
-								<th>Prix Old</th>
-								<th>Image Produit</th>
-								<th>Quantié Stocker</th>
-								<th >Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td class="col-1">{{ produit.id }}</td>
-               					 <td>{{ produit.designation }}</td>
-                				<td>{{ produit.description }}</td>
-                				<td>{{ produit.ancienPrix }}Dhs</td>
-                				{# <td>{{ produit.nouveauPrix }}Dhs</td> #}
-                				<td><img src= {{ asset('uploads/produits/' ~ produit.imageProduit ) }} width="80" height="70"></td>
-                				<td>{{ produit.qteStock }}</td>
-                				<td>
-                    				
-                    					<a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-md btn-warning mb-5">
-		                          <i class="fa fa-edit"></i>
-         	               		</a>
-                                   {{ include('produit/_delete_form.html.twig') }}
-                				</td>
-							</tr>
-						</tbody>
-						{# <tfoot class="mb-5">
-						  
-						</tfoot> #}
-					</table>
-					</div>
-				</div>
-				<!-- /.box-body -->
-			  </div>
-			  <!-- /.box -->      
-			</div>  
-			<!-- /.col -->
-		  </div>
-		  <!-- /.row -->
-		</section>
-		<!-- /.content -->
-	  
-	  </div>
+                <div class="col-md-12">
+                  <h4>{{ attribut.nom }}</h4>
+                  {% if attribut.getVariations()|length != 0 %}
+                  <ul>
+                    {% for variation in attribut.getVariations() %} {% if
+                    variation in produit.getVariation() %}
+                    <li>
+                      {{ variation.nom }}
+                    </li>
+                    {% endif %} {% endfor %}
+                  </ul>
+                </div>
+                {% endif %} {% endfor %} {% endif %}
+              </div>
+              <div class="row">
+                {% if produit.getType()=="stable" %}
+                <a
+                  style="position: absolute; right: 10px; bottom: 0"
+                  href="{{ path('app_produit_edit', { id: produit.id }) }}"
+                  class="btn btn-md btn-warning mb-5"
+                  >Editer
+                  <i class="fa fa-edit"></i>
+                </a>
+                {% else %}
+                <a
+                  style="position: absolute; right: 10px; bottom: 0"
+                  href="{{
+                    path('app_produit_edit_variable', { id: produit.id })
+                  }}"
+                  class="btn btn-md btn-warning mb-5"
+                  >Editer
+                  <i class="fa fa-edit"></i>
+                </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
-  <!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
-    
-{% endblock %}
-{% block javascript %}
-{# <script src="{{ asset('assets/vendor_components/datatable/datatables.min.js') }} "></script>
-	<script src="{{ asset('main/js/pages/data-table.js') }}"></script> #}
-{% endblock %}
+{% endblock %} {% block javascript %} {#
+<script src="{{
+    asset('assets/vendor_components/datatable/datatables.min.js')
+  }} "></script>
+<script src="{{ asset('main/js/pages/data-table.js') }}"></script>
+#} {% endblock %}

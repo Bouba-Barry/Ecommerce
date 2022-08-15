@@ -5,14 +5,16 @@ namespace App\Controller;
 use App\Entity\Produit;
 use App\Form\ProduitType;
 use Doctrine\ORM\Mapping\Id;
-use App\Repository\ProduitRepository;
+use App\Form\ProduitVariableType;
 use App\Repository\UserRepository;
+use App\Repository\ProduitRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -33,6 +35,150 @@ class ProduitController extends AbstractController
     }
 
 
+
+    #[Route('/corbeille', name: 'app_produit_corbeille', methods: ['GET'])]
+    public function corbeille(ProduitRepository $produitRepository, ManagerRegistry $doctrine): Response
+    {
+        $em=$doctrine->getManager();
+        $em->getFilters()->disable('softdeleteable');
+        
+        $produits=$produitRepository->findcorbeille();
+        
+
+        return $this->render('produit/corbeille.html.twig', [
+            'produits' => $produits
+        ]);
+    }
+
+    #[Route('/restore/{id}', name: 'app_produit_restore', methods: ['GET'])]
+    public function restore($id,ProduitRepository $produitRepository, ManagerRegistry $doctrine): Response
+    {
+        $em=$doctrine->getManager();
+        $em->getFilters()->disable('softdeleteable');
+        $produit=$produitRepository->find($id);
+        $produit->setDeletedAt(Null);
+        $em->persist($produit);
+        $em->flush();        
+        $produits=$produitRepository->findcorbeille();
+        return $this->render('produit/corbeille.html.twig', [
+            'produits' => $produits
+        ]);
+    }
+
+    #[Route('/delete_from_corbeille/{id}', name: 'app_produit_delete_fromcorbeille', methods: ['GET'])]
+    public function deleteforce($id,ProduitRepository $produitRepository, ManagerRegistry $doctrine): Response
+    {
+        $em=$doctrine->getManager();
+       
+        //  $em->getFilters()->disable('softdeleteable');
+        //  $user=$userRepository->find($id);
+         $produitRepository->deletefromtrash($id);
+             
+        $produits=$produitRepository->findcorbeille();
+        return $this->render('produit/corbeille.html.twig', [
+            'produits' => $produits
+        ]);
+    }
+
+
+
+
+    
+    #[Route('/admin/new/variable', name: 'app_produit_new_variable', methods: ['GET', 'POST'])]
+    public function newvariable(Request $request, ProduitRepository $produitRepository, SluggerInterface $slugger): Response
+    {
+        $produit = new Produit();
+
+        $form = $this->createForm(ProduitVariableType::class, $produit);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+
+           
+            // new  $attribut_produit = $form->get('attributs')->getData();
+
+            // foreach ($attribut_produit as $var) {
+            //     $produit->addAttribut($var);
+            // new }
+
+            // dd($form);
+           
+            $produit = $form->getData();
+            $produit->setQteStock(0);
+            $produit->setType("variable");
+            
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+           
+
+
+            // uploadImage($slugger, $produit, $brochureFile);
+
+
+            $produitRepository->add($produit, true);
+
+            return $this->redirectToRoute('app_quantite_new_variable', ['id' => $produit->getId() ]);
+        }
+
+        return $this->renderForm('produit/new_variable.html.twig', [
+            'produit' => $produit,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/admin/variable/{id}/edit', name: 'app_produit_edit_variable', methods: ['GET', 'POST'])]
+    public function edit_variable(Request $request, Produit $produit, SluggerInterface $slugger, ProduitRepository $produitRepository): Response
+    {
+        $form = $this->createForm(ProduitVariableType::class, $produit);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+             $attribut_produit = $form->get('attributs')->getData();
+
+             foreach ($attribut_produit as $var) {
+                 $produit->addAttribut($var);
+             }
+            
+            
+             
+            //  dd($produit->getSousCategorie());
+            // dd($form);
+            
+            $produit = $form->getData();
+            
+            $produitRepository->add($produit, true);
+
+            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('produit/edit_variable.html.twig', [
+            'produit' => $produit,
+            'form' => $form,
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     #[Route('/admin/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProduitRepository $produitRepository, SluggerInterface $slugger): Response
     {
@@ -41,17 +187,20 @@ class ProduitController extends AbstractController
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            
 
-            $attribut_produit = $form->get('attributs')->getData();
 
-            foreach ($attribut_produit as $var) {
-                $produit->addAttribut($var);
-            }
+            // new  $attribut_produit = $form->get('attributs')->getData();
+
+            // foreach ($attribut_produit as $var) {
+            //     $produit->addAttribut($var);
+            // new }
 
             // dd($form);
             /** @var UploadedFile $brochureFile */
             $produit = $form->getData();
+            $produit->setType("stable");
             $brochureFile = $form->get('photo')->getData();
 
             // this condition is needed because the 'brochure' field is not required
@@ -110,13 +259,13 @@ class ProduitController extends AbstractController
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            $attribut_produit = $form->get('attributs')->getData();
+            // $attribut_produit = $form->get('attributs')->getData();
 
-            foreach ($attribut_produit as $var) {
-                $produit->addAttribut($var);
-            }
+            // foreach ($attribut_produit as $var) {
+            //     $produit->addAttribut($var);
+            // }
 
             // dd($form);
             /** @var UploadedFile $brochureFile */

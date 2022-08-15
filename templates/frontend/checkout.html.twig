@@ -46,11 +46,8 @@
           <div class="billing-details">
             <h3 class="title">Billing Details</h3>
             <div class="row">
-<<<<<<< HEAD
-=======
             
             
->>>>>>> 58dd99cf1371fe2a1c1ff85bd8947ec0018ec57d
               <div class="col-lg-6 col-md-6">
                 <div class="form-group">
                   <label>First Name <span class="required">*</span></label>
@@ -174,18 +171,20 @@
                   </div>
                 </div>
               </div>
-                <div class="form-group">
+                <div  class="form-group">
+                  <div class="col-lg-12 col-md-12">
                   <label
-                    >Address de livraision
+                    >Address detaille
                     <span class="required">*</span></label
                   >
                   <input type="text" class="form-control"  name="other_adresse" />
+                </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
- {% set Montant = 0 %}
+ {# {% set Montant = 0 %} #}
         <div class="col-lg-6 col-md-12">
           <div class="order-details">
             <h3 class="title">Your Order</h3>
@@ -193,31 +192,24 @@
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Total + TVA</th>
+                    
+                    <th scope="col">Total a payer</th>
                   </tr>
                 </thead>
                 <tbody>
+
+                    
+                      
+                    
+                  
                   <tr>
                     <td class="product-total">
                       <span class="subtotal-amount">
-                      {% if produit.getNouveauPrix() != NULL %}
-                      {% set total = 0 %}
-                        {% set total = total + produit.getNouveauPrix() * panier_produit.qte_produit %}
-                        {# <input type="text" class="form-control"  name="total" value =" {{ produit.getNouveauPrix() * panier_produit.qte_produit }}" DH  #}
-                        {{ total }}
-                        {% set Montant = Montant + total %}
-                        {% else %}
-                        {% set total = 0 %}
-                            {% set total = total + produit.getAncienPrix() * panier_produit.qte_produit %}
-                         {# <input type="text" class="form-control"  name="total" value =" {{ produit.AncienPrix() * panier_produit.qte_produit }}" DH  #}
-                     {{ total }}
-                     {% set Montant = Montant + total %}
-                      {% endif %}
+                      {{ Montant }} DH
                       </span>
                     </td>
                   </tr>
+           
                 </tbody>
                 {# {{ total}} #}
               </table>
@@ -252,7 +244,18 @@
                   <label for="cash-on-delivery">Cash on Delivery</label>
                 </p>
               </div>
-              <input type="submit" class="btn btn-default" value="Place Order "/>
+              
+              <a href="#"  class="default-btn">
+               <button style="background: none;
+               color: inherit;
+               border: none;
+               padding: 0;
+               font: inherit;
+               cursor: pointer;
+               outline: inherit;"> Proceed to Checkout</button>
+              </a>
+         
+              
             </div>
           </div>
         </div>

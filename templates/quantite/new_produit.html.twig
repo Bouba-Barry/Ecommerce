@@ -1,0 +1,153 @@
+{% extends 'admin.html.twig' %} {# {% block title %}Ajouter Produit{% endblock
+    %} #} {% block content %}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <div class="container-full">
+        <div id="message">
+          {% for message in app.flashes('success') %}
+          <div class="alert alert-success">
+            {{ message }}
+          </div>
+          {% endfor %}
+        </div>
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="d-flex align-items-center">
+            <div class="mr-auto">
+              <h3 class="page-title">Ajoute d une Variation</h3>
+              <div class="d-inline-block align-items-center">
+                <nav>
+                  <ol class="breadcrumb">
+                    <li>
+                      <a
+                        href="{{ path('app_quantite_new_variable' , { id : produit.id } ) }}"
+                        class="btn btn-primary btn-md"
+                        >Retour
+                      </a>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <div class="col-12">
+              <div class="box">
+                <div class="box-body">
+                  <div class="form-group row">
+                    <label class="col-form-label col-md-2">Produit Concerne</label>
+                    <div class="mb-3 col-md-10">
+                      {{ form_row(form.produit) }}
+                      <span class="form-text text-muted">{{
+                        form_errors(form.produit)
+                      }}</span>
+                    </div>
+                  </div>
+    
+                  <div class="form-group row">
+                    <label class="col-form-label col-md-2">Qantite En Stock</label>
+                    <div class="mb-3 col-md-10">
+                      {{ form_row(form.qte_stock) }}
+                      <span class="form-text text-muted">{{
+                        form_errors(form.qte_stock)
+                      }}</span>
+                    </div>
+                  </div>
+    
+                  {% for attribut in attributs %}
+                  <div class="form-group row">
+                    <label class="col-form-label col-md-2">{{
+                      attribut.getNom()
+                    }}</label>
+                    <div
+                      class="mb-3 col-md-10 attributs"
+                      id="{{ attribut.getId() }}"
+                    >
+                      {% for variation in attribut.getVariations() %}
+                      <div class="form-check">
+                        <input
+                          type="radio"
+                          id="quantite_variable_variations_{{ variation.id }}"
+                          name="quantite_variable[variations][{{ attribut.id }}]"
+                          class="form-check-input"
+                          value="{{ variation.id }}"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="quantite_variable_variations_{{ variation.id }}"
+                          >{{ variation.getNom() }}</label
+                        >
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  {% endfor %} {#
+                  <div class="form-group row">
+                    <label class="col-form-label col-md-2"
+                      >Combinaison des Variations</label
+                    >
+                    <div class="mb-3 col-md-10">
+                      {{ form_row(form.variations) }}
+                      <span class="form-text text-muted">{{
+                        form_errors(form.variations)
+                      }}</span>
+                    </div>
+                  </div>
+                  #} {#
+                  <div class="form-group row">
+                    <label class="col-form-label col-md-2">Image du Produit</label>
+                    <div class="mb-3 col-md-10">
+                      {{ form_row(form.photo) }}
+                      {#
+                      <span class="form-text text-muted"
+                        >Using <code>input type="datetime"</code></span
+                      >
+                    </div>
+                  </div>
+                  #}
+    
+                  <div class="row">
+                    <div class="mb-3 col-4">
+                      <button class="btn btn-info btn-rounded margin-top-10">
+                        {{ button_label|default('Ajouter') }}
+                      </button>
+                    </div>
+    
+                    
+    
+                    <div class="col-4">
+    
+                    </div>
+                    
+                    {# <div class="col-4">
+                      
+                      <a class="btn btn-info btn-rounded margin-top-10" href="{{ path('app_image_new_variable',{ id : produit.getId() }) }}">
+                        gerer les images
+                      </a>
+                  
+                    </div> #}
+                  </div>
+                
+    
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- ./col -->
+          </div>
+          <!-- /.row -->
+        </section>
+        <!-- /.content -->
+      </div>
+    </div>
+    <!-- /.content-wrapper -->
+    {% endblock %} {% block javascript %}
+    <script src="{{ asset('js/variation_combinaison_1.js') }}"></script>
+    {% endblock %}
+    

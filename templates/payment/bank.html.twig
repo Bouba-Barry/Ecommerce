@@ -1,34 +1,52 @@
-{% extends 'frontend/index.html.twig' %}
+{% extends 'frontend/index.html.twig' %} {% block content %}
+<div class="container mt-20" id="container">
+  <h2 class="bg-light text-primary text-center mt-3 fs-5 p-4">
+    Information Relative à votre Commande :
+  </h2>
+  <table class="table table-hover table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Date de la Commande</th>
+        <th scope="col">Adresse de Livraison</th>
+        {#
+        <th scope="col">Produit concerné</th>
+        #}
+        <th scope="col">Montant Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">
+          {{ commandes.getDateCmd() | date("d/m/Y", "Europe/Paris") }}
+        </th>
+        <td>{{ commandes.getAdresseLivraison() }}</td>
+        <td id="total">{{ total }} Dhs</td>
+      </tr>
+    </tbody>
+  </table>
 
-{% block content %}
- <div class="container mt-20" id="container">
-                <h2 class="bg-light text-primary text-center mt-3 fs-5 p-4">Information Relative à votre Commande :</h2>
-                <table class="table table-hover table-bordered">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Date de la Commande</th>
-                            <th scope="col">Adresse de Livraison</th>
-                            {# <th scope="col">Produit concerné</th> #}
-                            <th scope="col">Montant Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">{{ commandes.getDateCmd() | date("d/m/Y", "Europe/Paris") }}</th>
-                            <td>{{ commandes.getAdresseLivraison()  }}</td>
-                            <td id="total">{{ total }} Dhs</td>
-                        </tr>
-                    </tbody>
-                </table>
+  <form action="{{ path('app_stripe') }}" method="POST">
+    <a href="#" class="default-btn">
+      <button
+        style="
+          background: none;
+          color: inherit;
+          border: none;
+          padding: 0;
+          font: inherit;
+          cursor: pointer;
+          outline: inherit;
+        "
+        type="submit"
+        id="checkout-button"
+      >
+        Passer Au Paiement
+      </button>
+    </a>
+  </form>
+</div>
 
-                <form action="{{ path('app_stripe') }}" method="POST">
-        <button type="submit" id="checkout-button">Passer Au Paiement</button>
-      </form>
-        </div>
-
-
-{% endblock %}
-{% block javascripts %}
+{% endblock %} {% block javascripts %}
 <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
-    <script src="https://js.stripe.com/v3/"></script>
- {% endblock %}
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}

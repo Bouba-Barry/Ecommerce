@@ -113,6 +113,30 @@ class ProduitRepository extends ServiceEntityRepository
         return $queryBuilder;
     }
 
+    public function findcorbeille()
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where("p.deletedAt is not NULL");
+            
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function deletefromtrash($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        DELETE FROM produit 
+        WHERE  id=:id
+        ";
+        $stmt = $conn->prepare($sql);
+        $stmt->executeQuery(['id'=>$id]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return true;
+    }
+
+
     public function findProduitBy($id)
     {
         // $conn = $this->getEntityManager()->getConnection();

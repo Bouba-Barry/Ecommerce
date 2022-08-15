@@ -48,6 +48,8 @@ class ReductionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Reduction::class,
+            'csrf_protection' => false,
+
         ]);
     }
 }

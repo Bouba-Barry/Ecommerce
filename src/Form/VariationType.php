@@ -39,6 +39,7 @@ class VariationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Variation::class,
+            'csrf_protection' => false, 
         ]);
     }
 }

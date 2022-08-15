@@ -8,8 +8,11 @@ use App\Repository\ReductionRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Filter\SoftDeleteable;
 
 #[ORM\Entity(repositoryClass: ReductionRepository::class)]
+#[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
 class Reduction
 {
     #[ORM\Id]
@@ -17,6 +20,9 @@ class Reduction
     #[ORM\Column(type: 'integer')]
     #[Groups(['prod:read','prod:check'])]
     private $id;
+
+     #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
+     private $deletedAt;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['prod:read'])]
@@ -57,6 +63,16 @@ class Reduction
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 
     public function getDesignation(): ?string

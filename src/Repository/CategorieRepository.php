@@ -29,6 +29,38 @@ class CategorieRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
+    public function findAllCategories()
+    {
+        $queryBuilder = $this->createQueryBuilder('c');
+            
+            
+        return $queryBuilder;
+    }
+
+
+    public function findcorbeille()
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->where("c.deletedAt is not NULL");
+            
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function deletefromtrash($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        DELETE FROM categorie 
+        WHERE  id=:id
+        ";
+        $stmt = $conn->prepare($sql);
+        $stmt->executeQuery(['id'=>$id]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return true;
+    }
 
     public function remove(Categorie $entity, bool $flush = false): void
     {

@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Ville;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,6 +35,13 @@ class UserType extends AbstractType
                 'label'   => false
             ], array('attr' => ['class' => 'form-control']))
             ->add('nom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Nom', 'class' => 'form-control']))
+            ->add('ville', EntityType::class,
+            [
+                'class' => Ville::class,
+                'choice_label' => 'nom_ville',
+                'label' => false,
+                'attr' => ['placeholder' => 'Produit concerner' , 'class' => 'form-control']])
+            
             ->add('prenom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Prenom', 'class' => 'form-control']))
             ->add('adresse', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Adresse', 'class' => 'form-control']))
             ->add('telephone', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Telephone', 'class' => 'form-control']))
@@ -73,8 +82,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'csrf_protection' => false,
-            
+            'csrf_protection' => false,           
         ]);
     }
 }

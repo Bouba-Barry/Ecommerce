@@ -1,33 +1,42 @@
-{% extends 'frontend/index.html.twig' %}
+{% extends 'frontend/index.html.twig' %} {% block content %} {% set clientiD =
+"AVwH2qMsF-DucjPxKqUEA1sbdrf7nEoRF7copwTquI5qsXiqzObavtTs1j8wvCiSoLkiwnixryORhxs6"
+%}
+<div class="container mt-20" id="container">
+  <h2 class="bg-light text-primary text-center mt-3 fs-5 p-4">
+    Information Relative à votre Commande :
+  </h2>
+  <table class="table table-hover table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Date de la Commande</th>
+        <th scope="col">Adresse de Livraison</th>
+        {#
+        <th scope="col">Produit concerné</th>
+        #}
+        <th scope="col">Montant Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">
+          {{ commandes.getDateCmd() | date("d/m/Y", "Europe/Paris") }}
+        </th>
+        <td>{{ commandes.getAdresseLivraison() }}</td>
+        <td id="total">{{ total }}</td>
+      </tr>
+    </tbody>
+  </table>
 
-{% block content %}
-{% set clientiD = "AVwH2qMsF-DucjPxKqUEA1sbdrf7nEoRF7copwTquI5qsXiqzObavtTs1j8wvCiSoLkiwnixryORhxs6" %}
- <div class="container mt-20" id="container">
-                <h2 class="bg-light text-primary text-center mt-3 fs-5 p-4">Information Relative à votre Commande :</h2>
-                <table class="table table-hover table-bordered">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Date de la Commande</th>
-                            <th scope="col">Adresse de Livraison</th>
-                            {# <th scope="col">Produit concerné</th> #}
-                            <th scope="col">Montant Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">{{ commandes.getDateCmd() | date("d/m/Y", "Europe/Paris") }}</th>
-                            <td>{{ commandes.getAdresseLivraison()  }}</td>
-                            <td id="total">{{ total }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+  <a href="{{ path('success_url') }}" id="Valider" class="default-btn"
+    >Valider Votre Commande</a
+  >
+  <a
+    href="{{ path('cancel_url') }}"
+    id="annuller"
+    style="background-color: red"
+    class="default-btn"
+    >Annuler Votre Commande
+  </a>
+</div>
 
-    <a href="{{ path('success_url') }}" id="Valider" class="text-center btn btn-warning">Valider Votre Commande</a>
-    <a href="{{ path('cancel_url') }}" id="annuller" class="text-center btn btn-danger">Annuler Votre Commande </a>
-        </div>
-
-
-{% endblock %}
-{% block javascripts %}
-
- {% endblock %}
+{% endblock %} {% block javascripts %} {% endblock %}

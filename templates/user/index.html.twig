@@ -16,20 +16,26 @@
     <div class="content-header">
       <div class="d-flex align-items-center">
         <div class="mr-auto">
-          <h3 class="page-title">Data Tables</h3>
+          <h3 class="page-title">Liste Users</h3>
           <div class="d-inline-block align-items-center">
-            <nav>
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                  <a href="#"><i class="mdi mdi-home-outline"></i></a>
-                </li>
-                <li class="breadcrumb-item" aria-current="page">Tables</li>
-                <li class="breadcrumb-item active" aria-current="page">
-                  Data Tables
-                </li>
-              </ol>
-            </nav>
+            <ol class="breadcrumb">
+              <li>
+                <a
+                  href="{{ path('app_user_new') }}"
+                  class="btn btn-primary btn-md"
+                  >Ajouter User</a
+                >
+              </li>
+            </ol>
           </div>
+        </div>
+        <div>
+          <a
+            href="{{ path('app_user_corbeille') }}"
+            style="font-size: 20px; color: blue"
+            >Corbeille
+            <i class="fa-solid fa-trash" style="font-size: 25px"></i>
+          </a>
         </div>
       </div>
     </div>
@@ -51,7 +57,7 @@
                       <th rowspan="2">Nom Complet</th>
                       <th colspan="2">HR Information</th>
                       <th colspan="2">Contact</th>
-                      <th rowspan="2"></th>
+                      <th rowspan="2" colspan="2"></th>
                     </tr>
                     <tr>
                       <th>Adresse</th>

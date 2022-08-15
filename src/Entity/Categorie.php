@@ -2,24 +2,34 @@
 
 namespace App\Entity;
 
-use App\Repository\CategorieRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use App\Repository\CategorieRepository;
+use Doctrine\Common\Collections\Collection;
+use Gedmo\SoftDeleteable\Filter\SoftDeleteable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
+#[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
 class Categorie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['categorie:read'])]
     private $id;
+
+    #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
+    private $deletedAt;
+
 
     #[Assert\NotBlank(message: 'le champ est requis')]
     #[Assert\Length(min: 3, minMessage: 'Au Moins 3 caractères')]
     // #[Assert\Unique(message: 'La Valeur existe déjà')]
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['categorie:read'])]
     private $titre;
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: SousCategorie::class)]
@@ -42,6 +52,16 @@ class Categorie
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 
     public function getTitre(): ?string

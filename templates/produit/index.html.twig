@@ -17,17 +17,27 @@ content %}
 		<div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
-					<h3 class="page-title">Produits</h3>
+					<h3 class="page-title">Liste Produits</h3>
 					<div class="d-inline-block align-items-center">
-						<nav>
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-								{# <li class="breadcrumb-item" aria-current="page"></li> #}
-								<li class="breadcrumb-item" aria-current="page"></li>
-							</ol>
-						</nav>
+					  <ol class="breadcrumb">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle btn-primary" data-toggle="dropdown" href="#" >
+							  <span class="hidden-sm-up"><i class="ion-email"></i></span> <span class="hidden-xs-down">Ajouter Un produit</span>
+							</a>
+							<div class="dropdown-menu"> <a class="dropdown-item" id="dropdown1-tab"   href="{{ path('app_produit_new') }}" > Produit stable</a> <a class="dropdown-item" id="dropdown2-tab" href="{{ path('app_produit_new_variable') }}" >Produit Variable
+							 </a> </div>
+						  </li>
+					  </ol>
 					</div>
-				</div>
+				  </div>
+				  <div>
+					<a
+					   href="{{ path('app_produit_corbeille') }}" 
+					  style="font-size: 20px; color: blue"
+					  >Corbeille
+					  <i class="fa-solid fa-trash" style="font-size: 25px"></i>
+					</a>
+				  </div>
 			</div>
 		</div>
 
@@ -39,13 +49,11 @@ content %}
 			<div class="col-12">
 
 			 <div class="box">
-				<div class="box-header with-border">
-				  <h3 class="box-title">Parcourir les Produits </h3>
-				</div>
+		
 				<!-- /.box-header -->
 				<div class="box-body">
 					<div class="table-responsive">
-					<a class="btn btn-primary btn-md mb-15" href="{{ path('app_produit_new') }}">Ajouter Produit</a>
+					
 					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
 						<thead>
 							<tr>
@@ -55,6 +63,7 @@ content %}
 								<th>Prix Old</th>
 								<th>Image Produit</th>
 								<th class="col-1">Quantié Stocker</th>
+								<th class="col-1">Type de Produit</th>
 								<th class="col-3">Action</th>
 							</tr>
 						</thead>
@@ -68,14 +77,22 @@ content %}
                 				{# <td>{{ produit.nouveauPrix }}Dhs</td> #}
                 				<td><img src= {{ asset('uploads/produits/' ~ produit.imageProduit ) }} width="80" height="70"></td>
                 				<td>{{ produit.qteStock }}</td>
+								<td>{{ produit.type }}</td>
+
 								{% if produit.user.id == app.user.id %}
                 				<td>
 									<a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn btn-md btn-primary">
                           				<i class="fa fa-eye"></i>
                         			</a>
+								{% if produit.getType()=="stable" %}
                         			<a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-md btn-warning">
 		                          <i class="fa fa-edit"></i>
          	               		</a>
+								{% else %}
+								<a href="{{ path('app_produit_edit_variable', {'id': produit.id}) }}" class="btn btn-md btn-warning">
+									<i class="fa fa-edit"></i>
+									  </a>
+								{% endif %}
             	            	<a href="{{ path('app_produit_delete', {'id': produit.id}) }}" class="btn btn-md btn-danger">
                 	          	<i class="fa fa-trash"></i>
                     	    	</a>
@@ -96,9 +113,10 @@ content %}
 								<th>Désignation</th>
 								<th>Description</th>
 								<th>Prix Old</th>
-								{# <th>New Prix</th> #}
-								<th>Images Produit</th>
-								<th style="border-right: 1px solid #d5dfea">Action</th>
+								<th>New Prix</th> 
+								<th>Qte en Stock</th>
+								<th>type</th>
+								<th ></th>
 							</tr>
 						</tfoot>
 					</table>

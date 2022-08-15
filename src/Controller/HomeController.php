@@ -11,6 +11,7 @@ use App\Entity\Produit;
 use App\Entity\Reduction;
 use Doctrine\ORM\Mapping\Id;
 use App\Entity\SousCategorie;
+use App\Repository\AttributRepository;
 use App\Repository\FeadBackRepository;
 use App\Repository\UserRepository;
 use App\Repository\PanierRepository;
@@ -72,6 +73,7 @@ class HomeController extends AbstractController
     #[Route('/checkout/{id}/{slug}', name: 'app_checkout', methods: ['GET'])]
     public function checkout(User $user,$slug,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
     {
+        // dd($slug);
         $panier = $panierRepository->findOneBy(['user' => $user]);
         $panier_produit = $panierRepository->find_produit_panier($panier->getId());
         $vals = [];
@@ -87,11 +89,12 @@ class HomeController extends AbstractController
         // dd($vals);
         $produits = $produitRepository->findBy(['id' => $vals]);
 
+        
         return $this->render('frontend/checkout.html.twig', [
             'panier_produits' => $obj,
             'produits' => $produits,
             'length' => $length,
-            'total'=> $slug
+            'Montant' => $slug
         ]);
     }
 
@@ -136,7 +139,7 @@ class HomeController extends AbstractController
 
 
     #[Route('/panier_infos/{id}', name: 'app_panier_infos', methods: ['GET'])]
-    public function panier_infos(User $user, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
+    public function panier_infos(User $user, AttributRepository $attributRepository,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
     {
 
 
@@ -171,12 +174,27 @@ class HomeController extends AbstractController
         }
         // dd($vals);
         $produits = $produitRepository->findBy(['id' => $vals]);
+        // $obj1=json_encode($obj);
+        // dd($obj[0]->variations);
+       
+        // foreach($obj1 as $val){
+        //     $val->variations=str_replace("[\"","",$val->variations);
+        //     $val->variations=str_replace("\"]","",$val->variations);
+        //     $val->variations=str_replace("\"","",$val->variations);
+        //     $val->variations=explode(',',$val->variations);
+        // }
+      
+
+
+
+
 
         //  dd($produits);
         return $this->render('frontend/cart.html.twig', [
             'panier_produits' => $obj,
             'produits' => $produits,
-            'length' => $length
+            'length' => $length,
+            'attributs' => $attributRepository->findAll(),
         ]);
     }
 

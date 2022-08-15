@@ -7,18 +7,24 @@ use App\Repository\VariationRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Filter\SoftDeleteable;
 
 #[ORM\Entity(repositoryClass: VariationRepository::class)]
+#[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
 class Variation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read','variation'])]
+    #[Groups(['prod:read','variation','attribut'])]
     private $id;
 
+    #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
+     private $deletedAt;
+
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['prod:read','variation'])]
+    #[Groups(['prod:read','variation','attribut'])]
     private $nom;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -42,15 +48,30 @@ class Variation
     #[Groups(['prod:read'])]
     private $images;
 
+    #[ORM\ManyToMany(targetEntity: Quantite::class, mappedBy: 'variations')]
+    private Collection $quantites;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->quantites = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 
     public function getNom(): ?string
@@ -172,6 +193,33 @@ class Variation
             if ($image->getVariation() === $this) {
                 $image->setVariation(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quantite>
+     */
+    public function getQuantites(): Collection
+    {
+        return $this->quantites;
+    }
+
+    public function addQuantite(Quantite $quantite): self
+    {
+        if (!$this->quantites->contains($quantite)) {
+            $this->quantites[] = $quantite;
+            $quantite->addVariation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuantite(Quantite $quantite): self
+    {
+        if ($this->quantites->removeElement($quantite)) {
+            $quantite->removeVariation($this);
         }
 
         return $this;

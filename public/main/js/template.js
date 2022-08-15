@@ -4,12 +4,39 @@
 //Primary use:	Sunny Admin - Responsive Admin Template
 
 //should be included in all pages. It controls some layout
+let elements_li = document.getElementsByClassName("treeview");
+
+for (let li_element of elements_li) {
+  li_element.addEventListener("click", function () {
+    console.log("dd");
+    li_element.classList.add("active");
+    for (let li_element_other of elements_li) {
+      if (li_element_other != li_element) {
+        li_element_other.classList.remove("active");
+      }
+    }
+    // let childelem = document.querySelector(li_element + " > li ");
+
+    // for (element_child of li_element.childNodes) {
+    //   element_child.addEventListener("");
+    // }
+  });
+}
+
+let dashboard = document.getElementById("dashboard");
+dashboard.addEventListener("click", function () {
+  window.location.href = "http://127.0.0.1:8000/admin";
+});
+// for( li_element_child of elements_li.children ){
+
+// }
 
 let f = document.getElementById("message");
-setTimeout(function () {
-  document.getElementById("message").innerHTML = "";
-}, 5000);
-
+if (f) {
+  setTimeout(function () {
+    document.getElementById("message").innerHTML = "";
+  }, 5000);
+}
 // let x = document.getElementById("active");
 // let y = document.getElementById("pactive");
 

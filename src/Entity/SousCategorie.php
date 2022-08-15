@@ -2,20 +2,29 @@
 
 namespace App\Entity;
 
-use App\Repository\SousCategorieRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use App\Repository\SousCategorieRepository;
+use Doctrine\Common\Collections\Collection;
+use Gedmo\SoftDeleteable\Filter\SoftDeleteable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SousCategorieRepository::class)]
+#[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
 class SousCategorie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['souscategorie:read'])]
     private $id;
 
+    #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
+    private $deletedAt;
+
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['souscategorie:read'])]
     private $titre;
 
     #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'sousCategories')]
@@ -42,6 +51,16 @@ class SousCategorie
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 
     public function getTitre(): ?string

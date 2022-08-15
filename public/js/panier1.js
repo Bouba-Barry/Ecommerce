@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "http://127.0.0.1:8000/checkout/" +
       parseInt(user_id.innerHTML) +
       "/" +
-      total.innerHTML;
+      total.innerHTML.replace("DH", "");
   });
 
   for (let i = 0; i < valprogress.length - 1; i++) {
@@ -118,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
           ""
         );
         variations = variations.replace('"]', "");
+        noti.innerHTML = Number(noti.innerHTML) + 1;
 
         variations = variations.replace('"', "");
         variations = variations.replace('"', "");
@@ -171,13 +172,13 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       function update_total_par_produit(data) {
-        console.log(valprogress[i].value);
-        let length = 0;
-        for (let j = 0; j < valprogress.length; j++) {
-          length = length + parseInt(valprogress[j].value);
-        }
-        console.log(length);
-        panier.innerHTML = length;
+        // console.log(valprogress[i].value);
+        // let length = 0;
+        // for (let j = 0; j < valprogress.length; j++) {
+        //   length = length + parseInt(valprogress[j].value);
+        // }
+        // console.log(length);
+        // panier.innerHTML = length;
         let somme =
           parseInt(valprogress[i].value) *
           parseInt(prix[i].innerHTML.replace("DH", ""));

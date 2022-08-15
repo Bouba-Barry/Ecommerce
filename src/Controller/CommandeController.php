@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Commande;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
+use App\Repository\VilleRepository;
 use Doctrine\Common\Collections\Expr\Value;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +36,7 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_commande_new')]
-    public function new(Request $request, SerializerInterface $serializer, CommandeRepository $commandeRepository): Response
+    public function new(Request $request, SerializerInterface $serializer,VilleRepository $villeRepository ,CommandeRepository $commandeRepository): Response
     {
         $commande = new Commande();
         $user = $this->getUser();
@@ -46,11 +47,17 @@ class CommandeController extends AbstractController
         if ($_POST) {
             // dd("its ok");
             $adresse = $request->get('other_adresse');
+            $ville=$request->get("ville");
+            
             $payment = $request->get('choice', 0)[0];
             if ($adresse && strlen($adresse) > 0) {
                 $commande->setAdresseLivraison($adresse);
             } else {
                 $commande->setAdresseLivraison($request->get('adresse'));
+            }
+            if($ville && strlen($ville) > 0){
+                $commande->setVille($villeRepository->find($ville));
+       
             }
 
             // dd($payment);

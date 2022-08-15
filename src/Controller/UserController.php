@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\EditUserType;
 use App\Form\AdminProfileType;
 use App\Form\EditPasswordType;
-use App\Form\EditUserType;
 use App\Repository\UserRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Null_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Role\Role;
@@ -24,12 +26,61 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, ManagerRegistry $doctrine): Response
     {
+        // $em=$doctrine->getManager();
+        // $em->getFilters()->disable('softdeleteable');
+       
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
     }
+    #[Route('/corbeille', name: 'app_user_corbeille', methods: ['GET'])]
+    public function corbeille(UserRepository $userRepository, ManagerRegistry $doctrine): Response
+    {
+        $em=$doctrine->getManager();
+        $em->getFilters()->disable('softdeleteable');
+        
+        $users=$userRepository->findcorbeille();
+        
+
+        return $this->render('user/corbeille.html.twig', [
+            'users' => $users
+        ]);
+    }
+
+    #[Route('/restore/{id}', name: 'app_user_restore', methods: ['GET'])]
+    public function restore($id,UserRepository $userRepository, ManagerRegistry $doctrine): Response
+    {
+        $em=$doctrine->getManager();
+       
+         $em->getFilters()->disable('softdeleteable');
+         $user=$userRepository->find($id);
+        $user->setDeletedAt(Null);
+        $em->persist($user);
+        $em->flush();        
+        $users=$userRepository->findcorbeille();
+        return $this->render('user/corbeille.html.twig', [
+            'users' => $users
+        ]);
+    }
+
+    #[Route('/delete_from_corbeille/{id}', name: 'app_user_delete_fromcorbeille', methods: ['GET'])]
+    public function deleteforce($id,UserRepository $userRepository, ManagerRegistry $doctrine): Response
+    {
+        $em=$doctrine->getManager();
+       
+         $em->getFilters()->disable('softdeleteable');
+         $user=$userRepository->find($id);
+         $userRepository->deletefromtrash($id);
+             
+        $users=$userRepository->findcorbeille();
+        return $this->render('user/corbeille.html.twig', [
+            'users' => $users
+        ]);
+    }
+
+
 
     #[Route('/profile', name: 'app_user_profile')]
     public function profile(Request $request, SluggerInterface $slugger, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response

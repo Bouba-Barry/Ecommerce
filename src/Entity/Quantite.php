@@ -17,7 +17,7 @@ class Quantite
     #[ORM\ManyToOne(inversedBy: 'quantites')]
     private ?Produit $produit = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
+    #[ORM\Column(type: Types::BIGINT,nullable:true)]
     private ?string $qte_stock = null;
 
     #[ORM\Column]

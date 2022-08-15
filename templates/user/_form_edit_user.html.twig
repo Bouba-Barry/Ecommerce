@@ -3,7 +3,7 @@
                   <br>
                   <div class="row">
                     <div class="col-md-6">
-                      {{form_errors(form.email)}}
+                   
                       <div class="form-group">
                         <label for="firstName5">Email :</label>
                         {#
@@ -13,6 +13,7 @@
                       </div>
                     </div>
                     <div class="col-md-6">
+                      {{form_errors(form.nom)}}
                       <div class="form-group">
                         <label for="lastName1">Nom :</label>
                         {#
@@ -79,7 +80,23 @@
                         {{ form_row(form.roles) }}
                       </div>
                     </div> 
+                    <div class="col-md-6">
+                    <div class="form-group">
+                      <div >
+                        {{ form_errors(form.ville) }}
+                        <div class="form-group">
+                          <label >Ville :</label>
+                          {{ form_row(form.ville) }}
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
                   
+
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6"></div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <br><br>
@@ -89,7 +106,8 @@
                           {{ button_label|default('Save') }}
                       </div>
                     </div>
-                    </div>
+                  </div>
+                    
                     {{ form_end(form) }}
                
                  

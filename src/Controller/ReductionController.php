@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Reduction;
 use App\Form\ReductionType;
 use App\Repository\ReductionRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 #[Security("is_granted('ROLE_ADMIN')")]
@@ -23,6 +24,62 @@ class ReductionController extends AbstractController
             'reductions' => $reductionRepository->findAll(),
         ]);
     }
+
+
+
+    #[Route('/corbeille', name: 'app_reduction_corbeille', methods: ['GET'])]
+    public function corbeille(ReductionRepository $reductionRepository, ManagerRegistry $doctrine): Response
+    {
+        $em=$doctrine->getManager();
+        $em->getFilters()->disable('softdeleteable');
+        
+        $reductions=$reductionRepository->findcorbeille();
+        
+
+        return $this->render('reduction/corbeille.html.twig', [
+            'reductions' => $reductions
+        ]);
+    }
+
+    #[Route('/restore/{id}', name: 'app_reduction_restore', methods: ['GET'])]
+    public function restore($id,ReductionRepository $reductionRepository, ManagerRegistry $doctrine): Response
+    {
+        $em=$doctrine->getManager();
+        $em->getFilters()->disable('softdeleteable');
+        $reduction=$reductionRepository->find($id);
+        $reduction->setDeletedAt(Null);
+        $em->persist($reduction);
+        $em->flush();        
+        $reductions=$reductionRepository->findcorbeille();
+        return $this->render('reduction/corbeille.html.twig', [
+            'reductions' => $reductions
+        ]);
+    }
+
+    #[Route('/delete_from_corbeille/{id}', name: 'app_reduction_delete_fromcorbeille', methods: ['GET'])]
+    public function deleteforce($id,ReductionRepository $reductionRepository, ManagerRegistry $doctrine): Response
+    {
+        $em=$doctrine->getManager();
+       
+        //  $em->getFilters()->disable('softdeleteable');
+        //  $user=$userRepository->find($id);
+         $reductionRepository->deletefromtrash($id);
+             
+        $reductions=$reductionRepository->findcorbeille();
+        return $this->render('reduction/corbeille.html.twig', [
+            'reductions' => $reductions
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
 
     #[Route('/new', name: 'app_reduction_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ReductionRepository $reductionRepository): Response

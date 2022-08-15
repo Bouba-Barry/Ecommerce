@@ -17,17 +17,19 @@ content %}
 					<div class="mr-auto">
 						<h3 class="page-title">Les Images</h3>
 						<div class="d-inline-block align-items-center">
-							<nav>
+							
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item">
-										<a href="#">
-											<i class="mdi mdi-home-outline"></i>
-										</a>
-									</li>
-									{# <li class="breadcrumb-item" aria-current="page"></li> #}
-									<li class="breadcrumb-item" aria-current="page"></li>
+									<li>
+										<a
+										  href="{{
+											path('app_quantite_index_variable', { id: produit.id })
+										  }}"
+										  class="btn btn-primary btn-md"
+										  >Retour</a
+										>
+									  </li>
 								</ol>
-							</nav>
+							
 						</div>
 					</div>
 				</div>
@@ -41,14 +43,10 @@ content %}
 					<div class="col-12">
 
 						<div class="box">
-							<div class="box-header with-border">
-								<h3 class="box-title">Parcourir les Images
-								</h3>
-							</div>
+							
 							<!-- /.box-header -->
 							<div class="box-body">
 								<div class="table-responsive">
-									<a class="btn btn-primary btn-md mb-15" href="{{ path('app_image_new') }}">Ajouter Image</a>
 									<table id="example5" class="table table-bordered table-striped" style="width:100%">
 										<thead>
 											<tr>

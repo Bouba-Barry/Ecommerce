@@ -1,13 +1,144 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %} {# {% block title %}Ajouter Produit{% endblock
+%} #} {% block content %}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-{% block title %}Edit Variation{% endblock %}
+<!-- Content Wrapper. Contains page content -->
 
-{% block body %}
-    <h1>Edit Variation</h1>
+<div class="content-wrapper">
+  <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('variation') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="page-title">Modificarion d Une Variation</h3>
+          <div class="d-inline-block align-items-center">
+            <nav>
+              <ol class="breadcrumb">
+                {#
+                <li class="breadcrumb-item">
+                  <a href="#"><i class="mdi mdi-home-outline"></i></a>
+                </li>
+                #} {#
+                <li class="breadcrumb-item" aria-current="page">Forms</li>
+                #}
+                <li>
+                  <a
+                    href="{{
+                      path('app_variation_index_attribut', { id: attribut.id })
+                    }}"
+                    class="btn btn-primary btn-md"
+                    >Retour</a
+                  >
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    {{ include('variation/_form.html.twig', {'button_label': 'Update'},  { action: path("app_variation_edit", { id: variation.id }) }) }}
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            {#
+            <div class="box-header">
+              <h4 class="box-title">Type options</h4>
+            </div>
+            #}
+            <div class="box-body">
+              <div class="form-group row">
+                <label class="col-form-label col-md-2">Nom</label>
+                <div class="mb-3 col-md-10">
+                  {#
+                  <input class="form-control" type="datetime" name="datetime" />
+                  #}
 
-    <a href="{{ path('app_variation_index') }}">back to list</a>
+                  {{ form_row(form.nom) }}
 
-    {{ include('variation/_delete_form.html.twig') }}
+                  {#
+                  <span class="form-text text-muted">{{
+                    form_errors(form)
+                  }}</span>
+                  #}
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-form-label col-md-2">Code</label>
+                <div class="mb-3 col-md-10">
+                  {#
+                  <input class="form-control" type="datetime" name="datetime" />
+                  #}
+
+                  {{ form_row(form.code) }}
+
+                  {#
+                  <span class="form-text text-muted">{{
+                    form_errors(form)
+                  }}</span>
+                  #}
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-form-label col-md-2">Attribut</label>
+                <div class="mb-3 col-md-10">
+                  {#
+                  <input class="form-control" type="datetime" name="datetime" />
+                  #}
+
+                  {{ form_row(form.attribut) }}
+
+                  {#
+                  <span class="form-text text-muted">{{
+                    form_errors(form)
+                  }}</span>
+                  #}
+                </div>
+              </div>
+
+              {#
+              <div class="form-group row">
+                <label class="col-form-label col-md-2">produits Reliée</label>
+                <div class="mb-3 col-md-10">
+                  {#
+                  <input class="form-control" type="datetime" name="datetime" />
+                  {{ form_row(form.produits) }}
+
+                  {#
+                  <span class="form-text text-muted">{{
+                    form_errors(form)
+                  }}</span>
+                </div>
+              </div>
+              #}
+
+              <div class="mb-3 col-12">
+                <button class="btn btn-info btn-rounded margin-top-10">
+                  {{ button_label|default('Modifier') }}
+                </button>
+              </div>
+            </div>
+
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- ./col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- /.content-wrapper -->
 {% endblock %}

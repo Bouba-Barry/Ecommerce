@@ -8,8 +8,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Filter\SoftDeleteable;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
+#[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
 class Produit
 {
     #[ORM\Id]
@@ -18,6 +21,8 @@ class Produit
     #[Groups(['prod:read','prod:check'])]
     private $id;
 
+    #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
+    private $deletedAt;
 
 
     #[Assert\Length(
@@ -101,6 +106,12 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Quantite::class)]
     private Collection $quantites;
 
+    #[ORM\Column(length: 2000, nullable: true)]
+    private ?string $description_detaille = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable('now');
@@ -121,6 +132,18 @@ class Produit
     {
         return $this->id;
     }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
+
+
 
     public function getDesignation(): ?string
     {
@@ -480,6 +503,30 @@ class Produit
                 $quantite->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescriptionDetaille(): ?string
+    {
+        return $this->description_detaille;
+    }
+
+    public function setDescriptionDetaille(?string $description_detaille): self
+    {
+        $this->description_detaille = $description_detaille;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

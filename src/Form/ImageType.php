@@ -56,15 +56,14 @@ class ImageType extends AbstractType
                 'label' => false,
                 'attr' => ['placeholder' => 'Variation associé', 'class' => 'form-control']
             ])
-            ->add('qte_stock', NumberType::class, [
-                'attr' => ['placeholder' => 'quantite', 'class' => 'form-control']
-            ]);
+           ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Image::class,
+            'csrf_protection' => false,
         ]);
     }
 }

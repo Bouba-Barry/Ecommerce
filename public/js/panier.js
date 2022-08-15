@@ -25,7 +25,10 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("le i : " + i);
 
       let vals = [];
-      vals.push(search[i].id.charAt(search[i].id.length - 1));
+      let matches = search[i].id.match(/(\d+)/);
+      vals.push(matches[0]);
+
+      // vals.push(search[i].id.charAt(search[i].id.length - 1));
       console.log("search id: " + search[i].id);
 
       fetch(`http://127.0.0.1:8000/getProduit/${vals}`)

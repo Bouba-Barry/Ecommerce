@@ -8,21 +8,25 @@
     <div class="content-header">
       <div class="d-flex align-items-center">
         <div class="mr-auto">
-          <h3 class="page-title">Reduction</h3>
+          <h3 class="page-title">Liste Reductions</h3>
           <div class="d-inline-block align-items-center">
-            <nav>
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                  <a href="#"><i class="mdi mdi-home-outline"></i></a>
-                </li>
-                {#
-                <li class="breadcrumb-item" aria-current="page"></li>
-                #}
-                <li class="breadcrumb-item" aria-current="page"></li>
-              </ol>
-            </nav>
+            <ol class="breadcrumb">
+              <li>
+                <a
+                  href="{{ path('app_reduction_new') }}"
+                  class="btn btn-primary btn-md"
+                  >Ajouter Reduction</a
+                >
+              </li>
+            </ol>
           </div>
         </div>
+        <a
+          href="{{ path('app_reduction_corbeille') }}"
+          style="font-size: 20px; color: blue"
+          >Corbeille
+          <i class="fa-solid fa-trash" style="font-size: 25px"></i>
+        </a>
       </div>
     </div>
 
@@ -31,17 +35,9 @@
       <div class="row">
         <div class="col-12">
           <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Parcourir Les Reductions</h3>
-            </div>
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <a
-                  class="btn btn-primary mb-15"
-                  href="{{ path('app_reduction_new') }}"
-                  >Ajouter Reduction</a
-                >
                 <table
                   id="example5"
                   class="table table-bordered table-striped"
@@ -56,7 +52,6 @@
                       <th>Produits Associés</th>
 
                       <th class="col-3">Action</th>
-                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -113,7 +108,9 @@
                       <th>Designation</th>
                       <th>Pourcentage</th>
                       <th>Periode</th>
-                      <th>Produits Associés</th>
+                      <th style="border-right: 1px solid #d5dfea">
+                        Produits Associés
+                      </th>
                     </tr>
                   </tfoot>
                 </table>

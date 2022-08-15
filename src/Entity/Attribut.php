@@ -8,8 +8,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Filter\SoftDeleteable;
 
 #[ORM\Entity(repositoryClass: AttributRepository::class)]
+#[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
 class Attribut
 {
     #[ORM\Id]
@@ -18,19 +21,19 @@ class Attribut
     #[Groups(['prod:read','variation'])]
     private $id;
 
+    #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
+     private $deletedAt;
+
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['prod:read','variation'])]
     #[Assert\Length(
         min: 3,
         minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
     )]
-    #[Assert\Unique(
-        message: "La designation de l'attribut existe déjà"
-    )]
     private $nom;
 
     #[ORM\OneToMany(mappedBy: 'attribut', targetEntity: Variation::class)]
-    #[Groups(['prod:read'])]
+    #[Groups(['prod:read','attribut'])]
     private $variations;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
@@ -55,6 +58,16 @@ class Attribut
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 
     public function getNom(): ?string

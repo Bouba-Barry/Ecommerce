@@ -50,6 +50,31 @@ class ReductionRepository extends ServiceEntityRepository
 
     }
 
+
+
+    public function findcorbeille()
+    {
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->where("r.deletedAt is not NULL");
+            
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function deletefromtrash($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        DELETE FROM reduction
+        WHERE  id=:id
+        ";
+        $stmt = $conn->prepare($sql);
+        $stmt->executeQuery(['id'=>$id]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return true;
+    }
+
 //    /**
 //     * @return Reduction[] Returns an array of Reduction objects
 //     */

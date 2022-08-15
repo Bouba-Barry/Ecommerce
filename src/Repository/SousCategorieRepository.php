@@ -30,6 +30,31 @@ class SousCategorieRepository extends ServiceEntityRepository
         }
     }
 
+
+
+    public function findcorbeille()
+    {
+        $queryBuilder = $this->createQueryBuilder('s')
+            ->where("s.deletedAt is not NULL");
+            
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function deletefromtrash($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        DELETE FROM sous_categorie 
+        WHERE  id=:id
+        ";
+        $stmt = $conn->prepare($sql);
+        $stmt->executeQuery(['id'=>$id]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return true;
+    }
+
     public function remove(SousCategorie $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

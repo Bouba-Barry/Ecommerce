@@ -1,0 +1,7 @@
+{{
+  include(
+    "produit/_form_variable_edit.html.twig",
+    { button_label: "Update" },
+    { action: path("app_produit_edit_variable", { id: produit.id }) }
+  )
+}}

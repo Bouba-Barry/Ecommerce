@@ -39,6 +39,31 @@ class AttributRepository extends ServiceEntityRepository
         }
     }
 
+
+
+    public function findcorbeille()
+    {
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->where("a.deletedAt is not NULL");
+            
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function deletefromtrash($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        DELETE FROM attribut
+        WHERE  id=:id
+        ";
+        $stmt = $conn->prepare($sql);
+        $stmt->executeQuery(['id'=>$id]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return true;
+    }
+
 //    /**
 //     * @return Attribut[] Returns an array of Attribut objects
 //     */

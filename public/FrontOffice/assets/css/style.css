@@ -2948,7 +2948,7 @@ Department Area CSS
 Why Choose Area CSS
 =================================================*/
 .why-choose-area {
-  background-image: url(../../assets/img/why-choose-bg.jpg);
+  background-image: url(../../assets/img/home1.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -2956,7 +2956,7 @@ Why Choose Area CSS
 }
 
 .why-choose-area.choose-item-two {
-  background-image: url(../../assets/img/why-choose-bg-2.jpg);
+  background-image: url(../../assets/img/home2.jpg);
 }
 
 .why-choose-area.choose-item-two .why-choose-item {
@@ -3308,7 +3308,7 @@ Featured Products Area CSS
 Testimonial Area CSS
 =================================================*/
 .testimonial-area {
-  background-image: url(../../assets/img/testimonial-bg.jpg);
+  background-image: url(../../assets/img/home2.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -4710,7 +4710,7 @@ Page Banner CSS
 .page-banner-area {
   position: relative;
   z-index: 1;
-  background-image: url(../../assets/img/page-banner/page-banner-1.jpg);
+  background-image: url(../../assets/img/back.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -4738,7 +4738,7 @@ Page Banner CSS
 }
 
 .page-banner-area.item-bg2 {
-  background-image: url(../../assets/img/page-banner/page-banner-3.jpg);
+  background-image: url(../../assets/img/back.jpg);
 }
 
 .page-banner-area.item-bg3 {

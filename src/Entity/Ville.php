@@ -29,9 +29,13 @@ class Ville
     #[ORM\OneToMany(mappedBy: 'ville', targetEntity: User::class)]
     private Collection $users;
 
+    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Commande::class)]
+    private Collection $commandes;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,6 +91,36 @@ class Ville
             // set the owning side to null (unless already changed)
             if ($user->getVille() === $this) {
                 $user->setVille(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setVille($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getVille() === $this) {
+                $commande->setVille(null);
             }
         }
 

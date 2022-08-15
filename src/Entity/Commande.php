@@ -46,6 +46,9 @@ class Commande
     #[Groups(['cmd:read'])]
     private $update_at;
 
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    private ?Ville $ville = null;
+
     public function __construct()
     {
         $this->create_at = new \DateTimeImmutable('now');
@@ -159,6 +162,18 @@ class Commande
     public function setUpdateAt(?\DateTimeImmutable $update_at): self
     {
         $this->update_at = $update_at;
+
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }

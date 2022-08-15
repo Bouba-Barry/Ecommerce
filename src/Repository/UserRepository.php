@@ -115,6 +115,35 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $resultSet->fetchAllAssociative();
     }
 
+
+    public function findcorbeille()
+    {
+        $queryBuilder = $this->createQueryBuilder('u')
+            ->where("u.deletedAt is not NULL");
+            
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+   
+    
+
+    public function deletefromtrash($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        DELETE FROM user 
+        WHERE  id=:id
+        ";
+        $stmt = $conn->prepare($sql);
+        $stmt->executeQuery(['id'=>$id]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return true;
+    }
+
+
+
     public function findByAdmin($role)
     {
         $queryBuilder = $this->createQueryBuilder('u')

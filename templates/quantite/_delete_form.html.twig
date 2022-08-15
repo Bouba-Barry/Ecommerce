@@ -1,6 +1,11 @@
 <form
   method="post"
-  action="{{ path('app_quantite_delete', { id: quantite.id }) }}"
+  action="{{
+    path('app_quantite_delete', {
+      id: quantite.id,
+      slug: quantite.getProduit().id
+    })
+  }}"
   onsubmit="return confirm('Are you sure you want to delete this item?');"
 >
   <input

@@ -704,7 +704,99 @@
                     </div>
                   </div>
                   <!-- /.post Activity -->
-                  {% for produit in user.produits %}
+                  {% for produit in user.produits %} {% if
+                  produit.getUpdateAt()!= NULL %}
+                  <div class="col-md-12 col-12">
+                    <div class="box box-solid box-inverse box-info">
+                      <div class="box-header with-border">
+                        <a class="avatar" href="#" title="vous"
+                          ><img
+                            src="{{asset('uploads/users/' ~ user.profile )}}"
+                            alt=""
+                        /></a>
+                        <h4 class="box-title">
+                          Modification d un <strong> Produit</strong>
+                        </h4>
+                        <ul class="box-controls pull-right">
+                          <li class="dropdown">
+                            <a data-toggle="dropdown" href="#"
+                              ><i class="ti-more-alt rotate-90"></i
+                            ></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#"
+                                ><i class="ti-import"></i> Import</a
+                              >
+                              <a class="dropdown-item" href="#"
+                                ><i class="ti-export"></i> Export</a
+                              >
+                              <a class="dropdown-item" href="#"
+                                ><i class="ti-printer"></i> Print</a
+                              >
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="#"
+                                ><i class="ti-settings"></i> Settings</a
+                              >
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="box-body">
+                        {# <label>Other icon suggestions</label> #} {#
+                        <p>
+                          <span class="pr-1"><i class="ti-settings"></i></span>
+                          <span><i class="ti-menu"></i></span>
+                        </p>
+                        #}
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div>
+                              <i class="fa-solid fa-clock"></i>
+                              {% set difference =
+                              date("now").diff(date(produit.getUpdateAt())) %}
+
+                              <strong
+                                ><span class="description"
+                                  >{{ difference.days }}Jours ago
+                                  <strong>
+                                    le
+                                    {{ produit.getUpdateAt()|date('Y-m-d') }}</strong
+                                  ></span
+                                ></strong
+                              >
+                            </div>
+                            <a class="avatar" href="#" title="vous"
+                              ><img
+                                style="font-size: 90px"
+                                src="{{ asset('uploads/produits/' ~ produit.getImageProduit() )  }}"
+                                alt=""
+                            /></a>
+
+                            <p>
+                              <strong>Designation : </strong
+                              >{{ produit.getDesignation() }}
+                            </p>
+                            <p>
+                              <strong>Prix : </strong
+                              >{{ produit.getAncienPrix() }} DH
+                            </p>
+                          </div>
+                          <div class="col-md-6">
+                            <a
+                              class="btn btn-app btn-info"
+                              href="{{
+                                path('app_produit_show', { id: produit.id })
+                              }}"
+                            >
+                              <i class="fa fa-edit"></i> Edit
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+
                   <div class="col-md-12 col-12">
                     <div class="box box-solid box-inverse box-info">
                       <div class="box-header with-border">
@@ -751,9 +843,16 @@
                           <div class="col-md-6">
                             <div>
                               <i class="fa-solid fa-clock"></i>
+                              {% set difference =
+                              date("now").diff(date(produit.getCreateAt())) %}
+
                               <strong
                                 ><span class="description"
-                                  >5 minutes ago</span
+                                  >{{ difference.days }}Jours ago
+                                  <strong>
+                                    le
+                                    {{ produit.getCreateAt()|date('Y-m-d') }}</strong
+                                  ></span
                                 ></strong
                               >
                             </div>
@@ -777,7 +876,7 @@
                             <a
                               class="btn btn-app btn-info"
                               href="{{
-                                path('app_user_show', { id: user.id })
+                                path('app_produit_show', { id: produit.id })
                               }}"
                             >
                               <i class="fa fa-edit"></i> Edit

@@ -3,18 +3,20 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Ville;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Validator\Constraints\File;
 
 class EditUserType extends AbstractType
 {
@@ -32,6 +34,12 @@ class EditUserType extends AbstractType
                 'expanded' => true,
                 'label'   => false
             ], array('attr' => ['class' => 'form-control']))
+            ->add('ville', EntityType::class,
+            [
+                'class' => Ville::class,
+                'choice_label' => 'nom_ville',
+                'label' => false,
+                'attr' => ['placeholder' => 'Produit concerner' , 'class' => 'form-control']])
             ->add('nom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Nom', 'class' => 'form-control']))
             ->add('prenom', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Prenom', 'class' => 'form-control']))
             ->add('adresse', TextType::class, array('label'   => false, 'attr' => ['placeholder' => 'Adresse', 'class' => 'form-control']))

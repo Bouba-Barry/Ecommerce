@@ -14,6 +14,7 @@ class AttributType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, array('label' => false, 'attr' => ['placeholder' => 'Nom Attribut', 'class' => 'form-control']));
+            
     }
 
     public function configureOptions(OptionsResolver $resolver): void

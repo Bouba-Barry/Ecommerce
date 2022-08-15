@@ -8,17 +8,27 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Filter\SoftDeleteable;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+/**
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ */
 #[ORM\Table(name: '`user`')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
+
+    #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
+    private $deletedAt;
 
     #[Assert\Email(
         message: 'The email {{ value }} is not a valid email.',
@@ -112,6 +122,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
     public function getEmail(): ?string
     {
         return $this->email;

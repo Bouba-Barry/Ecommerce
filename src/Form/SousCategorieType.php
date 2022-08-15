@@ -27,6 +27,8 @@ class SousCategorieType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => SousCategorie::class,
+            'csrf_protection' => false,
+
         ]);
     }
 }

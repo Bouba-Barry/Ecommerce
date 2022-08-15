@@ -26,8 +26,7 @@ class Image
     #[ORM\ManyToOne(targetEntity: Variation::class, inversedBy: 'images')]
     private $variation;
 
-    #[ORM\Column(type: Types::BIGINT)]
-    private ?string $qte_stock = null;
+    
 
    
 
@@ -72,17 +71,7 @@ class Image
         return $this;
     }
 
-    public function getQteStock(): ?string
-    {
-        return $this->qte_stock;
-    }
-
-    public function setQteStock(string $qte_stock): self
-    {
-        $this->qte_stock = $qte_stock;
-
-        return $this;
-    }
+   
 
  
 }
