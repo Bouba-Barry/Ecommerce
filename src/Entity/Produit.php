@@ -18,7 +18,7 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read','prod:check'])]
+    #[Groups(['prod:read', 'prod:check'])]
     private $id;
 
     #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
@@ -26,7 +26,7 @@ class Produit
 
 
     #[Assert\Length(
-        min: 3,
+        min: 1,
         minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
     )]
 
@@ -34,7 +34,7 @@ class Produit
     #[Groups(['prod:read'])]
     private $designation;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['prod:read'])]
     private $description;
 
@@ -43,7 +43,7 @@ class Produit
     #[Groups(['prod:read'])]
     private $ancien_prix;
 
-    // #[Assert\GreaterThan(1)]
+
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['prod:read'])]
     private $nouveau_prix;
@@ -52,7 +52,11 @@ class Produit
     #[Groups(['prod:read'])]
     private $image_produit;
 
-    // #[Assert\Positive]
+
+    #[Assert\GreaterThanOrEqual(
+        value: 1,
+        message: 'la quantite doit être plus grand que 0'
+    )]
     #[ORM\Column(type: 'bigint')]
     #[Groups(['prod:read'])]
     private $qte_stock;
@@ -66,7 +70,7 @@ class Produit
     private $sous_categorie;
 
     #[ORM\ManyToMany(targetEntity: Reduction::class, inversedBy: 'produits')]
-    #[Groups(['prod:read','prod:check'])]
+    #[Groups(['prod:read', 'prod:check'])]
     private $reduction;
 
     #[ORM\ManyToMany(targetEntity: Variation::class, inversedBy: 'produits')]

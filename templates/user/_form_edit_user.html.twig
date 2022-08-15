@@ -6,19 +6,17 @@
                    
                       <div class="form-group">
                         <label for="firstName5">Email :</label>
-                        {#
-                        <input type="text" class="form-control" id="firstName5" />
-                        #}
                         {{ form_row(form.email) }}
+                        <span class="form-text text-muted">{{ form_errors(form.email) }}</span>
                       </div>
                     </div>
                     <div class="col-md-6">
                       {{form_errors(form.nom)}}
                       <div class="form-group">
                         <label for="lastName1">Nom :</label>
-                        {#
-                        <input type="text" class="form-control" id="lastName1" /> #}
+                        
                         {{ form_row(form.nom) }}
+                      <span class="form-text text-muted">{{ form_errors(form.nom) }}</span>
                       </div>
                     </div>
                   </div>
@@ -26,54 +24,42 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="emailAddress1">Prenom :</label>
-                        {#
-                        <input
-                          type="email"
-                          class="form-control"
-                          id="emailAddress1"
-                        />
-                        #}
                         {{ form_row(form.prenom) }}
+                      <span class="form-text text-muted">{{ form_errors(form.prenom) }}</span>              
                       </div>
                     </div>
                     <div class="col-md-6">
-                      {{form_errors(form.telephone)}}
+                      {# {{form_errors(form.telephone)}} #}
                       <div class="form-group">
                         <label for="phoneNumber1">Telephone :</label>
-                        {#
-                        <input type="tel" class="form-control" id="phoneNumber1" />
-                        #}
                         {{ form_row(form.telephone) }}
+                              <span class="form-text text-muted">{{ form_errors(form.telephone) }}</span>
                       </div>
                     </div>
                   </div>
                   <div class="row">
                    
                     <div class="col-md-6">
-                      {{ form_errors(form.adresse) }}
+                      {# {{ form_errors(form.adresse) }} #}
                       <div class="form-group">
                         <label for="addressline1">Address :</label>
-                        {#
-                        <input type="text" class="form-control" id="addressline1" />
-                        #}
                         {{ form_row(form.adresse) }}
+                            <span class="form-text text-muted">{{ form_errors(form.adresse) }}</span>
                       </div>
                     </div>
                     {#  Input des profiles ajouter icic #}
                     <div class="col-md-6">
-                      {{ form_errors(form.profile) }}
+                      {# {{ form_errors(form.profile) }} #}
                       <div class="form-group">
                         <label for="addressline1">Modifier la photo</label>
-                        {#
-                        <input type="text" class="form-control" id="addressline1" />
-                        #}
                         {{ form_row(form.profile) }}
+                        <span class="form-text text-muted">{{ form_errors(form.profile) }}</span>
                       </div>
                     </div>
                  </div>
                   <div class="row">
                      <div class="col-md-6">
-                        {{ form_errors(form.roles) }}
+                        {# {{ form_errors(form.roles) }} #}
                       <div class="form-group">
                         <label for="location3">Roles :</label>
            

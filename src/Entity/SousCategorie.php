@@ -40,6 +40,9 @@ class SousCategorie
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $update_at;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $picture = null;
+
 
     public function __construct()
     {
@@ -137,6 +140,18 @@ class SousCategorie
     public function setUpdateAt(?\DateTimeImmutable $update_at): self
     {
         $this->update_at = $update_at;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }

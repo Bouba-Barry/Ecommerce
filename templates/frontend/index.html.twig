@@ -7,11 +7,11 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link
       rel="stylesheet"
       href="{{ asset('FrontOffice/assets/css/bootstrap.min.css') }}"
-    />
-    <!-- Animate CSS -->
+    />    
     <link
       rel="stylesheet"
       href=" {{ asset('FrontOffice/assets/css/animate.min.css') }}"
@@ -172,33 +172,37 @@
               <ul class="navbar-nav">
                 <li class="nav-item">
                   <a href="{{ path('app_home') }}" class="nav-link active">
-                    Home
+                    Accueil
                   </a>
                 </li>
 
                 {% if app.user %}
                 <li class="nav-item">
                   <a href="{{ path('app_client_index') }}" class="nav-link">
-                    Profile
+                  {# <i class="bi bi-person-check-fill"></i> #}
+                  {# <svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"far\" data-icon=\"circle-user\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\" class=\"svg-inline--fa fa-circle-user fa-xl\"><path fill=\"currentColor\" d=\"M256 112c-48.6 0-88 39.4-88 88C168 248.6 207.4 288 256 288s88-39.4 88-88C344 151.4 304.6 112 256 112zM256 240c-22.06 0-40-17.95-40-40C216 177.9 233.9 160 256 160s40 17.94 40 40C296 222.1 278.1 240 256 240zM256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 464c-46.73 0-89.76-15.68-124.5-41.79C148.8 389 182.4 368 220.2 368h71.69c37.75 0 71.31 21.01 88.68 54.21C345.8 448.3 302.7 464 256 464zM416.2 388.5C389.2 346.3 343.2 320 291.8 320H220.2c-51.36 0-97.35 26.25-124.4 68.48C65.96 352.5 48 306.3 48 256c0-114.7 93.31-208 208-208s208 93.31 208 208C464 306.3 446 352.5 416.2 388.5z\" class=\"\"></path></svg> #}
+                  {# <i  class="flaticon2-user"></i> #}
+                  {# <img src="{{ asset('images/other/user.png') }} " alt="user"> #}
                   </a>
                 </li>
                 {% else %}
                 <li class="nav-item">
                   <a href="#" class="nav-link">
-                    Account
+                    {# <i class="bi bi-person-x-fill"></i> #}
+                    Compte
                     <i class="bx bx-chevron-down"></i>
                   </a>
 
                   <ul class="dropdown-menu">
                     <li class="nav-item">
                       <a href="{{ path('app_user_login') }}" class="nav-link">
-                        Login
+                        Connexion
                       </a>
                     </li>
 
                     <li class="nav-item">
                       <a href="{{ path('app_client_new') }}" class="nav-link">
-                        Register
+                        Inscription
                       </a>
                     </li>
                   </ul>
@@ -208,24 +212,26 @@
 
                 <li class="nav-item">
                   <a href="{{ path('app_home_shop') }}" class="nav-link">
-                    Shop List
+                    Boutique
                   </a>
                 </li>
 
-                {% if app.user %}
+               
+
+                <li class="nav-item">
+                  <a href="{{ path('app_contact') }}" class="nav-link"> Contact </a>
+                </li>
+
+                 {% if app.user %}
                 <li class="nav-item">
                   <a
                     href="{{ path('app_wish', { id: app.user.id }) }}"
                     class="nav-link"
                   >
-                    Wish List
+                    <i class="bi bi-heart-fill"></i>
                   </a>
                 </li>
                 {% endif %}
-
-                <li class="nav-item">
-                  <a href="contact.html" class="nav-link"> Contact </a>
-                </li>
               </ul>
 
               <div class="others-options d-flex align-items-center">
@@ -257,7 +263,7 @@
                       type="text"
                       name="searchInput"
                       class="form-control"
-                      placeholder="Search"
+                      placeholder="Produit"
                     />
                     <button type="submit">
                       <i class="flaticon-search"></i>
@@ -320,7 +326,7 @@
                       type="text"
                       name="searchInput"
                       class="form-control"
-                      placeholder="Search"
+                      placeholder="Rechercher Produit"
                     />
                     <button type="submit">
                       <i class="flaticon-search"></i>

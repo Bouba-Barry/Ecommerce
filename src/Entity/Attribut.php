@@ -18,14 +18,14 @@ class Attribut
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read','variation'])]
+    #[Groups(['prod:read', 'variation'])]
     private $id;
 
     #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
      private $deletedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['prod:read','variation'])]
+    #[Groups(['prod:read', 'variation'])]
     #[Assert\Length(
         min: 3,
         minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',

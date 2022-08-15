@@ -64,28 +64,43 @@ class SousCategorieRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return SousCategorie[] Returns an array of SousCategorie objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function findProducts($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
 
-//    public function findOneBySomeField($value): ?SousCategorie
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $sql = "
+        SELECT p.* FROM produit p, sous_categorie s
+        WHERE  s.id = $id and p.sous_categorie_id = s.id
+        ORDER BY p.id DESC
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+    // /**
+    //  * @return Produit[] Returns an array of User objects
+    //  */
+    // public function findBySome($id)
+    // {
+    //     // The ResultSetMapping maps the SQL result to entities
+    //     $rsm = $this->createResultSetMappingBuilder('s');
+
+    //     $rawQuery = sprintf(
+    //         'SELECT %p
+    //     FROM produit p, sous_categorie s 
+    //     WHERE s.id = $id and p.sous_categorie_id = s.id,
+    //         $rsm->generateSelectClause()
+    //     );
+
+    //     $query = $this->getEntityManager()->createNativeQuery($rawQuery, $rsm);
+    //     // $query->setParameter('role', $role);
+    //     $query->setParameter('role', sprintf('"%s"', $role));
+
+    //     return $query->getResult();
+    // }
 }

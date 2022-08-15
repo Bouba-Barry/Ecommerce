@@ -10,6 +10,7 @@ use Gedmo\SoftDeleteable\Filter\SoftDeleteable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 #[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
@@ -27,7 +28,6 @@ class Categorie
 
     #[Assert\NotBlank(message: 'le champ est requis')]
     #[Assert\Length(min: 3, minMessage: 'Au Moins 3 caractères')]
-    // #[Assert\Unique(message: 'La Valeur existe déjà')]
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['categorie:read'])]
     private $titre;

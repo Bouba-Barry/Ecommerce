@@ -40,4 +40,4 @@ const Myintervale = setInterval(() => {
   }
   removeActiveImg();
   img_slider[etape].classList.add("active");
-}, 3000);
+}, 8000);

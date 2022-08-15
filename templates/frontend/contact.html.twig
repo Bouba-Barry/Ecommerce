@@ -1,0 +1,76 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block content %}
+ <section class="contact-area ptb-100">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Ready To Get Started?</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum suspendisse</p>
+                </div>
+
+                <div class="contact-form">
+                    <form  action="{{path('app_contact')}}" method="POST">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>First Name*</label>
+                                    <input type="text" name="name" id="name" class="form-control" required data-error="Please enter your name">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>Last Name*</label>
+                                    <input type="text" name="name" id="name" class="form-control" required data-error="Please enter your name">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>Your Email*</label>
+                                    <input type="email" name="email" id="email" class="form-control" required data-error="Please enter your email">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>Your Phone*</label>
+                                    <input type="text" name="phone_number" id="phone_number" required data-error="Please enter your number" class="form-control">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <label>Your Subject*</label>
+                                    <input type="text" name="msg_subject" id="msg_subject" class="form-control" required data-error="Please enter your subject">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <label>Your Message*</label>
+                                    <textarea name="message" class="form-control" id="message" cols="30" rows="6" required data-error="Write your message"></textarea>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12">
+                                <button type="submit" class="default-btn">
+                                    Send Message
+                                </button>
+
+                                <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- End Contact Area -->
+{% endblock %}

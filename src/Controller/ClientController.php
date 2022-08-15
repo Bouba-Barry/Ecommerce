@@ -10,6 +10,7 @@ use App\Form\ClientType;
 use App\Repository\UserRepository;
 use App\Repository\PanierRepository;
 use App\Repository\WishlistRepository;
+use App\Services\MailerService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
@@ -27,36 +29,38 @@ class ClientController extends AbstractController
 
 
     #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,WishlistRepository $wishlistRepository ,PanierRepository $panierRepository, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request, ManagerRegistry $doctrine, WishlistRepository $wishlistRepository, PanierRepository $panierRepository, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
-        
+
         $user = new User();
-    
+
         $form = $this->createForm(ClientType::class, $user);
         $form->handleRequest($request);
-        
 
 
-        if ($form->isSubmitted() ) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // dd($form);
-            
-            $panier = new Panier();
-            $wish=new Wishlist();
-            $panier->setUser($user);
-            $panierRepository->add($panier);
-            $wish->setUser($user);
-            $wishlistRepository->add($wish);
+
+
 
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $user->getPassword()
             );
 
+
             $user->setPassword($hashedPassword);
             $user->setRoles(['ROLE_USER']);
 
-
             $userRepository->add($user, true);
+
+            $panier = new Panier();
+            $wish = new Wishlist();
+            $panier->setUser($user);
+            $panierRepository->add($panier, true);
+            $wish->setUser($user);
+            $wishlistRepository->add($wish, true);
+
 
             return $this->redirectToRoute('app_user_login', [], Response::HTTP_SEE_OTHER);
         }
@@ -74,30 +78,30 @@ class ClientController extends AbstractController
 
 
         $userlogged = $this->getUser();
-
-        $user = $userRepository->find($userlogged);
-        $form = $this->createForm(ClientType::class, $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user, true);
-
-
-            $hashedPassword = $passwordHasher->hashPassword(
-                $user,
-                $user->getPassword()
-            );
-
-            $user->setPassword($hashedPassword);
-            return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        if ($userlogged == null) {
-            return $this->redirectToRoute('app_login_user', [], Response::HTTP_SEE_OTHER);
-        }
-
         if (in_array("ROLE_USER", $userlogged->getRoles())) {
+            $user = $userRepository->find($userlogged);
+            $form = $this->createForm(ClientType::class, $user);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+
+
+                $hashedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $user->getPassword()
+                );
+                $user->setPassword($hashedPassword);
+                $userRepository->add($user, true);
+                return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            // if ($userlogged == null) {
+            //     return $this->redirectToRoute('app_user_login', [], Response::HTTP_SEE_OTHER);
+            // }
+
+
             // dd($userlogged->getRoles());
             // dd($userlogged->Id);
 
@@ -110,7 +114,7 @@ class ClientController extends AbstractController
                 'form' => $form
             ]);
         } else {
-            return $this->redirectToRoute('app_login_user', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_login', [], Response::HTTP_SEE_OTHER);
         }
     }
 
@@ -143,14 +147,23 @@ class ClientController extends AbstractController
         ]);
     }
 
-    // #[Route('/feedback/{id}', name: 'app_client_feedback', methods: ['GET', 'POST'])]
-    // public function feedbackUser(Request $request): Response
-    // {
-    //     if ($request->isMethod('POST')) {
-    //         $name = $request->get('name');
-    //         $subject = $request->get('msg_subject');
-    //         $msg = $request->get('message');
-    //     }
-    //     return $this->render('frontend/feedback.html.twig', []);
-    // }
+    #[Route('/contact', name: 'app_contact', methods: ['GET', 'POST'])]
+    public function feedbackUser(Request $request, MailerService $mail): Response
+    {
+        if ($request->isMethod('POST')) {
+
+            $name = $request->get('name');
+            $email = $request->get('email');
+            $subject = $request->get('msg_subject');
+            $msg = $request->get('message');
+            $pattern = '/([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@gmail([\.])com/';
+            // if (preg_match($pattern, $email)) {
+            // }
+            $to = 'boubatest1@gmail.com';
+
+            $twig = 'frontend/contact.html.twig';
+            $mail->send($subject, $email, $to, 'frontend/contact.html.twig');
+        }
+        return $this->render('frontend/contact.html.twig', []);
+    }
 }
