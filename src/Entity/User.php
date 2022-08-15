@@ -15,9 +15,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-/**
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- */
+#[Gedmo\SoftDeleteable(fieldName:"deletedAt", timeAware:false)]
 #[ORM\Table(name: '`user`')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
