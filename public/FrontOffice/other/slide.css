@@ -2,60 +2,60 @@
   width: 1250px;
 } */
 
-.carousel-inner{
-    margin-bottom: 5px;
-    width: 100%;
-    background: no-repeat center center scroll;
-    height: 70vh;
-    min-height: 250px;
-    -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
+.carousel-inner {
+  margin-bottom: 5px;
+  /* width: 100%; */
+  background: no-repeat center center scroll;
+  height: 80vh;
+  min-height: 280px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .carousel-item {
   position: absolute;
-  top:5px;
-  }
-  .carousel-caption {
-    top:5px;
+  top: 5px;
+}
+.carousel-caption {
+  top: 5px;
+}
+.suivant {
+  cursor: pointer;
+}
+.precedent {
+  cursor: pointer;
+}
+.carousel-caption h5 {
+  font-size: 45px;
+  text-transform: uppercase;
+  color: black !important;
+  letter-spacing: 2px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  /* margin-top: 50px; */
+}
 
-  }
-  .suivant{
-    cursor: pointer;
-  }
-  .precedent{
-    cursor: pointer;
-  }
-  .carousel-caption h5 {
-    font-size: 45px;
-    text-transform: uppercase;
-    color: black;
-    letter-spacing: 2px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    /* margin-top: 50px; */
-  }
-  
-  .carousel-caption p {
-    width: 75%;
-    margin: auto;
-    font-size: 18px;
-    line-height: 1.9;
-  }
-  /* ignore the code below */
-  .link-area
-  {
-    position:fixed;
-    bottom:5px;
-    left:20px;  
-    padding:15px;
-    border-radius:40px;
-    background:tomato;
-  }
-  .link-area a
-  {
-    text-decoration:none;
-    color:#fff;
-    font-size:25px;
-  }
+.carousel-caption p {
+  width: 75%;
+  margin: auto;
+  font-size: 20px;
+  line-height: 1.9;
+  color: black;
+  opacity: 0.2;
+}
+/* ignore the code below */
+.link-area {
+  position: fixed;
+  bottom: 5px;
+  left: 20px;
+  padding: 15px;
+  border-radius: 40px;
+  background: rgb(27, 25, 25);
+}
+.link-area a {
+  text-decoration: none;
+  color: rgb(31, 3, 3);
+  font-size: 25px;
+}

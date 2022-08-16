@@ -1,5 +1,5 @@
 {% extends "frontend/index.html.twig" %}
-{% block title %}Shop List
+{% block title %}Page de Recherche
 {% endblock %}
 
 
@@ -11,12 +11,12 @@
 			<div class="d-table-cell">
 				<div class="container">
 					<div class="page-banner-content">
-						<h2>Shop List One</h2>
+						<h2>Votre Recherche</h2>
 						<ul>
 							<li>
-								<a href="index.html">Home</a>
+								<a href="">Retour à l'accueil</a>
 							</li>
-							<li>Shop List One</li>
+							<li></li>
 						</ul>
 					</div>
 				</div>
@@ -30,22 +30,22 @@
 		<section class="top-products-area pt-100 pb-100"> <div class="container">
 			<div class="orgo-grid-sorting row align-items-center">
 				<div class="col-lg-6 col-md-6 result-count">
-					<p>We found
+					<p>On a Trouvé 
 						<span class="count">{{size}}</span>
-						products available for you</p>
+						produits Disponible</p>
 				</div>
 
 				<div class="col-lg-6 col-md-6 ordering">
 					<div class="select-box">
-						<label>Sort By:</label>
+						<label>Triez par:</label>
 						<select
 						id="trieProd"/>
 						{# <op0t0ion value="" id="first"></option> #}
 						<option value="default">Default</option>
-						<option value="populaire">Popularity</option>
-						<option value="new">Latest</option>
-						<option value="price_asc">Price: low to high</option>
-						<option value="price_desc">Price: high to low</option>
+						<option value="populaire">Populaire</option>
+						<option value="new">Nouveautés</option>
+						<option value="price_asc">Prix: moins chère au plus</option>
+						<option value="price_desc">Prix: plus chère au moins</option>
 					</select>
 					{# <button id="shortBy">
 																																																																																																																																																																																																									check</button> #}
@@ -64,7 +64,7 @@
 				<div class="col-lg-3 col-md-6">
 					<div class="top-products-item">
 						<div class="products-image">
-							<a href="shop-details.html"><img src="{{ asset('FrontOffice/assets/img/top-products/top-products-8.jpg') }} "  style="width: 250px; height: 200px" alt="image"></a>
+							<a href="{{ path('app_shop_details',{id : produit.id }) }}"><img style="width: 250px; height: 200px" src="{{ asset('uploads/produits/' ~ produit.image_produit) }} " alt="image"></a>
 
 							<ul class="products-action">
 								<li>
@@ -84,33 +84,35 @@
 								</li>
 							</ul>
 
-							{% if produit.getReduction()|length != 0 %}
+							{# {% if produit.getReduction()|length != 0 %} #}
                             <div class="sale">
                                 <span>
-                                    {% for produit_reduction in produit.getReduction() %}
+                                    {# {% for produit_reduction in produit.getReduction() %}
                                         -{{
                                    produit_reduction.getPourcentage()
                                            }}
-                                    {% endfor %}
+                                    {% endfor %} #}sale
       </span>
     </div>
-    {% endif %}
+
 						</div>
 
 						<div class="products-content">
 							<h3>
-								<a href="shop-details.html">{{ produit.designation }}</a>
+								<a href="">{{ produit.designation }}</a>
 							</h3>
-							{% if produit.getReduction()|length != 0 %}
+							{# {% if produit.getReduction()|length != 0 %} #}
                             <div class="price">
+							{% if produit.nouveau_prix %}
                               <span class="new-price"> {{ produit.nouveauPrix }}Dhs</span>
                               <span class="old-price">{{ produit.ancienPrix }}Dhs</span>
+							   {% else %} 
+							    <span class="new-price"> {{ produit.ancien_prix }}Dhs</span>
+							    {% endif %}
                             </div>
-                            {% else %}
-                            <div class="price">
-                              <span class="new-price">{{ produit.ancienPrix }}Dhs</span>
-                            </div>
-                            {% endif %}
+                           
+                          
+                          
 							<ul class="rating">
 								<li>
 									<i class='bx bxs-star'></i>

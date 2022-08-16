@@ -36,7 +36,7 @@ class SousCategorieRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('s')
             ->where("s.deletedAt is not NULL");
-            
+
         return $queryBuilder->getQuery()->getResult();
     }
 
@@ -49,7 +49,7 @@ class SousCategorieRepository extends ServiceEntityRepository
         WHERE  id=:id
         ";
         $stmt = $conn->prepare($sql);
-        $stmt->executeQuery(['id'=>$id]);
+        $stmt->executeQuery(['id' => $id]);
 
         // returns an array of arrays (i.e. a raw data set)
         return true;
@@ -82,6 +82,24 @@ class SousCategorieRepository extends ServiceEntityRepository
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function findByMarque()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        SELECT * FROM sous_categorie where lower(nom) like 
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
     // /**
     //  * @return Produit[] Returns an array of User objects
     //  */

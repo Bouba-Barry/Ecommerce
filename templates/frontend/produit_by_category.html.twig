@@ -15,10 +15,10 @@
 			<div class="d-table-cell">
 				<div class="container">
 					<div class="page-banner-content">
-						<h2>Notre Collections de</h2>
+						<h2>Nos {{ cat.titre }}</h2>
 						<ul>
 							<li>
-								<a href="{{ path('app_home') }}">Retoure à l'accueil</a>
+								<a href="{{ path('app_home') }}" class="btn btn-info">Retour à l'accueil</a>
 							</li>
 							{# <li>Shop List One</li> #}
 						</ul>
@@ -40,15 +40,15 @@
 
 				<div class="col-lg-6 col-md-6 ordering">
 					<div class="select-box">
-						<label>Sort By:</label>
+						<label>Trier Par:</label>
 						<select
 						id="trieProd"/>
 						{# <op0t0ion value="" id="first"></option> #}
 						<option value="default">Default</option>
-						<option value="populaire">Popularity</option>
-						<option value="new">Latest</option>
-						<option value="price_asc">Price: low to high</option>
-						<option value="price_desc">Price: high to low</option>
+						<option value="populaire">Populaire</option>
+						<option value="new">Nouveautés</option>
+						<option value="price_asc">Prix: moins chère au plus</option>
+						<option value="price_desc">Prix: plus chère au moins</option>
 					</select>
 					{# <button id="shortBy">
 																																																																																																																																																		check</button> #}
