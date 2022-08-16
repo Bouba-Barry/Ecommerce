@@ -91,14 +91,20 @@ document.addEventListener("DOMContentLoaded", function () {
         // newNode.classList.add("col-lg-3 col-md-6");
         // let elt = document.createElement("div");
         // elt.className = "col-lg-3 col-md-6";
+        new_prix = "";
+        if (res[i].nouveau_prix) {
+          new_prix = "".res[i].nouveau_prix;
+        } else {
+          new_prix = "".res[i].ancien_prix;
+        }
         ch += `
       <div class = "col-lg-3 col-md-6">
       <div class="top-products-item">
         <div class="products-image">
-          <a href="shop-details.html"><img src="FrontOffice/assets/img/top-products/top-products-8.jpg"  alt="image"></a>
+          <a href="{{ path('app_home') }}"><img src="{{ assett(uploads/produits/${res[i].image_produit}"  alt="image"></a>
           <ul class="products-action">
             <li>
-              <a href="cart.html" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+              <a href="" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
                 <i class="flaticon-shopping-cart"></i>
               </a>
             </li>
@@ -124,8 +130,9 @@ document.addEventListener("DOMContentLoaded", function () {
             <a href="shop-details.html">${res[i].designation}</a>
           </h3>
           <div class="price">
-            <span class="new-price">DHS ${res[i].nouveau_prix}</span>
-            <span class="old-price">DHS ${res[i].ancien_prix}
+          
+            <span class="new-price">DHS ${res[i].new_prix}</span>
+           
             </span>
           </div>
           <ul class="rating">
