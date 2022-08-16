@@ -29,7 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
       vals.push(matches[0]);
 
       // vals.push(search[i].id.charAt(search[i].id.length - 1));
-      console.log("search id: " + search[i].id);
+
+      // vals.push(search[i].id.charAt(search[i].id.length - 1));
+      // console.log("search id: " + search[i].id);
 
       fetch(`http://127.0.0.1:8000/getProduit/${vals}`)
         .then((response) => {
@@ -50,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function getinfos_produits(data) {
       titre_produit.innerHTML = data.designation;
-      new_price.innerHTML = data.nouveau_prix;
+      new_price.innerHTML = data.nouveau_prix + "DH";
       old_price.innerHTML = data.ancien_prix + "DH";
       image_produit.style.backgroundImage =
         "url(../../../uploads/produits/" + data.image_produit + ")";
@@ -258,8 +260,13 @@ document.addEventListener("DOMContentLoaded", function () {
           let vals = [];
           let qte = [];
           let variations = [];
-          vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
-          console.log("voila : " + progressbtn1[i].id);
+          // vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+          // console.log("voila : " + progressbtn1[i].id);
+
+          let matches = addcard[i].id.match(/(\d+)/);
+
+          vals.push(matches[0]);
+
           for (let choisi of variation_choisi) {
             if (choisi.innerHTML != "") {
               variations.push(choisi.innerHTML.trim());
@@ -293,8 +300,13 @@ document.addEventListener("DOMContentLoaded", function () {
             parseInt(noti.innerHTML) + Number(valprogress[i].value);
         }
       } else {
-        vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
-        console.log("voila : " + progressbtn1[i].id);
+        // vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+        // console.log("voila : " + progressbtn1[i].id);
+
+        let matches = addcard[i].id.match(/(\d+)/);
+        console.log(matches[0]);
+        vals.push(matches[0]);
+
         qte.push(Number(valprogress[i].value));
         console.log("qte : " + qte[0]);
 
@@ -345,8 +357,12 @@ document.addEventListener("DOMContentLoaded", function () {
           let vals = [];
           let qte = [];
           let variations = [];
-          vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
-          console.log("voila : " + progressbtn1[i].id);
+          // vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+          // console.log("voila : " + progressbtn1[i].id);
+
+          let matches = addcard[i].id.match(/(\d+)/);
+          vals.push(matches[0]);
+
           for (let choisi of variation_choisi) {
             if (choisi.innerHTML != "") {
               variations.push(choisi.innerHTML.trim());
@@ -380,7 +396,9 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           let vals = [];
           let qte = [];
-          vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+          // vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+          let matches = addcard[i].id.match(/(\d+)/);
+          vals.push(matches[0]);
           qte.push(Number(valprogress[i].value));
 
           fetch(
@@ -430,7 +448,9 @@ document.addEventListener("DOMContentLoaded", function () {
       // console.log(add);
       let vals = [];
       let qte = [];
-      vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+      // vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+      let matches = addcard[i].id.match(/(\d+)/);
+      vals.push(matches[0]);
       qte.push(Number(valprogress[i].value));
 
       if (

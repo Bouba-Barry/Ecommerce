@@ -607,19 +607,15 @@
           </section> #}
 
           <section class="widget widget_tag_cloud">
-            <h3 class="widget-title">Popular Tags</h3>
+            <h3 class="widget-title">Categories Populaires</h3>
 
             <div class="tagcloud">
-              <a href="#">Architecture</a>
-              <a href="#">Interior Design</a>
-              <a href="#">Designing</a>
-              <a href="#">Construction</a>
-              <a href="#">Buildings</a>
-              <a href="#">Industrial Factory</a>
-              <a href="#">Material</a>
-              <a href="#">Organic</a>
-              <a href="#">Food</a>
-              <a href="#">Tasty</a>
+              {% for categorie in categories %}
+                
+              
+              <a href="#">{{ categorie.getTitre() }}</a>
+              
+              {% endfor %}
             </div>
           </section>
         </aside>

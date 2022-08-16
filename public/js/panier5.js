@@ -8,7 +8,9 @@ for (let butt of top_products_item) {
       butt.firstElementChild.children[1].children[1].firstElementChild;
 
     let vals = [];
-    vals.push(element.id.charAt(element.id.length - 1));
+    // vals.push(element.id.charAt(element.id.length - 1));
+    let matches = element.id.match(/(\d+)/);
+    vals.push(matches[0]);
     fetch(
       `http://127.0.0.1:8000/wish_check/${vals}/${parseInt(user_id.innerHTML)}`
     )
@@ -48,8 +50,10 @@ for (let but of addtowish) {
 
     let vals = [];
 
-    vals.push(addtowish[i].id.charAt(addtowish[i].id.length - 1));
-    console.log("search id: " + addtowish[i].id);
+    // vals.push(addtowish[i].id.charAt(addtowish[i].id.length - 1));
+    // console.log("search id: " + addtowish[i].id);
+    let matches = addtowish[i].id.match(/(\d+)/);
+    vals.push(matches[0]);
 
     if (but.getAttribute("data-original-title") == "remove from wishlist") {
       console.log("awdi rk nadi");

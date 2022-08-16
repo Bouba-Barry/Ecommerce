@@ -44,8 +44,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function getinfos_produits(data, i) {
       titre_produit.innerHTML = data.designation;
-      new_price.innerHTML = data.nouveau_prix;
-      old_price.innerHTML = data.ancien_prix + "DH";
+      if (data.nouveau_prix != null) {
+        new_price.innerHTML = data.nouveau_prix + "DH";
+        old_price.innerHTML = data.ancien_prix + "DH";
+      } else {
+        new_price.innerHTML = data.ancien_prix + "DH";
+      }
       image_produit.style.backgroundImage =
         "url(../../../uploads/produits/" + data.image_produit + ")";
       description_produit.innerHTML = data.description;
@@ -180,8 +184,12 @@ document.addEventListener("DOMContentLoaded", function () {
       let vals = [];
       let qte = [];
       console.log(progressbtn1);
-      vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
-      console.log("voila : " + progressbtn1[i].id);
+      // vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+      // console.log("voila : " + progressbtn1[i].id);
+
+      let matches = progressbtn1[i].id.match(/(\d+)/);
+      vals.push(matches[0]);
+
       qte.push(Number(valprogress[i].value));
       fetch(
         `http://127.0.0.1:8000/panier/${vals}/${qte}/${parseInt(
@@ -218,7 +226,9 @@ document.addEventListener("DOMContentLoaded", function () {
       ) {
         let vals = [];
         let qte = [];
-        vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+        // vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+        let matches = progressbtn1[i].id.match(/(\d+)/);
+        vals.push(matches[0]);
         qte.push(Number(valprogress[i].value));
 
         fetch(
@@ -267,7 +277,9 @@ document.addEventListener("DOMContentLoaded", function () {
       // console.log(add);
       let vals = [];
       let qte = [];
-      vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+      // vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
+      let matches = progressbtn1[i].id.match(/(\d+)/);
+      vals.push(matches[0]);
       qte.push(Number(valprogress[i].value));
 
       if (

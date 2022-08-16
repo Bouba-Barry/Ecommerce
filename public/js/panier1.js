@@ -23,6 +23,12 @@ document.addEventListener("DOMContentLoaded", function () {
       total.innerHTML.replace("DH", "");
   });
 
+  // let ff = progressbtn1[0].id.match(/(\d+)/);
+  // let f = ff[0];
+  // console.log(f.slice(1));
+
+  console.log(valprogress);
+
   for (let i = 0; i < valprogress.length - 1; i++) {
     if (valprogress[i].parentElement.classList.contains("variation-nom")) {
       console.log("22");
@@ -147,7 +153,10 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("error");
           });
       } else {
-        vals.push(progressbtn1[i].id.charAt(progressbtn1[i].id.length - 1));
+        // vals.push(progressbtn1[i].id.charAt(progressbtn1[i].id.length - 1));
+        let matches = progressbtn1[i].id.match(/(\d+)/);
+        console.log(matches[0].slice(1));
+        vals.push(matches[0].slice(1));
         qte.push(Number(valprogress[i].value));
         console.log(parseInt(user_id.innerHTML));
         fetch(
@@ -169,6 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
           .catch((err) => {
             console.log("error");
           });
+        noti.innerHTML = Number(noti.innerHTML) + 1;
       }
 
       function update_total_par_produit(data) {
@@ -225,6 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
         variations = variations.replace('"', "");
         variations = variations.replace(" ", "");
         console.log(variations);
+        // noti.innerHTML = Number(noti.innerHTML) - 1;
         fetch(
           `http://127.0.0.1:8000/quantite/panier_edit/${parseInt(
             valprogress[i].parentElement.parentElement.previousElementSibling
@@ -248,7 +259,9 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("error");
           });
       } else {
-        vals.push(progressbtn2[i].id.charAt(progressbtn2[i].id.length - 1));
+        // vals.push(progressbtn2[i].id.charAt(progressbtn2[i].id.length - 1));
+        let matches = progressbtn2[i].id.match(/(\d+)/);
+        vals.push(matches[0].slice(1));
         qte.push(Number(valprogress[i].value));
 
         fetch(
@@ -275,7 +288,8 @@ document.addEventListener("DOMContentLoaded", function () {
       function update_total_par_produit(data) {
         console.log(valprogress[i].value);
         let length = 0;
-        for (let j = 0; j < valprogress.length; j++) {
+        for (let j = 0; j < valprogress.length; j = j + 2) {
+          console.log(valprogress[j].value);
           length = length + parseInt(valprogress[j].value);
         }
         console.log(length);
@@ -285,12 +299,36 @@ document.addEventListener("DOMContentLoaded", function () {
           parseInt(valprogress[i].value) *
           parseInt(prix[i].innerHTML.replace("DH", ""));
         total_par_produit[i].innerHTML = somme + "DH";
+
+        let somme_subtotal = 0;
+        let somme_total = 0;
+        for (let i = 0; i < total_par_produit.length; i++) {
+          console.log("fhf");
+          console.log(total_par_produit[i].innerHTML.replace("DH", ""));
+          somme_subtotal =
+            somme_subtotal +
+            parseInt(total_par_produit[i].innerHTML.replace("DH", ""));
+          console.log(somme_subtotal);
+        }
+        subtotal.innerHTML = somme_subtotal + "DH";
+
+        somme_total =
+          (parseInt(subtotal.innerHTML.replace("DH", "")) *
+            parseInt(tva.innerHTML.replace("%", ""))) /
+            100 +
+          parseInt(subtotal.innerHTML.replace("DH", ""));
+        total.innerHTML = somme_total + "DH";
       }
 
+      let somme_subtotal = 0;
+      let somme_total = 0;
       for (let i = 0; i < total_par_produit.length; i++) {
+        console.log("fhf");
+        console.log(total_par_produit[i].innerHTML.replace("DH", ""));
         somme_subtotal =
           somme_subtotal +
           parseInt(total_par_produit[i].innerHTML.replace("DH", ""));
+        console.log(somme_subtotal);
       }
       subtotal.innerHTML = somme_subtotal + "DH";
 
@@ -300,6 +338,7 @@ document.addEventListener("DOMContentLoaded", function () {
           100 +
         parseInt(subtotal.innerHTML.replace("DH", ""));
       total.innerHTML = somme_total + "DH";
+
       /*
       // console.log("voila : " + parseInt(valprogress[i].value));
       // if (parseInt(valprogress[i].value) > 1) {

@@ -250,7 +250,7 @@ class HomeController extends AbstractController
 
 
     #[Route('/shop_details/{id}', name: 'app_shop_details', methods: ['GET'])]
-    public function shop_details($id, FeadBackRepository $feadBackRepository, SerializerInterface $serializer, ProduitRepository $produitRepository, SousCategorieRepository $sousCategorieRepository)
+    public function shop_details($id, CategorieRepository $categorieRepository  , FeadBackRepository $feadBackRepository, SerializerInterface $serializer, ProduitRepository $produitRepository, SousCategorieRepository $sousCategorieRepository)
     {
         // dd($produit);
 
@@ -280,7 +280,8 @@ class HomeController extends AbstractController
             'produits_similaires' => $produits_similaires,
             'produits_en_relation' => $produits_en_relation,
             'popular_products' => $json,
-            'reviews' => $reviews
+            'reviews' => $reviews,
+            'categories' => $categorieRepository->findAll()
         ]);
     }
 
@@ -537,11 +538,11 @@ class HomeController extends AbstractController
         // $panier->setUser($user);
         // $entityManager->persist($panier);
         $panier = $panierRepository->findOneBy(['user' => $userRepository->find($user_id)]);
-
+        
         // // actually executes the queries (i.e. the INSERT query)
         // $entityManager->flush();
         $panier_id = $panier->getId();
-
+       
         // $val->array_push($produit->getId());
 
         //  $panier_id=$panier->getId();
@@ -552,7 +553,7 @@ class HomeController extends AbstractController
 
 
         $panierRepository->add_to_produit_panier($panier_id, $id, $slug);
-
+        // dd($panier_id);
         //  dd("fin am3lm");      
         $panier_produit = $panierRepository->find_one_produit_panier($panier_id, $id);
 
