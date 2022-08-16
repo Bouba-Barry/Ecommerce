@@ -117,7 +117,7 @@ class ProduitRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('p')
             ->where("p.deletedAt is not NULL");
-            
+
         return $queryBuilder->getQuery()->getResult();
     }
 
@@ -130,7 +130,7 @@ class ProduitRepository extends ServiceEntityRepository
         WHERE  id=:id
         ";
         $stmt = $conn->prepare($sql);
-        $stmt->executeQuery(['id'=>$id]);
+        $stmt->executeQuery(['id' => $id]);
 
         // returns an array of arrays (i.e. a raw data set)
         return true;
@@ -283,7 +283,7 @@ class ProduitRepository extends ServiceEntityRepository
     /**
      * @return Produit[] Returns an array of Produit objects
      */
-    public function BestSellers()
+    public function PopularProducts()
     {
 
         $conn = $this->getEntityManager()->getConnection();
@@ -302,7 +302,7 @@ class ProduitRepository extends ServiceEntityRepository
         WHERE p.id = f.produit_id 
         GROUP BY f.produit_id
         ORDER BY COUNT(*) DESC
-        LIMIT 20
+        LIMIT 12
         ";
         $stmt = $conn->prepare($sql2);
         $resultSet = $stmt->executeQuery();
@@ -311,6 +311,28 @@ class ProduitRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+
+    /**
+     * @return Query Returns an array of Produit objects
+     */
+    public function PopularProducts_This_Month()
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql2 = "
+        SELECT p.* FROM produit p, commande_produit f
+        WHERE p.id = f.produit_id and (DATEDIFF(CURRENT_TIMESTAMP(), f.create_at)  BETWEEN 1 and 31)
+        GROUP BY f.produit_id
+        ORDER BY COUNT(*) DESC
+        LIMIT 8
+        ";
+        $stmt = $conn->prepare($sql2);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 
     /**
      * @return Produit Returns an array of Produit objects
@@ -338,7 +360,7 @@ class ProduitRepository extends ServiceEntityRepository
     /**
      * @return Produit[] Returns an array of Produit objects
      */
-    public function PopularProducts()
+    public function BestSellers()
     {
 
         $conn = $this->getEntityManager()->getConnection();
@@ -348,6 +370,7 @@ class ProduitRepository extends ServiceEntityRepository
         WHERE p.id = f.produit_id 
         GROUP BY f.produit_id
         ORDER BY SUM(f.qte_cmd) DESC
+        LIMIT 20
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();

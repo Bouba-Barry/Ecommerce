@@ -46,7 +46,7 @@
         </div>
       </div>
       #}
-      <video class="d-block w-100 h-55" autoplay muted loop>
+      <video class="d-block w-100 h-80" autoplay muted loop>
         <source
           src=" {{ asset('FrontOffice/video/slide.mp4') }} "
           type="video/mp4"
@@ -61,6 +61,7 @@
           <div class="carousel-caption">
             <div class="container">
               <div class="row justify-content-center">
+              <p>Nos Collections De produis les plus Populaires</p>
                 <div class="col-lg-6">
                   <h5
                     class="display-2 text-light mb-5 animated slideInDown"
@@ -140,12 +141,12 @@
           <div class="col-lg-3 col-md-6">
             <div class="single-services-box">
               <div class="icon">
-                <i class="flaticon-apple"></i>
+                {# <i class="flaticon-"></i> #}
+									<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slack"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"></path><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"></path><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"></path><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"></path><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"></path><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"></path><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"></path></svg>
               </div>
               <h3>{{ categorie.titre }}</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
-                eiusmod tempor incididunt.
+               {{ categorie.description }}
               </p>
               <a
                 href="{{ path('app_prod_by_cate', { id: categorie.id }) }}"
@@ -226,99 +227,60 @@
       <section class="department-area pt-100 pb-70">
         <div class="container">
           <div class="section-title">
-            <h2>Produits Les plus Vues Du Mois</h2>
+            <h2>Les Produits populaires Du Mois</h2>
             <p></p>
           </div>
 
           <div class="row">
-            {% for prod in produits %}
+            {% for prod in popular_products_month %}
+               <div class="col-lg-3 col-md-6">
+                        <div class="top-products-item">
+                            <div class="products-image">
+                                <a href="{{ path('app_shop_details', { id: prod.id }) }}"><img  src="{{ asset('uploads/produits/' ~ prod.image_produit) }}"
+                      style="width: 250px; height: 200px" alt="image"></a>
 
-            <div class="col-lg-3 col-md-6">
-              <div class="top-products-item">
-                <div class="products-image">
-                  <a href="{{ path('app_shop_details', { id: prod.id }) }}"
-                    ><img
-                      src="{{ asset('uploads/produits/' ~ prod.imageProduit) }}"
-                      style="width: 250px; height: 200px"
-                  /></a>
+                                <ul class="products-action">
+                                    <li>
+                                        <a id="addtocart{{ prod.id }}" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="flaticon-shopping-cart"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" id="addtowish{{ prod.id }}" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i class="flaticon-heart"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" id="searchbtn{{ prod.id }}" data-tooltip="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+                                            <i class="flaticon-search"></i>
+                                        </a>
+                                    </li>
+                                </ul>
 
-                  <ul class="products-action">
-                    <li>
-                      <a
-                        id="addtocart{{ prod.id }}"
-                        class="addtocart"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Add to Cart"
-                      >
-                        <i class="flaticon-shopping-cart"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        id="addtowish{{ prod.id }}"
-                        class="addtowish"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Add to Wishlist"
-                      >
-                        <i class="flaticon-heart"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        data-tooltip="tooltip"
-                        id="searchbtn{{ prod.id }}"
-                        class="search"
-                        data-placement="top"
-                        title="Quick View"
-                        data-toggle="modal"
-                        data-target="#productsQuickView"
-                      >
-                        <i class="flaticon-search"></i>
-                      </a>
-                    </li>
-                  </ul>
+                                <div class="sale">
+                                    <span>Sale</span>
+                                </div>
+                            </div>
 
-                  {% if prod.getReduction()|length != 0 %}
-                  <div class="">
-                    <span>
-                      {% for produit_reduction in prod.getReduction() %} -{{
-                        produit_reduction.getPourcentage()
-                      }}
-                      {% endfor %}
-                    </span>
-                  </div>
-                  {% endif %}
-                </div>
-
-                <div class="products-content">
-                  <h3>
-                    <a href="shop-details.html">{{ prod.designation }}</a>
-                  </h3>
-                  {% if prod.getReduction()|length != 0 %}
-                  <div class="price">
-                    <span class="new-price"> {{ prod.nouveauPrix }}Dhs</span>
-                    <span class="old-price">{{ prod.ancienPrix }}Dhs</span>
-                  </div>
-                  {% else %}
-                  <div class="price">
-                    <span class="new-price">{{ prod.ancienPrix }}Dhs</span>
-                  </div>
-                  {% endif %}
-                  <ul class="rating">
-                    <li>
-                      <i class="bx bxs-star"></i>
-                      <i class="bx bxs-star"></i>
-                      <i class="bx bxs-star"></i>
-                      <i class="bx bxs-star"></i>
-                      <i class="bx bx-star"></i>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+                            <div class="products-content">
+                                <h3>
+                                    <a href="{{ path('app_shop_details', { id: prod.id }) }}">{{ prod.designation }}</a>
+                                </h3>
+                                <div class="price">
+                                {% if prod.nouveau_prix %}
+                                    <span class="new-price">{{ prod.nouveau_prix }} Dhs</span>
+                                    <span class="old-price">{{ prod.ancien_prix }} Dhs</span>
+                                {% else %}
+                                 <span class="new-price">{{ prod.ancien_prix }} Dhs</span>{% endif %}
+                                </div>
+                                <ul class="rating">
+                                    <li>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bx-star'></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
             {% endfor %}
           </div>
         </div>
@@ -396,7 +358,8 @@
                   <ul class="products-action">
                     <li>
                       <a
-                        href="cart.html"
+                        {# href="#" #}
+                        id="addtocart{{ newproduct.id }}"
                         data-tooltip="tooltip"
                         data-placement="top"
                         title="Add to Cart"
@@ -406,22 +369,23 @@
                     </li>
                     <li>
                       <a
-                        href="#"
+    
                         data-tooltip="tooltip"
                         data-placement="top"
                         title="Add to Wishlist"
+                        id="addtowish{{ newproduct.id }}"
                       >
                         <i class="flaticon-heart"></i>
                       </a>
                     </li>
                     <li>
                       <a
-                        href="#"
                         data-tooltip="tooltip"
                         data-placement="top"
                         title="Quick View"
                         data-toggle="modal"
                         data-target="#productsQuickView"
+                        id="searchbtn{{ newproduct.id }}"
                       >
                         <i class="flaticon-search"></i>
                       </a>
@@ -473,7 +437,7 @@
               </div>
             </div>
             {% else %}
-            <div class="">Aucun Arrivage Disponible</div>
+            <div class="alert alert-info">Aucun Arrivage Disponible</div>
             {% endfor %}
           </div>
         </div>
@@ -482,51 +446,53 @@
 
       <!-- Start Testimonial Area -->
       <section class="testimonial-area ptb-100">
-        <div class="container">
-          <div class="section-title">
-            <h2>Les Avis De La Clientielle</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua quis
-              ipsum suspendisse
-            </p>
-          </div>
+            <div class="container">
+                <div class="section-title">
+                    <h2>Le Retour Des Clients</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum suspendisse</p>
+                </div>
 
-          <div class="testimonial-slider owl-carousel owl-theme">
-            {% for review in reviews %}
+                <div class="testimonial-slider owl-carousel owl-theme">
 
-            <div class="testimonial-item">
-              <div class="info">
-                <img
-                  src=" {{
-                    asset('FrontOffice/assets/img/client/client-3.jpg')
-                  }} "
-                  alt="image"
-                />
-                <h3>{{ review.pseudo }}</h3>
-                <span>{{ review.titre }}</span>
-              </div>
-              <p>
-                {{ review.content }}
-              </p>
 
-              <div class="icon">
-                <i class="flaticon-right-quotes-symbol"></i>
-              </div>
-            </div>
-          </div>
-          {% else %}
-          <div>Aucun FeadBack</div>
-          {% endfor %} {% if app.user %}
+                    {# <div class="testimonial-item">
+                        <div class="info">
+                            <img src="assets/img/client/client-1.jpg" alt="image">
+                            <h3>Ken Morris</h3>
+                            <span>partage de mon expérience</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste.</p>
+
+                        <div class="icon">
+                            <i class="flaticon-right-quotes-symbol"></i>
+                        </div>
+                    </div> #}
+                    {% for review in reviews %}
+                    <div class="testimonial-item">
+                        <div class="info">
+                            <img src=" {{ asset('images/other/user.png') }} " style="width:200; height: 150"  alt="image">
+                            <h3>{{ review.pseudo }}</h3>
+                            <span>{{ review.titre }}</span>
+                        </div>
+                        <p> {{ review.content }}</p>
+
+                        <div class="icon">
+                            <i class="flaticon-right-quotes-symbol"></i>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                {% if app.user %}
           <a
             class="btn btn-warning"
-            style="position: absolute; bottom: 10px; right: 45%"
+            {# style="position: absolute; bottom: 10px; right: 45%" #}
             href="{{ path('app_client_feedback') }}"
             >Donnez Votre Avis</a
           >
           {% endif %}
-        </div>
-      </section>
+            </div>
+        </section>
       <!-- End Testimonial Area -->
 
       <!-- Start Best Sellers Products Area -->
@@ -683,7 +649,7 @@
       <!-- End Overview Area -->
 
       <!-- Start Most Viewed Products Area -->
-      <section class="featured-products-area bg-fafafa pt-100 pb-100">
+      {# <section class="featured-products-area bg-fafafa pt-100 pb-100">
         <div class="container">
           <div class="section-title">
             <h2>Most Viewed Products This Month</h2>
@@ -695,7 +661,6 @@
           </div>
 
           <div class="featured-products-slider owl-carousel owl-theme">
-            {# {% for item in items %}{% endfor %} #}
             <div class="featured-products-item">
               <div class="products-image">
                 <a href="shop-details.html"
@@ -769,7 +734,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> #}
       <!-- End Most Viewed Products Area -->
 
       <!-- Start Blog Area -->
@@ -870,7 +835,7 @@
       #}
 
       <!-- Start Newsletter Area -->
-      {#
+      
       <div class="newsletter-area ptb-100">
         <div class="container">
           <div class="row align-items-center">
@@ -878,9 +843,7 @@
               <div class="newsletter-content">
                 <h2>Abonnez-Vous à Notre Newsletter</h2>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua
-                  quis ipsum suspendisse
+                  Soyez informez de Tous nos Nouveautés, à savoir reduction spéciale, des livraison gratuites et plein d'autres privilèges
                 </p>
               </div>
             </div>
@@ -896,7 +859,7 @@
                   autocomplete="off"
                 />
 
-                <button type="submit">Subscribe Now</button>
+                <button type="submit">Abonnez-Vous</button>
 
                 <div id="validator-newsletter" class="form-result"></div>
               </form>
@@ -904,7 +867,7 @@
           </div>
         </div>
       </div>
-      #}
+      
       <!-- End Newsletter Area -->
 
       <!-- Start Partner Area -->

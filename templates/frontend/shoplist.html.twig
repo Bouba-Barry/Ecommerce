@@ -18,9 +18,9 @@
 						<h2>Shop List One</h2>
 						<ul>
 							<li>
-								<a href="index.html">Home</a>
+								<a href="{{ path('app_home') }}">Accueil</a>
 							</li>
-							<li>Shop List One</li>
+							<li>Boutique</li>
 						</ul>
 					</div>
 				</div>
@@ -34,14 +34,14 @@
 		<section class="top-products-area pt-100 pb-100"> <div class="container">
 			<div class="orgo-grid-sorting row align-items-center">
 				<div class="col-lg-6 col-md-6 result-count">
-					<p>We found
+					{# <p>On a Trouvé
 						<span class="count">10</span>
-						products available for you</p>
+						produits </p> #}
 				</div>
 
 				<div class="col-lg-6 col-md-6 ordering">
 					<div class="select-box">
-						<label>Sort By:</label>
+						<label>Trier par:</label>
 						<select
 						id="trieProd"/>
 						{# <op0t0ion value="" id="first"></option> #}

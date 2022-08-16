@@ -481,7 +481,7 @@ class HomeController extends AbstractController
 
 
     #[Route('', name: 'app_home')]
-    public function home(CategorieRepository $categorieRepository, CategorieRepository $cat, ProduitRepository $produitRepository, FeadBackRepository $feadBackRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
+    public function home(CategorieRepository $categorieRepository, SousCategorieRepository $sousCat, ProduitRepository $produitRepository, FeadBackRepository $feadBackRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
     {
         $NewProducts = $produitRepository->findRecentProduct(); //produit arriver il y'a 2 weeks et maxREsult 10
         // dd($NewProduct);
@@ -509,9 +509,9 @@ class HomeController extends AbstractController
         // $max = $max->getId();
         // $min = $produitRepository->findOneBy([], ['id' => 'ASC']);
         // $min = $min->getId();
-
+        $popular_products = $produitRepository->PopularProducts_This_Month();
         $categories = $categorieRepository->findAll();
-
+        $marque = $sousCat->findAll();
         return $this->render('frontend/home.html.twig', [
             'produits' => $produits,
             'NewProducts' => $NewProducts,
@@ -520,7 +520,9 @@ class HomeController extends AbstractController
             'reviews' => $reviews,
             'plusVendu' => $plusVendus,
             'sous_categories' => $SouscatePopulaire,
-            'categories' => $categories
+            'categories' => $categories,
+            'marque' => $marque,
+            'popular_products_month' => $popular_products
         ]);
     }
 
@@ -746,8 +748,10 @@ class HomeController extends AbstractController
         // dd($categorieRepository->findProductsByCategory($id));
         $produits = $categorieRepository->findProductsByCategory($id);
         // dd($pan->findMostViewMonth());
+        $cat = $categorieRepository->findOneBy(['id' => $id]);
         return $this->render('frontend/produit_by_category.html.twig', [
             'produits' => $produits,
+            'cat' => $cat
         ]);
     }
 }
