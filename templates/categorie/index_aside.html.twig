@@ -1,0 +1,140 @@
+{% extends 'admin.html.twig' %} {% block stylesheet %} {% endblock stylesheet %}
+{# {% block title %}Produit index{% endblock %} #} {% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="page-title">Liste Categories</h3>
+          <div class="d-inline-block align-items-center">
+            <ol class="breadcrumb">
+              <li>
+                <a
+                  href="{{ path('app_categorie_new_aside') }}"
+                  class="btn btn-primary btn-md"
+                  >Ajouter Categorie</a
+                >
+              </li>
+            </ol>
+          </div>
+        </div>
+        <div>
+          <a
+            href="{{ path('app_categorie_corbeille') }}"
+            style="font-size: 20px; color: blue"
+            >Corbeille
+            <i class="fa-solid fa-trash" style="font-size: 25px"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="table-responsive">
+                <table
+                  id="example5"
+                  class="table table-bordered table-striped"
+                  style="width: 100%"
+                >
+                  <thead>
+                    <tr>
+                      <th col-1>ID</th>
+                      <th>Nom De la Categorie</th>
+                      <th>Sous Categories</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for categorie in categories %}
+                    <tr>
+                      <td class="">{{ categorie.id }}</td>
+                      <td>{{ categorie.titre }}</td>
+                      <td>
+                        {% for sous_categorie in categorie.getSousCategories()
+                        %}
+                        {{ sous_categorie.getTitre() }} , {% endfor %}
+                      </td>
+                      <td>
+                        <a
+                          href="{{
+                            path('app_categorie_show', { id: categorie.id })
+                          }}"
+                          class="btn btn-md btn-primary"
+                        >
+                          <i class="fa fa-eye"></i>
+                        </a>
+                        <a
+                          href="{{
+                            path('app_categorie_edit_aside', {
+                              id: categorie.id
+                            })
+                          }}"
+                          class="btn btn-md btn-warning"
+                        >
+                          <i class="fa fa-edit"></i>
+                        </a>
+                        <a
+                          href="{{
+                            path('app_categorie_delete', { id: categorie.id })
+                          }}"
+                          class="btn btn-md btn-danger"
+                        >
+                          <i class="fa fa-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                      <td colspan="9">no records found</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nom Categorie</th>
+                      <th style="border-right: 1px solid #d5dfea">Produits</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %} {% block javascript %}
+<script src="{{
+    asset('assets/vendor_components/datatable/datatables.min.js')
+  }} "></script>
+<script src="{{ asset('main/js/pages/data-table.js') }}"></script>
+{% endblock %}

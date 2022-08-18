@@ -171,6 +171,45 @@ class VariationController extends AbstractController
 
 
 
+
+    #[Security("is_granted('ROLE_ADMIN')")]
+    #[Route('/new/editproduit/{id}/{slug}', name: 'app_variation_new_variable_edit', methods: ['GET', 'POST'])]
+    public function new_variable_edit( $id,$slug,Request $request , AttributRepository $attributRepository ,VariationRepository $variationRepository): Response
+    {
+        
+        
+        $variation = new Variation();
+        $variation->setAttribut($attributRepository->find($id));
+        $form = $this->createForm(VariationType::class, $variation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $this->addFlash('variation', 'Variation Ajoute avec succes');
+
+            $variation_produit = $form->get('produits')->getData();
+
+            foreach ($variation_produit as $var) {
+                $variation->addProduit($var);
+            }
+
+
+            $variationRepository->add($variation, true);
+
+            return $this->redirectToRoute('app_variation_new_variable', ['id'=> $variation->getAttribut()->getId() ]);
+        }
+
+        return $this->renderForm('variation/new_editproduit.html.twig', [
+            'variation' => $variation,
+            'form' => $form,
+            'slug' => $slug
+        ]);
+    }
+
+
+
+
+
+
     
 
 

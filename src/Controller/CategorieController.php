@@ -28,6 +28,24 @@ class CategorieController extends AbstractController
         ]);
     }
 
+
+    #[Route('/aside', name: 'app_categorie_index_aside', methods: ['GET'])]
+    public function indexaside(CategorieRepository $categorieRepository): Response
+    {
+
+        return $this->render('categorie/index_aside.html.twig', [
+            'categories' => $categorieRepository->findAll(),
+        ]);
+    }
+
+
+
+
+
+
+
+
+
     #[Route('/all', name: 'app_categorie_all', methods: ['GET'])]
     public function all(CategorieRepository $categorieRepository,SerializerInterface $serializer): JsonResponse
     {
@@ -137,6 +155,7 @@ class CategorieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categorieRepository->add($categorie, true);
 
+            
             return $this->redirectToRoute('app_sous_categorie_new_variable', ['id' => $categorie->getId()]);
         }
 
@@ -171,6 +190,37 @@ class CategorieController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
+
+
+
+    #[Route('/{id}/edit/aside', name: 'app_categorie_edit_aside', methods: ['GET', 'POST'])]
+    public function editaside(Request $request, Categorie $categorie, CategorieRepository $categorieRepository): Response
+    {
+        $form = $this->createForm(CategorieType::class, $categorie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Categorie Modifiee avec succes');
+            $categorieRepository->add($categorie, true);
+
+            return $this->redirectToRoute('app_categorie_index_aside', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('categorie/_form_edit_aside.html.twig', [
+            'categorie' => $categorie,
+            'form' => $form,
+        ]);
+    }
+
+
+
+
+
+
+
+
 
     #[Route('/{id}', name: 'app_categorie_delete', methods: ['POST'])]
     public function delete(Request $request, Categorie $categorie, CategorieRepository $categorieRepository): Response

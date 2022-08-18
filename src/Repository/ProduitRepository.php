@@ -238,6 +238,11 @@ class ProduitRepository extends ServiceEntityRepository
 
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
+        // $queryBuilder = $this->createQueryBuilder('p')
+        //     ->where('p in (:result) ')
+        //     ->setParameter(':result',$result);
+       
+        // return $queryBuilder->getQuery()->getResult();
     }
 
     /**

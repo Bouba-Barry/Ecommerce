@@ -1,14 +1,9 @@
-{% extends 'base.html.twig' %}
+{{
+  include(
+    "categorie/_form.html.twig",
+    { button_label: "Update" },
+    { action: path("app_categorie_edit", { id: categorie.id }) }
+  )
+}}
 
-{% block title %}Edit Categorie{% endblock %}
-
-{% block body %}
-
-
-    {{ include('categorie/_form.html.twig', {'button_label': 'Update'}, {'action': path("app_categorie_edit", {'id': categorie.id})}) }}
-
-
-   {{ include('categorie/_delete_form.html.twig') }}
-{% endblock %}
-
-  
+{{ include("categorie/_delete_form.html.twig") }}

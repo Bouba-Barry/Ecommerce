@@ -29,7 +29,9 @@
                 #}
                 <li>
                   <a
-                    href="{{ path('app_categorie_new') }}"
+                    href="{{
+                      path('app_produit_edit_variable', { id: produit.id })
+                    }}"
                     class="btn btn-primary btn-md"
                     >Retour</a
                   >
@@ -84,11 +86,13 @@
                 </div>
               </div>
 
-               <div class="form-group row">
-                <label class="col-form-label col-md-2">Image de couverture</label>
+              <div class="form-group row">
+                <label class="col-form-label col-md-2"
+                  >Image de couverture</label
+                >
                 <div class="mb-3 col-md-10">
                   {{ form_row(form.photo) }}
-                <span class="form-text text-muted">{{
+                  <span class="form-text text-muted">{{
                     form_errors(form.photo)
                   }}</span>
                 </div>

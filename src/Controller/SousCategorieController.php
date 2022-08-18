@@ -6,6 +6,7 @@ use App\Entity\Categorie;
 use App\Entity\SousCategorie;
 use App\Form\SousCategorieType;
 use App\Repository\CategorieRepository;
+use App\Repository\ProduitRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\SousCategorieRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +16,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Security("is_granted('ROLE_ADMIN')")]
 #[Route('/admin/sous/categorie')]
@@ -27,6 +29,45 @@ class SousCategorieController extends AbstractController
             'sous_categories' => $sousCategorieRepository->findAll(),
         ]);
     }
+
+
+    #[Route('/categorie/{id}', name: 'app_souscategorie_index_categorie', methods: ['GET'])]
+    public function variation_attribut(Categorie $categorie,SousCategorieRepository $souscategorieRepository  ): Response
+    {
+        
+        return $this->render('sous_categorie/index_categorie.html.twig', [
+            'sous_categories' => $souscategorieRepository->findBy(['categorie' => $categorie ]),
+            'categorie' => $categorie 
+        ]);
+    }
+
+
+    #[Security("is_granted('ROLE_ADMIN')")]
+    #[Route('/new/aside/souscategorie/{id}', name: 'app_souscategorie_new_aside_categorie', methods: ['GET', 'POST'])]
+    public function new_aside_variation( $id,Request $request ,CategorieRepository $categorieRepository,SousCategorieRepository $sousCategorieRepository): Response
+    {
+        $sousCategorie = new SousCategorie();
+        $sousCategorie->setCategorie($categorieRepository->find($id));
+        $form = $this->createForm(SousCategorieType::class, $sousCategorie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Sous Categorie Ajoute avec succes');
+            $sousCategorieRepository->add($sousCategorie, true);
+
+            return $this->redirectToRoute('app_souscategorie_new_aside_categorie', ['id' => $id]);
+        }
+
+        return $this->renderForm('sous_categorie/new_aside_categorie.html.twig', [
+            'sous_categorie' => $sousCategorie,
+            'form' => $form,
+            'categorie' => $categorieRepository->find($id)
+        ]);
+    }
+
+
+
+
 
 
 
@@ -79,9 +120,10 @@ class SousCategorieController extends AbstractController
 
 
 
-    #[Route('/new/{id}', name: 'app_sous_categorie_new_aside', methods: ['GET', 'POST'])]
+    #[Route('/new/aside/{id}', name: 'app_sous_categorie_new_aside', methods: ['GET', 'POST'])]
     public function new_aside($id,Request $request ,CategorieRepository $categorieRepository ,SousCategorieRepository $sousCategorieRepository): Response
     {
+        // dd("dd");
         $sousCategorie = new SousCategorie();
         $sousCategorie->setCategorie($categorieRepository->find($id));
         $form = $this->createForm(SousCategorieType::class, $sousCategorie);
@@ -107,13 +149,15 @@ class SousCategorieController extends AbstractController
 
 
 
-    #[Route('/new/{id}', name: 'app_sous_categorie_new_variable', methods: ['GET', 'POST'])]
+    #[Route('/new/variable/{id}', name: 'app_sous_categorie_new_variable', methods: ['GET', 'POST'])]
     public function new_variable($id,Request $request ,CategorieRepository $categorieRepository ,SousCategorieRepository $sousCategorieRepository): Response
     {
+        // dd("f");
         $sousCategorie = new SousCategorie();
         $sousCategorie->setCategorie($categorieRepository->find($id));
         $form = $this->createForm(SousCategorieType::class, $sousCategorie);
         $form->handleRequest($request);
+       
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Sous Categorie Ajoute avec succes');
@@ -128,8 +172,8 @@ class SousCategorieController extends AbstractController
         ]);
     }
 
-    #[Route('/new/souscategorie', name: 'app_sous_categorie_new_produit', methods: ['GET', 'POST'])]
-    public function newsouscategorie(Request $request, SousCategorieRepository $sousCategorieRepository): Response
+    #[Route('/new/souscategorie/{id}', name: 'app_sous_categorie_new_produit', methods: ['GET', 'POST'])]
+    public function newsouscategorie($id,Request $request, ProduitRepository $produitRepository ,SousCategorieRepository $sousCategorieRepository): Response
     {
         $sousCategorie = new SousCategorie();
         $form = $this->createForm(SousCategorieType::class, $sousCategorie);
@@ -141,12 +185,14 @@ class SousCategorieController extends AbstractController
 
             $sousCategorieRepository->add($sousCategorie, true);
 
-            return $this->redirectToRoute('app_sous_categorie_new_produit', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_produit_edit_variable', ['id' => $id ]);
         }
 
         return $this->renderForm('sous_categorie/_form_variable.html.twig', [
             'sous_categorie' => $sousCategorie,
             'form' => $form,
+            'produit' => $produitRepository->find($id)
+            
         ]);
     }
 
@@ -258,13 +304,86 @@ class SousCategorieController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_sous_categorie_delete', methods: ['POST'])]
-    public function delete(Request $request, SousCategorie $sousCategorie, SousCategorieRepository $sousCategorieRepository): Response
+
+
+
+    #[Route('/{id}/edit/aside/{slug}', name: 'app_sous_categorie_edit_aside', methods: ['GET', 'POST'])]
+    public function editaside($id,$slug,Request $request, SousCategorie $sousCategorie, SousCategorieRepository $sousCategorieRepository, SluggerInterface $slugger): Response
     {
+        $sousCategorie=$sousCategorieRepository->find($id);
+        $form = $this->createForm(SousCategorieType::class, $sousCategorie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $file */
+
+            // $fileUploader->setTargetDirectory('sous_categorie_directory');
+            $brochureFile = $form->get('photo')->getData();
+            // if ($file) {
+            //     $FileName = $fileUploader->upload($file);
+            //     $sousCategorie->setPicture($FileName);
+            // }
+            if ($brochureFile) {
+                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $brochureFile->move(
+                        $this->getParameter('sous_categorie_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $sousCategorie->setPicture($newFilename);
+                $fileName = $this->getParameter('sous_categorie_directory') . $newFilename;
+                // dd($fileName);
+                // $imageOptimizer->resize($this->getParameter('sous_categorie_directory') . $newFilename, $newFilename);
+            }
+            $sousCategorieRepository->add($sousCategorie, true);
+            $this->addFlash('success', 'Sous Categorie modifie avec succes');
+
+
+
+            return $this->redirectToRoute('app_souscategorie_index_categorie', ['id' => $slug ]);
+        }
+
+        return $this->renderForm('sous_categorie/edit_aside.html.twig', [
+            'sous_categorie' => $sousCategorie,
+            'form' => $form,
+            'categorie' => $slug
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #[Route('/{id}/{slug}', name: 'app_sous_categorie_delete', methods: ['POST'])]
+    public function delete( $id,$slug ,Request $request, CategorieRepository $categorieRepository ,SousCategorieRepository $sousCategorieRepository): Response
+    {
+        
+        $sousCategorie= $sousCategorieRepository->find($id) ;
+        $categorie=$categorieRepository->find($slug);
+        $this->addFlash('suppression', 'Sous Categorie supprime avec succes');
+
         if ($this->isCsrfTokenValid('delete' . $sousCategorie->getId(), $request->request->get('_token'))) {
             $sousCategorieRepository->remove($sousCategorie, true);
         }
 
-        return $this->redirectToRoute('app_sous_categorie_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_souscategorie_index_categorie', ['id' => $slug ]);
     }
 }

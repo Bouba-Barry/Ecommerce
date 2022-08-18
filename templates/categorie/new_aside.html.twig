@@ -22,7 +22,7 @@
                 #}
                 <li>
                   <a
-                    href="{{ path('app_categorie_index') }}"
+                    href="{{ path('app_categorie_index_aside') }}"
                     class="btn btn-primary btn-md"
                     >Liste Categories</a
                   >
@@ -56,6 +56,21 @@
 
                   <span class="form-text text-muted">{{
                     form_errors(form.titre)
+                  }}</span>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-form-label col-md-2">Titre Categorie</label>
+                <div class="mb-3 col-md-10">
+                  {#
+                  <input class="form-control" type="datetime" name="datetime" />
+                  #}
+
+                  {{ form_row(form.description) }}
+
+                  <span class="form-text text-muted">{{
+                    form_errors(form.description)
                   }}</span>
                 </div>
               </div>

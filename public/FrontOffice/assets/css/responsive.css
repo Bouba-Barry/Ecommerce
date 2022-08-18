@@ -106,7 +106,7 @@
     right: 0;
     top: 0;
     z-index: -1;
-    opacity: .80;
+    opacity: 0.8;
   }
   .main-banner-item.banner-item-two::before {
     display: none;
@@ -264,8 +264,6 @@
     font-size: 22px;
   }
   .deal-content .d-flex {
-    display: -webkit-box !important;
-    display: -ms-flexbox !important;
     display: flex !important;
   }
   .deal-shape .shape-1 {
@@ -335,8 +333,7 @@
   .home-slides.owl-theme .owl-nav [class*=owl-] {
     left: 0;
     top: 55%;
-    -webkit-transform: translateY(-55%);
-            transform: translateY(-55%);
+    transform: translateY(-55%);
   }
   .home-slides.owl-theme .owl-nav [class*=owl-].owl-next {
     right: 0;
@@ -472,14 +469,12 @@
     display: none;
   }
 }
-
 @media only screen and (min-width: 576px) and (max-width: 767px) {
   .login-form form .lost-your-password {
     text-align: right;
     margin-top: 0;
   }
 }
-
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .default-btn {
     padding: 10px 25px;
@@ -582,7 +577,7 @@
     right: 0;
     top: 0;
     z-index: -1;
-    opacity: .80;
+    opacity: 0.8;
   }
   .main-banner-item.banner-item-two::before {
     display: none;
@@ -642,8 +637,6 @@
     margin-top: 0;
   }
   .deal-content .d-flex {
-    display: -webkit-box !important;
-    display: -ms-flexbox !important;
     display: flex !important;
   }
   .deal-shape .shape-1 {
@@ -703,8 +696,7 @@
   .home-slides.owl-theme .owl-nav [class*=owl-] {
     left: 0;
     top: 55%;
-    -webkit-transform: translateY(-55%);
-            transform: translateY(-55%);
+    transform: translateY(-55%);
   }
   .home-slides.owl-theme .owl-nav [class*=owl-].owl-next {
     right: 0;
@@ -727,8 +719,7 @@
   }
   .client-slider.owl-theme .owl-nav [class*=owl-] {
     top: 60%;
-    -webkit-transform: translateY(-60%);
-            transform: translateY(-60%);
+    transform: translateY(-60%);
   }
   .about-image {
     text-align: center;
@@ -757,7 +748,6 @@
     display: none;
   }
 }
-
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .top-header-information li {
     font-size: 15px;
@@ -840,8 +830,6 @@
     padding-bottom: 80px;
   }
   .deal-content .d-flex {
-    display: -webkit-box !important;
-    display: -ms-flexbox !important;
     display: flex !important;
   }
   .deal-content #timer div {
@@ -868,8 +856,7 @@
   }
   .client-slider.owl-theme .owl-nav [class*=owl-] {
     top: 60%;
-    -webkit-transform: translateY(-60%);
-            transform: translateY(-60%);
+    transform: translateY(-60%);
   }
   .main-slider-item.main-slider-two {
     padding-top: 100px;
@@ -885,13 +872,11 @@
     display: none;
   }
 }
-
 @media only screen and (min-width: 1200px) and (max-width: 2500px) {
   .container {
     max-width: 1250px;
   }
 }
-
 @media only screen and (min-width: 1550px) {
   .main-navbar .navbar .others-options .option-item .burger-menu span {
     height: 2px;
@@ -903,5 +888,4 @@
     padding-top: 275px;
     padding-bottom: 275px;
   }
-}
-/*# sourceMappingURL=responsive.css.map */
+}/*# sourceMappingURL=responsive.css.map */

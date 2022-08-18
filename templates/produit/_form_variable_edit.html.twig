@@ -87,26 +87,18 @@
                           <!-- Nav tabs -->
                           <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item"> <a class="nav-link active" id="home-tab"  href="{{ path('app_produit_index') }}" aria-controls="home5" aria-expanded="true"><span class="hidden-sm-up"><i class="ion-home"></i></span> <span class="hidden-xs-down">Liste Produits</span></a> </li>
-                            <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                <span class="hidden-sm-up"><i class="ion-email"></i></span> <span class="hidden-xs-down">Categories</span>
-                              </a>
-                              <div class="dropdown-menu"> <a class="dropdown-item" id="dropdown1-tab"   href="{{ path('app_categorie_new') }}" > Categorie Personnalise</a> <a class="dropdown-item" id="dropdown2-tab" href="#dropdown2" role="tab" data-toggle="tab" aria-controls="dropdown2">gerer les
-                                variations</a> </div>
-                            </li>
+                        
                             <li class="nav-item dropdown">
                               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="hidden-sm-up"><i class="ion-email"></i></span> <span class="hidden-xs-down">Attributs</span>
                               </a>
-                              <div class="dropdown-menu"> <a class="dropdown-item" id="dropdown1-tab"   href="{{ path('app_attribut_new') }}" > Attribut Personnalise</a> <a class="dropdown-item" id="dropdown2-tab" href="#dropdown2" role="tab" data-toggle="tab" aria-controls="dropdown2">gerer les
-                                variations</a> </div>
+                              <div class="dropdown-menu"> <a class="dropdown-item" id="dropdown1-tab"   href="{{ path('app_attribut_new_editproduit' , { id: produit.id }) }}" > Attribut Personnalise</a> </div>
                             </li>
                             <li class="nav-item dropdown">
                               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="hidden-sm-up"><i class="ion-email"></i></span> <span class="hidden-xs-down">Sous Categorie</span>
                               </a>
-                              <div class="dropdown-menu"> <a class="dropdown-item" id="dropdown1-tab"   href="{{ path('app_sous_categorie_new_produit') }}" > Ajouter Une sous Categorie</a> <a class="dropdown-item" id="dropdown2-tab" href="#dropdown2" role="tab" data-toggle="tab" aria-controls="dropdown2">gerer les
-                                variations</a> </div>
+                              <div class="dropdown-menu"> <a class="dropdown-item" id="dropdown1-tab"   href="{{ path('app_sous_categorie_new_produit',{ id : produit.id }) }}" > Ajouter Une sous Categorie</a>  </div>
                             </li>
     
                           

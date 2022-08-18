@@ -84,6 +84,18 @@
                 </div>
               </div>
 
+              <div class="form-group row">
+                <label class="col-form-label col-md-2"
+                  >Image de couverture</label
+                >
+                <div class="mb-3 col-md-10">
+                  {{ form_row(form.photo) }}
+                  <span class="form-text text-muted">{{
+                    form_errors(form.photo)
+                  }}</span>
+                </div>
+              </div>
+
               <div class="mb-3 col-12">
                 <button class="btn btn-info btn-rounded margin-top-10">
                   {{ button_label|default('Ajouter') }}

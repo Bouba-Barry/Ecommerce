@@ -1,94 +1,114 @@
-{% extends 'admin.html.twig' %} 
+{% extends 'admin.html.twig' %} {% block stylesheet %} {% endblock stylesheet %}
+{# {% block title %}Produit index{% endblock %} #} {% block content %}
 
-{% block stylesheet %} {% endblock stylesheet %}
-{# {% block title %}Produit index{% endblock %}  #}
-{% block content %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <div class="container-full">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="page-title">Sous Categorie</h3>
+          <div class="d-inline-block align-items-center">
+            <nav>
+              <ol class="breadcrumb">
+                {#
+                <li class="breadcrumb-item">
+                  <a href="#"><i class="mdi mdi-home-outline"></i></a>
+                </li>
+                #} {#
+                <li class="breadcrumb-item" aria-current="page">Forms</li>
+                #}
+                <li>
+                  <a
+                    href="{{
+                      path('app_souscategorie_index_categorie', {
+                        id: sous_categorie.categorie.id
+                      })
+                    }}"
+                    class="btn btn-primary btn-md"
+                    >Retour</a
+                  >
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-	  <div class="container-full">
-		<!-- Content Header (Page header) -->
-		<div class="content-header">
-			<div class="d-flex align-items-center">
-				<div class="mr-auto">
-					<h3 class="page-title">Sous Categorie</h3>
-					<div class="d-inline-block align-items-center">
-						<nav>
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-								{# <li class="breadcrumb-item" aria-current="page"></li> #}
-								<li class="breadcrumb-item" aria-current="page"><a class="btn btn-info btn-sm" href="{{ path('app_sous_categorie_index') }}">Retour à la liste</a></li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-			</div>
-		</div>
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="table-responsive">
+                <table
+                  id="example5"
+                  class="table table-bordered table-striped"
+                  style="width: 100%"
+                >
+                  <thead>
+                    <tr>
+                      <th col-1>ID</th>
+                      <th>Nom De la Sous Categorie</th>
+                      <th>image</th>
 
-		<!-- Main content -->
-		<section class="content">
-		  <div class="row">
-			  
-
-			<div class="col-12">
-
-			 <div class="box">
-				<div class="box-header with-border">
-				  <h3 class="box-title">Detail Sous Categorie</h3>
-				</div>
-				<!-- /.box-header -->
-				<div class="box-body">
-					<div class="table-responsive">
-					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
-						<thead>
-							<tr>
-							<th col-1>ID</th>
-							<th>Nom De la Sous Categorie</th>
-                            <th>Action <th>
-						
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td class="">{{ sous_categorie.id }}</td>
-               					 <td>{{ sous_categorie.titre }}</td>
-                				<td>
-                        			<a href="{{ path('app_sous_categorie_edit', {'id': sous_categorie.id}) }}" class="btn btn-md btn-warning mb-5">
-		                          <i class="fa fa-edit"></i>
-         	               		</a>
-            	            	{# <a href="{{ path('app_produit_delete', {'id': produit.id}) }}" class="btn btn-md btn-danger">
-                	          	<i class="fa fa-trash"></i>
-                    	    	</a> #}
-                                {{ include('sous_categorie/_delete_form.html.twig') }}
-							</td>
-							</tr>
-						</tbody>
-						<tfoot>
-							<tr>
-							<th>ID</th>
-								<th>Nom Sous Categorie</th>
-							</tr>
-						</tfoot>
-					</table>
-					</div>
-				</div>
-				<!-- /.box-body -->
-			  </div>
-			  <!-- /.box -->      
-			</div>  
-			<!-- /.col -->
-		  </div>
-		  <!-- /.row -->
-		</section>
-		<!-- /.content -->
-	  
-	  </div>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="">{{ sous_categorie.id }}</td>
+                      <td>{{ sous_categorie.titre }}</td>
+                      <td>
+                        <img
+                          style="height: 100px; width: 160px"
+                          src="{{ asset('uploads/sousCategories/' ~ sous_categorie.getPicture() ) }}"
+                        />
+                      </td>
+                      <td>
+                        <a
+                          href="{{
+                            path('app_sous_categorie_edit_aside', {
+                              id: sous_categorie.id,
+                              slug: sous_categorie.categorie.id
+                            })
+                          }}"
+                          class="btn btn-md btn-warning"
+                        >
+                          <i class="fa fa-edit"></i>
+                        </a>
+                        {#
+                        <a
+                          href="{{
+                            path('app_produit_delete', { id: produit.id })
+                          }}"
+                          class="btn btn-md btn-danger"
+                        >
+                          <i class="fa fa-trash"></i>
+                        </a>
+                        #}
+                        {{ include("sous_categorie/_delete_form.html.twig") }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
-    
-{% endblock %}
-{% block javascript %}
-<script src="{{ asset('assets/vendor_components/datatable/datatables.min.js') }} "></script>
-	<script src="{{ asset('main/js/pages/data-table.js') }}"></script>
 {% endblock %}

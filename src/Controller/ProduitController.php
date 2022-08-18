@@ -127,6 +127,9 @@ class ProduitController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
+    
     #[Route('/admin/variable/{id}/edit', name: 'app_produit_edit_variable', methods: ['GET', 'POST'])]
     public function edit_variable(Request $request, Produit $produit, SluggerInterface $slugger, ProduitRepository $produitRepository): Response
     {

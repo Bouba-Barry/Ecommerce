@@ -1,9 +1,7 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Edit SousCategorie{% endblock %}
-
-{% block body %}
-    <h1>Edit SousCategorie</h1>
-
-   {{ include('sous_categorie/_form.html.twig', {'button_label': 'Update'}, {'action': path("app_sous_categorie_edit", {'id': sous_categorie.id})}) }}
-{% endblock %}
+{{
+  include(
+    "sous_categorie/_form.html.twig",
+    { button_label: "Update" },
+    { action: path("app_sous_categorie_edit", { id: sous_categorie.id }) }
+  )
+}}

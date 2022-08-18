@@ -59,6 +59,22 @@
                   }}</span>
                 </div>
               </div>
+              <div class="form-group row">
+                <label class="col-form-label col-md-2"
+                  >Description Categorie</label
+                >
+                <div class="mb-3 col-md-10">
+                  {#
+                  <input class="form-control" type="datetime" name="datetime" />
+                  #}
+
+                  {{ form_row(form.description) }}
+
+                  <span class="form-text text-muted">{{
+                    form_errors(form.description)
+                  }}</span>
+                </div>
+              </div>
 
               <div class="mb-3 col-12">
                 <button class="btn btn-info btn-rounded margin-top-10">

@@ -13,7 +13,7 @@
             <ol class="breadcrumb">
               <li>
                 <a
-                  href="{{ path('app_categorie_index') }}"
+                  href="{{ path('app_categorie_index_aside') }}"
                   class="btn btn-primary btn-md"
                   >Liste Categories</a
                 >
@@ -41,6 +41,7 @@
                     <tr>
                       <th col-1>ID</th>
                       <th>Nom De la Categorie</th>
+                      <th>Sous Categorie</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -48,6 +49,11 @@
                     <tr>
                       <td class="">{{ categorie.id }}</td>
                       <td>{{ categorie.titre }}</td>
+                      <td>
+                        {% for sous_categorie in categorie.getSousCategories()
+                        %}
+                        {{ sous_categorie.getTitre() }} , {% endfor %}
+                      </td>
                       <td>
                         <a
                           href="{{
@@ -61,14 +67,6 @@
                       </td>
                     </tr>
                   </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>ID</th>
-                      <th style="border-right: 1px solid #d5dfea">
-                        Nom Categorie
-                      </th>
-                    </tr>
-                  </tfoot>
                 </table>
               </div>
             </div>
@@ -85,9 +83,4 @@
 </div>
 <!-- /.content-wrapper -->
 
-{% endblock %} {% block javascript %}
-<script src="{{
-    asset('assets/vendor_components/datatable/datatables.min.js')
-  }} "></script>
-<script src="{{ asset('main/js/pages/data-table.js') }}"></script>
 {% endblock %}

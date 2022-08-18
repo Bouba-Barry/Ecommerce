@@ -46,7 +46,7 @@ class SousCategorieType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid image',
                     ])
                 ],
-                'attr' => ['placeholder' => 'Image Produit', 'class' => 'form-control']
+                'attr' => ['placeholder' => 'Image Sous Categorie', 'class' => 'form-control']
             ]);
     }
 

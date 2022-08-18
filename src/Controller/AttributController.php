@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Attribut;
 use App\Form\AttributType;
 use App\Repository\AttributRepository;
+use App\Repository\ProduitRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -121,10 +122,6 @@ class AttributController extends AbstractController
 
 
 
-
-
-
-
     #[Route('/new', name: 'app_attribut_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AttributRepository $attributRepository): Response
     {
@@ -141,6 +138,30 @@ class AttributController extends AbstractController
         return $this->renderForm('attribut/new.html.twig', [
             'attribut' => $attribut,
             'form' => $form,
+        ]);
+    }
+
+
+
+
+
+    #[Route('/new/editproduit/{id}', name: 'app_attribut_new_editproduit', methods: ['GET', 'POST'])]
+    public function neweditproduit($id,Request $request,ProduitRepository $produitRepository ,AttributRepository $attributRepository): Response
+    {
+        $attribut = new Attribut();
+        $form = $this->createForm(AttributType::class, $attribut);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $attributRepository->add($attribut, true);
+
+            return $this->redirectToRoute('app_variation_new_variable_edit', ['id' => $attribut->getId(),'slug'=>$id  ]);
+        }
+
+        return $this->renderForm('attribut/new_editproduit.html.twig', [
+            'attribut' => $attribut,
+            'form' => $form,
+            'produit' => $produitRepository->find($id)
         ]);
     }
 

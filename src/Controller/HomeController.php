@@ -483,7 +483,10 @@ class HomeController extends AbstractController
     #[Route('', name: 'app_home')]
     public function home(CategorieRepository $categorieRepository, SousCategorieRepository $sousCat, ProduitRepository $produitRepository, FeadBackRepository $feadBackRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
     {
-        $NewProducts = $produitRepository->findRecentProduct(); //produit arriver il y'a 2 weeks et maxREsult 10
+        $NewProducts = $produitRepository->findRecentProduct();
+        // dd($NewProducts);
+        //produit arriver il y'a 2 weeks et maxREsult 10
+        
         // dd($NewProduct);
         $bestSellers = $produitRepository->BestSellers();
         // dd($bestSellers);

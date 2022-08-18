@@ -1,0 +1,209 @@
+{% extends 'admin.html.twig' %} {% block stylesheet %} {% endblock stylesheet %}
+{# {% block title %}Produit index{% endblock %} #} {% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="d-flex align-items-center">
+        {#
+        <div class="mr-auto">
+          <h3 class="page-title">Liste Sous Categorie</h3>
+          <div class="d-inline-block align-items-center">
+            <ol class="breadcrumb">
+              <li>
+                <a
+                  href="{{ path('app_sous_categorie_new') }}"
+                  class="btn btn-primary btn-md"
+                  >Ajouter Sous Categorie</a
+                >
+              </li>
+            </ol>
+          </div>
+        </div>
+        #}
+        <div class="mr-auto">
+          <h3 class="page-title">
+            Liste Sous Categories pour la Categorie : {{ categorie.getTitre() }}
+          </h3>
+          <div class="d-inline-block align-items-center">
+            <ol class="breadcrumb">
+              {#
+              <li>
+                <a
+                  href="{{ path('app_attribut_index_aside') }}"
+                  class="btn btn-primary btn-md"
+                  >Liste Attributs</a
+                >
+              </li>
+              #}
+              <li>
+                <div class="col-12">
+                  <div class="box box-default" style="background-color: beige">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                      <!-- Nav tabs -->
+                      <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                          <a
+                            class="nav-link active"
+                            id="home-tab"
+                            href="{{ path('app_categorie_index_aside') }}"
+                            aria-controls="home5"
+                            aria-expanded="true"
+                            ><span class="hidden-sm-up"
+                              ><i class="ion-home"></i
+                            ></span>
+                            <span class="hidden-xs-down"
+                              >Liste Categories</span
+                            ></a
+                          >
+                        </li>
+
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="{{
+                              path('app_souscategorie_new_aside_categorie', {
+                                id: categorie.id
+                              })
+                            }}"
+                          >
+                            <span class="hidden-sm-up"
+                              ><i class="ion-email"></i
+                            ></span>
+                            <span class="hidden-xs-down"
+                              >Ajouter Une sous Categorie</span
+                            >
+                          </a>
+                        </li>
+                      </ul>
+                      <!-- Tab panes -->
+                    </div>
+                    <!-- /.box-body -->
+                  </div>
+                  <!-- /.box -->
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+        <a
+          href="{{ path('app_sous_categorie_corbeille') }}"
+          style="font-size: 20px; color: blue"
+          >Corbeille
+          <i class="fa-solid fa-trash" style="font-size: 25px"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="table-responsive">
+                <table
+                  id="example5"
+                  class="table table-bordered table-striped"
+                  style="width: 100%"
+                >
+                  <thead>
+                    <tr>
+                      <th col-1>ID</th>
+                      <th>Nom De la Sous Categorie</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for sous_categorie in sous_categories %}
+                    <tr>
+                      <td class="">{{ sous_categorie.id }}</td>
+                      <td>{{ sous_categorie.titre }}</td>
+                      <td>
+                        <a
+                          href="{{
+                            path('app_sous_categorie_show', {
+                              id: sous_categorie.id
+                            })
+                          }}"
+                          class="btn btn-md btn-primary"
+                        >
+                          <i class="fa fa-eye"></i>
+                        </a>
+                        <a
+                          href="{{
+                            path('app_sous_categorie_edit_aside', {
+                              id: sous_categorie.id,
+                              slug: categorie.id
+                            })
+                          }}"
+                          class="btn btn-md btn-warning"
+                        >
+                          <i class="fa fa-edit"></i>
+                        </a>
+                        <a
+                          href="{{
+                            path('app_sous_categorie_show', {
+                              id: sous_categorie.id
+                            })
+                          }}"
+                          class="btn btn-md btn-danger"
+                        >
+                          <i class="fa fa-trash"></i>
+                        </a>
+                        {#
+                        {{ include("sous_categorie/_delete_form.html.twig") }}
+                        #}
+                      </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                      <td colspan="9">no records found</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>ID</th>
+                      <th style="border-right: 1px solid #d5dfea">
+                        Nom Sous Categorie
+                      </th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %} {% block javascript %}
+<script src="{{
+    asset('assets/vendor_components/datatable/datatables.min.js')
+  }} "></script>
+<script src="{{ asset('main/js/pages/data-table.js') }}"></script>
+{% endblock %}
