@@ -33,6 +33,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Messenger\Transport\Serialization\Serializer;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 
 // #[Route('/admin')]
@@ -51,6 +52,13 @@ class HomeController extends AbstractController
     //     $json = json_encode($produit_panier);
     //     return $this->json($json);
     // }
+
+    private $requestStack;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
 
 
 
@@ -298,7 +306,7 @@ class HomeController extends AbstractController
         // dd($priceAsc);
         $priceDesc = $produitRepository->price_desc();
         // dd($priceDesc);
-        $popular = $produitRepository->PopularProducts();
+        $popular = $produitRepository->BestSellers();
         // dd($popular);
         $produits_recent = $produitRepository->findRecentProduct();
         $produits = $produitRepository->findAll();
@@ -309,16 +317,31 @@ class HomeController extends AbstractController
     }
 
     #[ROUTE('/search', name: 'app_search_shop', methods: ['GET', 'POST'])]
-    public function shoplist_search(SerializerInterface $serializer, ProduitRepository $produitRepository, Request $request): Response
+    public function shoplist_search(SerializerInterface $serializer, ProduitRepository $produitRepository, Request $request)
     {
         $value = $request->get('searchInput');
+        $res = $produitRepository->findBySearch($value);
 
+        $session = $this->requestStack->getSession();
+        $session->set('valSearch', $value);
+
+        $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
+        $json = json_decode($json);
+        return $this->render('frontend/shoplist_search.html.twig', [
+            'produits' => $json,
+            'size' => count($json)
+        ]);
+    }
+
+    #[ROUTE('/TrieSearch', name: 'app_trie_search_shop', methods: ['GET', 'POST'])]
+    public function Sort_Search(SerializerInterface $serializer, ProduitRepository $produitRepository, Request $request): JsonResponse
+    {
         $choice = $request->get('choice_val');
 
-        // dd($value);
+        $session = $this->requestStack->getSession();
+        $value = $session->get('valSearch');
+
         $res = $produitRepository->findBySearch($value);
-        // dd($res);
-        // dd($res);
 
         $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
         $json = json_decode($json);
@@ -327,7 +350,8 @@ class HomeController extends AbstractController
             array_push($tab, $json[$i]->id);
         }
         // dd($tab);
-
+        $valll = $produitRepository->findMostPopulareInSearch($tab);
+        // dd($valll);
         if ($choice && (!empty($tab))) {
             switch ($choice) {
                 case 'default':
@@ -343,26 +367,17 @@ class HomeController extends AbstractController
                     $ret = $produitRepository->find_price_asc_inSearch($tab);
                     break;
                 case 'price_desc':
-                    $ret = $produitRepository->find_price_asc_inSearch($tab);
+                    $ret = $produitRepository->find_price_desc_inSearch($tab);
                     break;
             }
+            $ret = $serializer->serialize($ret, 'json', ['groups' => ['prod:read']]);
             return $this->json($ret);
         }
-
-
-        return $this->render('frontend/shoplist_search.html.twig', [
-            'produits' => $json,
-            'size' => count($json)
-        ]);
     }
 
     #[ROUTE('/shortProduct/{val}', name: 'app_short_by', methods: ['GET'])]
     public function shortBy($val,  SerializerInterface $serializer, ProduitRepository $produitRepository): JsonResponse
     {
-        // dd($val);
-        // dd($attr);
-        // $res = [];
-        // dd("je suis bien arriver dans le controller");
         switch ($val) {
             case 'default':
                 $res = [];
@@ -380,13 +395,6 @@ class HomeController extends AbstractController
                 $res = $produitRepository->price_desc();
                 break;
         }
-
-        // $response = new Response(json_encode($res));
-        // $response->headers->set('Content-Type', 'application/json');
-        // dd($response);
-        // dd($res);
-        // $t = json_encode($res);
-        // dd(json_encode($res));
         $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
         // dd($this->json($res));
         // dd($t);
@@ -483,11 +491,8 @@ class HomeController extends AbstractController
     #[Route('', name: 'app_home')]
     public function home(CategorieRepository $categorieRepository, SousCategorieRepository $sousCat, ProduitRepository $produitRepository, FeadBackRepository $feadBackRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
     {
-        $NewProducts = $produitRepository->findRecentProduct();
+        $NewProducts = $produitRepository->findRecentProduct(); //produit arriver il y'a 2 weeks et maxREsult 10
         // dd($NewProducts);
-        //produit arriver il y'a 2 weeks et maxREsult 10
-        
-        // dd($NewProduct);
         $bestSellers = $produitRepository->BestSellers();
         // dd($bestSellers);
         $plusVendus = $produitRepository->MostBuy();
@@ -513,6 +518,7 @@ class HomeController extends AbstractController
         // $min = $produitRepository->findOneBy([], ['id' => 'ASC']);
         // $min = $min->getId();
         $popular_products = $produitRepository->PopularProducts_This_Month();
+        // dd($popular_products);
         $categories = $categorieRepository->findAll();
         $marque = $sousCat->findAll();
         return $this->render('frontend/home.html.twig', [
@@ -524,7 +530,7 @@ class HomeController extends AbstractController
             'plusVendu' => $plusVendus,
             'sous_categories' => $SouscatePopulaire,
             'categories' => $categories,
-            'marque' => $marque,
+            'marques' => $marque,
             'popular_products_month' => $popular_products
         ]);
     }
@@ -735,13 +741,15 @@ class HomeController extends AbstractController
     public function ProductBySousCategory($id, ProduitRepository $prod, SousCategorieRepository $sousCategorieRepository)
     {
         $products = $sousCategorieRepository->findProducts($id);
-        // dd($prod->findMostViewMonth());
-        // dd($products);
-        // dd($prod->findAll());
+        $size = count($products);
+        $session = $this->requestStack->getSession();
+        $session->set('idSousCat', $id);
+
         $main = $sousCategorieRepository->findOneBy(['id' => $id]);
         return $this->render('frontend/sous_categorie.html.twig', [
             'products' => $products,
-            'main' => $main
+            'main' => $main,
+            'size' => $size
         ]);
     }
 
@@ -749,12 +757,97 @@ class HomeController extends AbstractController
     public function prodByCategory($id, CategorieRepository $categorieRepository, PanierRepository $pan)
     {
         // dd($categorieRepository->findProductsByCategory($id));
-        $produits = $categorieRepository->findProductsByCategory($id);
+        $produits = (array)$categorieRepository->findProductsByCategory($id);
+        $session = $this->requestStack->getSession();
+        $session->set('idCat', $id);
+        $size = count($produits);
         // dd($pan->findMostViewMonth());
+
+
         $cat = $categorieRepository->findOneBy(['id' => $id]);
         return $this->render('frontend/produit_by_category.html.twig', [
             'produits' => $produits,
-            'cat' => $cat
+            'cat' => $cat,
+            'size' => $size
         ]);
+    }
+    #[Route('/TrieCategory', name: 'app_sort_in_cate', methods: ['POST'])]
+    public function Trie_Cat_Produit(SerializerInterface $serializer, CategorieRepository $categorieRepository, ProduitRepository $produitRepository, Request $request): JsonResponse
+    {
+        $choice = $request->get('Le_choix');
+        $session = $this->requestStack->getSession();
+        $value = $session->get('idCat');
+
+        $res = $produitRepository->findProductsByCategory($value);
+
+        $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
+        $json = json_decode($json);
+        $tab = array();
+        for ($i = 0; $i < count($json); $i++) {
+            array_push($tab, $json[$i]->id);
+        }
+        // dd($tab);
+        // $valll = $produitRepository->findMostPopulareInSearch($tab);
+        // dd($valll);
+        if ($choice && (!empty($tab))) {
+            switch ($choice) {
+                case 'default':
+                    $ret = [];
+                    break;
+                case 'populaire':
+                    $ret = $produitRepository->findMostPopulareInSearch($tab);
+                    break;
+                case 'new':
+                    $ret = $produitRepository->find_recent_inSearch($tab);
+                    break;
+                case 'price_asc':
+                    $ret = $produitRepository->find_price_asc_inSearch($tab);
+                    break;
+                case 'price_desc':
+                    $ret = $produitRepository->find_price_desc_inSearch($tab);
+                    break;
+            }
+            $ret = $serializer->serialize($ret, 'json', ['groups' => ['prod:read']]);
+            return $this->json($ret);
+        }
+    }
+
+    #[Route('/TrieSousCategorie', name: 'app_sort_Sous_cate', methods: ['POST'])]
+    public function Trie_SousCategorie(SerializerInterface $serializer, SousCategorieRepository $sousCategorieRepository, ProduitRepository $produitRepository, Request $request): JsonResponse
+    {
+        $choice = $request->get('choix');
+        $session = $this->requestStack->getSession();
+        $value = $session->get('idSousCat');
+
+        $res = $sousCategorieRepository->findProducts($value);
+
+        $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
+        $json = json_decode($json);
+        $tab = array();
+        for ($i = 0; $i < count($json); $i++) {
+            array_push($tab, $json[$i]->id);
+        }
+
+        if ($choice && (!empty($tab))) {
+            switch ($choice) {
+                case 'default':
+                    $ret = [];
+                    break;
+                case 'populaire':
+                    $ret = $produitRepository->findMostPopulareInSearch($tab);
+                    break;
+                case 'new':
+                    $ret = $produitRepository->find_recent_inSearch($tab);
+                    break;
+                case 'price_asc':
+                    $ret = $produitRepository->find_price_asc_inSearch($tab);
+                    break;
+                case 'price_desc':
+                    $ret = $produitRepository->find_price_desc_inSearch($tab);
+                    break;
+            }
+            $ret = $serializer->serialize($ret, 'json', ['groups' => ['prod:read']]);
+            return $this->json($ret);
+        }
     }
 }

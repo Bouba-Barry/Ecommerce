@@ -34,15 +34,16 @@
 		<section class="top-products-area pt-100 pb-100"> <div class="container">
 			<div class="orgo-grid-sorting row align-items-center">
 				<div class="col-lg-6 col-md-6 result-count">
-					<p>
-                    Parcourez Les Produits
+					<p>On a Trouvé 
+						<span class="count" id="count">{{size}}</span>
+						produits Disponible</p>
 				</div>
 
 				<div class="col-lg-6 col-md-6 ordering">
 					<div class="select-box">
 						<label>Sort By:</label>
 						<select
-						id="trieProd"/>
+						id="Trie"/>
 						{# <op0t0ion value="" id="first"></option> #}
 						<option value="default">Default</option>
 						<option value="populaire">Popularity</option>
@@ -150,4 +151,5 @@
 </div></section><!-- End Top Products Area -->{# end of the main block #}{% endblock %}
 {% block javascripts %}
 {# <script src="{{ asset('js/panier3.js') }}"></script> #}
+	<script src="{{ asset('FrontOffice/other/trie_prod_sousCategorie.js') }} "></script>
 {% endblock %}

@@ -141,6 +141,9 @@ img {
 .pb-70 {
   padding-bottom: 70px;
 }
+.mt-50{
+  margin-top: 50px;
+}
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
   color: #111111;
