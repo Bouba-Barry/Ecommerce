@@ -59,7 +59,7 @@ class ProduitRepository extends ServiceEntityRepository
     /**
      * @return Produit[] Returns an array of Produit objects
      */
-    public function findBySearch($attr): array
+    public function findBySearch($attr)
     {
         // SELECT p FROM DoctrineExtensions\Query\BlogPost p WHERE DATEDIFF(CURRENT_TIME(), p.created) < 7 
         return $this->createQueryBuilder('p')
@@ -89,7 +89,12 @@ class ProduitRepository extends ServiceEntityRepository
         $resultSet = $stmt->executeQuery();
 
         // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
+        $result = $resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.id in (:result) ')
+            ->setParameter(':result', $result);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function findByUser($user)
@@ -189,7 +194,7 @@ class ProduitRepository extends ServiceEntityRepository
         WHERE p.id = f.produit_id and p.sous_categorie_id = s.id 
         GROUP BY s.id
         ORDER BY COUNT(*) DESC
-        LIMIT 3
+        LIMIT 4
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
@@ -210,7 +215,6 @@ class ProduitRepository extends ServiceEntityRepository
         SELECT * FROM produit p
         WHERE DATEDIFF(CURRENT_TIMESTAMP(), p.create_at)  BETWEEN 0 and 31
         ORDER BY p.create_at DESC
-        LIMIT 12
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
@@ -439,7 +443,12 @@ class ProduitRepository extends ServiceEntityRepository
         $resultSet = $stmt->executeQuery();
 
         // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
+        $result = $resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.id in (:result) ')
+            ->setParameter(':result', $result);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -512,6 +521,35 @@ class ProduitRepository extends ServiceEntityRepository
         ]);
 
         // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
+        $result = $resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.id in (:result) ')
+            ->setParameter(':result', $result);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function findProductsBySousCategory($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        SELECT p.* FROM produit p, sous_categorie s
+        WHERE  s.id = $id and p.sous_categorie_id = s.id
+        ORDER BY p.id DESC
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        $result = $resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.id in (:result) ')
+            ->setParameter(':result', $result);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 }

@@ -29,9 +29,9 @@
 		<section class="top-products-area pt-100 pb-100"> <div class="container">
 			<div class="orgo-grid-sorting row align-items-center">
 				<div class="col-lg-6 col-md-6 result-count">
-					{# <p>On a Trouvé
-						<span class="count">10</span>
-						produits </p> #}
+					<p>On a Trouvé
+						<span class="count" id="count">{{ size }}</span>
+						produits </p>
 				</div>
 
 				<div class="col-lg-6 col-md-6 ordering">
@@ -62,32 +62,25 @@
 						<div class="products-image">
 							<a href="{{ path('app_shop_details',{id : produit.id }) }}"><img style="width: 250px; height: 200px" src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }} " alt="image"></a>
 
-							<ul class="products-action">
-								<li>
-									<a href="cart.html" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
-										<i class="flaticon-shopping-cart"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
-										<i class="flaticon-heart"></i>
-									</a>
-								</li>
-								<li>
-									<a
-									href="#"
-									data-tooltip="tooltip"
-									id="searchbtn{{ produit.id }}"
-									class="search"
-									data-placement="top"
-									title="Quick View"
-									data-toggle="modal"
-									data-target="#productsQuickView"
-								  >
-									<i class="flaticon-search"></i>
-								  </a>
-								</li>
-							</ul>
+					<ul class="products-action">
+                  			<li>
+                   				<a    id="addtocart{{ produit.id }}"
+                    				class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+									<i class="flaticon-shopping-cart"></i>
+								</a>
+            		      </li>
+                  			<li>
+                    			<a  id="addtowish{{ produit.id }}"
+                    				class="addtowish" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+								<i class="flaticon-heart"></i>
+								</a>
+	    	              </li>
+    	    	          <li>
+        	    	        <a data-tooltip="tooltip" id="searchbtn{{ produit.id }}" class="search" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+								<i class="flaticon-search"></i>
+							</a>
+        	         	 </li>
+            	    	</ul>
 
 							{% if produit.getReduction()|length != 0 %}
 							<div class="sale">

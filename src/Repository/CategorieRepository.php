@@ -29,12 +29,12 @@ class CategorieRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    
+
     public function findAllCategories()
     {
         $queryBuilder = $this->createQueryBuilder('c');
-            
-            
+
+
         return $queryBuilder;
     }
 
@@ -43,7 +43,7 @@ class CategorieRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('c')
             ->where("c.deletedAt is not NULL");
-            
+
         return $queryBuilder->getQuery()->getResult();
     }
 
@@ -56,7 +56,7 @@ class CategorieRepository extends ServiceEntityRepository
         WHERE  id=:id
         ";
         $stmt = $conn->prepare($sql);
-        $stmt->executeQuery(['id'=>$id]);
+        $stmt->executeQuery(['id' => $id]);
 
         // returns an array of arrays (i.e. a raw data set)
         return true;
@@ -71,26 +71,28 @@ class CategorieRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-     * @return Query Returns an array of Categorie objects
-     */
-    public function findProductsByCategory($id)
-    {
-        $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "
-    SELECT p.* From produit p, categorie c, sous_categorie s
-    where c.id = :id and c.id = s.categorie_id and s.id = p.sous_categorie_id
-    ORDER By p.create_at DESC
-    ";
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery([
-            'id' => $id
-        ]);
+    // public function findProductsByCategory($id)
+    // {
+    //     $conn = $this->getEntityManager()->getConnection();
 
-        // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
-    }
+    //     $sql = "
+    // SELECT p.* From produit p, categorie c, sous_categorie s
+    // where c.id = :id and c.id = s.categorie_id and s.id = p.sous_categorie_id
+    // ORDER By p.create_at DESC
+    // ";
+    //     $stmt = $conn->prepare($sql);
+    //     $resultSet = $stmt->executeQuery([
+    //         'id' => $id
+    //     ]);
+
+    //     $result = $resultSet->fetchAllAssociative();
+    //     $queryBuilder = $this->createQueryBuilder('p')
+    //         ->where('p.id in (:result) ')
+    //         ->setParameter(':result', $result);
+
+    //     return $queryBuilder->getQuery()->getResult();
+    // }
 
 
 

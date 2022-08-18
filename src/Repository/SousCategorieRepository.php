@@ -64,24 +64,6 @@ class SousCategorieRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-     * @return Produit[] Returns an array of Produit objects
-     */
-    public function findProducts($id)
-    {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = "
-        SELECT p.* FROM produit p, sous_categorie s
-        WHERE  s.id = $id and p.sous_categorie_id = s.id
-        ORDER BY p.id DESC
-        ";
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery();
-
-        // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
-    }
 
     /**
      * @return Produit[] Returns an array of Produit objects

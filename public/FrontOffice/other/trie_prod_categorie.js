@@ -33,6 +33,11 @@ function addProduct(res) {
     totalRes.innerHTML = res.length;
     let ch = "";
     for (let i = 0; i < res.length; i++) {
+      let red = "";
+      if (res[i].reduction.length > 0) {
+        red = "-" + res[i].reduction[0].pourcentage;
+      }
+
       let new_prix = 0;
       if (res[i].nouveau_prix) {
         new_prix = res[i].nouveau_prix;
@@ -44,7 +49,9 @@ function addProduct(res) {
           <div class = "col-lg-3 col-md-6">
           <div class="top-products-item">
             <div class="products-image">
-              <a href="http://127.0.0.1:8000/shop_details/${res[i].id}"><img src="uploads/produits/${res[i].image_produit}" style="width: 250px; height: 200px"  alt="image"></a>
+            <a href="http://127.0.0.1:8000/shop_details/${res[i].id}">
+            <img src="uploads/produits/${res[i].image_produit}" style="width: 250px; height: 200px"  alt="image">
+            </a>
               <ul class="products-action">
                 <li>
                   <a  data-tooltip="tooltip" data-placement="top" title="Add to Cart">
@@ -64,7 +71,7 @@ function addProduct(res) {
               </ul>
     
               <div class="sale">
-                <span>sale</span>
+                <span>${red}</span>
               </div>
             </div>
     

@@ -279,40 +279,25 @@
                       alt="image"
                   /></a>
 
-                  <ul class="products-action">
-                    <li>
-                      <a
-                        id="addtocart{{ prod.id }}"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Add to Cart"
-                        ><i class="flaticon-shopping-cart"></i
-                      ></a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        id="addtowish{{ prod.id }}"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Add to Wishlist"
-                        ><i class="flaticon-heart"></i
-                      ></a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        id="searchbtn{{ prod.id }}"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Quick View"
-                        data-toggle="modal"
-                        data-target="#productsQuickView"
-                      >
-                        <i class="flaticon-search"></i>
-                      </a>
-                    </li>
-                  </ul>
+        <ul class="products-action">
+                  <li>
+                   <a    id="addtocart{{ prod.id }}"
+                    class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+											<i class="flaticon-shopping-cart"></i>
+										</a>
+                  </li>
+                  <li>
+                    <a  id="addtowish{{ prod.id }}"
+                    class="addtowish" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+											<i class="flaticon-heart"></i>
+										</a>
+                  </li>
+                  <li>
+                    <a data-tooltip="tooltip" id="searchbtn{{ prod.id }}" class="search" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+											<i class="flaticon-search"></i>
+										</a>
+                  </li>
+                </ul>
                   {% if prod.getReduction()|length != 0 %}
                   <div class="sale">
                     <span>
@@ -429,43 +414,25 @@
                     />
                   </a>
 
-                  <ul class="products-action">
-                    <li>
-                      <a
-                        id="addtocart{{ newproduct.id }}"
-                        class="addtocart"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Add to Cart"
-                      >
-                        <i class="flaticon-shopping-cart"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        id="addtowish{{ newproduct.id }}"
-                        class="addtowish"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Add to Wishlist"
-                      >
-                        <i class="flaticon-heart"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        data-tooltip="tooltip"
-                        id="searchbtn{{ newproduct.id }}"
-                        class="search"
-                        data-placement="top"
-                        title="Quick View"
-                        data-toggle="modal"
-                        data-target="#productsQuickView"
-                      >
-                        <i class="flaticon-search"></i>
-                      </a>
-                    </li>
-                  </ul>
+                   <ul class="products-action">
+                  <li>
+                   <a    id="addtocart{{ newproduct.id }}"
+                    class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+											<i class="flaticon-shopping-cart"></i>
+										</a>
+                  </li>
+                  <li>
+                    <a  id="addtowish{{ newproduct.id }}"
+                    class="addtowish" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+											<i class="flaticon-heart"></i>
+										</a>
+                  </li>
+                  <li>
+                    <a data-tooltip="tooltip" id="searchbtn{{ newproduct.id }}" class="search" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+											<i class="flaticon-search"></i>
+										</a>
+                  </li>
+                </ul>
 
                   <div class="new">
                     <span>New</span>
@@ -611,39 +578,21 @@
                 </a>
                 <ul class="products-action">
                   <li>
-                    <a
-                      id="addtocart{{ bestSeller.id }}"
-                      class="addtocart"
-                      data-tooltip="tooltip"
-                      data-placement="top"
-                      title="Add to Cart"
-                    >
-                      <i class="flaticon-shopping-cart"></i>
-                    </a>
+                   <a    id="addtocart{{ bestSeller.id }}"
+                    class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+											<i class="flaticon-shopping-cart"></i>
+										</a>
                   </li>
                   <li>
-                    <a
-                      id="addtowish{{ bestSeller.id }}"
-                      class="addtowish"
-                      data-tooltip="tooltip"
-                      data-placement="top"
-                      title="Add to Wishlist"
-                    >
-                      <i class="flaticon-heart"></i>
-                    </a>
+                    <a  id="addtowish{{ bestSeller.id }}"
+                    class="addtowish" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+											<i class="flaticon-heart"></i>
+										</a>
                   </li>
                   <li>
-                    <a
-                      data-tooltip="tooltip"
-                      id="searchbtn{{ bestSeller.id }}"
-                      class="search"
-                      data-placement="top"
-                      title="Quick View"
-                      data-toggle="modal"
-                      data-target="#productsQuickView"
-                    >
-                      <i class="flaticon-search"></i>
-                    </a>
+                    <a data-tooltip="tooltip" id="searchbtn{{ bestSeller.id }}" class="search" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+											<i class="flaticon-search"></i>
+										</a>
                   </li>
                 </ul>
 

@@ -65,35 +65,37 @@
 						<div class="products-image">
 							<a href="{{ path('app_shop_details',{id : produit.id }) }}"><img style="width: 250px; height: 200px" src="{{ asset('uploads/produits/' ~ produit.image_produit) }} " alt="image"></a>
 
-							<ul class="products-action">
-								<li>
-									<a href="cart.html" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
-										<i class="flaticon-shopping-cart"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
-										<i class="flaticon-heart"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#" data-tooltip="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
-										<i class="flaticon-search"></i>
-									</a>
-								</li>
-							</ul>
+						<ul class="products-action">
+                  			<li>
+                   				<a    id="addtocart{{ produit.id }}"
+                    				class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+									<i class="flaticon-shopping-cart"></i>
+								</a>
+            		      </li>
+                  			<li>
+                    			<a  id="addtowish{{ produit.id }}"
+                    				class="addtowish" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+								<i class="flaticon-heart"></i>
+								</a>
+	    	              </li>
+    	    	          <li>
+        	    	        <a data-tooltip="tooltip" id="searchbtn{{ produit.id }}" class="search" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+								<i class="flaticon-search"></i>
+							</a>
+        	         	 </li>
+            	    	</ul>
 
-							{# {% if produit.getReduction()|length != 0 %} #}
+							{% if produit.reduction |length != 0 %}
                             <div class="sale">
                                 <span>
-                                    {# {% for produit_reduction in produit.getReduction() %}
+                                    {% for produit_reduction in produit.reduction %}
                                         -{{
-                                   produit_reduction.getPourcentage()
+                                   produit_reduction.pourcentage
                                            }}
-                                    {% endfor %} #}sale
+                                    {% endfor %}
       </span>
     </div>
-
+{% endif %}
 						</div>
 
 						<div class="products-content">
@@ -103,8 +105,8 @@
 							{# {% if produit.getReduction()|length != 0 %} #}
                             <div class="price">
 							{% if produit.nouveau_prix %}
-                              <span class="new-price"> {{ produit.nouveauPrix }}Dhs</span>
-                              <span class="old-price">{{ produit.ancienPrix }}Dhs</span>
+                              <span class="new-price"> {{ produit.nouveau_prix }}Dhs</span>
+                              <span class="old-price">{{ produit.ancien_prix }}Dhs</span>
 							   {% else %} 
 							    <span class="new-price"> {{ produit.ancien_prix }}Dhs</span>
 							    {% endif %}
@@ -146,5 +148,7 @@
 	</div>
 </div></section><!-- End Top Products Area -->{# end of the main block #}{% endblock %}
 {% block javascript %}
+<script src="{{ asset('js/panier3.js') }}"></script>
+
 <script src="{{ asset('FrontOffice/other/search_shop.js') }} "></script>
 {% endblock %}

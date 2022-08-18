@@ -283,7 +283,7 @@ class HomeController extends AbstractController
 
 
     #[Route('/shop_details/{id}', name: 'app_shop_details', methods: ['GET'])]
-    public function shop_details($id, CategorieRepository $categorieRepository  , FeadBackRepository $feadBackRepository, SerializerInterface $serializer, ProduitRepository $produitRepository, SousCategorieRepository $sousCategorieRepository)
+    public function shop_details($id, CategorieRepository $categorieRepository, FeadBackRepository $feadBackRepository, SerializerInterface $serializer, ProduitRepository $produitRepository, SousCategorieRepository $sousCategorieRepository)
     {
         // dd($produit);
 
@@ -321,23 +321,11 @@ class HomeController extends AbstractController
     #[ROUTE('/shoplist', name: 'app_home_shop')]
     public function shopList(ProduitRepository $produitRepository, Request $request): Response
     {
-
-        // dd($attr);
-        // $v = $request->get('choice');
-        // if ($v) {
-        //     dd($v);
-        // }
-        $priceAsc = $produitRepository->price_asc();
-        // dd($priceAsc);
-        $priceDesc = $produitRepository->price_desc();
-        // dd($priceDesc);
-        $popular = $produitRepository->BestSellers();
-        // dd($popular);
-        $produits_recent = $produitRepository->findRecentProduct();
         $produits = $produitRepository->findAll();
 
         return $this->render('frontend/shoplist.html.twig', [
-            'produits' => $produits
+            'produits' => $produits,
+            'size' => count($produits)
         ]);
     }
 
@@ -346,6 +334,7 @@ class HomeController extends AbstractController
     {
         $value = $request->get('searchInput');
         $res = $produitRepository->findBySearch($value);
+        // dd($res);
 
         $session = $this->requestStack->getSession();
         $session->set('valSearch', $value);
@@ -374,9 +363,7 @@ class HomeController extends AbstractController
         for ($i = 0; $i < count($json); $i++) {
             array_push($tab, $json[$i]->id);
         }
-        // dd($tab);
-        $valll = $produitRepository->findMostPopulareInSearch($tab);
-        // dd($valll);
+
         if ($choice && (!empty($tab))) {
             switch ($choice) {
                 case 'default':
@@ -421,13 +408,7 @@ class HomeController extends AbstractController
                 break;
         }
         $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
-        // dd($this->json($res));
-        // dd($t);
-        // dd($json);
         return $this->json($json);
-        // return $this->render('frontend/shoplist.html.twig', [
-        //     'res' => $res
-        // ]);
     }
 
     // #[ROUTE('/search/{val}', name: 'app_search_by', methods: ['GET'])]
@@ -574,11 +555,11 @@ class HomeController extends AbstractController
         // $panier->setUser($user);
         // $entityManager->persist($panier);
         $panier = $panierRepository->findOneBy(['user' => $userRepository->find($user_id)]);
-        
+
         // // actually executes the queries (i.e. the INSERT query)
         // $entityManager->flush();
         $panier_id = $panier->getId();
-       
+
         // $val->array_push($produit->getId());
 
         //  $panier_id=$panier->getId();
@@ -765,7 +746,7 @@ class HomeController extends AbstractController
     #[Route('/sous_categorie/{id}', name: 'app_prod_sous_cat', methods: ['GET'])]
     public function ProductBySousCategory($id, ProduitRepository $prod, SousCategorieRepository $sousCategorieRepository)
     {
-        $products = $sousCategorieRepository->findProducts($id);
+        $products = $prod->findProductsBySousCategory($id);
         $size = count($products);
         $session = $this->requestStack->getSession();
         $session->set('idSousCat', $id);
@@ -779,10 +760,10 @@ class HomeController extends AbstractController
     }
 
     #[Route('/category-product/{id}', name: 'app_prod_by_cate', methods: ['GET'])]
-    public function prodByCategory($id, CategorieRepository $categorieRepository, PanierRepository $pan)
+    public function prodByCategory($id, CategorieRepository $categorieRepository, ProduitRepository $produitRepository)
     {
         // dd($categorieRepository->findProductsByCategory($id));
-        $produits = (array)$categorieRepository->findProductsByCategory($id);
+        $produits = $produitRepository->findProductsByCategory($id);
         $session = $this->requestStack->getSession();
         $session->set('idCat', $id);
         $size = count($produits);
@@ -844,7 +825,7 @@ class HomeController extends AbstractController
         $session = $this->requestStack->getSession();
         $value = $session->get('idSousCat');
 
-        $res = $sousCategorieRepository->findProducts($value);
+        $res = $produitRepository->findProductsBySousCategory($value);
 
         $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
         $json = json_decode($json);
