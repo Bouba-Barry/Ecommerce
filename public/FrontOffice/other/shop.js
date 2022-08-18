@@ -1,17 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var myButton = document.querySelector("#click");
-
-  myButton.addEventListener("click", function () {
-    // window.location.href = `http://127.0.0.1:8000/shortProduct/${lists.value}`;
-    console.log("you clicked  on Me");
-    myButton.textContent = "You just clicked on Me !!!!!!!!!!!!!!!!!";
-    myButton.style.color = "red";
-    console.log("you clicked  on Me");
-  });
-  console.log(myButton);
-
   // window.location.href = `http://127.0.0.1:8000/shortProduct/${lists.value}`;
-  // lists.Onchange = function () {
+  // let lists = document.querySelector("#trieProd");
+  // lists.addEventListener("Change", function () {
   //   console.log(lists.value);
   //   fetch(`http://127.0.0.1:8000/shortProduct/${lists.value}`)
   //     .then((response) => {
@@ -22,14 +12,16 @@ document.addEventListener("DOMContentLoaded", function () {
   //         console.log("Mauvaise response");
   //       }
   //     })
-  //     .then((json) => {
+  //     .then((response) => {
+  //       var json = JSON.parse(response);
   //       console.log(json);
+  //       addProduct(response);
   //     })
-  //     // addProduct(data);
+
   //     .catch((err) => {
   //       console.log(err);
   //     });
-  // };
+  // });
 
   // function addProduct(data) {
   //   if (data.length > 0) {
@@ -53,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // data: "val=" + $("#produits").value,
         success: function (response) {
           var json = JSON.parse(response);
+          console.log("okkkkkkkkkkkkkkkkkkkkkkkkk !!!!!!!!!! ");
           // whatever you want to do here. Let's console.log the response
           // console.log(json[0].id); // should show your ['success'=> $request->id]
           console.log(json);
@@ -91,17 +84,17 @@ document.addEventListener("DOMContentLoaded", function () {
         // newNode.classList.add("col-lg-3 col-md-6");
         // let elt = document.createElement("div");
         // elt.className = "col-lg-3 col-md-6";
-        new_prix = "";
+        let new_prix = 0;
         if (res[i].nouveau_prix) {
-          new_prix = "".res[i].nouveau_prix;
+          new_prix = res[i].nouveau_prix;
         } else {
-          new_prix = "".res[i].ancien_prix;
+          new_prix = res[i].ancien_prix;
         }
         ch += `
       <div class = "col-lg-3 col-md-6">
       <div class="top-products-item">
         <div class="products-image">
-          <a href="{{ path('app_home') }}"><img src="{{ assett(uploads/produits/${res[i].image_produit}"  alt="image"></a>
+          <a href="http://127.0.0.1:8000/shop_details/${res[i].id}"><img src="uploads/produits/${res[i].image_produit}" style="width: 250px; height: 200px"  alt="image"></a>
           <ul class="products-action">
             <li>
               <a href="" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
@@ -127,11 +120,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <div class="products-content">
           <h3>
-            <a href="shop-details.html">${res[i].designation}</a>
+            <a href="http://127.0.0.1:8000/shop_details/${res[i].id}">${res[i].designation}</a>
           </h3>
           <div class="price">
           
-            <span class="new-price">DHS ${res[i].new_prix}</span>
+            <span class="new-price">DHS ${new_prix}</span>
            
             </span>
           </div>

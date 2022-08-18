@@ -2,11 +2,6 @@
 {% block title %}Shop List
 {% endblock %}
 
-{% block javascript %}
-	<script src="https://kit.fontawesome.com/4c827d40eb.js" crossorigin="anonymous"></script>
-	<script src="{{ asset('FrontOffice/other/shop.js') }} "></script>
-{% endblock %}
-
 {% block content %}
 
 	<!-- Start Page Banner -->
@@ -44,15 +39,12 @@
 						<label>Trier par:</label>
 						<select
 						id="trieProd"/>
-						{# <op0t0ion value="" id="first"></option> #}
 						<option value="default">Default</option>
 						<option value="populaire">Popularity</option>
 						<option value="new">Latest</option>
 						<option value="price_asc">Price: low to high</option>
 						<option value="price_desc">Price: high to low</option>
 					</select>
-					{# <button id="shortBy">
-																																																																																																																																																		check</button> #}
 				</div>
 			</div>
 		</div>
@@ -165,4 +157,6 @@
 </div></section><!-- End Top Products Area -->{# end of the main block #}{% endblock %}
 {% block javascripts %}
 <script src="{{ asset('js/panier3.js') }}"></script>
+	<script src="{{ asset('FrontOffice/other/shop.js') }} "></script>
+
 {% endblock %}

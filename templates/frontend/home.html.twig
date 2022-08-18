@@ -236,7 +236,7 @@
                <div class="col-lg-3 col-md-6">
                         <div class="top-products-item">
                             <div class="products-image">
-                                <a href="{{ path('app_shop_details', { id: prod.id }) }}"><img  src="{{ asset('uploads/produits/' ~ prod.image_produit) }}"
+                                <a href="{{ path('app_shop_details', { id: prod.id }) }}"><img  src="{{ asset('uploads/produits/' ~ prod.getImageProduit() ) }}"
                       style="width: 250px; height: 200px" alt="image"></a>
 
                                 <ul class="products-action">
@@ -252,22 +252,29 @@
                                         </a>
                                     </li>
                                 </ul>
-
-                                <div class="sale">
-                                    <span>Sale</span>
-                                </div>
+                                {% if prod.getReduction()|length != 0 %}
+									<div class="sale">
+										<span>
+											{% for produit_reduction in prod.getReduction() %}
+												-{{
+                  produit_reduction.getPourcentage()
+                }}
+                {% endfor %}
+              </span>
+            </div>
+            {% endif %}
                             </div>
-
+                            
                             <div class="products-content">
                                 <h3>
                                     <a href="{{ path('app_shop_details', { id: prod.id }) }}">{{ prod.designation }}</a>
                                 </h3>
                                 <div class="price">
-                                {% if prod.nouveau_prix %}
-                                    <span class="new-price">{{ prod.nouveau_prix }} Dhs</span>
-                                    <span class="old-price">{{ prod.ancien_prix }} Dhs</span>
+                                {% if prod.getNouveauPrix() %}
+                                    <span class="new-price">{{ prod.getNouveauPrix() }} Dhs</span>
+                                    <span class="old-price">{{ prod.getAncienPrix()}} Dhs</span>
                                 {% else %}
-                                 <span class="new-price">{{ prod.ancien_prix }} Dhs</span>{% endif %}
+                                 <span class="new-price">{{ prod.getAncienPrix()}} Dhs</span>{% endif %}
                                 </div>
                                 <ul class="rating">
                                     <li>
@@ -350,7 +357,7 @@
                     href="{{ path('app_shop_details', { id: newproduct.id }) }}"
                   >
                     <img
-                      src="{{ asset('uploads/produits/' ~ newproduct.image_produit) }}"
+                      src="{{ asset('uploads/produits/' ~ newproduct.getImageProduit() ) }}"
                       style="width: 250px; height: 200px"
                     />
                   </a>
@@ -407,20 +414,20 @@
                     >
                   </h3>
                   <div class="price">
-                    {% if newproduct.nouveau_prix %}
+                    {% if newproduct.getNouveauPrix() %}
                     <span class="new-price"
-                      >{{ newproduct.nouveau_prix }}Dhs</span
+                      >{{ newproduct.getNouveauPrix() }}Dhs</span
                     >
                     <span class="old-price"
-                      >{{ newproduct.ancien_prix }}Dhs</span
+                      >{{ newproduct.getAncienPrix() }}Dhs</span
                     >
                     {% else %} {#
                     <span class="new-price"
-                      >{{ newproduct.nouveau_prix }}Dhs</span
+                      >{{ newproduct.getNouveauPrix() }}Dhs</span
                     >
                     #}
                     <span class="new-price"
-                      >{{ newproduct.ancien_prix }}Dhs</span
+                      >{{ newproduct.getAncienPrix() }}Dhs</span
                     >
                     {% endif %}
                   </div>
@@ -509,7 +516,7 @@
               <div class="products-image">
                 <a href="{{ path('app_shop_details', { id: bestSeller.id }) }}">
                   <img
-                    src="{{ asset('uploads/produits/' ~ bestSeller.image_produit) }}"
+                    src="{{ asset('uploads/produits/' ~ bestSeller.getImageProduit()) }}"
                     style="width: 250px; height: 200px"
                   />
                 </a>
@@ -548,9 +555,17 @@
                   </li>
                 </ul>
 
-                <div class="sale">
-                  <span>Sale</span>
-                </div>
+                {% if bestSeller.getReduction()|length != 0 %}
+									<div class="sale">
+										<span>
+											{% for produit_reduction in bestSeller.getReduction() %}
+												-{{
+                  produit_reduction.getPourcentage()
+                }}
+                {% endfor %}
+              </span>
+            </div>
+            {% endif %}
               </div>
 
               <div class="products-content">
@@ -561,17 +576,17 @@
                   >
                 </h3>
                 <div class="price">
-                  {% if bestSeller.nouveau_prix %}
+                  {% if bestSeller.getNouveauPrix() %}
                   <span class="new-price"
-                    >{{ bestSeller.nouveau_prix }}Dhs</span
+                    >{{ bestSeller.getNouveauPrix() }}Dhs</span
                   >
-                  <span class="old-price">{{ bestSeller.ancien_prix }}Dhs</span>
+                  <span class="old-price">{{ bestSeller.getAncienPrix() }}Dhs</span>
                   {% else %} {#
                   <span class="new-price"
-                    >{{ newproduct.nouveau_prix }}Dhs</span
+                    >{{ newproduct.getNouveauPrix() }}Dhs</span
                   >
                   #}
-                  <span class="new-price">{{ bestSeller.ancien_prix }}Dhs</span>
+                  <span class="new-price">{{ bestSeller.getAncienPrix() }}Dhs</span>
                   {% endif %}
                 </div>
                 <ul class="rating">
@@ -871,53 +886,22 @@
       <!-- End Newsletter Area -->
 
       <!-- Start Partner Area -->
-      <div class="partner-area ptb-100">
+      <div class="partner-area ">
         <div class="container">
-          <div class="partner-slider owl-carousel owl-theme">
+          <div class="partner-slider owl-carousel owl-theme mt-50">
+          {% for marque in marques %}
+            {% if marque.getPicture() %}
             <div class="partner-item">
               <img
                 src=" {{
-                  asset('FrontOffice/assets/img/partner/partner-1.png')
+                  asset('uploads/sousCategories/' ~ marque.getPicture() )
                 }} "
+                style="width: 70px; height: 50px"
                 alt="image"
               />
             </div>
-
-            <div class="partner-item">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/partner/partner-2.png')
-                }} "
-                alt="image"
-              />
-            </div>
-
-            <div class="partner-item">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/partner/partner-3.png')
-                }} "
-                alt="image"
-              />
-            </div>
-
-            <div class="partner-item">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/partner/partner-4.png')
-                }} "
-                alt="image"
-              />
-            </div>
-
-            <div class="partner-item">
-              <img
-                src=" {{
-                  asset('FrontOffice/assets/img/partner/partner-5.png')
-                }} "
-                alt="image"
-              />
-            </div>
+            {% endif %}
+            {% endfor %}
           </div>
         </div>
       </div>

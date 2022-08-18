@@ -11,12 +11,11 @@
 			<div class="d-table-cell">
 				<div class="container">
 					<div class="page-banner-content">
-						<h2>Votre Recherche</h2>
+						<h2>Resultat de Votre Recherche</h2>
 						<ul>
 							<li>
-								<a href="">Retour à l'accueil</a>
+								<a href=" {{ path('app_home') }} " class="default-btn">Retour à l'accueil</a>
 							</li>
-							<li></li>
 						</ul>
 					</div>
 				</div>
@@ -31,7 +30,7 @@
 			<div class="orgo-grid-sorting row align-items-center">
 				<div class="col-lg-6 col-md-6 result-count">
 					<p>On a Trouvé 
-						<span class="count">{{size}}</span>
+						<span class="count" id="count">{{size}}</span>
 						produits Disponible</p>
 				</div>
 
@@ -39,7 +38,7 @@
 					<div class="select-box">
 						<label>Triez par:</label>
 						<select
-						id="trieProd"/>
+						id="choice"/>
 						{# <op0t0ion value="" id="first"></option> #}
 						<option value="default">Default</option>
 						<option value="populaire">Populaire</option>
@@ -145,4 +144,7 @@
 																																											</div> #}
 		</div>
 	</div>
-</div></section><!-- End Top Products Area -->{# end of the main block #}{% endblock %}{% block javascript %}<script src="{{ asset('FrontOffice/other/search_shop.js') }} "></script>{% endblock %}
+</div></section><!-- End Top Products Area -->{# end of the main block #}{% endblock %}
+{% block javascript %}
+<script src="{{ asset('FrontOffice/other/search_shop.js') }} "></script>
+{% endblock %}

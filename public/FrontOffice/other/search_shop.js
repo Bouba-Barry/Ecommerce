@@ -1,23 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let lists = document.querySelector("#trieProd");
+  let lists = document.querySelector("#choice");
   $(function () {
     // when select changes
     // if (lists.value === "default") {
 
     // } else {
-    $("#trieProd").on("change", function () {
+    $("#choice").on("change", function () {
       // if (lists.value != "default") {
       $.ajax({
-        url: `http://127.0.0.1:8000/search`,
+        url: `http://127.0.0.1:8000/TrieSearch`,
         method: "POST",
         dataType: "json", // we expect a json response
         data: { choice_val: lists.value },
         success: function (response) {
-          var json = response;
+          var valeurs = JSON.parse(response);
           // whatever you want to do here. Let's console.log the response
           // console.log(json[0].id); // should show your ['success'=> $request->id]
-          console.log(json);
-          addProduct(json);
+          console.log("okkkkkkkkkkkkkkkkkkkkkkkkk !!!!!!!!!! ");
+          console.log(valeurs);
+          addProduct(valeurs);
         },
       });
       // }}
@@ -40,23 +41,28 @@ document.addEventListener("DOMContentLoaded", function () {
     // contents.innerHTML = "";
 
     // console.log(elmts);
+
     if (res.length > 0) {
       row.innerHTML = "";
+      let totalRes = document.querySelector("#count");
+      totalRes.innerHTML = res.length;
       let ch = "";
       let img = `
   <img src={{ asset('FrontOffice/assets/img/top-products/top-products-8.jpg') }}  alt="image"> `;
       // console.log(src);
       for (let i = 0; i < res.length; i++) {
-        // console.log(res[i].designation);
-        // let newNode = document.createElement("div");
-        // newNode.classList.add("col-lg-3 col-md-6");
-        // let elt = document.createElement("div");
-        // elt.className = "col-lg-3 col-md-6";
+        let new_prix = 0;
+        if (res[i].nouveau_prix) {
+          new_prix = res[i].nouveau_prix;
+        } else {
+          new_prix = res[i].ancien_prix;
+        }
+
         ch += `
         <div class = "col-lg-3 col-md-6">
         <div class="top-products-item">
           <div class="products-image">
-            <a href="shop-details.html"><img src="FrontOffice/assets/img/top-products/top-products-8.jpg"  alt="image"></a>
+            <a href="http://127.0.0.1:8000/shop_details/${res[i].id}"><img src="uploads/produits/${res[i].image_produit}" style="width: 250px; height: 200px"  alt="image"></a>
             <ul class="products-action">
               <li>
                 <a href="cart.html" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
@@ -76,18 +82,16 @@ document.addEventListener("DOMContentLoaded", function () {
             </ul>
   
             <div class="sale">
-              <span>Sale</span>
+              <span></span>
             </div>
           </div>
   
           <div class="products-content">
             <h3>
-              <a href="shop-details.html">${res[i].designation}</a>
+              <a href="http://127.0.0.1:8000/shop_details/${res[i].id}">${res[i].designation}</a>
             </h3>
             <div class="price">
-              <span class="new-price">DHS ${res[i].nouveau_prix}</span>
-              <span class="old-price">DHS ${res[i].ancien_prix}
-              </span>
+            <span class="new-price">DHS ${new_prix}</span>
             </div>
             <ul class="rating">
               <li>

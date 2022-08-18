@@ -81,10 +81,9 @@ class ProduitRepository extends ServiceEntityRepository
         // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
         $sql = "
             SELECT p.* FROM produit p, commande_produit c 
-            WHERE p.id = c.produit_id and p.id IN (" . implode(',', $json) . ")  
+            WHERE p.id IN (" . implode(',', $json) . ") and p.id = c.produit_id   
             GROUP BY c.produit_id
-            ORDER BY SUM(c.qte_cmd) DESC
-            LIMIT 1
+            ORDER BY COUNT(*) DESC
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
@@ -199,26 +198,6 @@ class ProduitRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
-    /**
-     * @return Query Returns an array of Produit objects
-     */
-    public function findMostViewMonth()
-    {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = "
-        SELECT p.* FROM produit p , panier_produit pp,  
-        WHERE p.id = pp.produit_id
-        group by p.id
-        ";
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery();
-
-        // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
-    }
-
-
 
     /**
      * @return Produit[] Returns an array of Produit objects
@@ -229,15 +208,20 @@ class ProduitRepository extends ServiceEntityRepository
 
         $sql = "
         SELECT * FROM produit p
-        WHERE DATEDIFF(CURRENT_TIMESTAMP(), p.create_at)  BETWEEN 0 and 27
-        ORDER BY p.id DESC
+        WHERE DATEDIFF(CURRENT_TIMESTAMP(), p.create_at)  BETWEEN 0 and 31
+        ORDER BY p.create_at DESC
         LIMIT 12
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
 
         // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
+        $result = $resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.id in (:result) ')
+            ->setParameter(':result', $result);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -308,13 +292,16 @@ class ProduitRepository extends ServiceEntityRepository
         $resultSet = $stmt->executeQuery();
 
         // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
+        $result = $resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.id in (:result) ')
+            ->setParameter(':result', $result);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
 
-    /**
-     * @return Query Returns an array of Produit objects
-     */
+
     public function PopularProducts_This_Month()
     {
 
@@ -331,7 +318,12 @@ class ProduitRepository extends ServiceEntityRepository
         $resultSet = $stmt->executeQuery();
 
         // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
+        $result = $resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.id in (:result) ')
+            ->setParameter(':result', $result);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -353,13 +345,17 @@ class ProduitRepository extends ServiceEntityRepository
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
 
-        // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
+        $result = $resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.id in (:result) ')
+            ->setParameter(':result', $result);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
-    /**
-     * @return Produit[] Returns an array of Produit objects
-     */
+    // /**
+    //  * @return Produit[] Returns an array of Produit objects
+    //  */
     public function BestSellers()
     {
 
@@ -376,7 +372,12 @@ class ProduitRepository extends ServiceEntityRepository
         $resultSet = $stmt->executeQuery();
 
         // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
+        $result = $resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.id in (:result) ')
+            ->setParameter(':result', $result);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
 
@@ -430,11 +431,9 @@ class ProduitRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
         // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
         $sql = "
-            SELECT p.* FROM produit p, commande_produit c 
-            WHERE p.id = c.produit_id and p.id IN (" . implode(',', $json) . ") and DATEDIFF(CURRENT_TIMESTAMP(), p.create_at)  BETWEEN 0 and 15
-            Group by c.produit_id
-            ORDER BY p.id ASC
-            LIMIT 10
+            SELECT p.* FROM produit p
+            WHERE p.id IN (" . implode(',', $json) . ") and DATEDIFF(CURRENT_TIMESTAMP(), p.create_at)  BETWEEN 0 and 15
+            ORDER BY p.create_at DESC
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
@@ -451,11 +450,28 @@ class ProduitRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
         // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
         $sql = "
-            SELECT p.* FROM produit p, commande_produit c 
-            WHERE p.id = c.produit_id and p.id IN (" . implode(',', $json) . ") 
-            Group by c.produit_id
+            SELECT p.* FROM produit p 
+            WHERE p.id IN (" . implode(',', $json) . ") 
             order by IFNULL(nouveau_prix, 0) asc, ancien_prix asc
-            LIMIT 10
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function find_price_desc_inSearch($json)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
+        $sql = "
+            SELECT p.* FROM produit p 
+            WHERE p.id IN (" . implode(',', $json) . ") 
+            order by IFNULL(nouveau_prix, 0) desc, ancien_prix desc
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
@@ -476,5 +492,26 @@ class ProduitRepository extends ServiceEntityRepository
 
         // returns an array of arrays (i.e. a raw data set)
         return true;
+    }
+
+    /**
+     * @return Produit[] Returns an array of Categorie objects
+     */
+    public function findProductsByCategory($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+    SELECT p.* From produit p, categorie c, sous_categorie s
+    where c.id = :id and c.id = s.categorie_id and s.id = p.sous_categorie_id
+    ORDER By p.create_at DESC
+    ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery([
+            'id' => $id
+        ]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
     }
 }
