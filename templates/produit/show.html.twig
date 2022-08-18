@@ -107,13 +107,15 @@ content %}
 
           <div class="product-info" id="product-info">
             {% if produit.getVariation()|length > 0 %}
-            <script>
-              document.getElementById("product-info").style.position = "";
-            </script>
-            {% else %}
+
             <script>
               document.getElementById("product-info").style.position =
                 "absolute";
+            </script>
+            {% else %}
+
+            <script>
+              document.getElementById("product-info").style.position = "";
               console.log("ddfjd");
             </script>
             {% endif %}
@@ -171,7 +173,7 @@ content %}
                 {% endif %} {% if produit.getAttributs()|length !=0 %} {% for
                 attribut in produit.getAttributs() %}
 
-                <div class="col-md-12">
+                <div class="col-12">
                   <h4>{{ attribut.nom }}</h4>
                   {% if attribut.getVariations()|length != 0 %}
                   <ul>
@@ -182,28 +184,36 @@ content %}
                     </li>
                     {% endif %} {% endfor %}
                   </ul>
+                  {% endif %}
                 </div>
-                {% endif %} {% endfor %} {% endif %}
+                {% endfor %} {% endif %}
               </div>
               <div class="row">
                 {% if produit.getType()=="stable" %}
-                <a
-                  style="position: absolute; right: 10px; bottom: 0"
-                  href="{{ path('app_produit_edit', { id: produit.id }) }}"
-                  class="btn btn-md btn-warning mb-5"
-                  >Editer
-                  <i class="fa fa-edit"></i>
-                </a>
+
+                <div class="col-6"></div>
+                <div class="col-6">
+                  <a
+                    href="{{
+                      path('app_produit_edit_variable', { id: produit.id })
+                    }}"
+                    class="btn btn-md btn-warning mb-5"
+                    >Editer
+                    <i class="fa fa-edit"></i>
+                  </a>
+                </div>
                 {% else %}
-                <a
-                  style="position: absolute; right: 10px; bottom: 0"
-                  href="{{
-                    path('app_produit_edit_variable', { id: produit.id })
-                  }}"
-                  class="btn btn-md btn-warning mb-5"
-                  >Editer
-                  <i class="fa fa-edit"></i>
-                </a>
+                <div class="col-6"></div>
+                <div class="col-6">
+                  <a
+                    href="{{
+                      path('app_produit_edit_variable', { id: produit.id })
+                    }}"
+                    class="btn btn-md btn-warning mb-5"
+                    >Editer
+                    <i class="fa fa-edit"></i>
+                  </a>
+                </div>
                 {% endif %}
               </div>
             </div>

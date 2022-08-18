@@ -22,7 +22,7 @@ use App\Repository\ReductionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\SousCategorieRepository;
-
+use Gedmo\Mapping\Annotation\Tree;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,6 +34,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Messenger\Transport\Serialization\Serializer;
 use Symfony\Component\HttpFoundation\RequestStack;
+
+use Symfony\Component\Mime\Email;
 
 
 // #[Route('/admin')]
@@ -62,6 +64,29 @@ class HomeController extends AbstractController
 
 
 
+
+    #[Route('/email')]
+    public function sendEmail(MailerInterface $mailer):JsonResponse
+    {
+        $email = (new Email())
+            ->from('oussabitarek123@gmail.com')
+            ->to('oussabi.tarek@gmail.com')
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Time for Symfony Mailer!')
+            ->text('Sending emails is fun again!')
+            ->html('<p>See Twig integration for better HTML integration!</p>');
+
+        // $mailer->send($email);
+    //    if (count($this->getErrors()) > 0) {
+    //          dd($this->getErrors());
+    //      }
+       return $this->json($mailer->send($email));
+
+        // ...
+    }
 
     #[Route('/discover_product/{id}', name: 'app_discover_product', methods: ['GET'])]
     public function discover_product(Reduction $reduction, SerializerInterface $serializer, ProduitRepository $produitRepository, PanierRepository $panierRepository)
