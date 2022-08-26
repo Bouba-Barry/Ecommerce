@@ -60,6 +60,7 @@ class UserController extends AbstractController
         $em->persist($user);
         $em->flush();        
         $users=$userRepository->findcorbeille();
+        $this->addFlash('success', 'restauration effectue avec succes');
         return $this->render('user/corbeille.html.twig', [
             'users' => $users
         ]);
@@ -75,6 +76,7 @@ class UserController extends AbstractController
          $userRepository->deletefromtrash($id);
              
         $users=$userRepository->findcorbeille();
+        $this->addFlash('suppression', 'l utilisateur est supprime definitivement ');
         return $this->render('user/corbeille.html.twig', [
             'users' => $users
         ]);
@@ -110,7 +112,7 @@ class UserController extends AbstractController
 
         if ($form2->isSubmitted() && $form2->isValid()) {
             // dd("dd");
-            $this->addFlash('success', 'Mot de passe a ete modifie avec succes');
+            
             $user = $form2->getData();
             // dd($user->getPassword());
             //   dd($user->getPassword());
@@ -129,7 +131,7 @@ class UserController extends AbstractController
 
 
             $userRepository->add($user, true);
-
+            $this->addFlash('success', 'Mot de passe a ete modifie avec succes');
             return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
         }
         if ($form->isSubmitted() && $form->isValid()) {
@@ -239,6 +241,7 @@ class UserController extends AbstractController
 
 
             $userRepository->add($user, true);
+            $this->addFlash('success', 'utilisateur ajoute avec succes');
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -358,6 +361,8 @@ class UserController extends AbstractController
 
             $user->setPassword($hashedPassword);
             $userRepository->add($user, true);
+            $this->addFlash('success', 'vos modifications sont enregistre avec succes avec succes');
+
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -374,7 +379,40 @@ class UserController extends AbstractController
         //  dd("ff");
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
+            $this->addFlash('suppression', 'utilisateur supprime avec succes');
         }
+
+
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/delete/{id}', name: 'app_user_delete_get', methods: ['GET'])]
+    public function deleteget(Request $request, User $user, UserRepository $userRepository): Response
+    {
+        //  dd("ff");
+        // if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            $userRepository->remove($user, true);
+            $this->addFlash('suppression', 'utilisateur supprime avec succes');
+
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/delete/group', name: 'app_user_delete_group', methods: ['POST'])]
+    public function deletegroup(Request $request, UserRepository $userRepository): Response
+    {
+        // dd($request->get('check1'));
+        $array=[];
+        foreach($userRepository->findAll() as $user){
+          if($request->get('check'.$user->getId())!=null){
+           
+             array_push($array,$user->getId());
+          }
+
+        }
+        foreach($array as $user){
+            $userRepository->remove($userRepository->find($user),true);
+        }
+        // if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            // $userRepository->remove($user, true);
+            $this->addFlash('suppression', 'La suppression est effectue  avec succes');
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }

@@ -4,15 +4,24 @@ namespace App\Controller;
 
 use doctrine;
 use App\Entity\User;
+use App\Entity\Image;
 use App\Entity\Ville;
 use App\Entity\Panier;
 use App\Entity\Region;
 use App\Entity\Produit;
+use App\Entity\Attribut;
+use App\Entity\Quantite;
+use App\Entity\Categorie;
 use App\Entity\Reduction;
+use App\Entity\Variation;
 use Doctrine\ORM\Mapping\Id;
 use App\Entity\SousCategorie;
 use App\Services\MailerService;
+use App\Form\ForgotPasswordType;
+use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
+use Gedmo\Mapping\Annotation\Tree;
+use App\Repository\VilleRepository;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\AttributRepository;
@@ -22,20 +31,19 @@ use App\Repository\ReductionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\SousCategorieRepository;
-use Gedmo\Mapping\Annotation\Tree;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Messenger\Transport\Serialization\Serializer;
-use Symfony\Component\HttpFoundation\RequestStack;
-
-use Symfony\Component\Mime\Email;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 // #[Route('/admin')]
@@ -62,29 +70,98 @@ class HomeController extends AbstractController
         $this->requestStack = $requestStack;
     }
 
-
-
-
-    #[Route('/email')]
-    public function sendEmail(MailerInterface $mailer):JsonResponse
+    #[Route('/forgotpassword',name: 'app_forgot', methods: ['GET'])]
+    public function forgot(MailerInterface $mailer):Response
     {
+      
+        // $user=new User();
+        // $form = $this->createForm(ForgotPasswordType::class);
+        // $form->handleRequest($request);
+        // if($form->isSubmitted() && $form->isValid()){
+
+        //     dd("ff");
+
+        // }
+   
+      
+         return $this->render('forgot.html.twig', [
+        
+           ]);
+    }
+    #[Route('/resetpassword/{email}',name: 'app_reset', methods: ['GET' , 'POST'])]
+    public function reset($email,Request $request,UserPasswordHasherInterface $passwordHasher,UserRepository $userRepository,MailerInterface $mailer):Response
+    {
+      
+        $user=$userRepository->findOneBy(['email'=>$email]);
+        $form = $this->createForm(ForgotPasswordType::class,$user);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+
+            $user = $form->getData();
+            // dd($user->getPassword());
+            //   dd($user->getPassword());
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the img must be processed only when a file is uploaded
+
+            /** fin de l'upload du profile du user */
+
+            $hashedPassword = $passwordHasher->hashPassword(
+                $user,
+                $user->getPassword()
+            );
+
+            $user->setPassword($hashedPassword);
+
+
+            $userRepository->add($user, true);
+            // $this->addFlash('success', 'Mot de passe a ete modifie avec succes');
+            $array=0;
+            foreach($user->getRoles() as $role){
+                if($role=="ROLE_USER")
+                $array=1;
+            }
+            if($array==1){
+                return $this->redirectToRoute('app_user_login', [], Response::HTTP_SEE_OTHER);
+            }
+            else{
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+            }
+        }
+        
+   
+      
+         return $this->renderForm('reset.html.twig', [
+            'form' => $form
+           ]);
+    }
+
+
+
+
+    #[Route('/email',name:'app_email',methods:['POST'])]
+    public function sendEmail(MailerInterface $mailer,Request $request):JsonResponse
+    {
+       
+        $email= $request->get('email');
+        $random = random_int(1000, 1000000);
         $email = (new Email())
             ->from('oussabitarek123@gmail.com')
-            ->to('oussabi.tarek@gmail.com')
+            ->to($email)
             //->cc('cc@example.com')
             //->bcc('bcc@example.com')
             //->replyTo('fabien@example.com')
             //->priority(Email::PRIORITY_HIGH)
-            ->subject('Time for Symfony Mailer!')
-            ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
+            ->subject('réinitialisez votre mot de passe!')
+            ->html('<p>ton  code : <strong>'. $random .'</strong></p>');
 
         // $mailer->send($email);
     //    if (count($this->getErrors()) > 0) {
     //          dd($this->getErrors());
     //      }
-       return $this->json($mailer->send($email));
+        $this->json($mailer->send($email));
 
+        return $this->json($random);
         // ...
     }
 
@@ -152,11 +229,68 @@ class HomeController extends AbstractController
     }
 
 
+    #[Route('/getVilles', name: 'app_getVilles_edituser', methods: ['GET'])]
+    public function getVillesedituser( SerializerInterface $serializer,VilleRepository $villeRepository ,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    {
+
+        $villes = $villeRepository->findAll();
+        $json = $serializer->serialize($villes, 'json', ['groups' => ['ville']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
 
 
+    #[Route('/getProduits', name: 'app_get_produits', methods: ['GET'])]
+    public function getProduits( SerializerInterface $serializer,VilleRepository $villeRepository ,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    {
+
+        $produits = $produitRepository->findAll();
+        $json = $serializer->serialize($produits, 'json', ['groups' => ['produit:read']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
+
+    #[Route('/getReduction/{id}', name: 'app_get_reductions', methods: ['GET'])]
+    public function getReductions(Reduction $reduction ,SerializerInterface $serializer,VilleRepository $villeRepository ,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    {
+        $json = $serializer->serialize($reduction, 'json', ['groups' => ['reduction']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
+
+    #[Route('/getCategorie/{id}', name: 'app_get_categorie', methods: ['GET'])]
+    public function getcategorie(Categorie  $categorie ,SerializerInterface $serializer,VilleRepository $villeRepository ,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    {
+        $json = $serializer->serialize($categorie, 'json', ['groups' => ['categorie']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
 
 
+    #[Route('/getAttribut/{id}', name: 'app_get_attribut', methods: ['GET'])]
+    public function getAttribut(Attribut $attribut ,SerializerInterface $serializer,VilleRepository $villeRepository ,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    {
+        $json = $serializer->serialize($attribut, 'json', ['groups' => ['attribut']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
 
+    #[Route('/getVariation/{id}', name: 'app_get_variation', methods: ['GET'])]
+    public function getVariation(Variation $variation ,SerializerInterface $serializer,VilleRepository $villeRepository ,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    {
+        $json = $serializer->serialize($variation, 'json', ['groups' => ['variation']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
+
+
+    #[Route('/getSousCategorie/{id}', name: 'app_get_souscategorie', methods: ['GET'])]
+    public function getsouscategorie(SousCategorie  $souscategorie ,SerializerInterface $serializer,VilleRepository $villeRepository ,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    {
+        $json = $serializer->serialize($souscategorie, 'json', ['groups' => ['souscategorie']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
 
 
 
@@ -243,6 +377,92 @@ class HomeController extends AbstractController
         // dd($this->json($res));
         // dd($t);
 
+        $json = json_decode($json);
+
+        return $this->json($json);
+    }
+
+    #[Route('/getQuantite/{id}', name: 'app_get_Quantite', methods: ['GET'])]
+    public function getQuantite(Quantite $quantite, SerializerInterface $serializer): JsonResponse
+    {
+
+        
+        $json = $serializer->serialize($quantite, 'json', ['groups' => ['quantite:read']]);
+        // dd($this->json($res));
+        // dd($t);
+        // dd($json);
+        $json = json_decode($json);
+
+        return $this->json($json);
+    } 
+
+
+    #[Route('/getImage/{id}', name: 'app_get_image', methods: ['GET'])]
+    public function getImage(Image $image, SerializerInterface $serializer): JsonResponse
+    {
+
+        $json = $serializer->serialize($image, 'json', ['groups' => ['image:read']]);
+        // dd($this->json($res));
+        // dd($t);
+        // dd($json);
+        $json = json_decode($json);
+
+        return $this->json($json);
+    }
+     
+    
+    #[Route('/getAttributs/{id}', name: 'app_get_attributs', methods: ['GET'])]
+    public function getAttributs(Produit $produit, AttributRepository $attributRepository ,SerializerInterface $serializer): JsonResponse
+    {
+
+        $attributs=$produit->getAttributs();
+        $json = $serializer->serialize($attributs, 'json', ['groups' => ['attribut:read']]);
+        // dd($this->json($res));
+        // dd($t);
+        // dd($json);
+        $json = json_decode($json);
+
+        return $this->json($json);
+    } 
+
+    #[Route('/getVariations/{id}', name: 'app_get_variations', methods: ['GET'])]
+    public function getVariations(Produit $produit, AttributRepository $attributRepository ,SerializerInterface $serializer): JsonResponse
+    {
+
+        $variations=$produit->getVariation();
+        $json = $serializer->serialize($variations, 'json', ['groups' => ['variation:read']]);
+        // dd($this->json($res));
+        // dd($t);
+        // dd($json);
+        $json = json_decode($json);
+
+        return $this->json($json);
+    } 
+
+    #[Route('/getUser/{id}', name: 'app_get_user', methods: ['GET'])]
+    public function getuseredit(User $user, AttributRepository $attributRepository ,SerializerInterface $serializer): JsonResponse
+    {
+
+        $json = $serializer->serialize($user, 'json', ['groups' => ['user:read']]);
+        // dd($this->json($res));
+        // dd($t);
+        // dd($json);
+        $json = json_decode($json);
+
+        return $this->json($json);
+    } 
+
+    
+    #[Route('/getsouscategories', name: 'app_get_souscategories', methods: ['GET'])]
+    public function getsouscategories(SerializerInterface $serializer,SousCategorieRepository $sousCategorieRepository): JsonResponse
+    {
+
+     
+        // dd($this->json($res));
+        // dd($t);
+         $json=$sousCategorieRepository->findAll();
+        // $json = json_decode($json);
+        $json = $serializer->serialize($json, 'json', ['groups' => ['souscategorie:read']]);
         $json = json_decode($json);
 
         return $this->json($json);

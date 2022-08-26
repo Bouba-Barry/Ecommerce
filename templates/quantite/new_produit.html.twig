@@ -59,6 +59,16 @@
                       }}</span>
                     </div>
                   </div>
+                  
+                  <div class="form-group row">
+                    <label class="col-form-label col-md-2">Prix</label>
+                    <div class="mb-3 col-md-10">
+                      {{ form_row(form.prix) }}
+                      <span class="form-text text-muted">{{
+                        form_errors(form.prix)
+                      }}</span>
+                    </div>
+                  </div>
     
                   {% for attribut in attributs %}
                   <div class="form-group row">

@@ -99,6 +99,7 @@ class ReductionController extends AbstractController
             }
 
             $reductionRepository->add($reduction, true);
+            $this->addFlash('success', 'Reduction ajoute avec succes');
 
             return $this->redirectToRoute('app_reduction_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -134,7 +135,7 @@ class ReductionController extends AbstractController
             }
 
             $reductionRepository->add($reduction, true);
-
+            $this->addFlash('success', 'Reduction modifie avec succes');
             return $this->redirectToRoute('app_reduction_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -153,4 +154,38 @@ class ReductionController extends AbstractController
 
         return $this->redirectToRoute('app_reduction_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/delete/{id}', name: 'app_reduction_delete_get', methods: ['GET'])]
+    public function deleteget(Request $request, Reduction $reduction, ReductionRepository $reductionRepository): Response
+    {
+        // if ($this->isCsrfTokenValid('delete' . $reduction->getId(), $request->request->get('_token'))) {
+            $reductionRepository->remove($reduction, true);
+            $this->addFlash('suppression', 'Reduction supprime avec succes');
+
+        return $this->redirectToRoute('app_reduction_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/delete/group', name: 'app_reduction_delete_group', methods: ['POST'])]
+    public function deletegroup(Request $request,ReductionRepository $reductionRepository): Response
+    {
+        // dd($request->get('check1'));
+        $array=[];
+        foreach($reductionRepository->findAll() as $reduction){
+          if($request->get('check'.$reduction->getId())!=null){
+           
+             array_push($array,$reduction->getId());
+          }
+
+        }
+        foreach($array as $reduction){
+            $reductionRepository->remove($reductionRepository->find($reduction),true);
+        }
+        // if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            // $userRepository->remove($user, true);
+            $this->addFlash('suppression', 'La suppression est effectue  avec succes');
+
+        return $this->redirectToRoute('app_reduction_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
 }

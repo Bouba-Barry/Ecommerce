@@ -23,6 +23,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['user:read'])]
     private $id;
 
     #[ORM\Column(name: "deletedAt", type: "datetime", nullable: true)]
@@ -33,9 +34,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         message: 'Ceci n\'est pas un compte gmail !'
     )]
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Groups(['user:read'])]
     private $email;
 
     #[ORM\Column(type: 'json')]
+    #[Groups(['user:read'])]
     private $roles = [];
 
     #[Assert\Length(
@@ -45,6 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         maxMessage: 'Votre Nom doit ne dois pas depasser {{ limit }} caractères',
     )]
     #[ORM\Column(type: 'string', length: 180)]
+    #[Groups(['user:read'])]
     private $nom;
 
     #[Assert\Length(
@@ -54,11 +58,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         maxMessage: 'Votre prenom doit ne dois pas depasser {{ limit }} caractères',
     )]
     #[ORM\Column(type: 'string', length: 180)]
+    #[Groups(['user:read'])]
     private $prenom;
 
 
     #[Assert\NotBlank(message: 'le champ est requis')]
     #[ORM\Column(type: 'string', length: 180)]
+    #[Groups(['user:read'])]
     private $adresse;
 
     // #[Assert\Length(
@@ -67,6 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // )]
     #[Assert\Regex('/^[0-9+]{10}$/', message: 'Veillez Entrez Un Numéro Valide')]
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['user:read'])]
     private $telephone;
 
     #[Assert\Length(
@@ -83,7 +90,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commande::class)]
     private $commandes;
-
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Panier::class)]
     private $paniers;
 
@@ -97,6 +103,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $update_at;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
+    #[Groups(['user:read'])]
     private ?Ville $ville = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: FeadBack::class)]

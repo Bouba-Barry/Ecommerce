@@ -140,9 +140,11 @@
                           <i class="fa fa-edit"></i>
                         </a>
                         <a
+                          {#
                           href="{{
-                            path('app_variation_delete', { id: variation.id })
+                            path('app_variation_delete', { id: variation.id . })
                           }}"
+                          #}
                           class="btn btn-md btn-danger"
                         >
                           <i class="fa fa-trash"></i>

@@ -130,10 +130,10 @@ class SousCategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Sous Categorie Ajoute avec succes');
             $sousCategorieRepository->add($sousCategorie, true);
+            $this->addFlash('success', 'Sous Categorie Ajoute avec succes');
 
-            return $this->redirectToRoute('app_sous_categorie_new_aside', ['id' => $id]);
+            return $this->redirectToRoute('app_categorie_show', ['id' => $id]);
         }
 
         return $this->renderForm('sous_categorie/new_aside.html.twig', [
@@ -348,7 +348,7 @@ class SousCategorieController extends AbstractController
 
 
 
-            return $this->redirectToRoute('app_souscategorie_index_categorie', ['id' => $slug ]);
+            return $this->redirectToRoute('app_categorie_show', ['id' => $slug ]);
         }
 
         return $this->renderForm('sous_categorie/edit_aside.html.twig', [
@@ -384,6 +384,55 @@ class SousCategorieController extends AbstractController
             $sousCategorieRepository->remove($sousCategorie, true);
         }
 
-        return $this->redirectToRoute('app_souscategorie_index_categorie', ['id' => $slug ]);
+        return $this->redirectToRoute('app_categorie_show', ['id' => $slug ]);
+    
     }
+
+    #[Route('/{id}/{slug}', name: 'app_sous_categorie_delete_get', methods: ['GET'])]
+    public function deleteget( $id,$slug ,Request $request, CategorieRepository $categorieRepository ,SousCategorieRepository $sousCategorieRepository): Response
+    {
+        
+        $sousCategorie= $sousCategorieRepository->find($id) ;
+        $categorie=$categorieRepository->find($slug);
+       
+
+        // if ($this->isCsrfTokenValid('delete' . $sousCategorie->getId(), $request->request->get('_token'))) {
+            $sousCategorieRepository->remove($sousCategorie, true);
+            $this->addFlash('suppression', 'Sous Categorie supprime avec succes');
+
+        return $this->redirectToRoute('app_categorie_show', ['id' => $slug ]);
+    
+    }
+
+
+    #[Route('/delete/souscategorie/group', name: 'app_sous_categorie_delete_group', methods: ['POST'])]
+    public function deletegroup(Request $request,SousCategorieRepository $sousCategorieRepository): Response
+    {
+        //  dd($request->get('categorie'));
+        $array=[];
+        foreach($sousCategorieRepository->findAll() as $sous_categorie){
+          if($request->get('check'.$sous_categorie->getId())!=null){
+           
+             array_push($array,$sous_categorie->getId());
+          }
+
+        }
+        foreach($array as $sous_categorie){
+            $sousCategorieRepository->remove($sousCategorieRepository->find($sous_categorie),true);
+        }
+        // if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            // $userRepository->remove($user, true);
+            $this->addFlash('suppression', 'La suppression est effectue  avec succes');
+
+        return $this->redirectToRoute('app_categorie_show', ['id'=> $request->get('categorie') ]);
+    }
+
+
+
+
+
+
+
+
+
 }

@@ -9,6 +9,10 @@
       <div class="alert alert-success">
         {{ message }}
       </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
       {% endfor %}
     </div>
     <!-- Content Header (Page header) -->
@@ -20,10 +24,33 @@
             <ol class="breadcrumb">
               <li>
                 <a
+                  {#
                   href="{{ path('app_attribut_new_aside') }}"
+                  #}
+                  id="ajouterattribut"
                   class="btn btn-primary btn-md"
-                  >Ajouter Attribut</a
-                >
+                  data-tooltip="tooltip"
+                  data-placement="top"
+                  title="Quick View"
+                  data-toggle="modal"
+                  data-target="#products"
+                  >Ajouter Un Attribut
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="36"
+                    height="26"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-plus"
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </a>
               </li>
             </ol>
           </div>
@@ -44,81 +71,115 @@
           <div class="box">
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="table-responsive">
-                <table
-                  id="example5"
-                  class="table table-bordered table-striped"
-                  style="width: 100%"
-                >
-                  <thead>
-                    <tr>
-                      <th>Désignation</th>
-                      <th>Variations</th>
+              <form
+                action="{{ path('app_categorie_delete_group') }}"
+                method="POST"
+              >
+                <div class="table-responsive">
+                  <table
+                    id="example5"
+                    class="table table-bordered table-striped"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th class="col-1"></th>
+                        <th>Désignation</th>
+                        <th>Variations</th>
 
-                      <th>Produits Relie</th>
+                        <th>Produits Relie</th>
 
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for attribut in attributs %}
-                    <tr>
-                      <td>{{ attribut.nom }}</td>
-                      <td>
-                        {% for variation in attribut.getVariations() %}
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for attribut in attributs %}
+                      <tr>
+                        <td>
+                          <div>
+                            <input
+                              type="checkbox"
+                              id="{{ attribut.id }}"
+                              name="check{{ attribut.id }}"
+                            />
+                            <label for="{{ attribut.id }}"></label>
+                          </div>
+                        </td>
+                        <td>{{ attribut.nom }}</td>
+                        <td>
+                          {% for variation in attribut.getVariations() %}
 
-                        {{ variation.nom }}, {% endfor %}
-                      </td>
+                          {{ variation.nom }}, {% endfor %}
+                        </td>
 
-                      <td>
-                        {% for produit in attribut.getProduits() %}
+                        <td>
+                          {% for produit in attribut.getProduits() %}
 
-                        {{ produit.designation }}, {% endfor %}
-                      </td>
+                          {{ produit.designation }}, {% endfor %}
+                        </td>
 
-                      <td>
-                        <a
-                          href="{{
-                            path('app_attribut_show', { id: attribut.id })
-                          }}"
-                          class="btn btn-md btn-primary"
-                        >
-                          <i class="fa fa-eye"></i>
-                        </a>
-                        <a
-                          href="{{
-                            path('app_attribut_edit', { id: attribut.id })
-                          }}"
-                          class="btn btn-md btn-warning"
-                        >
-                          <i class="fa fa-edit"></i>
-                        </a>
-                        <a
-                          href="{{
-                            path('app_attribut_delete', { id: attribut.id })
-                          }}"
-                          class="btn btn-md btn-danger"
-                        >
-                          <i class="fa fa-trash"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                      <td colspan="9">no records found</td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>Désignation</th>
-                      <th>Variations</th>
+                        <td>
+                          <a
+                            href="{{
+                              path('app_attribut_show', { id: attribut.id })
+                            }}"
+                            class="btn btn-md btn-primary"
+                          >
+                            <i class="fa fa-eye"></i>
+                          </a>
+                          <a
+                            href="{{
+                              path('app_attribut_edit', { id: attribut.id })
+                            }}"
+                            class="btn btn-md btn-warning"
+                          >
+                            <i class="fa fa-edit"></i>
+                          </a>
+                          <a
+                            onclick="return confirm('vous voulez  le supprimer vraiment ??');"
+                            href="{{
+                              path('app_attribut_delete_get', {
+                                id: attribut.id
+                              })
+                            }}"
+                            class="btn btn-md btn-danger"
+                          >
+                            <i class="fa fa-trash"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      {% else %}
+                      <tr>
+                        <td colspan="9">no records found</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th></th>
+                        <th>Désignation</th>
+                        <th>Variations</th>
 
-                      <th style="border-right: 1px solid #d5dfea">Produit</th>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
+                        <th style="border-right: 1px solid #d5dfea">Produit</th>
+                        <th></th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                <div class="row">
+                  <div class="col-5"></div>
+                  <div class="col-7">
+                    <button
+                      class="btn"
+                      onclick="return confirm('vous voulez  les supprimer vraiment ??');"
+                    >
+                      <strong>supprimer</strong
+                      ><i style="color: red" class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
             <!-- /.box-body -->
           </div>
@@ -138,4 +199,6 @@
     asset('assets/vendor_components/datatable/datatables.min.js')
   }} "></script>
 <script src="{{ asset('main/js/pages/data-table.js') }}"></script>
+<script src="{{ asset('main/js/attribut/ajouter_attribut.js') }}"></script>
+
 {% endblock %}

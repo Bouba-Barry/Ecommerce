@@ -12,6 +12,17 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="d-flex align-items-center">
@@ -23,7 +34,7 @@
                 <a
                   href="{{ path('app_user_index') }}"
                   class="btn btn-primary btn-md"
-                  >Liste Users</a
+                  >Tous Les Utilisateurs</a
                 >
               </li>
             </ol>
@@ -84,7 +95,7 @@
                           href="{{ path('app_user_restore', { id: user.id }) }}"
                           class="btn btn-md btn-success"
                         >
-                          Restore
+                          Restorer
                           <i class="fa-solid fa-trash-can-arrow-up"></i>
                         </a>
                         <a
@@ -95,7 +106,7 @@
                           }}"
                           class="btn btn-md btn-danger"
                         >
-                          delete from trash
+                          supprimer définitivement
                           <i class="fa fa-trash"></i>
                         </a>
                       </td>
@@ -109,6 +120,7 @@
                       <th>Salary</th>
                       <th>Office</th>
                       <th style="border-right: 1px solid #d5dfea">Extn.</th>
+                      <th></th>
                     </tr>
                   </tfoot>
                 </table>

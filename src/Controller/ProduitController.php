@@ -6,8 +6,10 @@ use App\Entity\Produit;
 use App\Form\ProduitType;
 use Doctrine\ORM\Mapping\Id;
 use App\Form\ProduitVariableType;
+use App\Repository\ImageRepository;
 use App\Repository\UserRepository;
 use App\Repository\ProduitRepository;
+use App\Repository\QuantiteRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -118,8 +120,9 @@ class ProduitController extends AbstractController
 
 
             $produitRepository->add($produit, true);
+            $this->addFlash('success', 'Produit ajoute avec succes, vous pouvez ajouter les variations');
 
-            return $this->redirectToRoute('app_quantite_new_variable', ['id' => $produit->getId() ]);
+            return $this->redirectToRoute('app_produit_show', ['id' => $produit->getId() ]);
         }
 
         return $this->renderForm('produit/new_variable.html.twig', [
@@ -246,13 +249,14 @@ class ProduitController extends AbstractController
 
 
     #[Route('/admin/{id}', name: 'app_produit_show', methods: ['GET'])]
-    public function show(Produit $produit): Response
+    public function show(Produit $produit,ImageRepository $imageRepository,QuantiteRepository $quantiteRepository): Response
     {
         // if($produit->getUser()==$this->getUser()){
-
-
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
+            'quantites' => $quantiteRepository->findBy(['produit' => $produit] ),
+            'attributs' => $produit->getAttributs(),
+            'images' => $imageRepository->findBy(['produit' => $produit ]),
         ]);
     }
 
@@ -261,8 +265,8 @@ class ProduitController extends AbstractController
     {
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid() && $form->isValid()) {
+     
+        if ($form->isSubmitted() && $form->isValid() ) {
 
             // $attribut_produit = $form->get('attributs')->getData();
 
@@ -297,9 +301,12 @@ class ProduitController extends AbstractController
                 // instead of its contents
                 $produit->setImageProduit($newFilename);
             }
+           
             $produitRepository->add($produit, true);
+            $this->addFlash('success', 'vos modifications sont enregistre avec succes avec succes');
 
-            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+            // dd("dfl");
+            return $this->redirectToRoute('app_produit_show', ['id'=>$produit->getId() ]);
         }
 
         return $this->renderForm('produit/edit.html.twig', [
@@ -313,8 +320,45 @@ class ProduitController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete' . $produit->getId(), $request->request->get('_token'))) {
             $produitRepository->remove($produit, true);
+            $this->addFlash('suppression', 'Produit supprime avec succes');
+
         }
+
 
         return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/admin/delete/{id}', name: 'app_produit_delete_get', methods: ['POST'])]
+    public function deleteget(Request $request, Produit $produit, ProduitRepository $produitRepository): Response
+    {
+        // if ($this->isCsrfTokenValid('delete' . $produit->getId(), $request->request->get('_token'))) {
+            $produitRepository->remove($produit, true);
+            $this->addFlash('suppression', 'Produit supprime avec succes');
+
+
+        return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/delete/group', name: 'app_produit_delete_group', methods: ['POST'])]
+    public function deletegroup(Request $request, ProduitRepository $produitRepository): Response
+    {
+        // dd($request->get('check1'));
+        $array=[];
+        foreach($produitRepository->findAll() as $produit){
+          if($request->get('check'.$produit->getId())!=null){
+           
+             array_push($array,$produit->getId());
+          }
+
+        }
+        foreach($array as $produit){
+            $produitRepository->remove($produitRepository->find($produit),true);
+        }
+        // if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            // $userRepository->remove($user, true);
+            $this->addFlash('suppression', 'La suppression est effectue  avec succes');
+
+        return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
 }

@@ -18,7 +18,7 @@ class Variation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read', 'variation', 'attribut'])]
+    #[Groups(['prod:read', 'variation', 'attribut','attribut:read','variation:read','image:read'])]
     private $id;
 
     #[ORM\Column(name: "deletedAt", type: "datetime", nullable: true)]
@@ -26,11 +26,11 @@ class Variation
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: 'le champ est requis')]
-    #[Groups(['prod:read', 'variation', 'attribut'])]
+    #[Groups(['prod:read', 'image:read','variation', 'attribut','attribut:read','variation:read'])]
     private $nom;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['prod:read'])]
+    #[Groups(['prod:read','variation'])]
     private $code;
 
     #[ORM\ManyToOne(targetEntity: Attribut::class, inversedBy: 'variations')]

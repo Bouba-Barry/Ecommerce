@@ -116,6 +116,12 @@ class VariationController extends AbstractController
             'variation' => $variation,
             'form' => $form,
         ]);
+
+
+
+
+
+
     }
 
 
@@ -148,18 +154,19 @@ class VariationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $this->addFlash('variation', 'Variation Ajoute avec succes');
+           
 
-            $variation_produit = $form->get('produits')->getData();
+            // $variation_produit = $form->get('produits')->getData();
 
-            foreach ($variation_produit as $var) {
-                $variation->addProduit($var);
-            }
+            // foreach ($variation_produit as $var) {
+            //     $variation->addProduit($var);
+            // }
 
 
             $variationRepository->add($variation, true);
+            $this->addFlash('success', 'Variation Ajoute avec succes');
 
-            return $this->redirectToRoute('app_variation_new_aside', ['id'=> $variation->getAttribut()->getId() ]);
+            return $this->redirectToRoute('app_attribut_show', ['id'=> $variation->getAttribut()->getId() ]);
         }
 
         return $this->renderForm('variation/new_aside.html.twig', [
@@ -301,22 +308,24 @@ class VariationController extends AbstractController
 
     #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/{id}/edit', name: 'app_variation_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Variation $variation, VariationRepository $variationRepository): Response
+    public function edit(Variation $variation,Request $request, VariationRepository $variationRepository): Response
     {
+        // $variation=$variationRepository->find($id);
         $form = $this->createForm(VariationType::class, $variation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+          
+            // $variation_produit = $form->get('produits')->getData();
+
+            // foreach ($variation_produit as $var) {
+            //     $variation->addProduit($var);
+            // }
+            $variationRepository->add($variation, true);
             $this->addFlash('success', 'Variation modifie avec succes');
 
-            $variation_produit = $form->get('produits')->getData();
 
-            foreach ($variation_produit as $var) {
-                $variation->addProduit($var);
-            }
-            $variationRepository->add($variation, true);
-
-            return $this->redirectToRoute('app_variation_index_attribut', [ 'id' => $variation->getAttribut()->getId()  ]);
+            return $this->redirectToRoute('app_attribut_show', [ 'id' => $variation->getAttribut()->getId()  ]);
         }
 
         return $this->renderForm('variation/edit.html.twig', [
@@ -326,15 +335,53 @@ class VariationController extends AbstractController
         ]);
     }
 
-    #[Security("is_granted('ROLE_ADMIN')")]
-    #[Route('/{id}', name: 'app_variation_delete', methods: ['POST'])]
-    public function delete(Request $request, Variation $variation, VariationRepository $variationRepository): Response
-    {
-        $this->addFlash('suppression', 'Variation supprime avec succes');
-        if ($this->isCsrfTokenValid('delete' . $variation->getId(), $request->request->get('_token'))) {
-            $variationRepository->remove($variation, true);
-        }
+    // #[Security("is_granted('ROLE_ADMIN')")]
+    // #[Route('/{id}/{slug}', name: 'app_variation_delete', methods: ['POST'])]
+    // public function delete($id,$slug,Request $request, VariationRepository $variationRepository): Response
+    // {
+    //     $variation=$variationRepository->find($id);
+        
+    //     if ($this->isCsrfTokenValid('delete' . $variation->getId(), $request->request->get('_token'))) {
+    //         $variationRepository->remove($variation, true);
+    //     }
+    //     $this->addFlash('suppression', 'Variation supprime avec succes');
+    //     return $this->redirectToRoute('app_attribut_show', [ 'id' => $slug  ]);
+    // }
 
-        return $this->redirectToRoute('app_variation_index_attribut', [ 'id' => $variation->getAttribut()->getId()  ]);
+    #[Security("is_granted('ROLE_ADMIN')")]
+    #[Route('/{id}/{slug}', name: 'app_variation_delete_get', methods: ['GET'])]
+    public function deleteget($id,$slug,Request $request, VariationRepository $variationRepository): Response
+    {
+        $variation=$variationRepository->find($id);
+        
+        // if ($this->isCsrfTokenValid('delete' . $variation->getId(), $request->request->get('_token'))) {
+            $variationRepository->remove($variation, true);
+        
+         $this->addFlash('suppression', 'Variation supprime avec succes');
+        return $this->redirectToRoute('app_attribut_show', [ 'id' => $slug  ]);
     }
+
+    #[Route('/delete/group', name: 'app_variation_delete_group', methods: ['POST'])]
+    public function deletegroup(Request $request,VariationRepository $variationRepository): Response
+    {
+        
+        // dd($request->get('check1'));
+        $array=[];
+        foreach($variationRepository->findAll() as $variation){
+          if($request->get('check'.$variation->getId())!=null){
+           
+             array_push($array,$variation->getId());
+          }
+
+        }
+        foreach($array as $variation){
+            $variationRepository->remove($variationRepository->find($variation),true);
+        }
+        // if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            // $userRepository->remove($user, true);
+            $this->addFlash('suppression', 'La suppression est effectue  avec succes');
+
+        return $this->redirectToRoute('app_attribut_show', ['id'=> $request->get('attribut') ], Response::HTTP_SEE_OTHER);
+    }
+
 }

@@ -23,7 +23,6 @@ class ProduitVariableType extends AbstractType
         ->add('designation', TextType::class, array('label' => false, 'attr' => ['placeholder' => 'designation', 'class' => 'form-control']))
         ->add('description', TextareaType::class, array('label' => false, 'attr' => ['placeholder' => 'description', 'class' => 'form-control']))
         ->add('description_detaille', TextareaType::class, array('label' => false, 'attr' => ['placeholder' => 'description detaille', 'class' => 'form-control']))
-        ->add('ancien_prix', NumberType::class, array('label' => false, 'attr' => ['placeholder' => 'Prix', 'class' => 'form-control']))
         ->add('user', EntityType::class, [
             'class' => User::class,
             'query_builder' => function (UserRepository $er) {

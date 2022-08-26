@@ -13,6 +13,17 @@ content %}
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 	  <div class="container-full">
+		<div id="message">
+			{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+			  {{ message }}
+			</div>
+			{% endfor %} {% for message in app.flashes('suppression') %}
+			<div class="alert btn-danger">
+			  {{ message }}
+			</div>
+			{% endfor %}
+		  </div>
 		<!-- Content Header (Page header) -->
 		<div class="content-header">
 			<div class="d-flex align-items-center">
@@ -52,17 +63,18 @@ content %}
 		
 				<!-- /.box-header -->
 				<div class="box-body">
+					<form action="{{ path('app_produit_delete_group') }}" method="POST">
 					<div class="table-responsive">
 					
 					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
 						<thead>
 							<tr>
-							<th class="col-1">ID</th>
+								<th></th>
 								<th class="col-1">Désignation</th>
 								<th class="col-4">Description</th>
-								<th class="col-1">Prix Old</th>
+								<th class="col-1">Ancien Prix</th>
 								<th class="col-1">Image Produit</th>
-								<th class="col-1">Quantié Stocker</th>
+								<th class="col-1">Quantié en Stock</th>
 								<th class="col-1">Type de Produit</th>
 								<th class="col-3">Action</th>
 							</tr>
@@ -70,8 +82,17 @@ content %}
 						<tbody>
 							 {% for produit in produits %}
 							<tr>
-								<td class="col-1">{{ produit.id }}</td>
-               					 <td>{{ produit.designation }}</td>
+								<td>
+									<div>
+									  <input
+										type="checkbox"
+										id="{{ produit.id }}"
+										name="check{{ produit.id }}"
+									  />
+									  <label for="{{ produit.id }}"></label>
+									</div>
+								</td>
+               					<td class="col-1">{{ produit.designation }}</td>
                 				<td>{{ produit.getDescriptionDetaille()}}</td>
                 				<td>{{ produit.ancienPrix }}Dhs</td>
                 				{# <td>{{ produit.nouveauPrix }}Dhs</td> #}
@@ -79,13 +100,19 @@ content %}
                 				<td>{{ produit.qteStock }}</td>
 								<td>{{ produit.type }}</td>
 
-								{% if produit.user.id == app.user.id %}
+								{% if produit.user.id == app.user.id or "ROLE_SUPER_ADMIN" in app.user.Roles %}
                 				<td>
 									<a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn btn-md btn-primary">
                           				<i class="fa fa-eye"></i>
                         			</a>
 								{% if produit.getType()=="stable" %}
-                        			<a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-md btn-warning">
+                        			<a data-tooltip="tooltip"
+									data-placement="top"
+									title="Quick View"
+									data-toggle="modal"
+									data-target="#products"  
+									id="edit{{ produit.id }}"
+									class="btn btn-md btn-warning edit">
 		                          <i class="fa fa-edit"></i>
          	               		</a>
 								{% else %}
@@ -93,7 +120,9 @@ content %}
 									<i class="fa fa-edit"></i>
 									  </a>
 								{% endif %}
-            	            	<a href="{{ path('app_produit_delete', {'id': produit.id}) }}" class="btn btn-md btn-danger">
+            	            	<a
+								onclick="return confirm('vous voulez  le supprimer vraiment ??');"
+								href="{{ path('app_produit_delete_get', {'id': produit.id}) }}" class="btn btn-md btn-danger">
                 	          	<i class="fa fa-trash"></i>
                     	    	</a>
 							</td>
@@ -109,7 +138,7 @@ content %}
 						</tbody>
 						<tfoot>
 							<tr>
-							<th>ID</th>
+							      <th></th>
 								<th>Désignation</th>
 								<th>Description</th>
 								<th>Prix Old</th>
@@ -121,6 +150,18 @@ content %}
 						</tfoot>
 					</table>
 					</div>
+					<div class="row">
+						<div class="col-5"></div>
+						<div class="col-7">
+						  <button class="btn" onclick="return confirm('vous voulez  les supprimer vraiment ??');">
+							<strong>supprimer</strong
+							><i style="color: red" class="fa fa-trash"></i>
+						  </button>
+						</div>
+					  </div>
+
+					</form>
+
 				</div>
 				<!-- /.box-body -->
 			  </div>
@@ -140,6 +181,9 @@ content %}
 {% endblock %} {% block javascript %}
 <script src="{{
     asset('assets/vendor_components/datatable/datatables.min.js')
-  }} "></script>
+  }}"></script>
 <script src="{{ asset('main/js/pages/data-table.js') }}"></script>
+
+<script src="{{ asset('main/js/produit/edit_produit_stable_index.js') }}"></script>
+
 {% endblock %}

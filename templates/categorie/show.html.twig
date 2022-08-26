@@ -4,6 +4,17 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="d-flex align-items-center">
@@ -11,6 +22,7 @@
           <h3 class="page-title">Categorie</h3>
           <div class="d-inline-block align-items-center">
             <ol class="breadcrumb">
+              {#
               <li>
                 <a
                   href="{{ path('app_categorie_index_aside') }}"
@@ -18,69 +30,310 @@
                   >Liste Categories</a
                 >
               </li>
+              #}
+
+   
+                  <!-- Nav tabs -->
+                  <ul class="nav nav-tabs customtab2" role="tablist">
+                    <li class="nav-item">
+                      <a
+                        class="nav-link active"
+                        data-toggle="tab"
+                        href="#informations"
+                        role="tab"
+                        ><span class="hidden-sm-up"
+                          ><i class="ion-home"></i
+                        ></span>
+                        <span class="hidden-xs-down">Informations du Categorie</span></a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        data-toggle="tab"
+                        href="#sous_categories"
+                        role="tab"
+                        ><span class="hidden-sm-up"
+                          ><i class="ion-person"></i
+                        ></span>
+                        <span class="hidden-xs-down"> Sous Categories</span></a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                       
+                        href="{{ path('app_categorie_index') }}"
+                        
+                        ><span class="hidden-sm-up"
+                          ><i class="ion-email"></i
+                        ></span>
+                        <span class="hidden-xs-down"></span>Tous les Categories</a
+                      >
+                    </li>
+                  </ul>
+                  <!-- Tab panes -->
+              
             </ol>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- /.box -->
+
+
+
+         <div class="tab-content">
+                    <div class="tab-pane active" id="informations" role="tabpanel">
+                      <div class="p-15">
+                        <section class="content">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="box">
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                  <p style="display: none;" id="categorie_id"> {{ categorie.id }} </p>
+                              
+                                  
+                                  <div class="table-responsive">
+                                    <table
+                                      id="example5"
+                                      class="table table-bordered table-striped"
+                                      style="width: 100%"
+                                    >
+                                      <thead>
+                                        <tr>
+                                          <th>Nom De la Categorie</th>
+                                          <th>Sous Categorie</th>
+                                          <th>Action</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>{{ categorie.titre }}</td>
+                                          <td>
+                                            {% for sous_categorie in categorie.getSousCategories()
+                                            %}
+                                            {{ sous_categorie.getTitre() }} , {% endfor %}
+                                          </td>
+                                          <td>
+                                            <a
+                                            id="editinfos"
+                                            data-tooltip="tooltip"
+                                            data-placement="top"
+                                            title="Quick View"
+                                            data-toggle="modal"
+                                            data-target="#products"
+                                              {# href="{{
+                                                path('app_categorie_edit', { id: categorie.id })
+                                              }}" #}
+                                              class="btn btn-md btn-warning mb-5"
+                                            >
+                                              <i class="fa fa-edit"></i>
+                                            </a>
+                                            {{ include("categorie/_delete_form.html.twig") }}
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                                <!-- /.box-body -->
+                              </div>
+                              <!-- /.box -->
+                            </div>
+                            <!-- /.col -->
+                          </div>
+                          <!-- /.row -->
+                        </section>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="sous_categories" role="tabpanel">
+                      <div class="p-15">
+                        <section class="content">
+                    
+
+
+                            <div class="row">
+                              <div class="col-9"></div>
+                              <div class="col-3" style="
+                              display: flex;
+                              align-items: end;
+                              justify-content: end;
+                              
+                            ">
+                            <a href="#"
+                            id="ajoutersouscategorie"
+                            data-tooltip="tooltip"
+                            data-placement="top"
+                            title="Quick View"
+                            data-toggle="modal"
+                            data-target="#products" style="color:blue;"><strong> Ajouter Une Sous Categorie</strong>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                              </a>
+
+                              </div>
+                            <div class="col-12">
+                              <div class="box">
+                                <form
+                action="{{ path('app_sous_categorie_delete_group') }}"
+                method="POST"
+              >
+              <input type="text" style="display: none;" name="categorie" value="{{ categorie.id }}" >
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                 
+                                  <div class="table-responsive">
+                                    <table
+                                      id="example5"
+                                      class="table table-bordered table-striped"
+                                      style="width: 100%"
+                                    >
+                                      <thead>
+                                        <tr>
+                                         
+                                          <th class="col-1"></th>
+                                          <th>Nom De la Sous Categorie</th>
+                                          <th>Produits Reliee</th>
+                                          <th>Action</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {% for sous_categorie in sous_categories %}
+                                        <tr>
+                                          <td>
+                                            <div>
+                                              <input
+                                                type="checkbox"
+                                                id="{{ sous_categorie.id }}"
+                                                name="check{{  sous_categorie.id }}"
+                                              />
+                                              <label for="{{  sous_categorie.id }}"></label>
+                                            </div>
+                                          </td>
+                                          <td>{{ sous_categorie.titre }}</td>
+                                          <td>{% for produit in sous_categorie.getProduits() %}
+                                            {{ produit.designation }},
+                                          {% endfor %}</td>
+                                          
+                                          <td>
+                                          
+                                            <a
+                                              {# href="{{
+                                                path('app_sous_categorie_edit_aside', {
+                                                  id: sous_categorie.id,
+                                                  slug: categorie.id
+                                                })
+                                              }}" #}
+
+                                              id="editsouscategorie{{ sous_categorie.id }}"
+                                              data-tooltip="tooltip"
+                                              data-placement="top"
+                                              title="Quick View"
+                                              data-toggle="modal"
+                                              data-target="#products"
+                                              class="btn btn-md btn-warning editsous_Categorie"
+                                            >
+                                              <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a
+                                            onclick="return confirm('vous voulez  le supprimer vraiment ??');"
+                                            href="{{
+                                              path('app_sous_categorie_delete_get', {
+                                                id: sous_categorie.id , slug:categorie.id
+                                              })
+                                            }}"
+                                            class="btn btn-md btn-danger"
+                                          >
+                                            <i class="fa fa-trash"></i>
+                                          </a>
+                                          
+                                          </td>
+                                        </tr>
+                                        {% else %}
+                                        <tr>
+                                          <td colspan="9">no records found</td>
+                                        </tr>
+                                        {% endfor %}
+                                      </tbody>
+                                      <tfoot>
+                                        <tr>
+                                         <th></th>
+                                          <th >
+                                            Nom Sous Categorie
+                                          </th>
+                                          <th>Produit</th>
+                                          <th></th>
+                                        </tr>
+                                      </tfoot>
+                                    </table>
+                                  </div>
+
+
+                                  <div class="row">
+                                    <div class="col-5"></div>
+                                    <div class="col-7">
+                                      <button
+                                        class="btn"
+                                        onclick="return confirm('vous voulez  les supprimer vraiment ??');"
+                                      >
+                                        <strong>supprimer</strong
+                                        ><i style="color: red" class="fa fa-trash"></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </form>
+
+                                </div>
+                                <!-- /.box-body -->
+                              </div>
+                              <!-- /.box -->
+                            </div>
+                            <!-- /.col -->
+                          </div>
+                          <!-- /.row -->
+                        </section>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="messages7" role="tabpanel">
+                      <div class="p-15">
+                        <h3>Donec vitae laoreet neque, id convallis ante.</h3>
+                        <p>
+                          Duis cursus eros lorem, pretium ornare purus tincidunt
+                          eleifend. Etiam quis justo vitae erat faucibus
+                          pharetra. Morbi in ullamcorper diam. Morbi lacinia,
+                          sem vitae dignissim cursus, massa nibh semper magna,
+                          nec pellentesque lorem nisl quis ex.
+                        </p>
+                      </div>
+                      <h4>
+                        Fusce porta eros a nisl varius, non molestie metus
+                        mollis. Pellentesque tincidunt ante sit amet ornare
+                        lacinia.
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div> 
     <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-12">
-          <div class="box">
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="table-responsive">
-                <table
-                  id="example5"
-                  class="table table-bordered table-striped"
-                  style="width: 100%"
-                >
-                  <thead>
-                    <tr>
-                      <th col-1>ID</th>
-                      <th>Nom De la Categorie</th>
-                      <th>Sous Categorie</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="">{{ categorie.id }}</td>
-                      <td>{{ categorie.titre }}</td>
-                      <td>
-                        {% for sous_categorie in categorie.getSousCategories()
-                        %}
-                        {{ sous_categorie.getTitre() }} , {% endfor %}
-                      </td>
-                      <td>
-                        <a
-                          href="{{
-                            path('app_categorie_edit', { id: categorie.id })
-                          }}"
-                          class="btn btn-md btn-warning mb-5"
-                        >
-                          <i class="fa fa-edit"></i>
-                        </a>
-                        {{ include("categorie/_delete_form.html.twig") }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </section>
+
     <!-- /.content -->
   </div>
 </div>
 <!-- /.content-wrapper -->
 
 {% endblock %}
+{% block javascript %} 
+
+  <script src="{{
+      asset('assets/vendor_components/datatable/datatables.min.js')
+    }} "></script>
+  <script src="{{ asset('main/js/pages/data-table.js') }}"></script>
+  
+  <script src="{{ asset('main/js/categorie/edit_categorie.js') }}"></script>
+  <script src="{{ asset('main/js/categorie/ajouter_sous_categorie.js') }}"></script>
+
+
+  {% endblock %}

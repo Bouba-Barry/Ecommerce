@@ -4,19 +4,52 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="d-flex align-items-center">
         <div class="mr-auto">
-          <h3 class="page-title">Liste Reductions</h3>
+          <h3 class="page-title">Tous Les Reductions</h3>
           <div class="d-inline-block align-items-center">
             <ol class="breadcrumb">
               <li>
                 <a
+                  {#
                   href="{{ path('app_reduction_new') }}"
+                  #}
                   class="btn btn-primary btn-md"
-                  >Ajouter Reduction</a
-                >
+                  id="ajout"
+                  data-tooltip="tooltip"
+                  data-placement="top"
+                  title="Quick View"
+                  data-toggle="modal"
+                  data-target="#products"
+                  >Ajouter Reduction
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="36"
+                    height="26"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-plus"
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line></svg
+                ></a>
               </li>
             </ol>
           </div>
@@ -37,84 +70,122 @@
           <div class="box">
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="table-responsive">
-                <table
-                  id="example5"
-                  class="table table-bordered table-striped"
-                  style="width: 100%"
-                >
-                  <thead>
-                    <tr>
-                      <th class="col-1">ID</th>
-                      <th>Designation</th>
-                      <th>Pourcentage</th>
-                      <th>Date Fin</th>
-                      <th>Produits Associés</th>
+              <form
+                action="{{ path('app_reduction_delete_group') }}"
+                method="POST"
+              >
+                <div class="table-responsive">
+                  <table
+                    id="example5"
+                    class="table table-bordered table-striped"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Designation</th>
+                        <th>Pourcentage</th>
+                        <th>Date Fin</th>
+                        <th>Produits Associés</th>
 
-                      <th class="col-3">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for reduction in reductions %}
-                    <tr>
-                      <td class="">{{ reduction.id }}</td>
-                      <td>{{ reduction.designation }}</td>
-                      <td>{{ reduction.pourcentage }}</td>
-                      <td>{{ reduction.datefin|date('Y-m-d \\HH:i:s') }}</td>
+                        <th class="col-3">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for reduction in reductions %}
+                      <tr>
+                        <td>
+                          <div>
+                            <input
+                              type="checkbox"
+                              id="{{ reduction.id }}"
+                              name="check{{ reduction.id }}"
+                            />
+                            <label for="{{ reduction.id }}"></label>
+                          </div>
+                        </td>
+                        <td>{{ reduction.designation }}</td>
+                        <td>{{ reduction.pourcentage }}</td>
+                        <td>{{ reduction.datefin|date('Y-m-d \\HH:i:s') }}</td>
 
-                      <td>
-                        {% for produit in reduction.produits %}
+                        <td>
+                          {% for produit in reduction.produits %}
 
-                        {{ produit.designation }}<br />
-                        {% else %} Aucun Produit associé {% endfor %}
-                      </td>
-                      <td>
-                        <a
-                          href="{{
-                            path('app_reduction_show', { id: reduction.id })
-                          }}"
-                          class="btn btn-md btn-primary"
-                        >
-                          <i class="fa fa-eye"></i>
-                        </a>
-                        <a
-                          href="{{
-                            path('app_reduction_edit', { id: reduction.id })
-                          }}"
-                          class="btn btn-md btn-warning"
-                        >
-                          <i class="fa fa-edit"></i>
-                        </a>
-                        <a
-                          href="{{
-                            path('app_reduction_delete', { id: reduction.id })
-                          }}"
-                          class="btn btn-md btn-danger"
-                        >
-                          <i class="fa fa-trash"></i>
-                        </a>
-                        {# {{ include("reduction/_delete_form.html.twig") }} #}
-                      </td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                      <td colspan="9">no records found</td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>ID</th>
-                      <th>Designation</th>
-                      <th>Pourcentage</th>
-                      <th>Periode</th>
-                      <th style="border-right: 1px solid #d5dfea">
-                        Produits Associés
-                      </th>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
+                          {{ produit.designation }}<br />
+                          {% else %} Aucun Produit associé {% endfor %}
+                        </td>
+                        <td>
+                          <a
+                            href="{{
+                              path('app_reduction_show', { id: reduction.id })
+                            }}"
+                            class="btn btn-md btn-primary"
+                          >
+                            <i class="fa fa-eye"></i>
+                          </a>
+                          <a
+                            {#
+                            href="{{
+                              path('app_reduction_edit', { id: reduction.id })
+                            }}"
+                            #}
+                            data-tooltip="tooltip"
+                            data-placement="top"
+                            title="Quick View"
+                            data-toggle="modal"
+                            data-target="#products"
+                            class="btn btn-md btn-warning edit"
+                            id="edit{{ reduction.id }}"
+                          >
+                            <i class="fa fa-edit"></i>
+                          </a>
+                          <a
+                            onclick="return confirm('vous voulez  le supprimer vraiment ??');"
+                            href="{{
+                              path('app_reduction_delete_get', {
+                                id: reduction.id
+                              })
+                            }}"
+                            class="btn btn-md btn-danger"
+                          >
+                            <i class="fa fa-trash"></i>
+                          </a>
+                          {#
+                          {{ include("reduction/_delete_form.html.twig") }} #}
+                        </td>
+                      </tr>
+                      {% else %}
+                      <tr>
+                        <td colspan="9">no records found</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th></th>
+                        <th>Designation</th>
+                        <th>Pourcentage</th>
+                        <th>Date fin</th>
+                        <th>Produits Associés</th>
+                        <th></th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                <div class="row">
+                  <div class="col-5"></div>
+                  <div class="col-7">
+                    <button
+                      class="btn"
+                      onclick="return confirm('vous voulez  les supprimer vraiment ??');"
+                    >
+                      <strong>supprimer</strong
+                      ><i style="color: red" class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
             <!-- /.box-body -->
           </div>
@@ -127,6 +198,161 @@
     <!-- /.content -->
   </div>
 </div>
+
+<select
+  style="display: none"
+  id="reduction_date_fin_date_month"
+  name="reduction[date_fin][date][month]"
+  class="form-control"
+>
+  <option value="1">Jan</option>
+  <option value="2">Feb</option>
+  <option value="3">Mar</option>
+  <option value="4">Apr</option>
+  <option value="5">May</option>
+  <option value="6">Jun</option>
+  <option value="7">Jul</option>
+  <option value="8">Aug</option>
+  <option value="9">Sep</option>
+  <option value="10">Oct</option>
+  <option value="11">Nov</option>
+  <option value="12">Dec</option>
+</select>
+
+<select style="display: none" id="reduction_date_fin_date_day">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="7">7</option>
+  <option value="8">8</option>
+  <option value="9">9</option>
+  <option value="10">10</option>
+  <option value="11">11</option>
+  <option value="12">12</option>
+  <option value="13">13</option>
+  <option value="14">14</option>
+  <option value="15">15</option>
+  <option value="16">16</option>
+  <option value="17">17</option>
+  <option value="18">18</option>
+  <option value="19">19</option>
+  <option value="20">20</option>
+  <option value="21">21</option>
+  <option value="22">22</option>
+  <option value="23">23</option>
+  <option value="24">24</option>
+  <option value="25">25</option>
+  <option value="26">26</option>
+  <option value="27">27</option>
+  <option value="28">28</option>
+  <option value="29">29</option>
+  <option value="30">30</option>
+  <option value="31">31</option>
+</select>
+
+<select id="reduction_date_fin_date_year" style="display: none">
+  <option value="2022">2022</option>
+  <option value="2023">2023</option>
+  <option value="2024">2024</option>
+  <option value="2025">2025</option>
+  <option value="2026">2026</option>
+  <option value="2027">2027</option>
+</select>
+
+<select id="reduction_date_fin_time_hour">
+  <option value="0">00</option>
+  <option value="1">01</option>
+  <option value="2">02</option>
+  <option value="3">03</option>
+  <option value="4">04</option>
+  <option value="5">05</option>
+  <option value="6">06</option>
+  <option value="7">07</option>
+  <option value="8">08</option>
+  <option value="9">09</option>
+  <option value="10">10</option>
+  <option value="11">11</option>
+  <option value="12">12</option>
+  <option value="13">13</option>
+  <option value="14">14</option>
+  <option value="15">15</option>
+  <option value="16">16</option>
+  <option value="17">17</option>
+  <option value="18">18</option>
+  <option value="19">19</option>
+  <option value="20">20</option>
+  <option value="21">21</option>
+  <option value="22">22</option>
+  <option value="23">23</option>
+</select>
+
+<select id="reduction_date_fin_time_minute">
+  <option value="0">00</option>
+  <option value="1">01</option>
+  <option value="2">02</option>
+  <option value="3">03</option>
+  <option value="4">04</option>
+  <option value="5">05</option>
+  <option value="6">06</option>
+  <option value="7">07</option>
+  <option value="8">08</option>
+  <option value="9">09</option>
+  <option value="10">10</option>
+  <option value="11">11</option>
+  <option value="12">12</option>
+  <option value="13">13</option>
+  <option value="14">14</option>
+  <option value="15">15</option>
+  <option value="16">16</option>
+  <option value="17">17</option>
+  <option value="18">18</option>
+  <option value="19">19</option>
+  <option value="20">20</option>
+  <option value="21">21</option>
+  <option value="22">22</option>
+  <option value="23">23</option>
+  <option value="24">24</option>
+  <option value="25">25</option>
+  <option value="26">26</option>
+  <option value="27">27</option>
+  <option value="28">28</option>
+  <option value="29">29</option>
+  <option value="30">30</option>
+  <option value="31">31</option>
+  <option value="32">32</option>
+  <option value="33">33</option>
+  <option value="34">34</option>
+  <option value="35">35</option>
+  <option value="36">36</option>
+  <option value="37">37</option>
+  <option value="38">38</option>
+  <option value="39">39</option>
+  <option value="40">40</option>
+  <option value="41">41</option>
+  <option value="42">42</option>
+  <option value="43">43</option>
+  <option value="44">44</option>
+
+  <option value="45">45</option>
+  <option value="46">46</option>
+
+  <option value="47">47</option>
+  <option value="48">48</option>
+  <option value="49">49</option>
+  <option value="50">50</option>
+  <option value="51">51</option>
+  <option value="52">52</option>
+  <option value="53">53</option>
+  <option value="54">54</option>
+  <option value="55">55</option>
+  <option value="56">56</option>
+  <option value="57">57</option>
+  <option value="58">58</option>
+  <option value="59">59</option>
+</select>
 <!-- /.content-wrapper -->
 
 {% endblock %} {% block javascript %}
@@ -134,4 +360,11 @@
     asset('assets/vendor_components/datatable/datatables.min.js')
   }} "></script>
 <script src="{{ asset('main/js/pages/data-table.js') }}"></script>
+<script src="{{
+    asset('main/js/reduction/ajouter_reduction_index.js')
+  }}"></script>
+<script src="{{
+    asset('main/js/reduction/editer_reduction_index.js')
+  }}"></script>
+
 {% endblock %}

@@ -13,17 +13,19 @@ class Image
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read'])]
+    #[Groups(['prod:read','image:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255 , nullable: true)]
-    #[Groups(['prod:read'])]
+    #[Groups(['prod:read','image:read'])]
     private $url;
 
     #[ORM\ManyToOne(targetEntity: Produit::class, inversedBy: 'images')]
+    #[Groups(['image:read'])]
     private $produit;
 
     #[ORM\ManyToOne(targetEntity: Variation::class, inversedBy: 'images')]
+    #[Groups(['image:read'])]
     private $variation;
 
     

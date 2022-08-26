@@ -6,34 +6,27 @@
     <div class="content-header">
       <div class="d-flex align-items-center">
         <div class="mr-auto">
-          <h3 class="page-title">Data Tables</h3>
+          <h3 class="page-title">Utilisateur</h3>
           <div class="d-inline-block align-items-center">
-            <nav>
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                  <a href="#"><i class="mdi mdi-home-outline"></i></a>
-                </li>
-                <li class="breadcrumb-item" aria-current="page">Tables</li>
-                <li class="breadcrumb-item active" aria-current="page">
-                  Data Tables
-                </li>
-              </ol>
-            </nav>
+            <ol class="breadcrumb">
+              <li>
+                <a
+                  href="{{ path('app_user_index') }}"
+                  class="btn btn-primary btn-md"
+                  >Tous les Utilisateurs</a
+                >
+              </li>
+            </ol>
           </div>
         </div>
       </div>
     </div>
-
+    <p id="user_id" style="display: none">{{ app.user.id }}</p>
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-12">
           <div class="box">
-            <div class="box-header">
-              <a href="{{ path('app_user_index') }}" class="btn btn-primary"
-                >Liste Users</a
-              >
-            </div>
             <div class="box-body">
               <div class="table-responsive">
                 <table
@@ -44,15 +37,18 @@
                   <thead>
                     <tr>
                       <th rowspan="2">Nom Complet</th>
-                      <th colspan="2">HR Information</th>
+                      <th colspan="2">HR Informations</th>
                       <th colspan="2">Contact</th>
+                      <th rowspan="2">Produits</th>
+
+                      <th rowspan="2">Action</th>
                       {#
                       <th rowspan="2"></th>
                       #}
                     </tr>
                     <tr>
                       <th>Adresse</th>
-                      <th>Roles</th>
+                      <th class="col-1">Roles</th>
                       <th>Telephone</th>
                       <th style="border-right: 1px solid #d5dfea">E-mail</th>
                     </tr>
@@ -78,12 +74,26 @@
                       <td>{{ user.telephone }}</td>
                       <td>{{ user.email }}</td>
                       <td>
+                        {% for produit in user.getProduits() %}
+                        <a href="#" style="color: black">{{
+                          produit.designation
+                        }}</a>
+                        , {% endfor %}
+                      </td>
+
+                      <td>
                         {#
                         <a href="#" class="btn btn-md btn-primary">
                           <i class="fa fa-eye"></i>
                         </a>
                         #}
                         <a
+                          id="edit"
+                          data-tooltip="tooltip"
+                          data-placement="top"
+                          title="Quick View"
+                          data-toggle="modal"
+                          data-target="#products"
                           href="{{ path('app_user_edit', { id: user.id }) }}"
                           class="btn btn-md btn-warning"
                         >
@@ -103,11 +113,14 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <th>Name</th>
-                      <th>Position</th>
-                      <th>Salary</th>
-                      <th>Office</th>
-                      <th style="border-right: 1px solid #d5dfea">Extn.</th>
+                      <th>Nom</th>
+                      <th>Adresse</th>
+                      <th>Roles</th>
+                      <th>Telephone</th>
+                      <th>Email</th>
+                      <th>Produit</th>
+
+                      <th></th>
                     </tr>
                   </tfoot>
                 </table>
@@ -123,5 +136,13 @@
     <!-- /.content -->
   </div>
 </div>
+
+{% endblock %} {% block javascript %} {#
+<script src="{{
+    asset('assets/vendor_components/datatable/datatables.min.js')
+  }}"></script>
+<script src="{{ asset('main/js/pages/data-table.js') }}"></script>
+#}
+<script src="{{ asset('main/js/user/editer_user.js') }}"></script>
 
 {% endblock %}

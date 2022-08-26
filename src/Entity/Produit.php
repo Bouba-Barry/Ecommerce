@@ -19,7 +19,7 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read', 'prod:check'])]
+    #[Groups(['prod:read','produit:read','prod:check','quantite:read','image:read'])]
     private $id;
 
     #[ORM\Column(name: "deletedAt", type: "datetime", nullable: true)]
@@ -30,9 +30,8 @@ class Produit
         min: 2,
         minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
     )]
-
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['prod:read'])]
+    #[Groups(['prod:read','produit:read','quantite:read','image:read'])]
     private $designation;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -68,10 +67,11 @@ class Produit
     private $user;
 
     #[ORM\ManyToOne(targetEntity: SousCategorie::class, inversedBy: 'produits')]
+    #[Groups(['prod:read'])]
     private $sous_categorie;
 
     #[ORM\ManyToMany(targetEntity: Reduction::class, inversedBy: 'produits')]
-    #[Groups(['prod:read', 'prod:check'])]
+    #[Groups(['prod:read', 'prod:check','produit:read'])]
     private $reduction;
 
     #[ORM\ManyToMany(targetEntity: Variation::class, inversedBy: 'produits')]
@@ -112,6 +112,7 @@ class Produit
     private Collection $quantites;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['prod:read'])]
     private ?string $description_detaille = null;
 
     #[ORM\Column(length: 255)]

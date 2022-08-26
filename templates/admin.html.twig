@@ -6,14 +6,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<meta name="description" content=""/>
 		<meta name="author" content=""/>
-		<link rel="icon" href="{{ asset('images/favicon.ico') }}"/>
-
+		 <link rel="icon" href="{{ asset('images/shop.png') }}"/> 
+        
 		<title>TB-INFO</title>
 
 		<!-- Vendors Style-->
 		<link
 		rel="stylesheet" href="{{ asset('main/css/vendors_css.css') }}"/>
-
+		<link
+		rel="stylesheet"
+		href=" {{ asset('FrontOffice/assets/css/flaticon.css') }}"
+	  />
 		<!-- Style-->
 		<link rel="stylesheet" href="{{ asset('main/css/style.css') }}"/>
 		<link rel="stylesheet" href="{{ asset('main/css/skin_color.css') }}"/> {% block stylesheets %}{% endblock %}
@@ -181,10 +184,10 @@
 						<div class="user-profile">
 							<div class="ulogo">
 								<a
-									href="index.html">
+									href="#">
 									<!-- logo for regular state and mobile devices -->
 									<div class="d-flex align-items-center justify-content-center">
-										{# <img style="width:120px ;height:60px"  src="{{ asset('images/TB.png') }}" alt=""/> #}
+										<img style="width:40px ;height:40px"  src="{{ asset('images/shop.png') }}" alt=""/> 
 										<h3>
 											<b>TB-INFO</b>
 											Admin</h3>
@@ -302,7 +305,7 @@
 								</a>
 								<ul class="treeview-menu">
 									<li>
-										<a href="{{ path('app_categorie_index_aside') }}">
+										<a href="{{ path('app_categorie_index') }}">
 											<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
 											Liste des Categories</a>
 									</li>
@@ -330,7 +333,7 @@
 									<li>
 										<a href="{{ path('app_attribut_new') }}">
 											<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-											Ajouter Un Attribut</a>
+											Ajouter Un Attribut</a> 
 									</li>
 								</ul>
 							</li>
@@ -1227,15 +1230,14 @@
 
 									  <div
 									  class="modal fade productsQuickView"
-									  id="productsQuickView"
+									  id="products"
 									  tabindex="-1"
 									  role="dialog"
 									  aria-hidden="true"
 									>
 									  <div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
-										  <button
-											type="button"
+										  <a
 											class="close"
 											data-dismiss="modal"
 											aria-label="Close"
@@ -1243,99 +1245,12 @@
 											<span aria-hidden="true">
 											  <i class="flaticon-cancel"></i>
 											</span>
-										  </button>
+										</a>
 								
-										  <div class="row">
-											<div class="col-lg-6 col-md-6">
-											  <div id="image_produit" class="products-image"></div>
-											</div>
+										  <div class="row" id="row">
+											
 								
-											<div class="col-lg-6 col-md-6">
-											  <div class="product-content">
-												<h3 id="titre_produit">Seasoned Tomatoes</h3>
-												<div class="price">
-												  <span class="new-price" id="new_price">$541.00</span>
-												  <span class="old-price" id="old_price">$652.00</span>
-												</div>
-												<div class="product-review">
-												  <div class="rating">
-													<i class="bx bxs-star"></i>
-													<i class="bx bxs-star"></i>
-													<i class="bx bxs-star"></i>
-													<i class="bx bxs-star"></i>
-													<i class="bx bxs-star"></i>
-												  </div>
-												  <a href="#" class="rating-count">5 reviews</a>
-												</div>
-												<div class="buy-checkbox-btn" id="product_review"></div>
-												{#
-												<div class="product-review" id="product_review_images"></div>
-												#}
-												<p id="description_produit">
-												  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-												  do eiusmod tempor incididunt ut labore et.
-												</p>
-												<div class="product-add-to-cart">
-												  <div class="input-counter">
-													<span class="minus-btn progressbtn2">
-													  <i class="bx bx-minus"></i>
-													</span>
-													<input type="text" class="valprogress" value="1" min="0" />
-													<span class="plus-btn progressbtn1">
-													  <i class="bx bx-plus"></i>
-													</span>
-												  </div>
-												  <button type="submit" class="default-btn addcard">
-													Add to cart
-												  </button>
-												</div>
 								
-												<div class="buy-checkbox-btn">
-												  <div class="item">
-													<input class="inp-cbx" id="cbx" type="checkbox" />
-													<label class="cbx" for="cbx">
-													  <span>
-														<svg width="12px" height="10px" viewbox="0 0 12 10">
-														  <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-														</svg>
-													  </span>
-													  <span>I agree with the terms and conditions</span>
-													</label>
-												  </div>
-												  <div class="item">
-													<a href="#" class="btn btn-light">Buy it now!</a>
-												  </div>
-												</div>
-								
-												<div class="products-share">
-												  <ul class="social">
-													<li>
-													  <span>Share:</span>
-													</li>
-													<li>
-													  <a href="#" class="facebook" target="_blank">
-														<i class="bx bxl-facebook"></i>
-													  </a>
-													</li>
-													<li>
-													  <a href="#" class="twitter" target="_blank">
-														<i class="bx bxl-twitter"></i>
-													  </a>
-													</li>
-													<li>
-													  <a href="#" class="linkedin" target="_blank">
-														<i class="bx bxl-linkedin"></i>
-													  </a>
-													</li>
-													<li>
-													  <a href="#" class="instagram" target="_blank">
-														<i class="bx bxl-instagram"></i>
-													  </a>
-													</li>
-												  </ul>
-												</div>
-											  </div>
-											</div>
 										  </div>
 										</div>
 									  </div>

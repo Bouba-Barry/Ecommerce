@@ -29,6 +29,9 @@ class EditQuantiteVariableType extends AbstractType
             ->add('qte_stock',NumberType::class,[
                 'label' => false,
             ])
+            ->add('prix',NumberType::class,[
+                'label' => false,
+            ])
             ->add('variations',EntityType::class,[
                 'class' => Variation::class,
                 'choice_label' => 'nom',

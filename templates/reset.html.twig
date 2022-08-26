@@ -1,0 +1,92 @@
+{% extends "base.html.twig" %} {% block stylesheets %}
+<link rel="icon" href="{{ asset('images/favicon.ico') }}" />
+
+<title>Recuperation du Mot de Passe</title>
+
+<!-- Vendors Style-->
+<link rel="stylesheet" href="{{ asset('main/css/vendors_css.css') }} " />
+
+<!-- Style-->
+<link rel="stylesheet" href="{{ asset('main/css/style.css') }} " />
+<link rel="stylesheet" href="{{ asset('main/css/skin_color.css') }}" />
+
+{% endblock %} {% block javascripts %}
+<script src="{{ asset('main/js/vendors.min.js') }} "></script>
+<script src="{{
+    asset('assets/icons/feather-icons/feather.min.js')
+  }} "></script>
+
+{% endblock %} {% block body %}
+
+{{ form_start(form) }}
+<!-- Content Wrapper. Contains page content -->
+
+<div class="container-full" style="margin-left: 200px; margin-right: 200px">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h3 class="page-title">Modification du Mot de Passe</h3>
+        <div class="d-inline-block align-items-center"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+
+  <!-- Step wizard -->
+  <div class="box box-default">
+    <!-- /.box-header -->
+    <div class="box-body wizard-content">
+      <!-- Step 1 -->
+
+      {# end Input des profiles ajouter icic #}
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="addressline2">Password :</label>
+            {{ form_row(form.password.first) }}
+            <span class="form-text text-muted">{{
+              form_errors(form.password.first)
+            }}</span>
+          </div>
+          <div class="form-group">
+            <label for="addressline2">confirmation :</label>
+            {{ form_row(form.password.second) }}
+            {#
+            <span class="form-text text-muted">{{
+              form_errors(form.password.second)
+            }}</span>
+            #}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6"></div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <br /><br />
+            {# <label for="date1">Date of Birth :</label>
+            <input type="date" class="form-control" id="date1" /> #}
+            <button
+              style="width: 150px"
+              class="btn btn-primary btn-rounded margin-top-10"
+            >
+              {{ button_label|default('Enregistrer') }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+
+  <!-- /.content -->
+</div>
+
+{{ form_end(form) }}
+
+{% endblock %}

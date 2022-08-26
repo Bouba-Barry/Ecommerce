@@ -26,8 +26,23 @@
                 <a
                   href="{{ path('app_categorie_new_aside') }}"
                   class="btn btn-primary btn-md"
-                  >Ajouter Categorie</a
-                >
+                  >Ajouter Categorie]
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="36"
+                    height="26"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-plus"
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </a>
               </li>
             </ol>
           </div>
@@ -58,7 +73,6 @@
                 >
                   <thead>
                     <tr>
-                      <th col-1>ID</th>
                       <th>Nom De la Categorie</th>
                       <th>Sous Categories</th>
                       <th>Action</th>
@@ -67,7 +81,6 @@
                   <tbody>
                     {% for categorie in categories %}
                     <tr>
-                      <td class="">{{ categorie.id }}</td>
                       <td>{{ categorie.titre }}</td>
                       <td>
                         {% for sous_categorie in categorie.getSousCategories()
@@ -111,9 +124,9 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <th>ID</th>
                       <th>Nom Categorie</th>
-                      <th style="border-right: 1px solid #d5dfea">Produits</th>
+                      <th>sous categorie</th>
+                      <th></th>
                     </tr>
                   </tfoot>
                 </table>

@@ -14,11 +14,11 @@ class Ville
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
-    #[Groups(['ville'])]
+    #[Groups(['ville','user:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['ville'])]
+    #[Groups(['ville','user:read'])]
     private ?string $nom_ville = null;
 
     #[ORM\ManyToOne(inversedBy: 'villes')]

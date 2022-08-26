@@ -201,11 +201,14 @@ class QuantiteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
+            // $quantite->setProduit($produitRepository->find($id));
+            
             $this->addFlash('success', 'Combinaison Ajoute avec succes');
              $quantite=$form->getData();
              $produit=$produitRepository->find($id);
             //   dd($form->get('variations')->getData()->getNom());
 
+            // dd($form->get('variations')->getData());
             $array=[];
              foreach( $form->get('variations')->getData() as $variations_produit ){
                 array_push($array,$variations_produit->getNom());
@@ -221,7 +224,7 @@ class QuantiteController extends AbstractController
             $quantite->setVariations($array);
             $quantiteRepository->add($quantite, true);
 
-            return $this->redirectToRoute('app_quantite_index_variable', ['id' => $id]);
+            return $this->redirectToRoute('app_produit_show', ['id' => $id]);
         }
 
         return $this->renderForm('quantite/new_produit.html.twig', [
@@ -375,14 +378,14 @@ class QuantiteController extends AbstractController
             $quantite->setVariations($array);
             $quantiteRepository->add($quantite, true);
 
-            return $this->redirectToRoute('app_quantite_index_variable', ['id' => $slug]);
+            return $this->redirectToRoute('app_produit_show', ['id' => $slug]);
         }
 
         return $this->renderForm('quantite/edit.html.twig', [
             'quantite' => $quantite,
             'form' => $form,
             'attributs'=> $produit->getAttributs(),
-             'variations' => $quantite->getVariations(),
+            'variations' => $quantite->getVariations(),
             'produit'=>$produit
         ]);
     }
@@ -448,17 +451,60 @@ class QuantiteController extends AbstractController
         ]);
     }
 
-    #[Route('admin/{id}/{slug}', name: 'app_quantite_delete', methods: ['POST'])]
-    public function delete( $id , $slug ,Request $request, ProduitRepository $produitRepository ,QuantiteRepository $quantiteRepository): Response
+    // #[Route('admin/{id}/{slug}', name: 'app_quantite_delete', methods: ['POST'])]
+    // public function delete( $id , $slug ,Request $request, ProduitRepository $produitRepository ,QuantiteRepository $quantiteRepository): Response
+    // {
+    //     $this->addFlash('suppression', 'votre suppression est faite avec succes');
+
+    //     $quantite=$quantiteRepository->find($id);
+        
+    //     if ($this->isCsrfTokenValid('delete'.$quantite->getId(), $request->request->get('_token'))) {
+    //         $quantiteRepository->remove($quantite, true);
+    //     }
+
+    //     return $this->redirectToRoute('app_produit_show', ['id' => $slug]);
+    // }
+
+    #[Route('admin/{id}/{slug}', name: 'app_quantite_delete_get', methods: ['GET'])]
+    public function deleteget( $id , $slug ,Request $request, ProduitRepository $produitRepository ,QuantiteRepository $quantiteRepository): Response
     {
-        $this->addFlash('suppression', 'votre suppression est faite avec succes');
 
         $quantite=$quantiteRepository->find($id);
         
-        if ($this->isCsrfTokenValid('delete'.$quantite->getId(), $request->request->get('_token'))) {
+        // if ($this->isCsrfTokenValid('delete'.$quantite->getId(), $request->request->get('_token'))) {
             $quantiteRepository->remove($quantite, true);
-        }
+        
+            $this->addFlash('suppression', 'votre suppression est faite avec succes');
 
-        return $this->redirectToRoute('app_quantite_index_variable', ['id' => $slug]);
+        return $this->redirectToRoute('app_produit_show', ['id' => $slug]);
     }
+
+
+
+    #[Route('/delete/group', name: 'app_quantite_delete_group', methods: ['POST'])]
+    public function deletegroup(Request $request, QuantiteRepository $quantiteRepository ): Response
+    {
+        // dd($request->get('check1'));
+        $array=[];
+        foreach($quantiteRepository->findAll() as $quantite){
+          if($request->get('check'.$quantite->getId())!=null){
+           
+             array_push($array,$quantite->getId());
+          }
+
+        }
+        foreach($array as $quantite){
+            $quantiteRepository->remove($quantiteRepository->find($quantite),true);
+        }
+        // if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            // $userRepository->remove($user, true);
+            $this->addFlash('suppression', 'La suppression est effectue  avec succes');
+
+        return $this->redirectToRoute('app_produit_show', ['id' => $request->get('produit') ], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+
+
 }

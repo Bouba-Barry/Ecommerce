@@ -14,14 +14,14 @@
       </div>
       <div class="d-flex align-items-center">
         <div class="mr-auto">
-          <h3 class="page-title">hello {{ user.nom }}</h3>
+          <h3 class="page-title">Bonjour {{ user.nom }}</h3>
           <div class="d-inline-block align-items-center">
             <nav>
               <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                   <a href="#"><i class="mdi mdi-home-outline"></i></a>
                 </li>
-                <li class="breadcrumb-item" aria-current="page">Extra</li>
+
                 <li class="breadcrumb-item active" aria-current="page">
                   Profile
                 </li>
@@ -128,6 +128,7 @@
                   </div>
                 </div>
                 <div class="col-12">
+                  {#
                   <div class="pb-15">
                     <p class="mb-10">Social Profile</p>
                     <div class="user-social-acount">
@@ -148,9 +149,10 @@
                       </button>
                     </div>
                   </div>
+                  #}
                 </div>
 
-                {# maps #}
+                {# maps #} {#
                 <div class="col-12">
                   <div>
                     <div class="map-box">
@@ -165,6 +167,7 @@
                     </div>
                   </div>
                 </div>
+                #}
               </div>
             </div>
             <!-- /.box-body -->
@@ -225,7 +228,7 @@
           <div class="box">
             <div class="box-body">
               <div class="flexbox align-items-baseline mb-20">
-                <h6 class="text-uppercase ls-2">Others Users</h6>
+                <h6 class="text-uppercase ls-2">Autres Utilisateurs</h6>
                 <small>{{ users | length }}</small>
               </div>
               <div class="gap-items-2 gap-y">
@@ -244,9 +247,11 @@
               </div>
             </div>
             <div class="box-footer">
+              {#
               <a class="text-uppercase d-blockls-1 text-fade" href="#"
-                >Invite People</a
-              >
+                >Inviter les Autres
+              </a>
+              #}
             </div>
           </div>
 
@@ -1040,7 +1045,7 @@
                   {{
                     include(
                       "user/_formProfile.html.twig",
-                      { button_label: "Save" },
+                      { button_label: "Enregistrer" },
                       { action: path("app_user_edit", { id: user.id }) }
                     )
                   }}
@@ -1052,7 +1057,7 @@
                   {{
                     include(
                       "user/_form_editpassword.html.twig",
-                      { button_label: "Update" },
+                      { button_label: "Modifier" },
                     
                     )
                   }}

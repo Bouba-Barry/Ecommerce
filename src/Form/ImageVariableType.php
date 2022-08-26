@@ -45,7 +45,7 @@ class ImageVariableType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid image',
                     ])
                 ],
-                'attr' => ['placeholder' => 'Image Produit', 'class' => 'form-control']
+                'attr' => ['placeholder' => 'Image', 'class' => 'form-control']
             ])
             ->add('produit', EntityType::class, [
                 'class' => Produit::class,

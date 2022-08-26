@@ -128,7 +128,9 @@ class CategorieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categorieRepository->add($categorie, true);
 
-            return $this->redirectToRoute('app_sous_categorie_new_aside', ['id' => $categorie->getId()]);
+            $this->addFlash('success', 'Categorie ajoute avec succes vous pouvez ajoute les sous categories');
+            return $this->redirectToRoute('app_categorie_show', ['id' => $categorie->getId()]);
+            // return $this->redirectToRoute('app_sous_categorie_new_aside', ['id' => $categorie->getId()]);
         }
 
         return $this->renderForm('categorie/new_aside.html.twig', [
@@ -170,6 +172,7 @@ class CategorieController extends AbstractController
     {
         return $this->render('categorie/show.html.twig', [
             'categorie' => $categorie,
+            'sous_categories'=>$categorie->getSousCategories()
         ]);
     }
 
@@ -202,10 +205,10 @@ class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Categorie Modifiee avec succes');
+            
             $categorieRepository->add($categorie, true);
-
-            return $this->redirectToRoute('app_categorie_index_aside', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Categorie Modifiee avec succes');
+            return $this->redirectToRoute('app_categorie_show', ['id'=>$categorie->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('categorie/_form_edit_aside.html.twig', [
@@ -228,7 +231,45 @@ class CategorieController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $categorie->getId(), $request->request->get('_token'))) {
             $categorieRepository->remove($categorie, true);
         }
+        $this->addFlash('suppression', 'Categorie supprime avec succes');
+
+        return $this->redirectToRoute('app_categorie_show', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/delete/{id}', name: 'app_categorie_delete_get', methods: ['GET'])]
+    public function deleteget(Request $request, Categorie $categorie, CategorieRepository $categorieRepository): Response
+    {
+        // if ($this->isCsrfTokenValid('delete' . $categorie->getId(), $request->request->get('_token'))) {
+            $categorieRepository->remove($categorie, true);
+        
+        $this->addFlash('suppression', 'Categorie supprime avec succes');
 
         return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/delete/group', name: 'app_categorie_delete_group', methods: ['POST'])]
+    public function deletegroup(Request $request,CategorieRepository $categorieRepository): Response
+    {
+        
+        // dd($request->get('check1'));
+        $array=[];
+        foreach($categorieRepository->findAll() as $categorie){
+          if($request->get('check'.$categorie->getId())!=null){
+           
+             array_push($array,$categorie->getId());
+          }
+
+        }
+        foreach($array as $categorie){
+            $categorieRepository->remove($categorieRepository->find($categorie),true);
+        }
+        // if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            // $userRepository->remove($user, true);
+            $this->addFlash('suppression', 'La suppression est effectue  avec succes');
+
+        return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
 }

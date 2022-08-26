@@ -110,8 +110,9 @@ class AttributController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             $attributRepository->add($attribut, true);
+            $this->addFlash('success', 'Attribut ajoute avec succes vous pouvez ajoute des Variations');
 
-            return $this->redirectToRoute('app_variation_new_aside', ['id' => $attribut->getId() ]);
+            return $this->redirectToRoute('app_attribut_show', ['id' => $attribut->getId() ]);
         }
 
         return $this->renderForm('attribut/new_aside.html.twig', [
@@ -131,8 +132,9 @@ class AttributController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             $attributRepository->add($attribut, true);
+            $this->addFlash('success', 'Attribut ajoute avec succes vous pouvez ajoute des Variations');
 
-            return $this->redirectToRoute('app_variation_new_variable', ['id' => $attribut->getId() ]);
+            return $this->redirectToRoute('app_attribut_show', ['id' => $attribut->getId() ]);
         }
 
         return $this->renderForm('attribut/new.html.twig', [
@@ -170,6 +172,7 @@ class AttributController extends AbstractController
     {
         return $this->render('attribut/show.html.twig', [
             'attribut' => $attribut,
+            'variations' =>$attribut->getVariations()
         ]);
     }
 
@@ -185,11 +188,12 @@ class AttributController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $this->addFlash('success', 'Attribut modifie avec succes');
+            
 
             $attributRepository->add($attribut, true);
+            $this->addFlash('success', 'Attribut modifie avec succes');
 
-            return $this->redirectToRoute('app_attribut_index_aside', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_attribut_show', ['id'=>$attribut->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('attribut/edit.html.twig', [
@@ -206,6 +210,47 @@ class AttributController extends AbstractController
             $attributRepository->remove($attribut, true);
         }
 
+        $this->addFlash('suppression', 'Attribut supprime avec succes');
+
         return $this->redirectToRoute('app_attribut_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/delete/{id}', name: 'app_attribut_delete_get', methods: ['GET'])]
+    public function deleteget(Request $request, Attribut $attribut, AttributRepository $attributRepository): Response
+    {
+        
+        // if ($this->isCsrfTokenValid('delete' . $attribut->getId(), $request->request->get('_token'))) {
+            $attributRepository->remove($attribut, true);
+        
+
+        $this->addFlash('suppression', 'Attribut supprime avec succes');
+
+        return $this->redirectToRoute('app_attribut_index_aside', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/delete/group', name: 'app_attribut_delete_group', methods: ['POST'])]
+    public function deletegroup(Request $request,AttributRepository $attributRepository): Response
+    {
+        
+        // dd($request->get('check1'));
+        $array=[];
+        foreach($attributRepository->findAll() as $attribut){
+          if($request->get('check'.$attribut->getId())!=null){
+           
+             array_push($array,$attribut->getId());
+          }
+
+        }
+        foreach($array as $attribut){
+            $attributRepository->remove($attributRepository->find($attribut),true);
+        }
+        // if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            // $userRepository->remove($user, true);
+            $this->addFlash('suppression', 'La suppression est effectue  avec succes');
+
+        return $this->redirectToRoute('app_attribut_index_aside', [], Response::HTTP_SEE_OTHER);
+    }
+
+
 }

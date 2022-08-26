@@ -1,6 +1,4 @@
-{% extends 'login.html.twig' %} 
-{% block form %}
- {% if error %}
+{% extends 'login.html.twig' %} {% block form %} {% if error %}
 <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
@@ -17,7 +15,7 @@
         name="_username"
         value="{{ last_username }}"
         class="form-control pl-15 bg-transparent text-white plc-white"
-        placeholder="Username"
+        placeholder="email"
       />
     </div>
   </div>
@@ -33,41 +31,39 @@
         name="_password"
         id="password"
         class="form-control pl-15 bg-transparent text-white plc-white"
-        placeholder="Password"
+        placeholder="Mot de passe"
       />
-    <input
+      <input
         type="hidden"
         name="_csrf_token"
         value="{{ csrf_token('authenticate') }}"
-    />
+      />
     </div>
   </div>
   <div class="row">
     <div class="col-6">
       <div class="checkbox text-white">
         <input type="checkbox" id="basic_checkbox_1" />
-        <label for="basic_checkbox_1">Remember Me</label>
+        <label for="basic_checkbox_1">me-Souviens</label>
       </div>
     </div>
     <!-- /.col -->
     <div class="col-6">
       <div class="fog-pwd text-right">
-        <a href="javascript:void(0)" class="text-white hover-info"
-          ><i class="ion ion-locked"></i> Forgot pwd?</a
+        <a href="{{ path('app_forgot') }}" class="text-white hover-info"
+          ><i class="ion ion-locked"></i> Mot de passe oublie?</a
         ><br />
       </div>
     </div>
     <!-- /.col -->
     <div class="col-12 text-center">
-
-    <input type="hidden" name="_target_path" value="/admin" />
+      <input type="hidden" name="_target_path" value="/admin" />
       <button type="submit" class="btn btn-info btn-rounded mt-10">
-        SIGN IN
+        Connexion
       </button>
     </div>
     <!-- /.col -->
   </div>
 </form>
-
 
 {% endblock %}

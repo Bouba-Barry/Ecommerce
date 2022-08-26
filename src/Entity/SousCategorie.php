@@ -17,17 +17,18 @@ class SousCategorie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['souscategorie:read'])]
+    #[Groups(['souscategorie:read','prod:read','souscategorie'])]
     private $id;
 
     #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
     private $deletedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['souscategorie:read'])]
+    #[Groups(['souscategorie:read','prod:read','souscategorie'])]
     private $titre;
 
     #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'sousCategories')]
+    #[Groups(['souscategorie'])]
     private $categorie;
 
     #[ORM\OneToMany(mappedBy: 'sous_categorie', targetEntity: Produit::class)]

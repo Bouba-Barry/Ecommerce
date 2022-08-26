@@ -67,12 +67,8 @@
       href=" {{ asset('FrontOffice/assets/css/responsive.css') }} "
     />
     {% block style %}{% endblock %}
-    <title>{% block title %}{% endblock %}</title>
-    <link
-      rel="icon"
-      type="image/png"
-      href=" {{ asset('FrontOffice/assets/img/favicon.png ') }}"
-    />
+    <title>{% block title %}TB-INFO{% endblock %}</title>
+    <link rel="icon" href="{{ asset('images/shop.png') }}"/> 
   </head>
 
   <body>
@@ -142,8 +138,18 @@
         <div class="container">
           <div class="main-responsive-menu">
             <div class="logo">
-              <a href="index.html">
-                <img src="{{ asset('uploads/TB.png') }} " alt="image" />
+              
+                <img style="width:40px ;height:40px"  src="{{ asset('images/shop.png') }}" alt=""/> 
+                <a
+                href="#"
+                style="
+                  font-size: 40px;
+                  color: black;
+                  font-weight: bold;
+                  font-family: Courier New, Courier, monospace;
+                "
+              >
+                TB-INFO
               </a>
             </div>
           </div>
@@ -153,6 +159,7 @@
       <div class="main-navbar">
         <div class="container">
           <nav class="navbar navbar-expand-md navbar-light">
+            <img style="width:40px ;height:40px"  src="{{ asset('images/shop.png') }}" alt=""/> 
             <a
               href="#"
               style="

@@ -18,14 +18,14 @@ class Attribut
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['prod:read', 'variation'])]
+    #[Groups(['prod:read','attribut' ,'variation','attribut:read'])]
     private $id;
 
     #[ORM\Column(name:"deletedAt", type:"datetime", nullable:true)]
      private $deletedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['prod:read', 'variation'])]
+    #[Groups(['prod:read','attribut' ,'variation','attribut:read'])]
     #[Assert\Length(
         min: 3,
         minMessage: 'la Designation doit avoir {{ limit }} caractères minimum',
@@ -33,7 +33,7 @@ class Attribut
     private $nom;
 
     #[ORM\OneToMany(mappedBy: 'attribut', targetEntity: Variation::class)]
-    #[Groups(['prod:read','attribut'])]
+    #[Groups(['prod:read','attribut','attribut:read'])]
     private $variations;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]

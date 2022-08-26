@@ -33,6 +33,10 @@ class QuantiteVariableType extends AbstractType
                 'label' => false,
                 'attr' => ['placeholder' => 'Quantite En Stock']
             ])
+            ->add('prix',NumberType::class,[
+                'label' => false,
+                'attr' => ['placeholder' => 'Prix']
+            ])
             ->add('variations',EntityType::class,[
                 'class' => Variation::class,
                 'choice_label' => 'nom',

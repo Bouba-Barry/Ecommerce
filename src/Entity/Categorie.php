@@ -24,7 +24,7 @@ class Categorie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['categorie:read'])]
+    #[Groups(['categorie:read','categorie','souscategorie'])]
     private $id;
 
     #[ORM\Column(name: "deletedAt", type: "datetime", nullable: true)]
@@ -34,10 +34,11 @@ class Categorie
     #[Assert\NotBlank(message: 'le champ est requis')]
     #[Assert\Length(min: 3, minMessage: 'Au Moins 3 caractères')]
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['categorie:read'])]
+    #[Groups(['categorie:read','categorie','souscategorie'])]
     private $titre;
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: SousCategorie::class)]
+    #[Groups(['categorie:read','categorie'])]
     private $sousCategories;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
