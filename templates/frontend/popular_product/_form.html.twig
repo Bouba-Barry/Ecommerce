@@ -1,0 +1,29 @@
+{{ form_start(form,{'attr': { 'class': 'filter' ,'id': 'filter'}}) }}
+
+<label>Par Produit</label>
+{{form_row(form.q)}}
+
+<label>Par categories</label>
+{{form_row(form.categories)}}
+
+<label>Par Prix</label>
+<div class="row">
+	<div class="col-md-6">
+		{{form_row(form.min)}}
+	</div>
+	<div class="col-md-6">
+		{{form_row(form.max)}}
+	</div>
+</div>
+
+
+<label>Par reductions</label>
+{{form_row(form.reductions)}}
+
+<label>Par variations</label>
+{{form_row(form.variations)}}
+
+{# <button class="btn btn-info btn-rounded margin-top-5">
+{{ button_label|default('FILTREZ') }}
+</button> #}
+{{ form_end(form)}}

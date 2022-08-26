@@ -10,7 +10,7 @@
 			<div class="d-table-cell">
 				<div class="container">
 					<div class="page-banner-content">
-						<h2>Shop List One</h2>
+						<h2>BOUTIQUE</h2>
 						<ul>
 							<li>
 								<a href="{{ path('app_home') }}">Accueil</a>
@@ -26,38 +26,17 @@
 	{# start the main block   #}
 
 	<!-- Start Top Products Area -->
-		<section class="top-products-area pt-100 pb-100"> <div class="container">
-			<div class="orgo-grid-sorting row align-items-center">
-				<div class="col-lg-6 col-md-6 result-count">
-					<p>On a Trouvé
-						<span class="count" id="count">{{ size }}</span>
-						produits </p>
-				</div>
-
-				<div class="col-lg-6 col-md-6 ordering">
-					<div class="select-box">
-						<label>Trier par:</label>
-						<select
-						id="trieProd"/>
-						<option value="default">Default</option>
-						<option value="populaire">Popularity</option>
-						<option value="new">Latest</option>
-						<option value="price_asc">Price: low to high</option>
-						<option value="price_desc">Price: high to low</option>
-					</select>
-				</div>
+		<section class="top-products-area pt-100 pb-100"> 
+		<div class="container js-filter">
+		<div class="row row-content">
+			<div class="col-lg-3 js-filter-form">
+			<h5>Filtrez Les Produits Selon Vos Besoins</h5>
+				{% include 'frontend/boutique/_filter.html.twig' %}
 			</div>
-		</div>
-		{# <div id="blockProd"></div> #}
-
-
-		<div
-			class="row" id="row">
-
-
-			{# <div id="content"> #}
+		<div class="col-lg-9">
+		<div class="row js-filter-content" id="content">
 			{% for produit in produits %}
-				<div class="col-lg-3 col-md-6">
+				<div class="col-lg-4">
 					<div class="top-products-item">
 						<div class="products-image">
 							<a href="{{ path('app_shop_details',{id : produit.id }) }}"><img style="width: 250px; height: 200px" src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }} " alt="image"></a>
@@ -102,16 +81,16 @@
 							{% if produit.getReduction()|length != 0 %}
 							<div class="price">
 							  <span class="new-price">
-								{{ produit.nouveauPrix }}Dhs</span
+								{{ produit.getNouveauPrix() }}Dhs</span
 							  >
 							  <span class="old-price"
-								>{{ produit.ancienPrix }}Dhs</span
+								>{{ produit.getAncienPrix() }}Dhs</span
 							  >
 							</div>
 							{% else %}
 							<div class="price">
 							  <span class="new-price"
-								>{{ produit.ancienPrix }}Dhs</span
+								>{{ produit.getNouveauPrix() }}Dhs</span
 							  >
 							</div>
 							{% endif %}
@@ -129,22 +108,9 @@
 
 				</div>
 			{% else %}
-				<div>NO record found</div>
-			{% endfor %}
-			{# </div> #}
-
-			{# <div class="col-lg-3 col-md-12" id="pred"> <div class="pagination-area">
-											<a href="#" class="prev page-numbers">
-												<i class="flaticon-left-arrow"></i>
-											</a>
-											<a href="#" class="page-numbers">1</a>
-											<span class="page-numbers current" aria-current="page">2</span>
-											<a href="#" class="page-numbers">3</a>
-											<a href="#" class="page-numbers">4</a>
-											<a href="#" class="next page-numbers">
-												<i class="flaticon-right-arrow"></i>
-											</a>
-										</div> #}
+				<div>Aucun Produit Trouvé</div>
+			{% endfor %}</div>
+		</div>
 		</div>
 	</div>
 </div></section><!-- End Top Products Area -->{# end of the main block #}{% endblock %}

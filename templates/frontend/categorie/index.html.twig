@@ -1,0 +1,47 @@
+{% extends "frontend/index.html.twig" %}
+{% block title %} {{ main.titre }}
+{% endblock %}
+
+{% block content %}
+
+	<!-- Start Page Banner -->
+	<div class="page-banner-area">
+		<div class="d-table">
+			<div class="d-table-cell">
+				<div class="container">
+					<div class="page-banner-content">
+						<h2>Nos {{ main.titre }}</h2>
+						<ul>
+							<li>
+								<a href="{{ path('app_home') }}" class="default-btn">Retoure à l'accueil</a>
+							</li>
+							{# <li>Shop List One</li> #}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{#  End Page Banner #}
+	{# start the main block   #}
+
+	<!-- Start Top Products Area -->
+		<section class="top-products-area pt-100 pb-100"> 
+		<div class="container js-filter">
+		<div class="row row-content">
+			<div class="col-lg-3 js-filter-form">
+			<h5>Filtrez Les Produits Selon Vos Besoins</h5>
+			{% include 'frontend/categorie/_form.html.twig' %}
+			</div>
+		<div class="col-lg-9">
+		<div class="row js-filter-content" id="content">
+			{% include 'frontend/categorie/_produit.html.twig' %}
+			</div>
+		</div>
+		</div>
+	</div>
+</div></section><!-- End Top Products Area -->{# end of the main block #}{% endblock %}
+{% block javascripts %}
+{# <script src="{{ asset('js/panier3.js') }}"></script> #}
+	<script src="{{ asset('FrontOffice/other/trieCategorie.js') }} "></script>
+{% endblock %}

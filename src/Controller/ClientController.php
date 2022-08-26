@@ -105,13 +105,15 @@ class ClientController extends AbstractController
             // dd($userlogged->getRoles());
             // dd($userlogged->Id);
 
-            $order = $user->getPaniers();
+            $order = $user->getCommandes();
+            $wishlists = $user->getWishlists();
 
-
+            // dd($order);
             return $this->renderForm('frontend/profile.html.twig', [
                 'user' => $userlogged,
-                'order' => $order,
-                'form' => $form
+                'orders' => $order,
+                'form' => $form,
+                'wishlists' => $wishlists
             ]);
         } else {
             return $this->redirectToRoute('app_user_login', [], Response::HTTP_SEE_OTHER);

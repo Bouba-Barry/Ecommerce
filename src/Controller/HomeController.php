@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Data\FilterData;
 use doctrine;
 use App\Entity\User;
 use App\Entity\Image;
@@ -16,6 +17,10 @@ use App\Entity\Reduction;
 use App\Entity\Variation;
 use Doctrine\ORM\Mapping\Id;
 use App\Entity\SousCategorie;
+use App\Form\FilterCateType;
+use App\Form\FilterForm;
+use App\Form\FilterType;
+use App\Form\SearchType;
 use App\Services\MailerService;
 use App\Form\ForgotPasswordType;
 use Symfony\Component\Mime\Email;
@@ -266,6 +271,11 @@ class HomeController extends AbstractController
         return $this->json($json);
     }
 
+        $villes = $villeRepository->findAll();
+        $json = $serializer->serialize($villes, 'json', ['groups' => ['ville']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
 
     #[Route('/getAttribut/{id}', name: 'app_get_attribut', methods: ['GET'])]
     public function getAttribut(Attribut $attribut ,SerializerInterface $serializer,VilleRepository $villeRepository ,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
@@ -283,6 +293,11 @@ class HomeController extends AbstractController
         return $this->json($json);
     }
 
+        $produits = $produitRepository->findAll();
+        $json = $serializer->serialize($produits, 'json', ['groups' => ['produit:read']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
 
     #[Route('/getSousCategorie/{id}', name: 'app_get_souscategorie', methods: ['GET'])]
     public function getsouscategorie(SousCategorie  $souscategorie ,SerializerInterface $serializer,VilleRepository $villeRepository ,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
@@ -538,23 +553,52 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[ROUTE('/shoplist', name: 'app_home_shop')]
-    public function shopList(ProduitRepository $produitRepository, Request $request): Response
+    #[ROUTE('/shoplist', name: 'app_home_shop', methods: ['GET', 'POST'])]
+    public function shopList(ProduitRepository $produitRepository, Request $request, SerializerInterface $serializer)
     {
-        $produits = $produitRepository->findAll();
 
-        return $this->render('frontend/shoplist.html.twig', [
+        $data = new FilterData();
+        $form = $this->createForm(FilterType::class, $data, [
+            'action' => 'http://127.0.0.1:8000/shoplist',
+            'method' => 'GET',
+        ]);
+        // dd($data);
+        // if ($request->get('filter_form[q]')) {
+        //     dd($request->query->all());
+        // }
+        $parametersToValidate = $request->query->all();
+        // if ($parametersToValidate) {
+        //     dd($parametersToValidate);
+        // }
+        $form->handleRequest($request);
+        $produits = $produitRepository->findByFilter($data);
+        // dd($produits);
+        $size = count($produits);
+        // dd($size);
+        if ($request->isXmlHttpRequest()) {
+
+            // $data = new FilterData();
+            // $form = $this->createForm(FilterType::class, $data);
+            // $prods = $produitRepository->findByFilter($data);
+            // $form->handleRequest($request);
+            return new JsonResponse([
+                'content' => $this->renderView('frontend/boutique/_produits.html.twig', ['produits' => $produits])
+            ]);
+            // $json = $serializer->serialize($produits, 'json', ['groups' => ['prod:read']]);
+            // return $this->json($json);
+        }
+        return $this->render('frontend/boutique/shoplist.html.twig', [
             'produits' => $produits,
-            'size' => count($produits)
+            'form' => $form->createView(),
+            'size' => $size
         ]);
     }
 
     #[ROUTE('/search', name: 'app_search_shop', methods: ['GET', 'POST'])]
-    public function shoplist_search(SerializerInterface $serializer, ProduitRepository $produitRepository, Request $request)
+    public function shoplist_search(ProduitRepository $produitRepository, Request $request, CategorieRepository $categorieRepository)
     {
-        $value = $request->get('searchInput');
-        $res = $produitRepository->findBySearch($value);
-        // dd($res);
+        $value = $request->get('q');
+        $data = new FilterData();
 
         $session = $this->requestStack->getSession();
         $session->set('valSearch', $value);
@@ -565,7 +609,6 @@ class HomeController extends AbstractController
             'produits' => $json,
             'size' => count($json)
         ]);
-    }
 
     #[ROUTE('/TrieSearch', name: 'app_trie_search_shop', methods: ['GET', 'POST'])]
     public function Sort_Search(SerializerInterface $serializer, ProduitRepository $produitRepository, Request $request): JsonResponse
@@ -745,7 +788,7 @@ class HomeController extends AbstractController
         // $min = $min->getId();
         $popular_products = $produitRepository->PopularProducts_This_Month();
         // dd($popular_products);
-        $categories = $categorieRepository->findAll();
+        $categories = $categorieRepository->findBy([], ['create_at' => 'DESC'], 4);
         $marque = $sousCat->findAll();
         return $this->render('frontend/home.html.twig', [
             'produits' => $produits,
@@ -964,116 +1007,88 @@ class HomeController extends AbstractController
     }
 
     #[Route('/sous_categorie/{id}', name: 'app_prod_sous_cat', methods: ['GET'])]
-    public function ProductBySousCategory($id, ProduitRepository $prod, SousCategorieRepository $sousCategorieRepository)
+    public function ProductBySousCategory($id, Request $request, SerializerInterface $serializer, ProduitRepository $prod, SousCategorieRepository $sousCategorieRepository)
     {
-        $products = $prod->findProductsBySousCategory($id);
-        $size = count($products);
-        $session = $this->requestStack->getSession();
-        $session->set('idSousCat', $id);
+        $data = new FilterData();
+        $form = $this->createForm(FilterCateType::class, $data, [
+            'method' => 'GET',
+        ]);
 
+        // $parametersToValidate = $request->query->all();
         $main = $sousCategorieRepository->findOneBy(['id' => $id]);
-        return $this->render('frontend/sous_categorie.html.twig', [
-            'products' => $products,
-            'main' => $main,
-            'size' => $size
+        $form->handleRequest($request);
+        $produits = $prod->findSousCateByFilter($data, $id);
+        $size = count($produits);
+        if ($request->isXmlHttpRequest()) {
+
+            return new JsonResponse([
+                'content' => $this->renderView('frontend/populaire_sous_categorie/_produit.html.twig', ['produits' => $produits])
+            ]);
+        }
+        return $this->render('frontend/populaire_sous_categorie/index.html.twig', [
+            'produits' => $produits,
+            'form' => $form->createView(),
+            'size' => $size,
+            'main' => $main
         ]);
     }
 
     #[Route('/category-product/{id}', name: 'app_prod_by_cate', methods: ['GET'])]
-    public function prodByCategory($id, CategorieRepository $categorieRepository, ProduitRepository $produitRepository)
+    public function prodByCategory($id, Request $request, CategorieRepository $categorieRepository, ProduitRepository $produitRepository)
     {
-        // dd($categorieRepository->findProductsByCategory($id));
-        $produits = $produitRepository->findProductsByCategory($id);
-        $session = $this->requestStack->getSession();
-        $session->set('idCat', $id);
+        $data = new FilterData();
+        $form = $this->createForm(FilterCateType::class, $data, [
+            'method' => 'GET',
+        ]);
+
+        // $parametersToValidate = $request->query->all();
+        $main = $categorieRepository->findOneBy(['id' => $id]);
+        $form->handleRequest($request);
+        $produits = $produitRepository->findCateByFilter($data, $id);
         $size = count($produits);
-        // dd($pan->findMostViewMonth());
+        if ($request->isXmlHttpRequest()) {
 
-
-        $cat = $categorieRepository->findOneBy(['id' => $id]);
-        return $this->render('frontend/produit_by_category.html.twig', [
+            return new JsonResponse([
+                'content' => $this->renderView('frontend/categorie/_produit.html.twig', ['produits' => $produits])
+            ]);
+        }
+        return $this->render('frontend/categorie/index.html.twig', [
             'produits' => $produits,
-            'cat' => $cat,
-            'size' => $size
+            'form' => $form->createView(),
+            'size' => $size,
+            'main' => $main
         ]);
     }
-    #[Route('/TrieCategory', name: 'app_sort_in_cate', methods: ['POST'])]
-    public function Trie_Cat_Produit(SerializerInterface $serializer, CategorieRepository $categorieRepository, ProduitRepository $produitRepository, Request $request): JsonResponse
+
+    #[Route('/category', name: 'app_cate', methods: ['GET'])]
+    public function allCategory(CategorieRepository $categorieRepository)
     {
-        $choice = $request->get('Le_choix');
-        $session = $this->requestStack->getSession();
-        $value = $session->get('idCat');
+        $category = $categorieRepository->findAll();
 
-        $res = $produitRepository->findProductsByCategory($value);
-
-        $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
-        $json = json_decode($json);
-        $tab = array();
-        for ($i = 0; $i < count($json); $i++) {
-            array_push($tab, $json[$i]->id);
-        }
-        // dd($tab);
-        // $valll = $produitRepository->findMostPopulareInSearch($tab);
-        // dd($valll);
-        if ($choice && (!empty($tab))) {
-            switch ($choice) {
-                case 'default':
-                    $ret = [];
-                    break;
-                case 'populaire':
-                    $ret = $produitRepository->findMostPopulareInSearch($tab);
-                    break;
-                case 'new':
-                    $ret = $produitRepository->find_recent_inSearch($tab);
-                    break;
-                case 'price_asc':
-                    $ret = $produitRepository->find_price_asc_inSearch($tab);
-                    break;
-                case 'price_desc':
-                    $ret = $produitRepository->find_price_desc_inSearch($tab);
-                    break;
-            }
-            $ret = $serializer->serialize($ret, 'json', ['groups' => ['prod:read']]);
-            return $this->json($ret);
-        }
+        return $this->render('frontend/AllCategorie.html.twig', [
+            'categories' => $category
+        ]);
     }
 
-    #[Route('/TrieSousCategorie', name: 'app_sort_Sous_cate', methods: ['POST'])]
-    public function Trie_SousCategorie(SerializerInterface $serializer, SousCategorieRepository $sousCategorieRepository, ProduitRepository $produitRepository, Request $request): JsonResponse
+    #[Route('/popular-products', name: 'app_famous', methods: ['GET', 'POST'])]
+    public function popular_product(ProduitRepository $prod, Request $request)
     {
-        $choice = $request->get('choix');
-        $session = $this->requestStack->getSession();
-        $value = $session->get('idSousCat');
-
-        $res = $produitRepository->findProductsBySousCategory($value);
-
-        $json = $serializer->serialize($res, 'json', ['groups' => ['prod:read']]);
-        $json = json_decode($json);
-        $tab = array();
-        for ($i = 0; $i < count($json); $i++) {
-            array_push($tab, $json[$i]->id);
+        $data = new FilterData();
+        $form = $this->createForm(FilterType::class, $data);
+        // $parametersToValidate = $request->query->all();
+        $form->handleRequest($request);
+        $produits = $prod->PopularProd_Month($data);
+        // dd($produits);
+        $size = count($produits);
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse([
+                'content' => $this->renderView('frontend/popular_product/_produit.html.twig', ['produits' => $produits])
+            ]);
         }
-
-        if ($choice && (!empty($tab))) {
-            switch ($choice) {
-                case 'default':
-                    $ret = [];
-                    break;
-                case 'populaire':
-                    $ret = $produitRepository->findMostPopulareInSearch($tab);
-                    break;
-                case 'new':
-                    $ret = $produitRepository->find_recent_inSearch($tab);
-                    break;
-                case 'price_asc':
-                    $ret = $produitRepository->find_price_asc_inSearch($tab);
-                    break;
-                case 'price_desc':
-                    $ret = $produitRepository->find_price_desc_inSearch($tab);
-                    break;
-            }
-            $ret = $serializer->serialize($ret, 'json', ['groups' => ['prod:read']]);
-            return $this->json($ret);
-        }
+        return $this->render('frontend/popular_product/index.html.twig', [
+            'produits' => $produits,
+            'form' => $form->createView(),
+            'size' => $size,
+        ]);
     }
 }
