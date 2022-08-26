@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<!-- Start Page Banner -->
+	<!-- Start Page Banner -->
 	<div class="page-banner-area">
 		<div class="d-table">
 			<div class="d-table-cell">
@@ -12,9 +12,7 @@
 					<div class="page-banner-content">
 						<h2>Resultat de Votre Recherche</h2>
 						<ul>
-							<li>
-								<a href=" {{ path('app_home') }} " class="default-btn">Retour à l'accueil</a>
-							</li>
+							<li><a href=" {{ path('app_home') }} " class="default-btn">Retour à l'accueil</a></li>
 						</ul>
 					</div>
 				</div>
@@ -25,28 +23,25 @@
 	{# start the main block   #}
 
 	<!-- Start Top Products Area -->
-		<section class="top-products-area pt-100 pb-100"> 
-		<div class="container js-filter">
-		<div  class="row">
- 		{% if value is not null and value is not empty %}	
-			<div class="col-lg-3 js-filter-form">
-			<h5>Filtrez Votre Recherche</h5>
-				{% include 'frontend/search/_filter.html.twig' %}
-			</div>
-		<div class="col-lg-9">
-		<div class="row js-filter-content" id="content">
-			{% include 'frontend/search/_produit.html.twig' %}
-			</div>
+		<section class="top-products-area pt-100 pb-100"> <div class="container js-filter">
+			<div class="row">
+				{% if value is not null and value is not empty %}
+					<div class="col-lg-3 js-filter-form">
+						<h5>Filtrez Votre Recherche</h5>
+						{% include 'frontend/search/_filter.html.twig' %}
+					</div>
+					<div class="col-lg-9">
+						<div class="row js-filter-content" id="content">
+							{% include 'frontend/search/_produit.html.twig' %}
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<p class="alert alert-info">Veuillez Vérifier Votre rechercher, voir Recommencez</p>
+			{% endif %}
 		</div>
-		</div>
-		{% else %}
-		<p class="alert alert-info">Veuillez Vérifier Votre rechercher, voir Recommencez</p>
-		{% endif %}
 	</div>
-</div>
-</section><!-- End Top Products Area -->{# end of the main block #}{% endblock %}
-{% block javascripts %}
+</section><!-- End Top Products Area -->{# end of the main block #}{% endblock %}{% block javascripts %}
 <script src="{{ asset('js/panier3.js') }}"></script>
 
-<script src="{{ asset('FrontOffice/other/search.js') }} "></script>
-{% endblock %}
+<script src="{{ asset('FrontOffice/other/search.js') }} "></script>{% endblock %}

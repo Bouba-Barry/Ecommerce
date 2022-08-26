@@ -55,6 +55,7 @@ class search {
       const data = await response.json();
       console.log(data.content);
       this.content.innerHTML = data.content;
+      // history.replaceState({}, "", this.url);
     } else {
       console.log("error");
     }

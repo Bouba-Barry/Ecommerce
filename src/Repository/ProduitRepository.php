@@ -724,7 +724,7 @@ class ProduitRepository extends ServiceEntityRepository
         $query = $this
             ->createQueryBuilder('p')
             ->select('p')
-            ->Where('p.designation LIKE :val ')
+            ->where('p.designation LIKE :val ')
             ->setParameter('val', "%{$value}%")
             ->join('p.sous_categorie', 's')
             ->join('s.categorie', 'c')
@@ -734,7 +734,7 @@ class ProduitRepository extends ServiceEntityRepository
         if (!empty($data->q)) {
             $query = $query
                 ->andWhere('p.designation LIKE :recherche ')
-                ->setParameter('recherche', "%{$value}%");
+                ->setParameter('recherche', "%{$data->q}%");
         }
         if (!empty($data->min)) {
             $query = $query
@@ -761,6 +761,7 @@ class ProduitRepository extends ServiceEntityRepository
         if (!empty($data->variations)) {
             $query = $query
                 ->andWhere('v.id IN (:variation) ')
+                // ->setParameter('q', "%{$value}%")
                 ->setParameter('variation', $data->variations);
         };
         // ->join('p.sous_categories', 's')
