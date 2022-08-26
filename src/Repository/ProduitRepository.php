@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Data\FilterData;
 use App\Entity\Produit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Produit>
@@ -16,9 +18,14 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProduitRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Produit::class);
+        $this->paginator = $paginator;
     }
 
     public function add(Produit $entity, bool $flush = false): void
@@ -56,20 +63,20 @@ class ProduitRepository extends ServiceEntityRepository
 
 
 
-    /**
-     * @return Produit[] Returns an array of Produit objects
-     */
-    public function findBySearch($attr)
-    {
-        // SELECT p FROM DoctrineExtensions\Query\BlogPost p WHERE DATEDIFF(CURRENT_TIME(), p.created) < 7 
-        return $this->createQueryBuilder('p')
-            //    ->andWhere('p.createAt = :val')
-            ->andWhere('p.designation like  :val')
-            ->setParameter('val', '%' . $attr . '%')
-            // ->setMaxResults(10)
-            ->getQuery()
-            ->getResult();
-    }
+    // /**
+    //  * @return Produit[] Returns an array of Produit objects
+    //  */
+    // public function findBySearch($attr)
+    // {
+    //     // SELECT p FROM DoctrineExtensions\Query\BlogPost p WHERE DATEDIFF(CURRENT_TIME(), p.created) < 7 
+    //     return $this->createQueryBuilder('p')
+    //         //    ->andWhere('p.createAt = :val')
+    //         ->andWhere('p.designation like  :val')
+    //         ->setParameter('val', '%' . $attr . '%')
+    //         // ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
 
 
     /**
@@ -215,6 +222,7 @@ class ProduitRepository extends ServiceEntityRepository
         SELECT * FROM produit p
         WHERE DATEDIFF(CURRENT_TIMESTAMP(), p.create_at)  BETWEEN 0 and 31
         ORDER BY p.create_at DESC
+        LIMIT 8
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
@@ -316,7 +324,7 @@ class ProduitRepository extends ServiceEntityRepository
         WHERE p.id = f.produit_id and (DATEDIFF(CURRENT_TIMESTAMP(), f.create_at)  BETWEEN 1 and 31)
         GROUP BY f.produit_id
         ORDER BY COUNT(*) DESC
-        LIMIT 8
+        LIMIT 16
         ";
         $stmt = $conn->prepare($sql2);
         $resultSet = $stmt->executeQuery();
@@ -370,7 +378,7 @@ class ProduitRepository extends ServiceEntityRepository
         WHERE p.id = f.produit_id 
         GROUP BY f.produit_id
         ORDER BY SUM(f.qte_cmd) DESC
-        LIMIT 20
+        LIMIT 16
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
@@ -551,5 +559,270 @@ class ProduitRepository extends ServiceEntityRepository
             ->setParameter(':result', $result);
 
         return $queryBuilder->getQuery()->getResult();
+    }
+
+
+    /**
+     * @return Produit[]
+     */
+    public function findByFilter(FilterData $data)
+    {
+
+        $query = $this
+            ->createQueryBuilder('p')
+            ->join('p.sous_categorie', 's')
+            ->join('s.categorie', 'c')
+            ->leftJoin('p.reduction', 'r')
+            ->leftJoin('p.variation', 'v');
+
+        if (!empty($data->q)) {
+            $query = $query
+                ->andWhere('p.designation LIKE :q ')
+                ->setParameter('q', "%{$data->q}%");
+        }
+        if (!empty($data->min)) {
+            $query = $query
+                ->andWhere('p.ancien_prix >= :min')
+                ->setParameter('min', $data->min);
+        }
+        if (!empty($data->max)) {
+            $query = $query
+                ->andWhere('p.ancien_prix <= :max')
+                ->setParameter('max', $data->max);
+        };
+        if (!empty($data->categories)) {
+            $query = $query
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $data->categories);
+        };
+        if (!empty($data->reductions)) {
+            $query = $query
+                ->andWhere('r.id IN (:reduction)')
+                ->setParameter('reduction', $data->reductions);
+        };
+        if (!empty($data->variations)) {
+            $query = $query
+                ->andWhere('v.id IN (:variation)')
+                ->setParameter('variation', $data->variations);
+        };
+        // ->join('p.sous_categories', 's')
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @return Produit[]
+     */
+    public function findCateByFilter(FilterData $data, $id)
+    {
+
+        $query = $this
+            ->createQueryBuilder('p')
+            ->select('p')
+            ->join('p.sous_categorie', 's')
+            ->join('s.categorie', 'c')
+            ->leftJoin('p.reduction', 'r')
+            ->leftJoin('p.variation', 'v');
+
+        if (!empty($id)) {
+            $query = $query
+                ->andWhere('c.id = (:id)')
+                ->setParameter('id', $id);
+        }
+        if (!empty($data->q)) {
+            $query = $query
+                ->andWhere('p.designation LIKE :q ')
+                ->setParameter('q', "%{$data->q}%");
+        }
+        if (!empty($data->min)) {
+            $query = $query
+                ->andWhere('p.ancien_prix >= :min')
+                ->setParameter('min', $data->min);
+        }
+        if (!empty($data->max)) {
+            $query = $query
+                ->andWhere('p.ancien_prix <= :max')
+                ->setParameter('max', $data->max);
+        };
+        if (!empty($data->categories)) {
+            $query = $query
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $data->categories);
+        };
+        if (!empty($data->reductions)) {
+            $query = $query
+                ->andWhere('r.id IN (:reduction)')
+                ->setParameter('reduction', $data->reductions);
+        };
+        if (!empty($data->variations)) {
+            $query = $query
+                ->andWhere('v.id IN (:variation)')
+                ->setParameter('variation', $data->variations);
+        };
+        // ->join('p.sous_categories', 's')
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @return Produit[]
+     */
+    public function findSousCateByFilter(FilterData $data, $id)
+    {
+
+        $query = $this
+            ->createQueryBuilder('p')
+            ->select('p')
+            ->join('p.sous_categorie', 's')
+            ->join('s.categorie', 'c')
+            ->leftJoin('p.reduction', 'r')
+            ->leftJoin('p.variation', 'v');
+
+        if (!empty($id)) {
+            $query = $query
+                ->andWhere('s.id = (:id)')
+                ->setParameter('id', $id);
+        }
+        if (!empty($data->q)) {
+            $query = $query
+                ->andWhere('p.designation LIKE :q ')
+                ->setParameter('q', "%{$data->q}%");
+        }
+        if (!empty($data->min)) {
+            $query = $query
+                ->andWhere('p.ancien_prix >= :min')
+                ->setParameter('min', $data->min);
+        }
+        if (!empty($data->max)) {
+            $query = $query
+                ->andWhere('p.ancien_prix <= :max')
+                ->setParameter('max', $data->max);
+        };
+        if (!empty($data->categories)) {
+            $query = $query
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $data->categories);
+        };
+        if (!empty($data->reductions)) {
+            $query = $query
+                ->andWhere('r.id IN (:reduction)')
+                ->setParameter('reduction', $data->reductions);
+        };
+        if (!empty($data->variations)) {
+            $query = $query
+                ->andWhere('v.id IN (:variation)')
+                ->setParameter('variation', $data->variations);
+        };
+        // ->join('p.sous_categories', 's')
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @return Produit[]
+     */
+    public function findBySearch(FilterData $data, $value)
+    {
+
+        $query = $this
+            ->createQueryBuilder('p')
+            ->select('p')
+            ->Where('p.designation LIKE :val ')
+            ->setParameter('val', "%{$value}%")
+            ->join('p.sous_categorie', 's')
+            ->join('s.categorie', 'c')
+            ->leftJoin('p.reduction', 'r')
+            ->leftJoin('p.variation', 'v');
+
+        if (!empty($data->q)) {
+            $query = $query
+                ->andWhere('p.designation LIKE :recherche ')
+                ->setParameter('recherche', "%{$value}%");
+        }
+        if (!empty($data->min)) {
+            $query = $query
+                ->andWhere('p.ancien_prix >= :min')
+                // ->andWhere('p.designation LIKE :q ')
+                ->setParameter('min', $data->min);
+            // ->setParameter('q', "%{$value}%");
+        }
+        if (!empty($data->max)) {
+            $query = $query
+                ->andWhere('p.ancien_prix <= :max ')
+                ->setParameter('max', $data->max);
+        };
+        if (!empty($data->categories)) {
+            $query = $query
+                ->andWhere('c.id IN (:categories) ')
+                ->setParameter('categories', $data->categories);
+        };
+        if (!empty($data->reductions)) {
+            $query = $query
+                ->andWhere('r.id IN (:reduction) ')
+                ->setParameter('reduction', $data->reductions);
+        };
+        if (!empty($data->variations)) {
+            $query = $query
+                ->andWhere('v.id IN (:variation) ')
+                ->setParameter('variation', $data->variations);
+        };
+        // ->join('p.sous_categories', 's')
+        return $query->getQuery()->getResult();
+    }
+
+    public function PopularProd_Month($data)
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql2 = "
+        SELECT p.* FROM produit p, commande_produit f
+        WHERE p.id = f.produit_id and (DATEDIFF(CURRENT_TIMESTAMP(), f.create_at)  BETWEEN 1 and 31)
+        GROUP BY f.produit_id
+        ORDER BY COUNT(*) DESC
+        ";
+        $stmt = $conn->prepare($sql2);
+        $resultSet = $stmt->executeQuery();
+        // returns an array of arrays (i.e. a raw data set)
+        $result = $resultSet->fetchAllAssociative();
+        $query = $this->createQueryBuilder('p')
+            ->where('p.id in (:result) ')
+            ->setParameter(':result', $result)
+            ->join('p.sous_categorie', 's')
+            ->join('s.categorie', 'c')
+            ->leftJoin('p.reduction', 'r')
+            ->leftJoin('p.variation', 'v');
+
+        if (!empty($data->q)) {
+            $query = $query
+                ->andWhere('p.designation LIKE :recherche ')
+                ->setParameter('recherche', "%{$data->q}%");
+        }
+        if (!empty($data->min)) {
+            $query = $query
+                ->andWhere('p.ancien_prix >= :min')
+                // ->andWhere('p.designation LIKE :q ')
+                ->setParameter('min', $data->min);
+            // ->setParameter('q', "%{$value}%");
+        }
+        if (!empty($data->max)) {
+            $query = $query
+                ->andWhere('p.ancien_prix <= :max')
+                ->setParameter('max', $data->max);
+        };
+        if (!empty($data->categories)) {
+            $query = $query
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $data->categories);
+        }
+        if (!empty($data->reductions)) {
+            $query = $query
+                ->andWhere('r.id IN (:reduction) ')
+                ->setParameter('reduction', $data->reductions);
+        }
+        if (!empty($data->variations)) {
+            $query = $query
+                ->andWhere('v.id IN (:variation)')
+                ->setParameter('variation', $data->variations);
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

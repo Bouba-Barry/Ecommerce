@@ -1,4 +1,4 @@
-class search {
+class trieCategorie {
   /**
    *
    * @param {HtmlElement|null} element
@@ -63,4 +63,4 @@ class search {
 
 let element = document.querySelector(".js-filter");
 
-new search(element);
+new trieCategorie(element);

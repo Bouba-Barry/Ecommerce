@@ -94,7 +94,7 @@
     <div class="top-header-area">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-lg-6">
+          <div class="col-lg-3">
             <ul class="top-header-information">
               <li>
                 <i class="bx bxs-map"></i>
@@ -107,7 +107,24 @@
             </ul>
           </div>
 
-          <div class="col-lg-6">
+             <div class=" col-lg-6 form-search">
+                  <form
+                    action="{{ path('app_search_shop') }}"
+                    method="GET"
+                    class="box-search"
+                  >
+                    <input
+                      type="text"
+                      name="q"
+                      class="form-control"
+                      placeholder="Rechercher Produit"
+                    />
+                    <button type="submit">
+                      <i class="flaticon-search"></i>
+                    </button>
+                  </form>
+                </div>
+          <div class="col-lg-3">
             <ul class="top-header-social">
               <li>
                 <a href="#" target="_blank">
@@ -169,23 +186,15 @@
               class="collapse navbar-collapse mean-menu"
               id="navbarSupportedContent"
             >
-              <ul class="navbar-nav">
+              <ul class="navbar-nav d-flex align-content-start">
                 <li class="nav-item">
                   <a href="{{ path('app_home') }}" class="nav-link active">
                     Accueil
                   </a>
                 </li>
 
-                {% if app.user %}
-                <li class="nav-item">
-                  <a href="{{ path('app_client_index') }}" class="nav-link">
-                  <i class="bi bi-person-check-fill"></i>
-                  {# <svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"far\" data-icon=\"circle-user\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\" class=\"svg-inline--fa fa-circle-user fa-xl\"><path fill=\"currentColor\" d=\"M256 112c-48.6 0-88 39.4-88 88C168 248.6 207.4 288 256 288s88-39.4 88-88C344 151.4 304.6 112 256 112zM256 240c-22.06 0-40-17.95-40-40C216 177.9 233.9 160 256 160s40 17.94 40 40C296 222.1 278.1 240 256 240zM256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 464c-46.73 0-89.76-15.68-124.5-41.79C148.8 389 182.4 368 220.2 368h71.69c37.75 0 71.31 21.01 88.68 54.21C345.8 448.3 302.7 464 256 464zM416.2 388.5C389.2 346.3 343.2 320 291.8 320H220.2c-51.36 0-97.35 26.25-124.4 68.48C65.96 352.5 48 306.3 48 256c0-114.7 93.31-208 208-208s208 93.31 208 208C464 306.3 446 352.5 416.2 388.5z\" class=\"\"></path></svg> #}
-                  {# <i  class="flaticon2-user"></i> #}
-                  {# <img src="{{ asset('images/other/user.png') }} " alt="user"> #}
-                  </a>
-                </li>
-                {% else %}
+               
+                {% if not app.user %}
                 <li class="nav-item">
                   <a href="#" class="nav-link">
                     {# <i class="bi bi-person-x-fill"></i> #}
@@ -223,7 +232,7 @@
                 </li>
 
                  {% if app.user %}
-                <li class="nav-item">
+                <li class="nav-item item-to-move">
                   <a
                     href="{{ path('app_wish', { id: app.user.id }) }}"
                     class="nav-link"
@@ -231,10 +240,18 @@
                     <i class="bi bi-heart-fill" ></i>
                   </a>
                 </li>
+                 <li class="nav-item item-to-move">
+                  <a href="{{ path('app_client_index') }}" class="nav-link">
+                  <i class="bi bi-person-check-fill"></i>
+                  {# <svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"far\" data-icon=\"circle-user\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\" class=\"svg-inline--fa fa-circle-user fa-xl\"><path fill=\"currentColor\" d=\"M256 112c-48.6 0-88 39.4-88 88C168 248.6 207.4 288 256 288s88-39.4 88-88C344 151.4 304.6 112 256 112zM256 240c-22.06 0-40-17.95-40-40C216 177.9 233.9 160 256 160s40 17.94 40 40C296 222.1 278.1 240 256 240zM256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 464c-46.73 0-89.76-15.68-124.5-41.79C148.8 389 182.4 368 220.2 368h71.69c37.75 0 71.31 21.01 88.68 54.21C345.8 448.3 302.7 464 256 464zM416.2 388.5C389.2 346.3 343.2 320 291.8 320H220.2c-51.36 0-97.35 26.25-124.4 68.48C65.96 352.5 48 306.3 48 256c0-114.7 93.31-208 208-208s208 93.31 208 208C464 306.3 446 352.5 416.2 388.5z\" class=\"\"></path></svg> #}
+                  {# <i  class="flaticon2-user"></i> #}
+                  {# <img src="{{ asset('images/other/user.png') }} " alt="user"> #}
+                  </a>
+                </li>
                 {% endif %}
               </ul>
 
-              <div class="others-options d-flex align-items-center">
+              <div class="others-options d-flex align-items-end">
                 <div class="option-item">
                   <div class="cart-btn">
                     {% if app.user %}
@@ -251,24 +268,6 @@
                     </a>
                     {% endif %}
                   </div>
-                </div>
-
-                <div class="option-item">
-                  <form
-                    action="{{ path('app_search_shop') }}"
-                    method="GET"
-                    class="search-box"
-                  >
-                    <input
-                      type="text"
-                      name="searchInput"
-                      class="form-control"
-                      placeholder="Produit"
-                    />
-                    <button type="submit">
-                      <i class="flaticon-search"></i>
-                    </button>
-                  </form>
                 </div>
 
                 <div class="option-item">
@@ -299,11 +298,11 @@
               <div class="others-options d-flex align-items-center">
                 <div class="option-item">
                   <div class="languages-list">
-                    <select>
+                    {# <select>
                       <option value="1">Eng</option>
                       <option value="2">Ger</option>
                       <option value="3">Span</option>
-                    </select>
+                    </select> #}
                   </div>
                 </div>
 
@@ -316,7 +315,7 @@
                   </div>
                 </div>
 
-                <div class="option-item">
+                {# <div class="option-item">
                   <form
                     action="{{ path('app_search_shop') }}"
                     method="GET"
@@ -324,7 +323,7 @@
                   >
                     <input
                       type="text"
-                      name="searchInput"
+                      name="q"
                       class="form-control"
                       placeholder="Rechercher Produit"
                     />
@@ -332,7 +331,7 @@
                       <i class="flaticon-search"></i>
                     </button>
                   </form>
-                </div>
+                </div> #}
 
                 <div class="option-item">
                   <div class="burger-menu">
