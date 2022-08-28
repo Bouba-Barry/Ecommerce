@@ -61,40 +61,40 @@ for (let but of addtocart) {
       console.log("awdi rk nadi");
       but.setAttribute("data-original-title", "Add to cart");
       but.innerHTML = '<i class="flaticon-shopping-cart"></i>';
-      fetch(`/panier_delete/${vals}/${parseInt(user_id.innerHTML)}`)
-        .then((response) => {
-          if (response.ok) {
-            return response;
-          } else {
-            console.log("mauvaise réponse!");
-          }
-        })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log("error");
-        });
+      fetch(`/panier_delete/${vals}/${parseInt(user_id.innerHTML)}`);
+      // .then((response) => {
+      //   if (response.ok) {
+      //     return response;
+      //   } else {
+      //     console.log("mauvaise réponse!");
+      //   }
+      // })
+      // .then((data) => {
+      //   console.log(data);
+      // })
+      // .catch((err) => {
+      //   console.log("error");
+      // });
 
       noti.innerHTML = parseInt(noti.innerHTML) - 1;
     } else {
       but.setAttribute("data-original-title", "remove from panier");
       but.innerHTML = '<i class="flaticon-cancel"></i>';
 
-      fetch(`/panier/${vals}/1/${parseInt(user_id.innerHTML)}`)
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            console.log("mauvaise réponse!");
-          }
-        })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log("error");
-        });
+      fetch(`/panier/${vals}/1/${parseInt(user_id.innerHTML)}`);
+      // .then((response) => {
+      //   if (response.ok) {
+      //     return response.json();
+      //   } else {
+      //     console.log("mauvaise réponse!");
+      //   }
+      // })
+      // .then((data) => {
+      //   console.log(data);
+      // })
+      // .catch((err) => {
+      //   console.log("error");
+      // });
 
       noti.innerHTML = parseInt(noti.innerHTML) + 1;
     }

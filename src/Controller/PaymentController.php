@@ -2,27 +2,29 @@
 
 namespace App\Controller;
 
-use App\Entity\Commande;
-use App\Entity\Panier;
+use Stripe\Stripe;
 use App\Entity\User;
+use App\Entity\Panier;
+use App\Entity\Commande;
 use App\Form\CommandeType;
-use App\Repository\CommandeRepository;
+use App\Services\PdfService;
+use App\Services\CurrencyConvert;
+use Symfony\Component\Mime\Email;
+use App\Repository\UserRepository;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
+use App\Repository\CommandeRepository;
 use App\Repository\QuantiteRepository;
-use App\Repository\UserRepository;
-use App\Services\CurrencyConvert;
-use App\Services\PdfService;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Stripe\Stripe;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/payment')]
 class PaymentController extends AbstractController
@@ -173,7 +175,7 @@ class PaymentController extends AbstractController
 
 
     #[Route('/success-url', name: 'success_url', methods: ['GET', 'POST'])]
-    public function facture(Request $request, PdfService $pdf, QuantiteRepository $q, ProduitRepository $produitRepository, PanierRepository $panierRepository, UserRepository $userRepository, CommandeRepository $commandeRepository): Response
+    public function facture(Request $request,MailerInterface $mailer ,PdfService $pdf, QuantiteRepository $q, ProduitRepository $produitRepository, PanierRepository $panierRepository, UserRepository $userRepository, CommandeRepository $commandeRepository): Response
     {
         // $cookie = $request->cookies->get('val');
 
@@ -188,7 +190,20 @@ class PaymentController extends AbstractController
 
 
         if ($this->getUser()) {
+
             $user = $this->getUser();
+            $email = $request->get('email');
+            $email = (new Email())
+                ->from('oussabitarek123@gmail.com')
+                ->to($user->getEmail())
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('réinitialisez votre mot de passe!')
+                ->html(`<p>votre commande a été prise en considération la livraison est dans un délai maximal d'une semaine.</p>`);
+            $this->json($mailer->send($email));
+
             // dd($user->getId());
             // dd($user->getPaniers());
             $array = [];

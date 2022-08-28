@@ -184,20 +184,20 @@ document.addEventListener("DOMContentLoaded", function () {
       vals.push(matches[0]);
 
       qte.push(Number(valprogress[i].value));
-      fetch(`/panier/${vals}/${qte}/${parseInt(user_id.innerHTML)}`)
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            console.log("mauvaise réponse!");
-          }
-        })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log("error");
-        });
+      fetch(`/panier/${vals}/${qte}/${parseInt(user_id.innerHTML)}`);
+      // .then((response) => {
+      //   if (response.ok) {
+      //     return response.json();
+      //   } else {
+      //     console.log("mauvaise réponse!");
+      //   }
+      // })
+      // .then((data) => {
+      //   console.log(data);
+      // })
+      // .catch((err) => {
+      //   console.log("error");
+      // });
       noti.innerHTML = parseInt(noti.innerHTML) + Number(valprogress[i].value);
     });
   }
@@ -230,20 +230,20 @@ document.addEventListener("DOMContentLoaded", function () {
         vals.push(matches[0]);
         qte.push(Number(valprogress[i].value));
 
-        fetch(`/panier_edit/${vals}/${qte}/${parseInt(user_id.innerHTML)}`)
-          .then((response) => {
-            if (response.ok) {
-              return response;
-            } else {
-              console.log("mauvaise réponse!");
-            }
-          })
-          .then((data) => {
-            console.log(data);
-          })
-          .catch((err) => {
-            console.log("error");
-          });
+        fetch(`/panier_edit/${vals}/${qte}/${parseInt(user_id.innerHTML)}`);
+        // .then((response) => {
+        //   if (response.ok) {
+        //     return response;
+        //   } else {
+        //     console.log("mauvaise réponse!");
+        //   }
+        // })
+        // .then((data) => {
+        //   console.log(data);
+        // })
+        // .catch((err) => {
+        //   console.log("error");
+        // });
 
         // console.log(valprogress[i].value);
         // console.log(noti.innerHTML);
@@ -281,20 +281,20 @@ document.addEventListener("DOMContentLoaded", function () {
         addcard[i].textContent.includes("Ajouter au panier") == false ||
         addcard[i].style.display == "none"
       ) {
-        fetch(`/panier_edit/${vals}/${qte}/${parseInt(user_id.innerHTML)}`)
-          .then((response) => {
-            if (response.ok) {
-              return response;
-            } else {
-              console.log("mauvaise réponse!");
-            }
-          })
-          .then((data) => {
-            console.log(data);
-          })
-          .catch((err) => {
-            console.log("error");
-          });
+        fetch(`/panier_edit/${vals}/${qte}/${parseInt(user_id.innerHTML)}`);
+        // .then((response) => {
+        //   if (response.ok) {
+        //     return response;
+        //   } else {
+        //     console.log("mauvaise réponse!");
+        //   }
+        // })
+        // .then((data) => {
+        //   console.log(data);
+        // })
+        // .catch((err) => {
+        //   console.log("error");
+        // });
 
         // console.log(valprogress[i].value);
       }
@@ -321,20 +321,20 @@ document.addEventListener("DOMContentLoaded", function () {
         valprogress[i].parentNode.parentNode.children[1].style.backgroundColor =
           "#f99459";
 
-        fetch(`/panier_delete/${vals}/${parseInt(user_id.innerHTML)}`)
-          .then((response) => {
-            if (response.ok) {
-              return response;
-            } else {
-              console.log("mauvaise réponse!");
-            }
-          })
-          .then((data) => {
-            console.log(data);
-          })
-          .catch((err) => {
-            console.log("error");
-          });
+        fetch(`/panier_delete/${vals}/${parseInt(user_id.innerHTML)}`);
+        // .then((response) => {
+        //   if (response.ok) {
+        //     return response;
+        //   } else {
+        //     console.log("mauvaise réponse!");
+        //   }
+        // })
+        // .then((data) => {
+        //   console.log(data);
+        // })
+        // .catch((err) => {
+        //   console.log("error");
+        // });
       }
 
       // let prix = document
