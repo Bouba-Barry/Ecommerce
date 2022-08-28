@@ -175,7 +175,7 @@ class PaymentController extends AbstractController
 
 
     #[Route('/success-url', name: 'success_url', methods: ['GET', 'POST'])]
-    public function facture(Request $request,MailerInterface $mailer ,PdfService $pdf, QuantiteRepository $q, ProduitRepository $produitRepository, PanierRepository $panierRepository, UserRepository $userRepository, CommandeRepository $commandeRepository): Response
+    public function facture(Request $request, MailerInterface $mailer, PdfService $pdf, QuantiteRepository $q, ProduitRepository $produitRepository, PanierRepository $panierRepository, UserRepository $userRepository, CommandeRepository $commandeRepository): Response
     {
         // $cookie = $request->cookies->get('val');
 
@@ -195,14 +195,14 @@ class PaymentController extends AbstractController
             $email = $request->get('email');
             $email = (new Email())
                 ->from('oussabitarek123@gmail.com')
-                ->to($user->getEmail())
+                ->to('bboubacarbarry2001@gmail.com')
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
-                ->subject('réinitialisez votre mot de passe!')
-                ->html(`<p>votre commande a été prise en considération la livraison est dans un délai maximal d'une semaine.</p>`);
-            $this->json($mailer->send($email));
+                ->subject('Notification de Commande')
+                ->html('<p>votre commande a été prise en considération la livraison est dans un délai maximal d\'une semaine.</p>');
+            $mailer->send($email);
 
             // dd($user->getId());
             // dd($user->getPaniers());
@@ -251,11 +251,13 @@ class PaymentController extends AbstractController
                     }
 
                     // ajouter le produit dans la table commande_produit
-                    $commandeRepository->ajout_produit($commandes->getId(), $prod->getId(), $qte[0]['qte_produit'], $total, $prod->getDesignation());
-                    $commandes->setStatus('traitées');
-                    $commandeRepository->add($commandes, true);
+                    $cmd = $commandeRepository->find($commandes);
+                    $cmd->setStatus('traitées');
+
+                    $commandeRepository->add($cmd, true);
                     $p->removeProduit($prod);
 
+                    $commandeRepository->ajout_produit($commandes->getId(), $prod->getId(), $qte[0]['qte_produit'], $total, $prod->getDesignation());
                     $panierRepository->RemoveProd($p->getId(), $prod->getId());
                 }
             }
@@ -312,8 +314,9 @@ class PaymentController extends AbstractController
 
         $session = $this->requestStack->getSession();
         $commandes = $session->get('commande');
-        $commandes->setStatus('annulées');
-        $commandeRepository->add($commandes, true);
+        $cmd = $commandeRepository->find($commandes);
+        $cmd->setStatus('annulées');
+        $commandeRepository->add($cmd, true);
         return $this->render('payment/cancel.html.twig');
     }
 }
