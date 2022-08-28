@@ -244,7 +244,7 @@ class PaymentController extends AbstractController
 
                         if ($qteConcerne[0]['variations'] === $var[0]['variations']) {
                             $q->UpdateProduit($qteConcerne[0]['id'], $prod->getId(), $qte[0]['qte_produit']);
-                            dd($q);
+                            // dd($q);
                         }
                     } else {
                         $produitRepository->UpdateProduit($prod->getId(), $qte[0]['qte_produit']);
@@ -253,10 +253,10 @@ class PaymentController extends AbstractController
                     // ajouter le produit dans la table commande_produit
                     $commandeRepository->ajout_produit($commandes->getId(), $prod->getId(), $qte[0]['qte_produit'], $total, $prod->getDesignation());
                     $commandes->setStatus('traitées');
+                    $commandeRepository->add($commandes, true);
                     $p->removeProduit($prod);
 
                     $panierRepository->RemoveProd($p->getId(), $prod->getId());
-                    // dd($val);
                 }
             }
         }
@@ -307,11 +307,13 @@ class PaymentController extends AbstractController
     }
 
     #[Route('/cancel-url', name: 'cancel_url', methods: ['GET', 'POST'])]
-    public function cancelUrl(): Response
+    public function cancelUrl(CommandeRepository $commandeRepository): Response
     {
+
         $session = $this->requestStack->getSession();
         $commandes = $session->get('commande');
         $commandes->setStatus('annulées');
+        $commandeRepository->add($commandes, true);
         return $this->render('payment/cancel.html.twig');
     }
 }

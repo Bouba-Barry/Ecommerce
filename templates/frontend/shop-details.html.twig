@@ -1,135 +1,142 @@
 {% extends 'frontend/index.html.twig' %}
 {% block content %}
 
-<!-- End Sidebar Modal -->
-<p id="user_id" style="display: none">
-  {% if app.user %} {{ app.user.id }} {% endif %}
-</p>
-<p id="produit_id" style="display: none;">{{ produit.id }}</p>
-<!-- Start Page Banner -->
-<div class="page-banner-area item-bg5">
-  <div class="d-table">
-    <div class="d-table-cell">
-      <div class="container">
-        <div class="page-banner-content">
-          <h2>Détails de la boutique</h2>
-          <ul>
-            <li>
-              <a href="{{ path('app_home') }}">Acceuil</a>
-            </li>
-            <li>Détails de la boutique</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Page Banner -->
-{% if produit.getVariation()|length != 0 and produit.getAttributs()|length != 0 %}
-<button id="message" class="btn btn-info btn-lg btn-block">
-  veuillez chosir la variation que vous voulez
-</button>
-{% endif %}
-<!-- Start Product Details Area -->
-<section class="product-details-area pt-100 pb-70">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-11">
-        <div class="row">
-          <div class="col-lg-6 col-md-12">
-         
-            <div class="product-details-image">
-              {# {% if produit.getImages()|length == 0 %} #}
-             
-              <a href="#" id="image_principale">
-                <img
-                  src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
-                  alt=""
-                />
-              </a>
-              {# {% else %}
-              
-              {# {% for image_var in produit.getImages() %} 
-            
-              <a href="#" id="image_principale">
-                <img
-                  src="{{ asset('uploads/others/' ~ produit.getImages()|first .getUrl() ) }}"
-                  alt=""
-                />
-              </a>
-              
-              {# {% endfor %} 
-              {% endif %} #}
-              {# <img
-                id="image_principale_hidden"
-                style="display: none"
-                src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
-                alt=""
-              /> #}
-            </div>
-          </div>
+	<!-- End Sidebar Modal -->
+	<p id="user_id" style="display: none">
+		{% if app.user %}
+			{{ app.user.id }}
+		{% endif %}
+	</p>
+	<p id="produit_id" style="display: none;">{{ produit.id }}</p>
+	<!-- Start Page Banner -->
+	<div class="page-banner-area item-bg5">
+		<div class="d-table">
+			<div class="d-table-cell">
+				<div class="container">
+					<div class="page-banner-content">
+						<h2>Détails de la boutique</h2>
+						<ul>
+							<li>
+								<a href="{{ path('app_home') }}">Acceuil</a>
+							</li>
+							<li>Détails de la boutique</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Page Banner -->
+	{% if produit.getVariation()|length != 0 and produit.getAttributs()|length != 0 %}
+		<button id="message" class="btn btn-info btn-lg btn-block">
+			veuillez chosir la variation que vous voulez
+		</button>
+	{% endif %}
+	<!-- Start Product Details Area -->
+	<section class="product-details-area pt-100 pb-70">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-11">
+					<div class="row">
+						<div class="col-lg-6 col-md-12">
 
-          <div class="col-lg-6 col-md-12">
-            <div class="product-details-desc">
-              <h3>{{ produit.designation }}</h3>
-              {% if produit.getType()=="stable" %}
-              <div class="price">
-                {% if produit.getReduction()|length != 0 %}
-                <div class="price">
-                  <span class="new-price" id="new_prix"> {{ produit.nouveauPrix }}Dhs</span>
-                  <span class="old-price" >{{ produit.ancienPrix }}Dhs</span>
-                </div>
-                {% else  %}
-                <div class="price">
-                  <span class="new-price" id="old_prix">{{ produit.ancienPrix }}Dhs</span>
-                </div>
-                {% endif %} {% if produit.getReduction()|length != 0 %}
-                <div class="sale">
-                  <span>
-                    {% for produit_reduction in produit.getReduction() %} -{{
+							<div
+								class="product-details-image">
+								{# {% if produit.getImages()|length == 0 %} #}
+
+								<a href="#" id="image_principale">
+									<img src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}" alt=""/>
+								</a>
+								{# {% else %}
+								              
+								              {# {% for image_var in produit.getImages() %} 
+								            
+								              <a href="#" id="image_principale">
+								                <img
+								                  src="{{ asset('uploads/others/' ~ produit.getImages()|first .getUrl() ) }}"
+								                  alt=""
+								                />
+								              </a>
+								              
+								              {# {% endfor %} 
+								              {% endif %} #}
+								{# <img
+								                id="image_principale_hidden"
+								                style="display: none"
+								                src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
+								                alt=""
+								              /> #}
+							</div>
+						</div>
+
+						<div class="col-lg-6 col-md-12">
+							<div class="product-details-desc">
+								<h3>{{ produit.designation }}</h3>
+								{% if produit.getType()=="stable" %}
+									<div class="price">
+										{% if produit.getReduction()|length != 0 %}
+											<div class="price">
+												<span class="new-price" id="new_prix">
+													{{ produit.nouveauPrix }}Dhs</span>
+												<span class="old-price">{{ produit.ancienPrix }}Dhs</span>
+											</div>
+										{% else  %}
+											<div class="price">
+												<span class="new-price" id="old_prix">{{ produit.ancienPrix }}Dhs</span>
+											</div>
+										{% endif %}
+										{% if produit.getReduction()|length != 0 %}
+											<div class="sale">
+												<span>
+													{% for produit_reduction in produit.getReduction() %}
+														-{{
                       produit_reduction.getPourcentage()
                     }}
-                    {% endfor %}
-                  </span>
-                </div>
-                {% endif %}
-              </div>
-              {% else %}
-              <div class="price">
-                {% if produit.getReduction()|length != 0 %}
-                <div class="price">
-                  <span class="new-price" id="new_prix_variable"> </span>
-                  <span class="old-price" ></span>
-                </div>
-                {% else  %}
-                <div class="price">
-                  <span class="new-price" id="old_prix_variable"></span>
-                </div>
-                {% endif %} {% if produit.getReduction()|length != 0 %}
-                <div class="sale">
-                  <span>
-                    {% for produit_reduction in produit.getReduction() %} -{{
+													{% endfor %}
+												</span>
+											</div>
+										{% endif %}
+									</div>
+								{% else %}
+									<div class="price">
+										{% if produit.getReduction()|length != 0 %}
+											<div class="price">
+												<span class="new-price" id="new_prix_variable"></span>
+												<span class="old-price"></span>
+											</div>
+										{% else  %}
+											<div class="price">
+												<span class="new-price" id="old_prix_variable"></span>
+											</div>
+										{% endif %}
+										{% if produit.getReduction()|length != 0 %}
+											<div class="sale">
+												<span>
+													{% for produit_reduction in produit.getReduction() %}
+														-{{
                       produit_reduction.getPourcentage()
                     }}
-                    {% endfor %}
-                  </span>
-                </div>
-                {% endif %}
-              </div>
-              {% endif %}
-              <div class="product-review">
-                <div class="rating">
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                </div>
-                <a href="#" class="rating-count">3 reviews</a>
-              </div>
-              <div class="product-review">
-                {% if produit.getAttributs()|length !=0 %} {% for
-                produit_attribut in produit.getAttributs() %} {% if
+													{% endfor %}
+												</span>
+											</div>
+										{% endif %}
+									</div>
+								{% endif %}
+								<div class="product-review">
+									<div class="rating">
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+									</div>
+									<a href="#" class="rating-count">3 reviews</a>
+								</div>
+								<div class="product-review">
+									{% if produit.getAttributs()|length !=0 %}
+										{% for
+                produit_attribut in produit.getAttributs() %}
+											{% if
                 produit_attribut.getVariations()|length != 0 %}
 
 												<h5>
@@ -165,120 +172,85 @@
 																<img class="image" style="width: 40px; height: 40px" src="{{ asset('uploads/others/' ~ image.url) }}" alt=""/>
 															</a>
 
-                {# <p class="qte_image" style="display: none">
-                  {{ image.getQteStock() }}
-                </p> #}
-                {% endif %} {% endfor %} {% endif %} {% endfor %}
-                {% endif %} {% endfor %} {% endif %}
-              </div>
-              {% if produit.getVariation()|length ==0 %}
-              <strong id="qte_reste" style="font-size:20px"
-                >il reste {{ produit.getQteStock() }} en stock</strong
-              >
-              {% else %}
-              <strong id="qte_reste"
-              ></strong
-            >
-              {% endif %}
-              <p>
-                {{ produit.description }}
-              </p>
+															{# <p class="qte_image" style="display: none">
+															                  {{ image.getQteStock() }}
+															                </p> #}
+														{% endif %}
+													{% endfor %}
+												{% endif %}
+											{% endfor %}
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							</div>
+							{% if produit.getVariation()|length ==0 %}
+								<strong id="qte_reste" style="font-size:20px">il reste
+									{{ produit.getQteStock() }}
+									en stock</strong>
+							{% else %}
+								<strong id="qte_reste"></strong>
+							{% endif %}
+							<p>
+								{{ produit.description }}
+							</p>
 
-              {% if produit.getVariation()|length != 0 and produit.getAttributs()|length != 0 %}
-              <div id="product-add-to-cart" style="display:none ;" class="product-add-to-cart">
-                <div class="input-counter">
-                  <span
-                    id="progressbtn2{{ produit.id }}"
-                    class="minus-btn progressbtn2"
-                  >
-                    <i class="bx bx-minus"></i>
-                  </span>
-                  {% if produit.getType()=="stable" %}
-                  
-                  <input
-                    class="valprogress"
-                    type="text"
-                    min="0"
-                    max="{{ produit.getQteStock() }}"
-                    value="1"
-                  />
-                  {% else %}
-                  
-                  <input
-                    class="valprogress"
-                    type="text"
-                    min="0"
-                    
-                    value="1"
-                  />
-                  {% endif %}
-                  
-                    
-                  <span
-                    class="plus-btn progressbtn1"
-                    id="progressbtn1{{ produit.id }}"
-                  >
-                    <i class="bx bx-plus"></i>
-                  </span>
-                </div>
-                <button
-                  type="submit"
-                  id="addcard{{ produit.id }}"
-                  class="default-btn addcard"
-                >
-                Ajouter au panier
-                  <span></span>
-                </button>
-              </div>
-              {% else %}
-              <div class="product-add-to-cart">
-                <div class="input-counter">
-                  <span
-                    id="progressbtn2{{ produit.id }}"
-                    class="minus-btn progressbtn2"
-                  >
-                    <i class="bx bx-minus"></i>
-                  </span>
-                  <input
-                    class="valprogress"
-                    type="text"
-                    min="0"
-                    max="{{ produit.getQteStock() }}"
-                    value="1"
-                  />
-                  <span
-                    class="plus-btn progressbtn1"
-                    id="progressbtn1{{ produit.id }}"
-                  >
-                    <i class="bx bx-plus"></i>
-                  </span>
-                </div>
-                <button
-                  type="submit"
-                  id="addcard{{ produit.id }}"
-                  class="default-btn addcard"
-                >
-                Ajouter au panier
-                  <span></span>
-                </button>
-              </div>
-              {% endif %}
-              <div class="buy-checkbox-btn">
-                <div class="item">
-                  <input class="inp-cbx" id="cbx" type="checkbox" />
-                  <label class="cbx" for="cbx">
-                    <span>
-                      <svg width="12px" height="10px" viewbox="0 0 12 10">
-                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                      </svg>
-                    </span>
-                    <span>I agree with the terms and conditions</span>
-                  </label>
-                </div>
-                <div class="item">
-                  <a href="#" class="btn btn-light">Buy it now!</a>
-                </div>
-              </div>
+							{% if produit.getVariation()|length != 0 and produit.getAttributs()|length != 0 %}
+								<div id="product-add-to-cart" style="display:none ;" class="product-add-to-cart">
+									<div class="input-counter">
+										<span id="progressbtn2{{ produit.id }}" class="minus-btn progressbtn2">
+											<i class="bx bx-minus"></i>
+										</span>
+										{% if produit.getType()=="stable" %}
+
+											<input class="valprogress" type="text" min="0" max="{{ produit.getQteStock() }}" value="1"/>
+										{% else %}
+
+											<input class="valprogress" type="text" min="0" value="1"/>
+										{% endif %}
+
+
+										<span class="plus-btn progressbtn1" id="progressbtn1{{ produit.id }}">
+											<i class="bx bx-plus"></i>
+										</span>
+									</div>
+									<button type="submit" id="addcard{{ produit.id }}" class="default-btn addcard">
+										Ajouter au panier
+										<span></span>
+									</button>
+								</div>
+							{% else %}
+								<div class="product-add-to-cart">
+									<div class="input-counter">
+										<span id="progressbtn2{{ produit.id }}" class="minus-btn progressbtn2">
+											<i class="bx bx-minus"></i>
+										</span>
+										<input class="valprogress" type="text" min="0" max="{{ produit.getQteStock() }}" value="1"/>
+										<span class="plus-btn progressbtn1" id="progressbtn1{{ produit.id }}">
+											<i class="bx bx-plus"></i>
+										</span>
+									</div>
+									<button type="submit" id="addcard{{ produit.id }}" class="default-btn addcard">
+										Ajouter au panier
+										<span></span>
+									</button>
+								</div>
+							{% endif %}
+							<div class="buy-checkbox-btn">
+								<div class="item">
+									<input class="inp-cbx" id="cbx" type="checkbox"/>
+									<label class="cbx" for="cbx">
+										<span>
+											<svg width="12px" height="10px" viewbox="0 0 12 10">
+												<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+											</svg>
+										</span>
+										<span>I agree with the terms and conditions</span>
+									</label>
+								</div>
+								<div class="item">
+									<a href="#" class="btn btn-light">Buy it now!</a>
+								</div>
+							</div>
 
 							<div class="products-share">
 								<ul class="social">
@@ -311,33 +283,33 @@
 					</div>
 				</div>
 
-        <div class="tab products-details-tab">
-          <div class="row">
-            <div class="col-lg-12 col-md-12">
-              <ul class="tabs">
-                <li>
-                  <a href="#">
-                    <div class="dot"></div>
-                    Description
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="dot"></div>
-                    Commentaires
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div class="col-lg-12 col-md-12">
-              <div class="tab_content">
-                <div class="tabs_item">
-                  <div class="products-details-tab-content">
-                    <p>
-                      {{ produit.description }}
-                    </p>
-                  </div>
-                </div>
+				<div class="tab products-details-tab">
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<ul class="tabs">
+								<li>
+									<a href="#">
+										<div class="dot"></div>
+										Description
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<div class="dot"></div>
+										Commentaires
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-lg-12 col-md-12">
+							<div class="tab_content">
+								<div class="tabs_item">
+									<div class="products-details-tab-content">
+										<p>
+											{{ produit.description }}
+										</p>
+									</div>
+								</div>
 
 								<!-- start reviews -->
 								<div class="tabs_item">
@@ -371,7 +343,7 @@
 														<span>
 															<strong>{{ review.getUser().nom }}</strong>
 															SUR
-															<strong>{{ review.create_at }}</strong>
+															<strong>{{ review.getCreateAt() ? review.getCreateAt()|date('Y-m-d H:i:s') : '' }}</strong>
 														</span>
 														<p>
 															{{ review.content }}
@@ -428,18 +400,10 @@
 						{% for produit_similaire in produits_similaires %}
 							{% if
             produit_similaire != produit %}
-            <div class="col-lg-6 col-md-6">
-              <div class="top-products-item">
-                <div class="products-image">
-                  <a
-                    href="{{
-                      path('app_shop_details', { id: produit_similaire.id })
-                    }}"
-                    ><img
-                    style="width: 450px; height: 400px"
-                      src="{{ asset('uploads/produits/' ~ produit_similaire.getImageProduit() ) }}"
-                      alt="image"
-                  /></a>
+								<div class="col-lg-6 col-md-6">
+									<div class="top-products-item">
+										<div class="products-image">
+											<a href="{{ path('app_shop_details', { id: produit_similaire.id }) }}"><img style="width: 450px; height: 400px" src="{{ asset('uploads/produits/' ~ produit_similaire.getImageProduit() ) }}" alt="image"/></a>
 
 											<ul class="products-action">
 												<li>
@@ -473,68 +437,59 @@
 											{% endif %}
 										</div>
 
-                <div class="products-content">
-                  <h3>
-                    <a
-                      href="{{
-                        path('app_shop_details', { id: produit_similaire.id })
-                      }}"
-                      >{{ produit_similaire.designation|slice(0,13) ~ '...' }}</a
-                    >
-                  </h3>
-                  {% if produit_similaire.getReduction()|length != 0 %}
-                  <div class="price">
-                    <span class="new-price">
-                      {{ produit_similaire.nouveauPrix }}Dh</span
-                    >
-                    <span class="old-price"
-                      >{{ produit_similaire.ancienPrix }}Dh</span
-                    >
-                  </div>
-                  {% else %}
-                  <div class="price">
-                    <span class="new-price"
-                      >{{ produit_similaire.ancienPrix }}Dhs</span
-                    >
-                  </div>
-                  {% endif %}
-                  <ul class="rating">
-                    <li>
-                      <i class="bx bxs-star"></i>
-                      <i class="bx bxs-star"></i>
-                      <i class="bx bxs-star"></i>
-                      <i class="bx bxs-star"></i>
-                      <i class="bx bx-star"></i>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            {% endif %} {% endfor %}
-          </div>
-        </div>
-      </div>
-{# 
-      <div class="col-lg-4 col-md-12">
-        <aside class="widget-area">
-          <section class="widget widget_tag_cloud">
-            <h3 class="widget-title">Categories Populaires</h3>
-
-            <div class="tagcloud">
-              {% for categorie in categories %}
-                
-              
-              <a href="#">{{ categorie.getTitre() }}</a>
-              
-              {% endfor %}
-            </div>
-          </section>
-        </aside>
-      </div> #}
+										<div class="products-content">
+											<h3>
+												<a href="{{ path('app_shop_details', { id: produit_similaire.id }) }}">{{ produit_similaire.designation|slice(0,13) ~ '...' }}</a>
+											</h3>
+											{% if produit_similaire.getReduction()|length != 0 %}
+												<div class="price">
+													<span class="new-price">
+														{{ produit_similaire.nouveauPrix }}Dh</span>
+													<span class="old-price">{{ produit_similaire.ancienPrix }}Dh</span>
+												</div>
+											{% else %}
+												<div class="price">
+													<span class="new-price">{{ produit_similaire.ancienPrix }}Dhs</span>
+												</div>
+											{% endif %}
+											<ul class="rating">
+												<li>
+													<i class="bx bxs-star"></i>
+													<i class="bx bxs-star"></i>
+													<i class="bx bxs-star"></i>
+													<i class="bx bxs-star"></i>
+													<i class="bx bx-star"></i>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			{# 
+			      <div class="col-lg-4 col-md-12">
+			        <aside class="widget-area">
+			          <section class="widget widget_tag_cloud">
+			            <h3 class="widget-title">Categories Populaires</h3>
+			
+			            <div class="tagcloud">
+			              {% for categorie in categories %}
+			                
+			              
+			              <a href="#">{{ categorie.getTitre() }}</a>
+			              
+			              {% endfor %}
+			            </div>
+			          </section>
+			        </aside>
+			      </div> #}
 
 
-    </div>
-  </div>
+		</div>
+	</div>
 </section>
 <!-- End Product Details Area -->
 
@@ -551,19 +506,10 @@
 				{% if
       produit_en_relation != produit and produit_en_relation not in
       produits_similaires %}
-      <div class="col-lg-3 col-md-6">
-        <div class="featured-products-item">
-          <div class="products-image">
-            <a
-              href="{{
-                path('app_shop_details', { id: produit_en_relation.id })
-              }}"
-              ><img
-                style="width: 250px; height: 200px"
-                src="{{ asset('uploads/produits/' ~ produit_en_relation.getImageProduit()) }}"
-                alt="image"
-                
-            /></a>
+					<div class="col-lg-3 col-md-6">
+						<div class="featured-products-item">
+							<div class="products-image">
+								<a href="{{ path('app_shop_details', { id: produit_en_relation.id }) }}"><img style="width: 250px; height: 200px" src="{{ asset('uploads/produits/' ~ produit_en_relation.getImageProduit()) }}" alt="image"/></a>
 
 								<ul class="products-action">
 									<li>
@@ -595,46 +541,37 @@
 								{% endif %}
 							</div>
 
-          <div class="products-content">
-            <h3 >
-              <a
-                href="{{
-                  path('app_shop_details', { id: produit_en_relation.id })
-                }}"
-                >{{ produit_en_relation.designation|slice(0,13) ~ '...'  }}</a
-              >
-            </h3>
-            {% if produit_en_relation.getReduction()|length != 0 %}
-            <div class="price">
-              <span class="new-price">
-                {{ produit_en_relation.nouveauPrix }}Dhs</span
-              >
-              <span class="old-price"
-                >{{ produit_en_relation.ancienPrix }}Dhs</span
-              >
-            </div>
-            {% else %}
-            <div class="price">
-              <span class="new-price"
-                >{{ produit_en_relation.ancienPrix }}Dhs</span
-              >
-            </div>
-            {% endif %}
-            <ul class="rating">
-              <li>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bxs-star"></i>
-                <i class="bx bx-star"></i>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      {% endif %} {% endfor %}
-    </div>
-  </div>
+							<div class="products-content">
+								<h3>
+									<a href="{{ path('app_shop_details', { id: produit_en_relation.id }) }}">{{ produit_en_relation.designation|slice(0,13) ~ '...'  }}</a>
+								</h3>
+								{% if produit_en_relation.getReduction()|length != 0 %}
+									<div class="price">
+										<span class="new-price">
+											{{ produit_en_relation.nouveauPrix }}Dhs</span>
+										<span class="old-price">{{ produit_en_relation.ancienPrix }}Dhs</span>
+									</div>
+								{% else %}
+									<div class="price">
+										<span class="new-price">{{ produit_en_relation.ancienPrix }}Dhs</span>
+									</div>
+								{% endif %}
+								<ul class="rating">
+									<li>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bxs-star"></i>
+										<i class="bx bx-star"></i>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
 </section>
 <!-- End Featured Products Area -->{% endblock %}{% block javascripts %}
 <script src="{{ asset('js/variation.js') }}"></script>

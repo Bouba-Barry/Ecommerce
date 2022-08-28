@@ -1,99 +1,122 @@
 {% extends 'frontend/index.html.twig' %}
 
 {% block style %}
-<link 
-rel="stylesheet" href=" {{ asset('FrontOffice/other/facture.css') }}"/>
-		<!-- Odometer CSS -->
+	<link
+	rel="stylesheet" href=" {{ asset('FrontOffice/other/facture.css') }}"/>
+<!-- Odometer CSS -->
 {% endblock %}
 {% block content %}
-{% set tot = 0 %}
-{% set totalTva = 0 %}
-      <div class="container mt-5">
-                      <h2 class="bg-light text-primary text-center mt-3 fs-5 p-4">Information Relative à votre payment :</h2>
-            <div class="row">
-           
-            {# <div class="col-lg-12"> #}
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <div class="panel panel-default height">
-                        <div class="panel-heading">Client Information</div>
-                        <div class="panel-body">
-                        {% if app.user %}
-                            <strong>{{ app.user.nom }}</strong><br>
-                            {{ app.user.adresse }}<br>
-                            <strong>{{ app.user.email }}</strong><br>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <div class="panel panel-default height">
-                        <div class="panel-heading">Commande N° {{ commandes.getId() }}</div>
-                        <div class="panel-body">
-                            <strong>Date Commande: </strong>{{ commandes.getDateCmd() | date("d/m/Y", "Europe/Paris")}}<br>
-                            <strong>Adresse Livraison: </strong>{{ commandes.getAdresseLivraison() }}<br>
-                            <strong>Moyen Payment: </strong>{{ commandes.getMethodPayement() }}<br>
-                        </div>
-                    </div>
-                </div>
-          
-            {# </div> #}
-            </div>
-            <div class="row">
-              <div class="table-responsive mt-10">
-               <h3 class="text-center"><strong>Produits Commander</strong></h3>
-                        <table class="table table-condensed table-bordered">
-            
-                                <tr>
-                                    <td><strong>Nom Produit</strong></td>
-                                    <td class="text-center"><strong>Quantité</strong></td>
-                                    <td class="text-right"><strong>Total</strong></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for facture in factures %}
-                                <tr>
-                                    <td>{{ facture.nom_produit }}</td>
-                                    <td class="text-center">{{ facture.qte_cmd }}</td>
-                                    <td class="text-right">${{ facture.total_vente }}</td>
-                                </tr>
-                                {% set tot = tot + facture.total_vente %}
-                            {% endfor %}
-                                <tr>
-                                    <td class="highrow"></td>
-                                    <td class="highrow"></td>
-                                    <td class="highrow text-center"><strong>Subtotal</strong></td>
-                                    <td class="highrow text-right">DHs {{ tot }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="emptyrow"></td>
-                                    <td class="emptyrow"></td>
-                                    <td class="emptyrow text-center"><strong>TVA</strong></td>
-                                    <td class="emptyrow text-right">20%</td>
-                                </tr>
-                                <tr>
-                                {% set totalTva = tot - (tot * 0.2) %}
-                                    <td class="emptyrow"><i class="fa fa-barcode iconbig"></i></td>
-                                    <td class="emptyrow"></td>
-                                    <td class="emptyrow text-center"><strong>Total</strong></td>
-                                    <td class="emptyrow text-right">Dhs {{ totalTva }}</td>
-                                </tr>
-                            </tbody>
-                </table>
-                            <a href="{{ path('app_pdf') }}" class="btn btn-warning" >Telecharger Facture</a>
+	{% set tot = 0 %}
+	{% set totalTva = 0 %}
+	<div class="container mt-5">
+		<h2 class="bg-light text-primary text-center mt-3 fs-5 p-4">Information Relative à votre payment :</h2>
+		<div
+			class="row">
 
-                </div> 
-                </div> 
-                {# end row #}
-            {# </div> #}
- </div>
-{% endblock %}
-{% block javascript %}
-		<!-- Jquery Slim JS -->
-		<script src=" {{ asset('FrontOffice/assets/js/jquery.min.js') }}"></script>
-		<!-- Popper JS -->
-		<script src=" {{ asset('FrontOffice/assets/js/popper.min.js') }} "></script>
-		<!-- Bootstrap JS -->
-		<script src=" {{
-						        asset('FrontOffice/assets/js/bootstrap.min.js')
-						      }} "></script>
-{% endblock %}
+			{# <div class="col-lg-12"> #}
+			<div class="col-xs-12 col-md-6 col-lg-6">
+				<div class="panel panel-default height">
+					<div class="panel-heading">Client Information</div>
+					<div class="panel-body">
+						{% if app.user %}
+							<strong>{{ app.user.nom }}</strong><br>
+							{{ app.user.adresse }}<br>
+							<strong>{{ app.user.email }}</strong><br>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-6">
+				<div class="panel panel-default height">
+					<div class="panel-heading">Commande N°
+						{{ commandes.getId() }}</div>
+					<div class="panel-body">
+						<strong>Date Commande:
+						</strong>
+						{{ commandes.getDateCmd() | date("d/m/Y", "Europe/Paris")}}<br>
+						<strong>Adresse Livraison:
+						</strong>
+						{{ commandes.getAdresseLivraison() }}<br>
+						<strong>Moyen Payment:
+						</strong>
+						{{ commandes.getMethodPayement() }}<br>
+					</div>
+				</div>
+			</div>
+
+			{# </div> #}
+		</div>
+		<div class="row">
+			<div class="table-responsive mt-10">
+				<h3 class="text-center">
+					<strong>Produits Commander</strong>
+				</h3>
+				<table class="table table-condensed table-bordered">
+
+					<tr>
+						<td>
+							<strong>Nom Produit</strong>
+						</td>
+						<td class="text-center">
+							<strong>Quantité</strong>
+						</td>
+						<td class="text-right">
+							<strong>Total</strong>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					{% for facture in factures %}
+						<tr>
+							<td>{{ facture.nom_produit }}</td>
+							<td class="text-center">{{ facture.qte_cmd }}</td>
+							<td class="text-right">${{ facture.total_vente }}</td>
+						</tr>
+						{% set tot = tot + facture.total_vente %}
+					{% endfor %}
+					<tr>
+						<td class="highrow"></td>
+						<td class="highrow"></td>
+						<td class="highrow text-center">
+							<strong>Subtotal</strong>
+						</td>
+						<td class="highrow text-right">DHs
+							{{ tot }}</td>
+					</tr>
+					<tr>
+						<td class="emptyrow"></td>
+						<td class="emptyrow"></td>
+						<td class="emptyrow text-center">
+							<strong>TVA</strong>
+						</td>
+						<td class="emptyrow text-right">20%</td>
+					</tr>
+					<tr>
+						{% set totalTva = tot - (tot * 0.2) %}
+						<td class="emptyrow">
+							<i class="fa fa-barcode iconbig"></i>
+						</td>
+						<td class="emptyrow"></td>
+						<td class="emptyrow text-center">
+							<strong>Total</strong>
+						</td>
+						<td class="emptyrow text-right">Dhs
+							{{ totalTva }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<a href="{{ path('app_pdf') }}" class="default-btn">Telecharger Facture</a>
+
+		</div>
+	</div>
+	{# end row #}
+	{# </div> #}
+</div>{% endblock %}{% block javascript %}
+<!-- Jquery Slim JS -->
+<script src=" {{ asset('FrontOffice/assets/js/jquery.min.js') }}"></script>
+<!-- Popper JS -->
+<script src=" {{ asset('FrontOffice/assets/js/popper.min.js') }} "></script>
+<!-- Bootstrap JS -->
+<script src=" {{
+							        asset('FrontOffice/assets/js/bootstrap.min.js')
+							      }} "></script>{% endblock %}
