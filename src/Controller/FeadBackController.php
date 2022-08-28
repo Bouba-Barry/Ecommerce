@@ -14,18 +14,32 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Length;
 
-#[Route('/feedback')]
 class FeadBackController extends AbstractController
 {
-    // #[Route('/', name: 'app_fead_back_index', methods: ['GET'])]
-    // public function index(FeadBackRepository $feadBackRepository): Response
-    // {
-    //     return $this->render('fead_back/index.html.twig', [
-    //         'fead_backs' => $feadBackRepository->findAll(),
-    //     ]);
-    // }
+    #[Route('/admin/feedback', name: 'app_fead_back_index', methods: ['GET'])]
+    public function index(FeadBackRepository $feadBackRepository): Response
+    {
+        $fead = $feadBackRepository->findBy(['produit' => null]);
+        // dd($fead);
+        return $this->render('fead_back/index.html.twig', [
+            'fead_backs' => $fead,
+        ]);
+    }
 
-    #[Route('/product', name: 'app_prod_feedback')]
+    #[Route('/admin/feedback/prod', name: 'app_fead_prod', methods: ['GET'])]
+    public function feed_back_prod(FeadBackRepository $feadBackRepository, ProduitRepository $prod): Response
+    {
+        $fead = $feadBackRepository->findFeedProd();
+        // dd($fead->produit);
+        // dd($fead);
+        $fead = $prod->findFeedProd();
+        // dd($fead);
+        return $this->render('fead_back/prod.html.twig', [
+            'feed_backs' => $fead,
+        ]);
+    }
+
+    #[Route('/feedback/product', name: 'app_prod_feedback')]
     public function feedbackProd(Request $request, FeadBackRepository $feadBackRepository, ProduitRepository $produitRepository): JsonResponse
     {
         if ($request->get('name') && $request->get('body') && $request->get('title')) {
@@ -59,7 +73,7 @@ class FeadBackController extends AbstractController
         }
     }
 
-    #[Route('/new', name: 'app_client_feedback', methods: ['GET', 'POST'])]
+    #[Route('/feedback/new', name: 'app_client_feedback', methods: ['GET', 'POST'])]
     public function new(Request $request, FeadBackRepository $feadBackRepository, ProduitRepository $produitRepository): Response
     {
         $feadBack = new FeadBack();
@@ -71,7 +85,7 @@ class FeadBackController extends AbstractController
             $feadBack->setUser($this->getUser());
 
             $feadBackRepository->add($feadBack, true);
-
+            $this->addFlash('success', 'Votre avis a été pris en compte avec succès');
             return $this->redirectToRoute('app_client_feedback', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -83,38 +97,41 @@ class FeadBackController extends AbstractController
         ]);
     }
 
-    // #[Route('/{id}', name: 'app_fead_back_show', methods: ['GET'])]
-    // public function show(FeadBack $feadBack): Response
-    // {
-    //     return $this->render('fead_back/show.html.twig', [
-    //         'fead_back' => $feadBack,
-    //     ]);
-    // }
+    #[Route('/admin/feedback/{id}', name: 'app_fead_back_show', methods: ['GET'])]
+    public function show(FeadBack $feadBack, Request $request): Response
+    {
+        return $this->render('fead_back/show.html.twig', [
+            'feed_back' => $feadBack,
+        ]);
+    }
 
-    // #[Route('/{id}/edit', name: 'app_fead_back_edit', methods: ['GET', 'POST'])]
-    // public function edit(Request $request, FeadBack $feadBack, FeadBackRepository $feadBackRepository): Response
-    // {
-    //     $form = $this->createForm(FeadBackType::class, $feadBack);
-    //     $form->handleRequest($request);
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $feadBackRepository->add($feadBack, true);
 
-    //         return $this->redirectToRoute('app_fead_back_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->renderForm('fead_back/edit.html.twig', [
-    //         'fead_back' => $feadBack,
-    //         'form' => $form,
-    //     ]);
-    // }
-
-    #[Route('/{id}', name: 'app_fead_back_delete', methods: ['POST'])]
+    #[Route('/admin/feedback/{id}', name: 'app_fead_back_delete_get', methods: ['POST', 'GET'])]
     public function delete(Request $request, FeadBack $feadBack, FeadBackRepository $feadBackRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $feadBack->getId(), $request->request->get('_token'))) {
-            $feadBackRepository->remove($feadBack, true);
+        $feadBackRepository->remove($feadBack, true);
+        $this->addFlash('suppression', 'le feedback a été supprimer avec succès');
+
+        return $this->redirectToRoute('app_fead_back_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/admin/feedback/delete/group', name: 'app_feedBack_delete_group', methods: ['POST'])]
+    public function deletegroup(Request $request, FeadBackRepository $feadBackRepository): Response
+    {
+        // dd($request->get('check1'));
+        $array = [];
+        foreach ($feadBackRepository->findAll() as $feed) {
+            if ($request->get('check' . $feed->getId()) != null) {
+
+                array_push($array, $feed->getId());
+            }
         }
+        foreach ($array as $cmd) {
+            $feadBackRepository->remove($feadBackRepository->find($cmd), true);
+        }
+
+        $this->addFlash('suppression', 'suppression  effectuée  avec succes');
 
         return $this->redirectToRoute('app_fead_back_index', [], Response::HTTP_SEE_OTHER);
     }

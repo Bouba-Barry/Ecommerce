@@ -1,3 +1,5 @@
+{# {% set filter = app.session.get('f') %} #}
+
 {{ form_start(form,{'attr': { 'class': 'filter' ,'id': 'filter'}}) }}
 
 <label>Par Produit</label>
@@ -8,17 +10,19 @@
 
 <label>Par Prix</label>
 <div class="row">
-<div class="col-md-6">
-{{form_row(form.min)}}
-</div>
-<div class="col-md-6">
-{{form_row(form.max)}}
-</div>
+	<div class="col-md-6">
+		{{form_row(form.min)}}
+	</div>
+	<div class="col-md-6">
+		{{form_row(form.max)}}
+	</div>
 </div>
 
 
-<label>Par reductions</label>
-{{form_row(form.reductions)}}
+{% if app.session.get('red') != 0 %}
+	<label>Par reductions</label>
+	{{form_row(form.reductions)}}
+{% endif %}
 
 <label>Par variations</label>
 {{form_row(form.variations)}}

@@ -16,9 +16,10 @@
 	</div>
 </div>
 
-
-<label>Par reductions</label>
-{{form_row(form.reductions)}}
+{% if app.session.get('red') != 0 %}
+	<label>Par reductions</label>
+	{{form_row(form.reductions)}}
+{% endif %}
 
 <label>Par variations</label>
 {{form_row(form.variations)}}

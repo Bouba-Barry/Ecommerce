@@ -6,6 +6,13 @@
 	<!-- Start Contact Area -->
 	<section class="contact-area ptb-100">
 		<div class="container">
+			<div id="message">
+			{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+			  {{ message }}
+			</div>
+			{% endfor %}
+		  </div>
 			<div class="section-title">
 				<h2>Partager Votre Expérience Avec Les Autres</h2>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum suspendisse</p>

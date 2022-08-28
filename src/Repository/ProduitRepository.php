@@ -768,7 +768,7 @@ class ProduitRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function PopularProd_Month($data)
+    public function PopularProd_Month(FilterData $data)
     {
 
         $conn = $this->getEntityManager()->getConnection();
@@ -825,5 +825,17 @@ class ProduitRepository extends ServiceEntityRepository
         }
 
         return $query->getQuery()->getResult();
+    }
+
+
+    public function findFeedProd(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->join('p.feadBacks', 'f')
+            // ->andWhere('f  != NULL')
+            // ->orderBy('f.id', 'DESC')
+            // ->groupBy('f.produit')
+            ->getQuery()->getResult();
     }
 }

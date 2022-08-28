@@ -30,7 +30,7 @@ class QuantiteRepository extends ServiceEntityRepository
         }
     }
 
-  
+
 
     public function findquantite($json)
     {
@@ -39,7 +39,7 @@ class QuantiteRepository extends ServiceEntityRepository
         $sql = "
             SELECT q.* FROM quantite q
             WHERE q.variations=:json  ";
-        
+
         $stmt = $conn->prepare($sql);
 
         $resultSet = $stmt->executeQuery(['json' => $json]);
@@ -47,17 +47,17 @@ class QuantiteRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
-    public function findquantite_produit($json,$id)
+    public function findquantite_produit($json, $id)
     {
         $conn = $this->getEntityManager()->getConnection();
         // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
         $sql = "
             SELECT q.* FROM quantite q
             WHERE q.variations=:json and q.produit_id=:id ";
-        
+
         $stmt = $conn->prepare($sql);
 
-        $resultSet = $stmt->executeQuery(['json' => $json , 'id' => $id]);
+        $resultSet = $stmt->executeQuery(['json' => $json, 'id' => $id]);
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
@@ -74,28 +74,41 @@ class QuantiteRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Quantite[] Returns an array of Quantite objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('q.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function UpdateProduit($id, $prod, $qte)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "
+        UPDATE quantite SET qte_stock = qte_stock - $qte WHERE id = $id and produit_id = $prod
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
 
-//    public function findOneBySomeField($value): ?Quantite
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        // returns an array of arrays (i.e. a raw data set)
+        return true;
+    }
+
+    //    /**
+    //     * @return Quantite[] Returns an array of Quantite objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('q')
+    //            ->andWhere('q.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('q.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Quantite
+    //    {
+    //        return $this->createQueryBuilder('q')
+    //            ->andWhere('q.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

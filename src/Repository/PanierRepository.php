@@ -233,31 +233,39 @@ class PanierRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Panier
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
-    /**
-     * @return Query Returns an array of Produit objects
-     */
-    public function findMostViewMonth()
+    // public function findVariation($panier, $prod)
+    // {
+    //     return $this->createQueryBuilder('p')
+    //         ->select('pp.variations')
+    //         ->andWhere('p.id = :id')
+    //         ->setParameter('id', $panier)
+    //         ->leftJoin('p.produit', 'pp')
+    //         ->andWhere('pp.produit_id = :val')
+    //         ->setParameter('val', $prod)
+    //         ->getQuery()
+    //         ->getOneOrNullResult();
+    // }
+    // /**
+    //  * @return Array Returns an array of Produit objects
+    //  */
+    public function getVariationsProduits($panier, $prod)
     {
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = "
-        SELECT p.* FROM produit p , panier_produit pp,  
-        WHERE p.id = pp.produit_id
-        group by p.id
+        select distinct(pp.variations) from panier_produit pp, panier p WHERE panier_id = $panier and produit_id = $prod
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
 
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
+
+        // $result = $resultSet->fetchAllAssociative();
+        // $queryBuilder = $this->createQueryBuilder('p')
+        //     ->where('p.id in (:result) ')
+        //     ->setParameter(':result', $result);
+
+        // return $queryBuilder->getQuery()->getResult();
     }
 }

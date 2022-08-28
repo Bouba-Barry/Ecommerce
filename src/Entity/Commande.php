@@ -49,6 +49,9 @@ class Commande
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?Ville $ville = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $status = null;
+
     public function __construct()
     {
         $this->create_at = new \DateTimeImmutable('now');
@@ -174,6 +177,18 @@ class Commande
     public function setVille(?Ville $ville): self
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

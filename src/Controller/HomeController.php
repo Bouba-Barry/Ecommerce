@@ -725,6 +725,9 @@ class HomeController extends AbstractController
         $produits_reduction = $produitRepository->get_produit_reduction();
 
         $reductions = $reductionRepository->findAll();
+
+        $session = $this->requestStack->getSession();
+        $session->set('red', count($reductions));
         // dd($produits_reduction);
         // $json = $serializer->serialize($produits, 'json', ['groups' => ['prod:read']]);
         $SouscatePopulaire = $produitRepository->findPopularSousCategory();
