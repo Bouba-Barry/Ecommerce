@@ -58,7 +58,7 @@ for (let i = 0; i < images.length; i++) {
     </div>
   </div>
 
-  <div class="form-group row">
+  <div class="form-group row" style="display:none">
     <label class="col-form-label col-md-2">Produit Associé</label>
     <div class="mb-3 col-md-10">
                         <div class="form-group"><select id="image_variable_produit" name="image_variable[produit]" placeholder="Produit associé" class="form-control form-control"><option value="${data.produit.id}" selected="selected">${data.produit.designation}</option></select></div>

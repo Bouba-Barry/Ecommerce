@@ -15,11 +15,7 @@ for (let butt of top_products_item) {
     // vals.push(element.id.charAt(element.id.length - 1));
     let matches = element.id.match(/(\d+)/);
     vals.push(matches[0]);
-    fetch(
-      `http://127.0.0.1:8000/panier_check/${vals}/${parseInt(
-        user_id.innerHTML
-      )}`
-    )
+    fetch(`/panier_check/${vals}/${parseInt(user_id.innerHTML)}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -65,11 +61,7 @@ for (let but of addtocart) {
       console.log("awdi rk nadi");
       but.setAttribute("data-original-title", "Add to cart");
       but.innerHTML = '<i class="flaticon-shopping-cart"></i>';
-      fetch(
-        `http://127.0.0.1:8000/panier_delete/${vals}/${parseInt(
-          user_id.innerHTML
-        )}`
-      )
+      fetch(`/panier_delete/${vals}/${parseInt(user_id.innerHTML)}`)
         .then((response) => {
           if (response.ok) {
             return response;
@@ -89,9 +81,7 @@ for (let but of addtocart) {
       but.setAttribute("data-original-title", "remove from panier");
       but.innerHTML = '<i class="flaticon-cancel"></i>';
 
-      fetch(
-        `http://127.0.0.1:8000/panier/${vals}/1/${parseInt(user_id.innerHTML)}`
-      )
+      fetch(`/panier/${vals}/1/${parseInt(user_id.innerHTML)}`)
         .then((response) => {
           if (response.ok) {
             return response.json();

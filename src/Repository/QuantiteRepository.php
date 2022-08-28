@@ -32,17 +32,17 @@ class QuantiteRepository extends ServiceEntityRepository
 
   
 
-    public function findquantite($json)
+    public function findquantite($json,$produit_id)
     {
         $conn = $this->getEntityManager()->getConnection();
         // WHERE p.id = c.id and JSON_CONTAINS(`$json`, p.id)
         $sql = "
             SELECT q.* FROM quantite q
-            WHERE q.variations=:json  ";
+            WHERE q.variations=:json  and produit_id=:produit ";
         
         $stmt = $conn->prepare($sql);
 
-        $resultSet = $stmt->executeQuery(['json' => $json]);
+        $resultSet = $stmt->executeQuery(['json' => $json,'produit'=>$produit_id]);
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }

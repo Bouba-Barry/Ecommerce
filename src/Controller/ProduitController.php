@@ -155,8 +155,8 @@ class ProduitController extends AbstractController
             $produit = $form->getData();
             
             $produitRepository->add($produit, true);
-
-            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'vos modifications sont enregistre avec succes avec succes');
+            return $this->redirectToRoute('app_produit_show', ['id'=>$produit->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('produit/edit_variable.html.twig', [

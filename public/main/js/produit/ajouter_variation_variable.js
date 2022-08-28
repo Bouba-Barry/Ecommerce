@@ -41,7 +41,7 @@ ajouter.addEventListener("click", function () {
             attributs += `</div>`;
           }
           attributs += ` </div>
-                </div`;
+                </div>`;
         }
       }
       row.innerHTML = `

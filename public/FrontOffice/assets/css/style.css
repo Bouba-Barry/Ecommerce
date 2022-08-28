@@ -4217,7 +4217,12 @@ Page Banner CSS
 .page-banner-area.item-bg4 {
   background-image: url(../../assets/img/login.png);
 }
-
+.page-banner-area.item-bg5 {
+  background-image: url(../../assets/img/Shop_details.jpg);
+}
+.page-banner-area.item-bg6 {
+  background-image: url(../../assets/img/boutique.jpg);
+}
 .page-banner-content {
   text-align: center;
 }
@@ -5858,7 +5863,6 @@ Checkout Area CSS
 Product Details Area CSS
 =================================================*/
 .product-details-image {
-  background-image: url(../../assets/img/top-products/top-products-7.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;

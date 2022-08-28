@@ -4,18 +4,19 @@
 <p id="user_id" style="display: none">
   {% if app.user %} {{ app.user.id }} {% endif %}
 </p>
+<p id="produit_id" style="display: none;">{{ produit.id }}</p>
 <!-- Start Page Banner -->
-<div class="page-banner-area item-bg4">
+<div class="page-banner-area item-bg5">
   <div class="d-table">
     <div class="d-table-cell">
       <div class="container">
         <div class="page-banner-content">
-          <h2>Shop Details</h2>
+          <h2>Détails de la boutique</h2>
           <ul>
             <li>
-              <a href="{{ path('app_home') }}">Home</a>
+              <a href="{{ path('app_home') }}">Acceuil</a>
             </li>
-            <li>Shop Details</li>
+            <li>Détails de la boutique</li>
           </ul>
         </div>
       </div>
@@ -32,7 +33,7 @@
 <section class="product-details-area pt-100 pb-70">
   <div class="container">
     <div class="row">
-      <div class="col-lg-8">
+      <div class="col-lg-11">
         <div class="row">
           <div class="col-lg-6 col-md-12">
          
@@ -70,15 +71,16 @@
           <div class="col-lg-6 col-md-12">
             <div class="product-details-desc">
               <h3>{{ produit.designation }}</h3>
+              {% if produit.getType()=="stable" %}
               <div class="price">
                 {% if produit.getReduction()|length != 0 %}
                 <div class="price">
-                  <span class="new-price"> {{ produit.nouveauPrix }}Dhs</span>
-                  <span class="old-price">{{ produit.ancienPrix }}Dhs</span>
+                  <span class="new-price" id="new_prix"> {{ produit.nouveauPrix }}Dhs</span>
+                  <span class="old-price" >{{ produit.ancienPrix }}Dhs</span>
                 </div>
-                {% else %}
+                {% else  %}
                 <div class="price">
-                  <span class="new-price">{{ produit.ancienPrix }}Dhs</span>
+                  <span class="new-price" id="old_prix">{{ produit.ancienPrix }}Dhs</span>
                 </div>
                 {% endif %} {% if produit.getReduction()|length != 0 %}
                 <div class="sale">
@@ -91,6 +93,29 @@
                 </div>
                 {% endif %}
               </div>
+              {% else %}
+              <div class="price">
+                {% if produit.getReduction()|length != 0 %}
+                <div class="price">
+                  <span class="new-price" id="new_prix_variable"> </span>
+                  <span class="old-price" ></span>
+                </div>
+                {% else  %}
+                <div class="price">
+                  <span class="new-price" id="old_prix_variable"></span>
+                </div>
+                {% endif %} {% if produit.getReduction()|length != 0 %}
+                <div class="sale">
+                  <span>
+                    {% for produit_reduction in produit.getReduction() %} -{{
+                      produit_reduction.getPourcentage()
+                    }}
+                    {% endfor %}
+                  </span>
+                </div>
+                {% endif %}
+              </div>
+              {% endif %}
               <div class="product-review">
                 <div class="rating">
                   <i class="bx bxs-star"></i>
@@ -146,7 +171,7 @@
                 {% endif %} {% endfor %} {% endif %}
               </div>
               {% if produit.getVariation()|length ==0 %}
-              <strong id="qte_reste"
+              <strong id="qte_reste" style="font-size:20px"
                 >il reste {{ produit.getQteStock() }} en stock</strong
               >
               {% else %}
@@ -167,6 +192,8 @@
                   >
                     <i class="bx bx-minus"></i>
                   </span>
+                  {% if produit.getType()=="stable" %}
+                  
                   <input
                     class="valprogress"
                     type="text"
@@ -174,6 +201,18 @@
                     max="{{ produit.getQteStock() }}"
                     value="1"
                   />
+                  {% else %}
+                  
+                  <input
+                    class="valprogress"
+                    type="text"
+                    min="0"
+                    
+                    value="1"
+                  />
+                  {% endif %}
+                  
+                    
                   <span
                     class="plus-btn progressbtn1"
                     id="progressbtn1{{ produit.id }}"
@@ -186,7 +225,7 @@
                   id="addcard{{ produit.id }}"
                   class="default-btn addcard"
                 >
-                  Add to cart
+                Ajouter au panier
                   <span></span>
                 </button>
               </div>
@@ -218,7 +257,7 @@
                   id="addcard{{ produit.id }}"
                   class="default-btn addcard"
                 >
-                  Add to cart
+                Ajouter au panier
                   <span></span>
                 </button>
               </div>
@@ -282,7 +321,7 @@
                 <li>
                   <a href="#">
                     <div class="dot"></div>
-                    Reviews
+                    Commentaires
                   </a>
                 </li>
               </ul>
@@ -417,6 +456,7 @@
                       path('app_shop_details', { id: produit_similaire.id })
                     }}"
                     ><img
+                    style="width: 450px; height: 400px"
                       src="{{ asset('uploads/produits/' ~ produit_similaire.getImageProduit() ) }}"
                       alt="image"
                   /></a>
@@ -476,16 +516,16 @@
                       href="{{
                         path('app_shop_details', { id: produit_similaire.id })
                       }}"
-                      >{{ produit_similaire.designation }}</a
+                      >{{ produit_similaire.designation|slice(0,13) ~ '...' }}</a
                     >
                   </h3>
                   {% if produit_similaire.getReduction()|length != 0 %}
                   <div class="price">
                     <span class="new-price">
-                      {{ produit_similaire.nouveauPrix }}Dhs</span
+                      {{ produit_similaire.nouveauPrix }}Dh</span
                     >
                     <span class="old-price"
-                      >{{ produit_similaire.ancienPrix }}Dhs</span
+                      >{{ produit_similaire.ancienPrix }}Dh</span
                     >
                   </div>
                   {% else %}
@@ -511,101 +551,9 @@
           </div>
         </div>
       </div>
-
+{# 
       <div class="col-lg-4 col-md-12">
         <aside class="widget-area">
-          {#
-          <section class="widget widget_search">
-            <h3 class="widget-title">Search</h3>
-
-            <form class="search-form">
-              <label>
-                <span class="screen-reader-text">Search for:</span>
-                <input
-                  type="search"
-                  class="search-field"
-                  placeholder="Search..."
-                />
-              </label>
-              <button type="submit">
-                <i class="flaticon-search"></i>
-              </button>
-            </form>
-          </section>
-          #} {#
-          <section class="widget price_list_widget">
-            <h3 class="widget-title">Price</h3>
-
-            <form>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="$10" />
-              </div>
-            </form>
-          </section>
-          #}
-
-          {# <section class="widget widget_popular_products">
-            <h3 class="widget-title">Popular Products</h3>
-            {% for popular_product in popular_products %}
-
-            <article class="item">
-              <a
-                href="{{
-                  path('app_shop_details', { id: popular_product.id })
-                }}"
-                class="thumb"
-              >
-                {# <span class="fullimage cover bg1" role="img"></span> 
-                <img
-                  src="{{ asset('uploads/produits/' ~ popular_product.getImageProduit() ) }}"
-                  alt=""
-                />
-              </a>
-              <div class="info">
-                {% if popular_product.getReduction()|length != 0 %}
-                <div class="price">
-                  <span class="new-price">
-                    {{ popular_product.nouveauPrix }}Dhs</span
-                  >
-                  <span class="old-price"
-                    >{{ popular_product.ancienPrix }}Dhs</span
-                  >
-                </div>
-                <div class="sale">
-                  <span>
-                    {% for produit_reduction in popular_product.getReduction()
-                    %} -{{ produit_reduction.getPourcentage() }}
-                    {% endfor %}
-                  </span>
-                </div>
-                {% else %}
-                <div class="price">
-                  <span class="new-price"
-                    >{{ popular_product.ancienPrix }}Dhs</span
-                  >
-                </div>
-                {% endif %} {# <span>{{ popular_product. }}</span> 
-                <h4 class="title usmall">
-                  <a
-                    href="{{
-                      path('app_shop_details', { id: popular_product.id })
-                    }}"
-                    >{{ popular_product.designation }}</a
-                  >
-                </h4>
-                <div class="rating">
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                  <i class="bx bxs-star"></i>
-                </div>
-              </div>
-            </article>
-
-            {% endfor %}
-          </section> #}
-
           <section class="widget widget_tag_cloud">
             <h3 class="widget-title">Categories Populaires</h3>
 
@@ -619,7 +567,9 @@
             </div>
           </section>
         </aside>
-      </div>
+      </div> #}
+
+
     </div>
   </div>
 </section>
@@ -645,8 +595,10 @@
                 path('app_shop_details', { id: produit_en_relation.id })
               }}"
               ><img
+                style="width: 250px; height: 200px"
                 src="{{ asset('uploads/produits/' ~ produit_en_relation.getImageProduit()) }}"
                 alt="image"
+                
             /></a>
 
             <ul class="products-action">
@@ -697,12 +649,12 @@
           </div>
 
           <div class="products-content">
-            <h3>
+            <h3 >
               <a
                 href="{{
                   path('app_shop_details', { id: produit_en_relation.id })
                 }}"
-                >{{ produit_en_relation.designation }}</a
+                >{{ produit_en_relation.designation|slice(0,13) ~ '...'  }}</a
               >
             </h3>
             {% if produit_en_relation.getReduction()|length != 0 %}

@@ -1,7 +1,7 @@
 let produit_edit = document.getElementById("edit_quantite_produit");
 let variations_edit = document.getElementById("edit_quantite_variations");
 
-fetch(`http://127.0.0.1:8000/quantite/variations_produit/${produit_edit.value}`)
+fetch(`/quantite/variations_produit/${produit_edit.value}`)
   .then((response) => {
     if (response.ok) {
       return response.json();

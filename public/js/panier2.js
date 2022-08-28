@@ -2,7 +2,7 @@ let user_id = document.getElementById("user_id");
 let length = 0;
 let panier = document.getElementById("panier");
 
-fetch(`http://127.0.0.1:8000/panier_length/${parseInt(user_id.innerHTML)}`)
+fetch(`/panier_length/${parseInt(user_id.innerHTML)}`)
   .then((response) => {
     if (response.ok) {
       return response.json();

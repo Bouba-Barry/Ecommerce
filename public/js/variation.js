@@ -8,6 +8,7 @@ let valprogress = document.getElementsByClassName("valprogress");
 // let variation_nom_hidden = document.getElementsByClassName(
 //   "hidden_variation_nom"
 // );
+let prix = document.getElementById("old_prix_variable");
 let addcard = document.getElementsByClassName("addcard");
 let qte_image = document.getElementsByClassName("qte_image");
 let qte_reste = document.getElementById("qte_reste");
@@ -17,7 +18,8 @@ let variation_choisi = document.getElementsByClassName("variation-choisi");
 let variation = document.getElementsByClassName("variation");
 let message = document.getElementById("message");
 let product_add_to_cart = document.getElementById("product-add-to-cart");
-
+let produit_id = document.getElementById("produit_id");
+let matches = produit_id.innerHTML.match(/(\d+)/);
 let vals = [];
 
 setTimeout(function () {
@@ -88,7 +90,7 @@ for (let variable of variation_nom) {
     // }
     console.log(vals);
     // window.location.href = "http://127.0.0.1:8000/quantite/check/" + vals;
-    fetch(`http://127.0.0.1:8000/quantite/check/${vals}`)
+    fetch(`/quantite/check/${vals}/${matches[0]}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -103,12 +105,7 @@ for (let variable of variation_nom) {
       .catch((err) => {
         console.log(err);
       });
-
-    fetch(
-      `http://127.0.0.1:8000/quantite/panier/check/${vals}/${parseInt(
-        user_id.innerHTML
-      )}`
-    )
+    fetch(`/quantite/panier/check/${vals}/${parseInt(user_id.innerHTML)}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -186,7 +183,7 @@ for (let image of variation_id) {
     // }
     console.log(vals);
     // window.location.href = "http://127.0.0.1:8000/quantite/check/" + vals;
-    fetch(`http://127.0.0.1:8000/quantite/check/${vals}`)
+    fetch(`/quantite/check/${vals}/${matches[0]}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -202,11 +199,7 @@ for (let image of variation_id) {
         console.log(err);
       });
 
-    fetch(
-      `http://127.0.0.1:8000/quantite/panier/check/${vals}/${parseInt(
-        user_id.innerHTML
-      )}`
-    )
+    fetch(`/quantite/panier/check/${vals}/${parseInt(user_id.innerHTML)}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -227,7 +220,9 @@ for (let image of variation_id) {
 function check(data) {
   if (data.length > 0) {
     for (let i = 0; i < data.length; i++) {
-      qte_reste.innerHTML = "il reste " + data[i].qte_stock + " en Stockjj";
+      qte_reste.innerHTML = "il reste " + data[i].qte_stock + " en Stock";
+      prix.innerHTML =
+        `<strong style="font-size:25px">` + data[i].prix + " DH</strong>";
       let matches = qte_reste.innerHTML.match(/(\d+)/);
       valprogress[0].setAttribute("max", matches[0]);
     }
@@ -243,10 +238,10 @@ function paniercheck(data) {
     //   qte_reste.innerHTML = "il reste " + data[i].qte_stock + " en Stockjj";
     //   let matches = qte_reste.innerHTML.match(/(\d+)/);
     valprogress[0].value = data[0].qte_produit;
-    addcard[0].innerHTML = "added to card";
+    addcard[0].innerHTML = "ajouté à la carte";
     addcard[0].style.display = "none";
   } else {
-    addcard[0].innerHTML = "Add to cart";
+    addcard[0].innerHTML = "Ajouter au panier";
     valprogress[0].value = 1;
     addcard[0].style.display = "inline-block";
   }

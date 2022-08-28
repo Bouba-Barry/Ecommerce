@@ -5,7 +5,7 @@
 {% block content %}
 
 	<!-- Start Page Banner -->
-	<div class="page-banner-area">
+	<div class="page-banner-area item-bg6">
 		<div class="d-table">
 			<div class="d-table-cell">
 				<div class="container">
@@ -76,7 +76,7 @@
 
 						<div class="products-content">
 							<h3>
-								<a href="{{ path('app_shop_details',{id : produit.id }) }}">{{ produit.designation }}</a>
+								<a href="{{ path('app_shop_details',{id : produit.id }) }}">{{ produit.designation|slice(0,13) ~ '...' }}</a>
 							</h3>
 							{% if produit.getReduction()|length != 0 %}
 							<div class="price">

@@ -1,12 +1,12 @@
 let quantites = document.getElementsByClassName("editquantite");
-let row = document.getElementById("row");
-let id_produit = document.getElementById("produit_id");
-let matches1 = id_produit.innerHTML.match(/(\d+)/);
+// let row = document.getElementById("row");
+// let id_produit = document.getElementById("produit_id");
+// let matches1 = id_produit.innerHTML.match(/(\d+)/);
 for (let i = 0; i < quantites.length; i++) {
   quantites[i].addEventListener("click", function () {
-    let matches = quantites[i].id.match(/(\d+)/);
+    let matches1 = quantites[i].id.match(/(\d+)/);
     row.innerHTML = "";
-    fetch(`http://127.0.0.1:8000/getQuantite/${matches[0]}`)
+    fetch(`http://127.0.0.1:8000/getQuantite/${matches1[0]}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -15,7 +15,7 @@ for (let i = 0; i < quantites.length; i++) {
         }
       })
       .then((data) => {
-        fetch(`http://127.0.0.1:8000/getAttributs/${matches1[0]}`)
+        fetch(`http://127.0.0.1:8000/getAttributs/${matches[0]}`)
           .then((response) => {
             if (response.ok) {
               return response.json();
@@ -66,12 +66,12 @@ for (let i = 0; i < quantites.length; i++) {
                   attributs += `</div>`;
                 }
                 attributs += ` </div>
-                </div`;
+                </div>`;
               }
             }
             row.innerHTML = `
         <h3 class="btn btn-md btn-primary">Variations</h3>
-    <form action="/quantite/admin/edit/variable/${matches[0]}/${matches1[0]}" method="POST" class="col-12">
+    <form action="/quantite/admin/edit/variable/${matches1[0]}/${matches[0]}" method="POST" class="col-12">
     <div class="box-body">
     <div class="form-group row" style="display:none">
       <label class="col-form-label col-md-2">Produit Concerne</label>

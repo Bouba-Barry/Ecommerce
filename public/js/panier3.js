@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let matches = search[i].id.match(/(\d+)/);
       vals.push(matches[0]);
 
-      fetch(`http://127.0.0.1:8000/getProduit/${vals}`)
+      fetch(`/getProduit/${vals}`)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -56,12 +56,11 @@ document.addEventListener("DOMContentLoaded", function () {
       addcard[0].setAttribute("id", "addcard" + data.id);
       progressbtn1[0].setAttribute("id", "progressbtn1" + data.id);
       progressbtn2[0].setAttribute("id", "progressbtn2" + data.id);
-      console.log("id: " + addcard[1].id);
-      console.log("id: " + progressbtn1[1].id);
+      valprogress[0].setAttribute("max", data.qte_stock);
+      // console.log("id: " + addcard[1].id);
+      // console.log("id: " + progressbtn1[1].id);
 
-      fetch(
-        `http://127.0.0.1:8000/panier_length/${parseInt(user_id.innerHTML)}`
-      )
+      fetch(`/panier_length/${parseInt(user_id.innerHTML)}`)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -74,18 +73,15 @@ document.addEventListener("DOMContentLoaded", function () {
           filter_produits(data);
         })
         .catch((err) => {
-          console.log("error");
+          console.log(err);
         });
 
       function filter_produits(data) {
         if (data.length > 0) {
           for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < progressbtn1.length; j++) {
-              console.log(progressbtn1[j]);
-              if (
-                progressbtn1[j].id.charAt(progressbtn1[j].id.length - 1) ==
-                data[i].produit_id
-              ) {
+              let matches = addcard[j].id.match(/(\d+)/);
+              if (matches[0] == data[i].produit_id) {
                 addcard[j].style.display = "none";
                 valprogress[j].value = data[i].qte_produit;
               }
@@ -112,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // });
   // console.log(addcard);
 
-  fetch(`http://127.0.0.1:8000/panier_length/${parseInt(user_id.innerHTML)}`)
+  fetch(`/panier_length/${parseInt(user_id.innerHTML)}`)
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -132,11 +128,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (data.length > 0) {
       for (let i = 0; i < data.length; i++) {
         for (let j = 0; j < progressbtn1.length; j++) {
-          console.log(progressbtn1[j]);
-          if (
-            progressbtn1[j].id.charAt(progressbtn1[j].id.length - 1) ==
-            data[i].produit_id
-          ) {
+          let matches = addcard[i].id.match(/(\d+)/);
+          if (matches[0] == data[i].produit_id) {
             addcard[j].style.display = "none";
             valprogress[j].value = data[i].qte_produit;
           }
@@ -158,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       //   sessionStorage.setItem("clone", matches[0]);
       // vals.push(matches[0]);
-      addcard[i].innerHTML = "added to card";
+      addcard[i].innerHTML = "ajouté à la carte";
       setTimeout(function () {
         addcard[i].innerHTML = "";
       }, 2000);
@@ -187,15 +180,11 @@ document.addEventListener("DOMContentLoaded", function () {
       // vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
       // console.log("voila : " + progressbtn1[i].id);
 
-      let matches = progressbtn1[i].id.match(/(\d+)/);
+      let matches = addcard[i].id.match(/(\d+)/);
       vals.push(matches[0]);
 
       qte.push(Number(valprogress[i].value));
-      fetch(
-        `http://127.0.0.1:8000/panier/${vals}/${qte}/${parseInt(
-          user_id.innerHTML
-        )}`
-      )
+      fetch(`/panier/${vals}/${qte}/${parseInt(user_id.innerHTML)}`)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -219,23 +208,29 @@ document.addEventListener("DOMContentLoaded", function () {
       i = findindex1(but);
 
       console.log(addcard[i].style.display);
+      if (Number(valprogress[i].value) > Number(valprogress[i].max)) {
+        valprogress[i].value = valprogress[i].value - 1;
+        noti.innerHTML = Number(noti.innerHTML);
+        console.log("nadi");
+      } else if (
+        addcard[i].textContent.includes("Ajouter au panier") == false ||
+        addcard[i].style.display == "none"
+      ) {
+        noti.innerHTML = Number(noti.innerHTML) + 1;
+      }
 
       if (
-        addcard[i].textContent.includes("Add to cart") == false ||
+        addcard[i].textContent.includes("Ajouter au panier") == false ||
         addcard[i].style.display == "none"
       ) {
         let vals = [];
         let qte = [];
         // vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
-        let matches = progressbtn1[i].id.match(/(\d+)/);
+        let matches = addcard[i].id.match(/(\d+)/);
         vals.push(matches[0]);
         qte.push(Number(valprogress[i].value));
 
-        fetch(
-          `http://127.0.0.1:8000/panier_edit/${vals}/${qte}/${parseInt(
-            user_id.innerHTML
-          )}`
-        )
+        fetch(`/panier_edit/${vals}/${qte}/${parseInt(user_id.innerHTML)}`)
           .then((response) => {
             if (response.ok) {
               return response;
@@ -250,9 +245,9 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("error");
           });
 
-        console.log(valprogress[i].value);
-        console.log(noti.innerHTML);
-        noti.innerHTML = Number(noti.innerHTML) + 1;
+        // console.log(valprogress[i].value);
+        // console.log(noti.innerHTML);
+        // noti.innerHTML = Number(noti.innerHTML) + 1;
       }
 
       // valprogress[i].innerHTML++;
@@ -278,19 +273,15 @@ document.addEventListener("DOMContentLoaded", function () {
       let vals = [];
       let qte = [];
       // vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
-      let matches = progressbtn1[i].id.match(/(\d+)/);
+      let matches = addcard[i].id.match(/(\d+)/);
       vals.push(matches[0]);
       qte.push(Number(valprogress[i].value));
 
       if (
-        addcard[i].textContent.includes("Add to cart") == false ||
+        addcard[i].textContent.includes("Ajouter au panier") == false ||
         addcard[i].style.display == "none"
       ) {
-        fetch(
-          `http://127.0.0.1:8000/panier_edit/${vals}/${qte}/${parseInt(
-            user_id.innerHTML
-          )}`
-        )
+        fetch(`/panier_edit/${vals}/${qte}/${parseInt(user_id.innerHTML)}`)
           .then((response) => {
             if (response.ok) {
               return response;
@@ -322,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         console.log(valprogress[i].parentNode.parentNode.children[1]);
         valprogress[i].parentNode.parentNode.children[1].innerHTML =
-          "Add to cart";
+          "Ajouter au panier";
 
         valprogress[i].parentNode.parentNode.children[1].style.display =
           "inline";
@@ -330,11 +321,7 @@ document.addEventListener("DOMContentLoaded", function () {
         valprogress[i].parentNode.parentNode.children[1].style.backgroundColor =
           "#f99459";
 
-        fetch(
-          `http://127.0.0.1:8000/panier_delete/${vals}/${parseInt(
-            user_id.innerHTML
-          )}`
-        )
+        fetch(`/panier_delete/${vals}/${parseInt(user_id.innerHTML)}`)
           .then((response) => {
             if (response.ok) {
               return response;
@@ -395,7 +382,6 @@ document.addEventListener("DOMContentLoaded", function () {
       valeurs.push(matches[0]);
       qte.push(Number(valprogress[i].value));
     }
-    window.location.href =
-      "http://127.0.0.1:8000/panier_infos/" + Number(user_id.innerHTML); //on fait pas le panier.php/?.. mais panier.php?...
+    window.location.href = "/panier_infos/" + Number(user_id.innerHTML); //on fait pas le panier.php/?.. mais panier.php?...
   });
 });

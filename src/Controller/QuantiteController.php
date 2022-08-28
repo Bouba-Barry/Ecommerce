@@ -142,8 +142,8 @@ class QuantiteController extends AbstractController
 
 
 
-    #[Route('/check/{id}', name: 'app_variations_produit_check', methods: ['GET'])]
-    public function check($id,QuantiteRepository $quantiteRepository,ProduitRepository $produitRepository,SerializerInterface $serializer):JsonResponse
+    #[Route('/check/{id}/{slug}', name: 'app_variations_produit_check', methods: ['GET'])]
+    public function check($id,$slug,QuantiteRepository $quantiteRepository,ProduitRepository $produitRepository,SerializerInterface $serializer):JsonResponse
     {
        
         
@@ -155,7 +155,7 @@ class QuantiteController extends AbstractController
         //     array_push($variations1,$d);
         // }
         // dd($variations1);
-        $quantite=$quantiteRepository->findquantite($array);
+        $quantite=$quantiteRepository->findquantite($array,$slug);
         return $this->json($quantite);
         // $variations_produit=$serializer->serialize($produit->getVariation(), 'json', ['groups' => ['variation']]);
         // $json=json_decode($variations_produit);

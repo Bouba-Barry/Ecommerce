@@ -147,7 +147,7 @@ paypal
 
         //   doc.innerHTML = res;
         // }
-        window.location.href = `http://127.0.0.1:8000/payment/facture/`;
+        window.location.href = `/payment/facture/`;
       });
     },
     // style: {

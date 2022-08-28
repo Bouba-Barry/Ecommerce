@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     but.addEventListener("click", (e) => {
       // console.log(but.id);
       i = findindex_search(but);
-      console.log("le i : " + i);
+      // console.log("le i : " + i);
 
       let vals = [];
       let matches = search[i].id.match(/(\d+)/);
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // vals.push(search[i].id.charAt(search[i].id.length - 1));
       // console.log("search id: " + search[i].id);
 
-      fetch(`http://127.0.0.1:8000/getProduit/${vals}`)
+      fetch(`/getProduit/${vals}`)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
             for (let produit_variation of produit_attribut.variations) {
               for (let data_variation of data.variation) {
                 if (data_variation.id == produit_variation.id) {
-                  product_review.innerHTML = `<div class="item"><a href="${data.id}" class="btn btn-light">Voir variations ! </a></div>`;
+                  product_review.innerHTML = `<div class="item"><a href="${data.id}" class="btn btn-light">Consulter les variations ! </a></div>`;
                   // for (let image of produit_variation.images) {
                   //   for (let data_image of data.images) {
                   //     if (data_image.id == image.id) {
@@ -85,12 +85,11 @@ document.addEventListener("DOMContentLoaded", function () {
       addcard[1].setAttribute("id", "addcard" + data.id);
       progressbtn1[1].setAttribute("id", "progressbtn1" + data.id);
       progressbtn2[1].setAttribute("id", "progressbtn2" + data.id);
-      console.log("id: " + addcard[1].id);
-      console.log("id: " + progressbtn1[1].id);
+      valprogress[1].setAttribute("max", data.qte_stock);
+      // console.log("id: " + addcard[1].id);
+      // console.log("id: " + progressbtn1[1].id);
 
-      fetch(
-        `http://127.0.0.1:8000/panier_length/${parseInt(user_id.innerHTML)}`
-      )
+      fetch(`/panier_length/${parseInt(user_id.innerHTML)}`)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -110,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.length > 0) {
           for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < progressbtn1.length; j++) {
-              console.log(progressbtn1[j]);
+              // console.log(progressbtn1[j]);
               if (
                 progressbtn1[j].id.charAt(progressbtn1[j].id.length - 1) ==
                 data[i].produit_id
@@ -141,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // });
   // console.log(addcard);
 
-  fetch(`http://127.0.0.1:8000/panier_length/${parseInt(user_id.innerHTML)}`)
+  fetch(`/panier_length/${parseInt(user_id.innerHTML)}`)
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -161,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (data.length > 0) {
       for (let i = 0; i < data.length; i++) {
         for (let j = 0; j < progressbtn1.length; j++) {
-          console.log(progressbtn1[j]);
+          // console.log(progressbtn1[j]);
           if (
             progressbtn1[j].id.charAt(progressbtn1[j].id.length - 1) ==
             data[i].produit_id
@@ -177,23 +176,26 @@ document.addEventListener("DOMContentLoaded", function () {
   for (let i = 0; i < addcard.length; i++) {
     addcard[i].addEventListener("click", test);
     function test() {
+      console.log("testfunction");
       testclick();
     }
 
     function testclick() {
+      console.log("test test");
       // let vals = [];
       // var matches = addcard[i].id.match(/(\d+)/);
       // console.log(matches[0]);
 
       //   sessionStorage.setItem("clone", matches[0]);
       let verified = 0;
-      if (variation_choisi.length != 0) {
+      if (variation_choisi.length != 0 && i == 0) {
+        console.log("aded1 ");
         for (let j = 0; j < variation_choisi.length; j = j + 2) {
-          console.log(variation_choisi[j]);
+          // console.log(variation_choisi[j]);
           if (variation_choisi[j].innerHTML != "") {
             verified = 1;
           } else verified = 0;
-          console.log("verified:" + verified);
+          // console.log("verified:" + verified);
         }
         if (verified == 0) {
           message.innerHTML =
@@ -203,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
             message.style.display = "none";
           }, 5000);
         } else {
-          addcard[i].innerHTML = "added to card";
+          addcard[i].innerHTML = "ajouté à la carte";
           setTimeout(function () {
             addcard[i].innerHTML = "";
           }, 2000);
@@ -215,7 +217,8 @@ document.addEventListener("DOMContentLoaded", function () {
           addcard[i].style.outline = "none";
         }
       } else {
-        addcard[i].innerHTML = "added to card";
+        console.log("added ");
+        addcard[i].innerHTML = "ajouté à la carte";
         setTimeout(function () {
           addcard[i].innerHTML = "";
         }, 2000);
@@ -241,7 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // noti.classList.add("zero");
       let vals = [];
       let qte = [];
-      if (variation_choisi.length != 0) {
+      if (variation_choisi.length != 0 && i == 0) {
         let verified = 0;
 
         for (let j = 0; j < variation_choisi.length; j = j + 2) {
@@ -279,23 +282,23 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log("qte : " + qte[0]);
 
           fetch(
-            `http://127.0.0.1:8000/quantite/panier/${vals}/${qte}/${variations}/${parseInt(
+            `/quantite/panier/${vals}/${qte}/${variations}/${parseInt(
               user_id.innerHTML
             )}`
-          )
-            .then((response) => {
-              if (response.ok) {
-                return response.json();
-              } else {
-                console.log("mauvaise réponse!");
-              }
-            })
-            .then((data) => {
-              console.log(data);
-            })
-            .catch((err) => {
-              console.log("error");
-            });
+          );
+          // .then((response) => {
+          //   if (response.ok) {
+          //     return response.json();
+          //   } else {
+          //     console.log("mauvaise réponse!");
+          //   }
+          // })
+          // .then((data) => {
+          //   console.log(data);
+          // })
+          // .catch((err) => {
+          //   console.log("error");
+          // });
           noti.innerHTML =
             parseInt(noti.innerHTML) + Number(valprogress[i].value);
         }
@@ -304,17 +307,13 @@ document.addEventListener("DOMContentLoaded", function () {
         // console.log("voila : " + progressbtn1[i].id);
 
         let matches = addcard[i].id.match(/(\d+)/);
-        console.log(matches[0]);
+        // console.log(matches[0]);
         vals.push(matches[0]);
 
         qte.push(Number(valprogress[i].value));
-        console.log("qte : " + qte[0]);
+        // console.log("qte : " + qte[0]);
 
-        fetch(
-          `http://127.0.0.1:8000/panier/${vals}/${qte}/${parseInt(
-            user_id.innerHTML
-          )}`
-        )
+        fetch(`/panier/${vals}/${qte}/${parseInt(user_id.innerHTML)}`)
           .then((response) => {
             if (response.ok) {
               return response.json();
@@ -342,18 +341,23 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("panier : " + valprogress[i].max);
       if (Number(valprogress[i].value) > Number(valprogress[i].max)) {
         valprogress[i].value = valprogress[i].value - 1;
-        noti.innerHTML = Number(noti.innerHTML) - 1;
+        noti.innerHTML = Number(noti.innerHTML);
         console.log("nadi");
+      } else if (
+        addcard[i].textContent.includes("Ajouter au panier") == false ||
+        addcard[i].style.display == "none"
+      ) {
+        noti.innerHTML = Number(noti.innerHTML) + 1;
       }
       //ha la fin dylha
 
-      console.log(addcard[i].style.display);
+      // console.log(addcard[i].style.display);
 
       if (
-        addcard[i].textContent.includes("Add to cart") == false ||
+        addcard[i].textContent.includes("Ajouter au panier") == false ||
         addcard[i].style.display == "none"
       ) {
-        if (variation_choisi.length != 0) {
+        if (variation_choisi.length != 0 && i == 0) {
           let vals = [];
           let qte = [];
           let variations = [];
@@ -368,16 +372,7 @@ document.addEventListener("DOMContentLoaded", function () {
               variations.push(choisi.innerHTML.trim());
             }
           }
-          // qte.push(Number(valprogress[i].value));
-          // console.log("qte : " + qte[0]);
-          qte.push(Number(valprogress[i].value));
-          console.log("qte : " + qte[0]);
-
-          fetch(
-            `http://127.0.0.1:8000/quantite/panier_edit/${vals}/${qte}/${variations}/${parseInt(
-              user_id.innerHTML
-            )}`
-          )
+          fetch(`/variations_panier_check/${vals}/${variations}`)
             .then((response) => {
               if (response.ok) {
                 return response.json();
@@ -391,8 +386,39 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch((err) => {
               console.log("error");
             });
-          noti.innerHTML =
-            parseInt(noti.innerHTML) + Number(valprogress[i].value);
+
+          // qte.push(Number(valprogress[i].value));
+          // console.log("qte : " + qte[0]);
+          // if (Number(valprogress[i].value) > Number(valprogress[i].max)) {
+          //   valprogress[i].value = valprogress[i].value - 1;
+          //   noti.innerHTML = Number(noti.innerHTML);
+          //   console.log("nadi");
+          // } else {
+          //   noti.innerHTML = Number(noti.innerHTML) + 1;
+          // }
+          qte.push(Number(valprogress[i].value));
+          // console.log("qte : " + qte[0]);
+
+          fetch(
+            `/quantite/panier_edit/${vals}/${qte}/${variations}/${parseInt(
+              user_id.innerHTML
+            )}`
+          );
+          // .then((response) => {
+          //   if (response.ok) {
+          //     return response;
+          //   } else {
+          //     console.log("mauvaise réponse!");
+          //   }
+          // })
+          // .then((data) => {
+          //   console.log(data);
+          // })
+          // .catch((err) => {
+          //   console.log("error");
+          // });
+          // noti.innerHTML =
+          //   parseInt(noti.innerHTML) + Number(valprogress[i].value);
         } else {
           let vals = [];
           let qte = [];
@@ -400,29 +426,30 @@ document.addEventListener("DOMContentLoaded", function () {
           let matches = addcard[i].id.match(/(\d+)/);
           vals.push(matches[0]);
           qte.push(Number(valprogress[i].value));
+          // if (Number(valprogress[i].value) > Number(valprogress[i].max)) {
+          //   valprogress[i].value = valprogress[i].value - 1;
+          //   noti.innerHTML = Number(noti.innerHTML);
+          //   console.log("nadi");
+          // } else {
+          //   noti.innerHTML = Number(noti.innerHTML) + 1;
+          // }
+          fetch(`/panier_edit/${vals}/${qte}/${parseInt(user_id.innerHTML)}`);
+          // .then((response) => {
+          //   if (response.ok) {
+          //     return response;
+          //   } else {
+          //     console.log("mauvaise réponse!");
+          //   }
+          // })
+          // .then((data) => {
+          //   console.log(data);
+          // })
+          // .catch((err) => {
+          //   console.log("error");
+          // });
 
-          fetch(
-            `http://127.0.0.1:8000/panier_edit/${vals}/${qte}/${parseInt(
-              user_id.innerHTML
-            )}`
-          )
-            .then((response) => {
-              if (response.ok) {
-                return response;
-              } else {
-                console.log("mauvaise réponse!");
-              }
-            })
-            .then((data) => {
-              console.log(data);
-            })
-            .catch((err) => {
-              console.log("error");
-            });
-
-          console.log(valprogress[i].value);
-          console.log(noti.innerHTML);
-          noti.innerHTML = Number(noti.innerHTML) + 1;
+          // console.log(valprogress[i].value);
+          // console.log(noti.innerHTML);
         }
       }
 
@@ -443,8 +470,8 @@ document.addEventListener("DOMContentLoaded", function () {
       // if (valprogress[i].innerHTML != 0) {
       //   valprogress[i].innerHTML--;
       // }
-      console.log("fin");
-      console.log(valprogress[i]);
+      // console.log("fin");
+      // console.log(valprogress[i]);
       // console.log(add);
       let vals = [];
       let qte = [];
@@ -454,14 +481,10 @@ document.addEventListener("DOMContentLoaded", function () {
       qte.push(Number(valprogress[i].value));
 
       if (
-        addcard[i].textContent.includes("Add to cart") == false ||
+        addcard[i].textContent.includes("Ajouter au panier") == false ||
         addcard[i].style.display == "none"
       ) {
-        fetch(
-          `http://127.0.0.1:8000/panier_edit/${vals}/${qte}/${parseInt(
-            user_id.innerHTML
-          )}`
-        )
+        fetch(`/panier_edit/${vals}/${qte}/${parseInt(user_id.innerHTML)}`)
           .then((response) => {
             if (response.ok) {
               return response;
@@ -491,9 +514,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         valprogress[i].value = 1;
 
-        console.log(valprogress[i].parentNode.parentNode.children[1]);
+        // console.log(valprogress[i].parentNode.parentNode.children[1]);
         valprogress[i].parentNode.parentNode.children[1].innerHTML =
-          "Add to cart";
+          "Ajouter au panier";
 
         valprogress[i].parentNode.parentNode.children[1].style.display =
           "inline";
@@ -501,11 +524,7 @@ document.addEventListener("DOMContentLoaded", function () {
         valprogress[i].parentNode.parentNode.children[1].style.backgroundColor =
           "#f99459";
 
-        fetch(
-          `http://127.0.0.1:8000/panier_delete/${vals}/${parseInt(
-            user_id.innerHTML
-          )}`
-        )
+        fetch(`/panier_delete/${vals}/${parseInt(user_id.innerHTML)}`)
           .then((response) => {
             if (response.ok) {
               return response;
@@ -533,23 +552,23 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function findindexadd_card(button) {
-    console.log(addcard.length);
+    // console.log(addcard.length);
     for (let j = 0; j < addcard.length; j++) {
       if (addcard[j].id === button.id) {
-        console.log(j);
+        // console.log(j);
         return j;
       } else continue;
     }
   }
   function findindex2(button) {
-    console.log(progressbtn2.length);
+    // console.log(progressbtn2.length);
     for (let j = 0; j < progressbtn2.length; j++) {
       if (progressbtn2[j].id === button.id) return j;
       else continue;
     }
   }
   function findindex1(button) {
-    console.log(progressbtn1.length);
+    // console.log(progressbtn1.length);
     for (let j = 0; j < progressbtn1.length; j++) {
       if (progressbtn1[j].id === button.id) return j;
       else continue;
@@ -558,7 +577,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var valeurs = [];
   var qte = [];
   noti.addEventListener("click", function () {
-    console.log("m3lm");
+    // console.log("m3lm");
 
     for (let i = 0; i < addcard.length; i++) {
       var matches = addcard[i].id.match(/(\d+)/);
@@ -566,7 +585,6 @@ document.addEventListener("DOMContentLoaded", function () {
       valeurs.push(matches[0]);
       qte.push(Number(valprogress[i].value));
     }
-    window.location.href =
-      "http://127.0.0.1:8000/panier_infos/" + Number(user_id.innerHTML); //on fait pas le panier.php/?.. mais panier.php?...
+    window.location.href = "/panier_infos/" + Number(user_id.innerHTML); //on fait pas le panier.php/?.. mais panier.php?...
   });
 });

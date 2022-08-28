@@ -135,6 +135,28 @@
                           </a>
                           {{ include("produit/_delete_form.html.twig") }}
                         </div>
+                        {% else %}
+                        <div
+                        class="col-4"
+                        style="
+                          display: flex;
+                          align-items: end;
+                          justify-content: end;
+                        "
+                      >
+                        <a
+                          class="btn btn-md btn-warning"
+                          id="editproduitvariable"
+                          data-tooltip="tooltip"
+                          data-placement="top"
+                          title="Quick View"
+                          data-toggle="modal"
+                          data-target="#products"
+                        >
+                          Editer <i class="fa fa-edit"></i>
+                        </a>
+                        {{ include("produit/_delete_form.html.twig") }}
+                      </div>
                         {% endif %}
                         <div class="col-12">
                           <h3>Designation :</h3>
@@ -560,4 +582,5 @@
 <script src="{{ asset('main/js/produit/ajouter_variation_variable.js') }}"></script>
 <script src="{{ asset('main/js/produit/edit_variation_variable.js') }}"></script>
 <script src="{{ asset('main/js/produit/editproduit_stable.js') }}"></script>
+<script src="{{ asset('main/js/produit/editproduit_variable.js') }}" ></script>
 {% endblock %}

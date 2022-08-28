@@ -8,7 +8,7 @@ function func() {
     select_ville.innerHTML =
       '<select name="ville" class="form-control"><option>choisissez une ville</option></select>';
   } else {
-    fetch(`http://127.0.0.1:8000/getVilles/${parseInt(select_region.value)}`)
+    fetch(`/getVilles/${parseInt(select_region.value)}`)
       .then((response) => {
         if (response.ok) {
           return response.json();

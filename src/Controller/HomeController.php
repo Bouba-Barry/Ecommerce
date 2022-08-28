@@ -32,6 +32,7 @@ use App\Repository\ProduitRepository;
 use App\Repository\AttributRepository;
 use App\Repository\FeadBackRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\QuantiteRepository;
 use App\Repository\ReductionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -185,9 +186,11 @@ class HomeController extends AbstractController
 
 
 
-    #[Route('/checkout/{id}/{slug}', name: 'app_checkout', methods: ['GET'])]
-    public function checkout(User $user, $slug, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
+    #[Route('/checkout/{id}', name: 'app_checkout', methods: ['GET'])]
+    public function checkout(User $user,Request $request ,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
     {
+        // dd($slug);
+        $slug=$request->cookies->get('total');
         // dd($slug);
         $panier = $panierRepository->findOneBy(['user' => $user]);
         $panier_produit = $panierRepository->find_produit_panier($panier->getId());
@@ -321,7 +324,7 @@ class HomeController extends AbstractController
 
 
     #[Route('/panier_infos/{id}', name: 'app_panier_infos', methods: ['GET'])]
-    public function panier_infos(User $user, AttributRepository $attributRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
+    public function panier_infos(User $user,QuantiteRepository $quantiteRepository ,AttributRepository $attributRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
     {
 
 
@@ -374,6 +377,7 @@ class HomeController extends AbstractController
         //  dd($produits);
         return $this->render('frontend/cart.html.twig', [
             'panier_produits' => $obj,
+            'quantities'=>$quantiteRepository->findAll(),
             'produits' => $produits,
             'length' => $length,
             'attributs' => $attributRepository->findAll(),
@@ -436,6 +440,21 @@ class HomeController extends AbstractController
 
         return $this->json($json);
     }
+    #[Route('/getAttributs', name: 'app_get_all_attributs', methods: ['GET'])]
+    public function getallAttributs( AttributRepository $attributRepository, SerializerInterface $serializer): JsonResponse
+    {
+
+        $attributs = $attributRepository->findAll();
+        $json = $serializer->serialize($attributs, 'json', ['groups' => ['attribut:read']]);
+        // dd($this->json($res));
+        // dd($t);
+        // dd($json);
+        $json = json_decode($json);
+
+        return $this->json($json);
+    }
+
+ 
 
     #[Route('/getVariations/{id}', name: 'app_get_variations', methods: ['GET'])]
     public function getVariations(Produit $produit, AttributRepository $attributRepository, SerializerInterface $serializer): JsonResponse

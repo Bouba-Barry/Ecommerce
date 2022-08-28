@@ -3,7 +3,7 @@ let produit = document.getElementById("quantite_produit");
 let variations = document.getElementById("quantite_variations");
 // let produit_id = produit.options[produit.selectedIndex].value;
 // variations.innerHTML = "";
-fetch(`http://127.0.0.1:8000/quantite/variations_produit/${produit.value}`)
+fetch(`/quantite/variations_produit/${produit.value}`)
   .then((response) => {
     if (response.ok) {
       return response.json();
@@ -21,7 +21,7 @@ fetch(`http://127.0.0.1:8000/quantite/variations_produit/${produit.value}`)
 
 produit.addEventListener("click", function () {
   console.log("voila : " + produit.value);
-  fetch(`http://127.0.0.1:8000/quantite/variations_produit/${produit.value}`)
+  fetch(`/quantite/variations_produit/${produit.value}`)
     .then((response) => {
       if (response.ok) {
         return response.json();

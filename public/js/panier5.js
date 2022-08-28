@@ -11,9 +11,7 @@ for (let butt of top_products_item) {
     // vals.push(element.id.charAt(element.id.length - 1));
     let matches = element.id.match(/(\d+)/);
     vals.push(matches[0]);
-    fetch(
-      `http://127.0.0.1:8000/wish_check/${vals}/${parseInt(user_id.innerHTML)}`
-    )
+    fetch(`/wish_check/${vals}/${parseInt(user_id.innerHTML)}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -59,17 +57,11 @@ for (let but of addtowish) {
       console.log("awdi rk nadi");
       but.setAttribute("data-original-title", "Add to wishlist");
       but.innerHTML = '<i class="flaticon-heart"></i>';
-      fetch(
-        `http://127.0.0.1:8000/wish_delete/${vals}/${parseInt(
-          user_id.innerHTML
-        )}`
-      );
+      fetch(`/wish_delete/${vals}/${parseInt(user_id.innerHTML)}`);
     } else {
       but.setAttribute("data-original-title", "remove from wishlist");
       but.innerHTML = '<i class="flaticon-cancel"></i>';
-      fetch(
-        `http://127.0.0.1:8000/wish/${vals}/${parseInt(user_id.innerHTML)}`
-      );
+      fetch(`/wish/${vals}/${parseInt(user_id.innerHTML)}`);
     }
   });
 }
