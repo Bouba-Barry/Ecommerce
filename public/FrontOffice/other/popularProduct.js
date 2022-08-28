@@ -1,4 +1,4 @@
-class popular_product {
+class popularProduct {
   /**
    *
    * @param {HtmlElement|null} element
@@ -63,4 +63,4 @@ class popular_product {
 
 let element = document.querySelector(".js-filter");
 
-new popular_product(element);
+new popularProduct(element);

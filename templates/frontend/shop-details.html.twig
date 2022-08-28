@@ -1,4 +1,5 @@
-{% extends 'frontend/index.html.twig' %} {% block content %}
+{% extends 'frontend/index.html.twig' %}
+{% block content %}
 
 <!-- End Sidebar Modal -->
 <p id="user_id" style="display: none">
@@ -130,39 +131,39 @@
                 {% if produit.getAttributs()|length !=0 %} {% for
                 produit_attribut in produit.getAttributs() %} {% if
                 produit_attribut.getVariations()|length != 0 %}
-                
-                <h5>
-                  <p style="display: none;" class="attribut"  >{{ produit_attribut.id }}</p>
-                  {{ produit_attribut.nom }} : &nbsp; {% for produit_variation
-                  in produit_attribut.getVariations() %} {% if produit in
-                  produit_variation.getProduits() %} {% if
-                  produit_variation.getImages()|length !=0 %}
-                  
-                  <p style="display: inline"  class="variation-choisi" id="variation-choisi{{ produit_attribut.id }}" ></p>
-                  <p style="display: none" class="variation_nom variation-choisi{{ produit_attribut.id }}">
-                    {{ produit_variation.nom }}
-                  </p>
-                </h5>
-                  {% else %}
-                  <p style="display: inline" class="variation-choisi" id="variation-choisi{{ produit_attribut.id }}"></p>
-                </h5>
-                  <p style="display: inline;margin-right:10px"  class="btn btn-light variation_nom variation-choisi{{ produit_attribut.id }}">
-                    {{ produit_variation.nom }}
-                  </p>
-                  {% endif %}
-              
 
-                {% for image in produit_variation.getImages() %} {% if
+												<h5>
+													<p style="display: none;" class="attribut">{{ produit_attribut.id }}</p>
+													{{ produit_attribut.nom }}
+													: &nbsp;
+													{% for produit_variation
+                  in produit_attribut.getVariations() %}
+														{% if produit in
+                  produit_variation.getProduits() %}
+															{% if
+                  produit_variation.getImages()|length !=0 %}
+
+																<p style="display: inline" class="variation-choisi" id="variation-choisi{{ produit_attribut.id }}"></p>
+																<p style="display: none" class="variation_nom variation-choisi{{ produit_attribut.id }}">
+																	{{ produit_variation.nom }}
+																</p>
+															</h5>
+														{% else %}
+															<p style="display: inline" class="variation-choisi" id="variation-choisi{{ produit_attribut.id }}"></p>
+														</h5>
+														<p style="display: inline;margin-right:10px" class="btn btn-light variation_nom variation-choisi{{ produit_attribut.id }}">
+															{{ produit_variation.nom }}
+														</p>
+													{% endif %}
+
+
+													{% for image in produit_variation.getImages() %}
+														{% if
                 produit==image.getProduit() %}
 
-                <a href="#image_principale">
-                  <img
-                    class="image"
-                    style="width: 40px; height: 40px"
-                    src="{{ asset('uploads/others/' ~ image.url) }}"
-                    alt=""
-                  />
-                </a>
+															<a href="#image_principale">
+																<img class="image" style="width: 40px; height: 40px" src="{{ asset('uploads/others/' ~ image.url) }}" alt=""/>
+															</a>
 
                 {# <p class="qte_image" style="display: none">
                   {{ image.getQteStock() }}
@@ -279,34 +280,36 @@
                 </div>
               </div>
 
-              <div class="products-share">
-                <ul class="social">
-                  <li><span>Share:</span></li>
-                  <li>
-                    <a href="#" class="facebook" target="_blank"
-                      ><i class="bx bxl-facebook"></i
-                    ></a>
-                  </li>
-                  <li>
-                    <a href="#" class="twitter" target="_blank"
-                      ><i class="bx bxl-twitter"></i
-                    ></a>
-                  </li>
-                  <li>
-                    <a href="#" class="linkedin" target="_blank"
-                      ><i class="bx bxl-linkedin"></i
-                    ></a>
-                  </li>
-                  <li>
-                    <a href="#" class="instagram" target="_blank"
-                      ><i class="bx bxl-instagram"></i
-                    ></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+							<div class="products-share">
+								<ul class="social">
+									<li>
+										<span>Partager:</span>
+									</li>
+									<li>
+										<a href="#" class="facebook" target="_blank">
+											<i class="bx bxl-facebook"></i>
+										</a>
+									</li>
+									<li>
+										<a href="#" class="twitter" target="_blank">
+											<i class="bx bxl-twitter"></i>
+										</a>
+									</li>
+									<li>
+										<a href="#" class="linkedin" target="_blank">
+											<i class="bx bxl-linkedin"></i>
+										</a>
+									</li>
+									<li>
+										<a href="#" class="instagram" target="_blank">
+											<i class="bx bxl-instagram"></i>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
 
         <div class="tab products-details-tab">
           <div class="row">
@@ -336,117 +339,94 @@
                   </div>
                 </div>
 
-                <!-- start reviews -->
-                <div class="tabs_item">
-                  <div class="products-details-tab-content">
-                    <div class="product-review-form">
-                      <h3>Customer Reviews</h3>
-                      <div class="review-title">
-                        <div class="rating">
-                          <i class="bx bxs-star"></i>
-                          <i class="bx bxs-star"></i>
-                          <i class="bx bxs-star"></i>
-                          <i class="bx bxs-star"></i>
-                          <i class="bx bxs-star"></i>
-                        </div>
-                        <p>Based on 3 reviews</p>
-                        <a href="#" class="default-btn"> Write a Review </a>
-                      </div>
-                      <div class="review-comments">
-                        {% for review in reviews %}
-                        <div class="review-item">
-                          <div class="rating">
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                          </div>
-                          <h3>{{ review.titre }}</h3>
-                          <span
-                            ><strong>{{ review.getUser().nom }}</strong> on
-                            <strong>{{ review.create_at }}</strong></span
-                          >
-                          <p>
-                            {{ review.content }}
-                          </p>
-                          <a href="#" class="review-report-link"
-                            >Report as Inappropriate</a
-                          >
-                        </div>
-                        {% endfor %}
-                      </div>
-                      <div class="review-form">
-                        <h3>Write a Review</h3>
-                        <form>
-                          <div class="row">
-                            <div class="col-lg-6 col-md-6">
-                              <div class="form-group">
-                                <input
-                                  type="text"
-                                  id="name"
-                                  name="name"
-                                  placeholder="Enter your name"
-                                  class="form-control"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                              <div class="form-group">
-                                <input
-                                  type="email"
-                                  id="email"
-                                  name="email"
-                                  placeholder="Enter your email"
-                                  class="form-control"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                              <div class="form-group">
-                                <input
-                                  type="text"
-                                  id="review-title"
-                                  name="review-title"
-                                  placeholder="Enter your review a title"
-                                  class="form-control"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                              <div class="form-group">
-                                <textarea
-                                  name="review-body"
-                                  id="review-body"
-                                  cols="30"
-                                  rows="7"
-                                  placeholder="Write your comments here"
-                                  class="form-control"
-                                ></textarea>
-                              </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                              <button type="submit" class="default-btn">
-                                Submit Review
-                              </button>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- end reviews -->
-              </div>
-            </div>
-          </div>
-        </div>
+								<!-- start reviews -->
+								<div class="tabs_item">
+									<div class="products-details-tab-content">
+										<div class="product-review-form">
+											<h3>Les Avis de nos clients</h3>
+											<div class="review-title">
+												<div class="rating">
+													<i class="bx bxs-star"></i>
+													<i class="bx bxs-star"></i>
+													<i class="bx bxs-star"></i>
+													<i class="bx bxs-star"></i>
+													<i class="bx bxs-star"></i>
+												</div>
+												<p>Basé sur ces 3 avis</p>
+												<a href="#" class="default-btn">
+													Donnez aussi votre Avis
+												</a>
+											</div>
+											<div class="review-comments">
+												{% for review in reviews %}
+													<div class="review-item">
+														<div class="rating">
+															<i class="bx bxs-star"></i>
+															<i class="bx bxs-star"></i>
+															<i class="bx bxs-star"></i>
+															<i class="bx bxs-star"></i>
+															<i class="bx bxs-star"></i>
+														</div>
+														<h3>{{ review.titre }}</h3>
+														<span>
+															<strong>{{ review.getUser().nom }}</strong>
+															SUR
+															<strong>{{ review.create_at }}</strong>
+														</span>
+														<p>
+															{{ review.content }}
+														</p>
+														<a href="#" class="review-report-link">Report as Inappropriate</a>
+													</div>
+												{% endfor %}
+											</div>
+											<div class="review-form">
+												<h3>Donnez votre avis</h3>
+												<form>
+													<div class="row">
+														<div class="col-lg-6 col-md-6">
+															<div class="form-group">
+																<input type="text" id="name" name="name" placeholder="Enter your name" class="form-control"/>
+															</div>
+														</div>
+														<div class="col-lg-6 col-md-6">
+															<div class="form-group">
+																<input type="email" id="email" name="email" placeholder="Enter your email" class="form-control"/>
+															</div>
+														</div>
+														<div class="col-lg-12 col-md-12">
+															<div class="form-group">
+																<input type="text" id="review-title" name="review-title" placeholder="Enter your review a title" class="form-control"/>
+															</div>
+														</div>
+														<div class="col-lg-12 col-md-12">
+															<div class="form-group">
+																<textarea name="review-body" id="review-body" cols="30" rows="7" placeholder="Write your comments here" class="form-control"></textarea>
+															</div>
+														</div>
+														<div class="col-lg-12 col-md-12">
+															<button type="submit" class="default-btn">
+																Envoyez
+															</button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- end reviews -->
+							</div>
+						</div>
+					</div>
+				</div>
 
-        <div class="related-shop">
-          <h4>Produits similaires</h4>
-          <p>les Produits De meme sous categorie que ce Produit</p>
-          <div class="row">
-            {% for produit_similaire in produits_similaires %} {% if
+				<div class="related-shop">
+					<h4>Produits similaires</h4>
+					<p>les Produits De même marque ou la Meme entreprise que ce Produit</p>
+					<div class="row">
+						{% for produit_similaire in produits_similaires %}
+							{% if
             produit_similaire != produit %}
             <div class="col-lg-6 col-md-6">
               <div class="top-products-item">
@@ -461,54 +441,37 @@
                       alt="image"
                   /></a>
 
-                  <ul class="products-action">
-                    <li>
-                      <a
-                        id="addtocart{{ produit_similaire.id }}"
-                        class="addtocart"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Add to Cart"
-                        ><i class="flaticon-shopping-cart"></i
-                      ></a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Add to Wishlist"
-                        ><i class="flaticon-heart"></i
-                      ></a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        id="searchbtn{{ produit_similaire.id }}"
-                        class="search"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Quick View"
-                        data-toggle="modal"
-                        data-target="#productsQuickView"
-                      >
-                        <i class="flaticon-search"></i>
-                      </a>
-                    </li>
-                  </ul>
+											<ul class="products-action">
+												<li>
+													<a id="addtocart{{ produit_similaire.id }}" class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+														<i class="flaticon-shopping-cart"></i>
+													</a>
+												</li>
+												<li>
+													<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+														<i class="flaticon-heart"></i>
+													</a>
+												</li>
+												<li>
+													<a href="#" id="searchbtn{{ produit_similaire.id }}" class="search" data-tooltip="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+														<i class="flaticon-search"></i>
+													</a>
+												</li>
+											</ul>
 
-                  {% if produit_similaire.getReduction()|length != 0 %}
-                  <div class="sale">
-                    <span>
-                      {% for produit_reduction in
-                      produit_similaire.getReduction() %} -{{
+											{% if produit_similaire.getReduction()|length != 0 %}
+												<div class="sale">
+													<span>
+														{% for produit_reduction in
+                      produit_similaire.getReduction() %}
+															-{{
                         produit_reduction.getPourcentage()
                       }}
-                      {% endfor %}
-                    </span>
-                  </div>
-                  {% endif %}
-                </div>
+														{% endfor %}
+													</span>
+												</div>
+											{% endif %}
+										</div>
 
                 <div class="products-content">
                   <h3>
@@ -577,14 +540,15 @@
 
 <!-- Start Featured Products Area -->
 <section class="featured-products-area pb-70">
-  <div class="container">
-    <div class="section-title">
-      <h2>Produits en Relation</h2>
-      <p>Les Produits de Meme Categorie que ce Produit</p>
-    </div>
+	<div class="container">
+		<div class="section-title">
+			<h2>Produits en Relation</h2>
+			<p>Les Produits de Meme Categorie que ce Produit</p>
+		</div>
 
-    <div class="row">
-      {% for produit_en_relation in produits_en_relation %} {% if
+		<div class="row">
+			{% for produit_en_relation in produits_en_relation %}
+				{% if
       produit_en_relation != produit and produit_en_relation not in
       produits_similaires %}
       <div class="col-lg-3 col-md-6">
@@ -601,52 +565,35 @@
                 
             /></a>
 
-            <ul class="products-action">
-              <li>
-                <a
-                  id="addtocart{{ produit_en_relation.id }}"
-                  class="addtocart"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Add to Cart"
-                  ><i class="flaticon-shopping-cart"></i
-                ></a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Add to Wishlist"
-                  ><i class="flaticon-heart"></i
-                ></a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  id="searchbtn{{ produit_en_relation.id }}"
-                  class="search"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Quick View"
-                  data-toggle="modal"
-                  data-target="#productsQuickView"
-                >
-                  <i class="flaticon-search"></i>
-                </a>
-              </li>
-            </ul>
+								<ul class="products-action">
+									<li>
+										<a id="addtocart{{ produit_en_relation.id }}" class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+											<i class="flaticon-shopping-cart"></i>
+										</a>
+									</li>
+									<li>
+										<a href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+											<i class="flaticon-heart"></i>
+										</a>
+									</li>
+									<li>
+										<a href="#" id="searchbtn{{ produit_en_relation.id }}" class="search" data-tooltip="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+											<i class="flaticon-search"></i>
+										</a>
+									</li>
+								</ul>
 
-            {% if produit_en_relation.getReduction()|length != 0 %}
-            <div class="new">
-              <span>
-                {% for produit_reduction in produit_en_relation.getReduction()
-                %} -{{ produit_reduction.getPourcentage() }}
-                {% endfor %}
-              </span>
-            </div>
-            {% endif %}
-          </div>
+								{% if produit_en_relation.getReduction()|length != 0 %}
+									<div class="new">
+										<span>
+											{% for produit_reduction in produit_en_relation.getReduction()
+                %}
+												-{{ produit_reduction.getPourcentage() }}
+											{% endfor %}
+										</span>
+									</div>
+								{% endif %}
+							</div>
 
           <div class="products-content">
             <h3 >
@@ -689,10 +636,6 @@
     </div>
   </div>
 </section>
-<!-- End Featured Products Area -->
-
-{% endblock %} {% block javascripts %}
+<!-- End Featured Products Area -->{% endblock %}{% block javascripts %}
 <script src="{{ asset('js/variation.js') }}"></script>
-<script src="{{ asset('js/panier.js') }}"></script>
-
-{% endblock %}
+<script src="{{ asset('js/panier.js') }}"></script>{% endblock %}

@@ -9,6 +9,7 @@ use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
+use App\Repository\QuantiteRepository;
 use App\Repository\UserRepository;
 use App\Services\CurrencyConvert;
 use App\Services\PdfService;
@@ -172,7 +173,7 @@ class PaymentController extends AbstractController
 
 
     #[Route('/success-url', name: 'success_url', methods: ['GET', 'POST'])]
-    public function facture(Request $request, PdfService $pdf, ProduitRepository $produitRepository, PanierRepository $panierRepository, UserRepository $userRepository, CommandeRepository $commandeRepository): Response
+    public function facture(Request $request, PdfService $pdf, QuantiteRepository $q, ProduitRepository $produitRepository, PanierRepository $panierRepository, UserRepository $userRepository, CommandeRepository $commandeRepository): Response
     {
         // $cookie = $request->cookies->get('val');
 
@@ -195,7 +196,11 @@ class PaymentController extends AbstractController
             $panier =  $user->getPaniers();
 
             foreach ($panier as $p) {
+                // dd($panier);
+                // dd($p->getId());
+
                 foreach ($p->getProduit() as $prod) {
+                    // dd($prod->getId());
                     $total = 0;
                     // foreach($panierRepository->selectPanierProd($panier->))
                     $qte = $panierRepository->getQteProd($p->getId(), $prod->getId());
@@ -206,12 +211,34 @@ class PaymentController extends AbstractController
                     } else {
                         $total = $qte[0]['qte_produit'] * $prod->getAncienPrix();
                     }
-                    // dd($prod->getId());
-                    // dd($total);
-                    // array_push($array, $prod);
+
+                    $var = $panierRepository->getVariationsProduits($p->getId(), $prod->getId());
+
+                    $variations = str_replace("[\"", "", $var[0]['variations']);
+                    $variations = str_replace("\"]", "", $variations);
+                    $variations = str_replace("\"", "", $variations);
+                    // dd($variations);
+                    $array = [];
+                    $array = explode(',', $variations);
+                    $array = json_encode($array);
+
+                    $qteConcerne =  $q->findquantite_produit($array, $prod->getId());
+                    // dd($qteConcerne[0]['variations']);
+                    // dd(explode('', $var[0]['variations']));
+                    if ($prod->getType() === 'variable') {
+
+                        if ($qteConcerne[0]['variations'] === $var[0]['variations']) {
+                            $q->UpdateProduit($qteConcerne[0]['id'], $prod->getId(), $qte[0]['qte_produit']);
+                            dd($q);
+                        }
+                    } else {
+                        $produitRepository->UpdateProduit($prod->getId(), $qte[0]['qte_produit']);
+                    }
+
+                    // ajouter le produit dans la table commande_produit
                     $commandeRepository->ajout_produit($commandes->getId(), $prod->getId(), $qte[0]['qte_produit'], $total, $prod->getDesignation());
-                    $produitRepository->UpdateProduit($prod->getId(), $qte[0]['qte_produit']);
-                    // $p->removeProduit($prod)
+                    $commandes->setStatus('traitées');
+                    $p->removeProduit($prod);
 
                     $panierRepository->RemoveProd($p->getId(), $prod->getId());
                     // dd($val);
@@ -267,6 +294,9 @@ class PaymentController extends AbstractController
     #[Route('/cancel-url', name: 'cancel_url', methods: ['GET', 'POST'])]
     public function cancelUrl(): Response
     {
+        $session = $this->requestStack->getSession();
+        $commandes = $session->get('commande');
+        $commandes->setStatus('annulées');
         return $this->render('payment/cancel.html.twig');
     }
 }

@@ -13,11 +13,20 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class FilterType extends AbstractType
 {
+    private $requestStack;
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $session = $this->requestStack->getSession();
+        $val = $session->get('red');
+
         $builder
             ->add('q', TextType::class, [
                 'label' => false,
@@ -61,6 +70,10 @@ class FilterType extends AbstractType
                 'label' => false,
                 'attr' => ['class' => 'form-control'],
             ]);
+
+        if ($val <= 0) {
+            $builder->remove('reductions');
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,182 +1,198 @@
-{% extends 'admin.html.twig' %} {# {% block title %}Ajouter Produit{% endblock
-    %} #} {% block content %}
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <div class="container-full">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-          <div class="d-flex align-items-center">
-            <div class="mr-auto">
-              <h3 class="page-title">Ajouter Produit</h3>
-              <div class="d-inline-block align-items-center">
-                <nav>
-                  <ol class="breadcrumb">
-                    {# <li>
-                      <a
-                        href="{{ path('app_produit_index') }}"
-                        class="btn btn-primary btn-md"
-                        >Retour à la Liste</a
-                      >
-                    </li> #}
-                  
-                    
-                      {#
-                      <div class="col-xl-4">
-                        <div class="h-200">
-                          <div class="dropdown">
-                            <button
-                              class="btn btn-primary btn-md dropdown-toggle"
-                              type="button"
-                              data-toggle="dropdown"
-                            >
-                              Attributs
-                            </button>
-                            <div class="dropdown-menu">
-                              <a
-                                class="dropdown-item"
-                                href="{{ path('app_attribut_new') }}"
-                                ><i class="fa fa-plus"></i> Attribut Personnalise</a
-                              >
-                              <a class="dropdown-item" href="#"
-                                ><i class="fa fa-pencil"></i> gerer les
-                                variations</a
-                              >
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-    
-                    <li>
-                      <div class="col-xl-4">
-                        <div class="h-200">
-                          <div class="dropdown">
-                            <button
-                              class="btn btn-primary btn-md dropdown-toggle"
-                              type="button"
-                              data-toggle="dropdown"
-                            >
-                              Categories
-                            </button>
-                            <div class="dropdown-menu">
-                              <a
-                                class="dropdown-item"
-                                href="{{ path('app_attribut_new') }}"
-                                ><i class="fa fa-plus"></i> Categorie
-                                Personnalise</a
-                              >
-                              <a class="dropdown-item" href="#"
-                                ><i class="fa fa-pencil"></i> gerer les
-                                variations</a
-                              >
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    #}
-    
-                    <li>
-                      <div class="col-12">
-                        <div class="box box-default" style="background-color:beige ;">
-                      
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                          <!-- Nav tabs -->
-                          <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item"> <a class="nav-link active" id="home-tab"  href="{{ path('app_produit_index') }}" aria-controls="home5" aria-expanded="true"><span class="hidden-sm-up"><i class="ion-home"></i></span> <span class="hidden-xs-down">Liste Produits</span></a> </li>
-                        
-                            <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                <span class="hidden-sm-up"><i class="ion-email"></i></span> <span class="hidden-xs-down">Attributs</span>
-                              </a>
-                              <div class="dropdown-menu"> <a class="dropdown-item" id="dropdown1-tab"   href="{{ path('app_attribut_new_editproduit' , { id: produit.id }) }}" > Attribut Personnalise</a> </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                <span class="hidden-sm-up"><i class="ion-email"></i></span> <span class="hidden-xs-down">Sous Categorie</span>
-                              </a>
-                              <div class="dropdown-menu"> <a class="dropdown-item" id="dropdown1-tab"   href="{{ path('app_sous_categorie_new_produit',{ id : produit.id }) }}" > Ajouter Une sous Categorie</a>  </div>
-                            </li>
-    
-                          
-    
-                          </ul>
-                          <!-- Tab panes -->
-                          
-                        </div>
-                        <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
-                      </div>
-    
-                    </li>
-                  </ol>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br />
-    
-        <div class="col-12">
-          <div class="box box-default">
-            <!-- /.box-header -->
-            <div class="box-body">
-              <!-- Nav tabs -->
-              <ul class="nav nav-tabs customtab2" role="tablist">
-                <li class="nav-item">
-                  <a
-                    class="nav-link active"
-                    data-toggle="tab"
-                    href="#home7"
-                    role="tab"
-                    ><span class="hidden-sm-up"><i class="ion-home"></i></span>
-                    <span class="hidden-xs-down">Produit Informations</span></a
-                  >
-                </li>
-              </ul>
-              <!-- Tab panes -->
-              <div class="tab-content">
-                <div class="tab-pane active" id="home7" role="tabpanel">
-                  <div class="p-15">
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="box">
-                          <div class="box-body">
-                            <div id="content"></div>
-                            <div class="form-group row">
-                              <label class="col-form-label col-md-2"
-                                >Désignation</label
-                              >
-                              <div class="mb-3 col-md-10">
-                                {{ form_row(form.designation) }}
-                                <span class="form-text text-muted">{{
+{% extends 'admin.html.twig' %}
+{# {% block title %}Ajouter Produit{% endblock
+    %} #}
+{% block content %}
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<div
+			class="container-full">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="d-flex align-items-center">
+					<div class="mr-auto">
+						<h3 class="page-title">Ajouter Produit</h3>
+						<div class="d-inline-block align-items-center">
+							<nav>
+								<ol class="breadcrumb">
+									{# <li>
+									                      <a
+									                        href="{{ path('app_produit_index') }}"
+									                        class="btn btn-primary btn-md"
+									                        >Retour à la Liste</a
+									                      >
+									                    </li> #}
+
+
+									{#
+									                      <div class="col-xl-4">
+									                        <div class="h-200">
+									                          <div class="dropdown">
+									                            <button
+									                              class="btn btn-primary btn-md dropdown-toggle"
+									                              type="button"
+									                              data-toggle="dropdown"
+									                            >
+									                              Attributs
+									                            </button>
+									                            <div class="dropdown-menu">
+									                              <a
+									                                class="dropdown-item"
+									                                href="{{ path('app_attribut_new') }}"
+									                                ><i class="fa fa-plus"></i> Attribut Personnalise</a
+									                              >
+									                              <a class="dropdown-item" href="#"
+									                                ><i class="fa fa-pencil"></i> gerer les
+									                                variations</a
+									                              >
+									                            </div>
+									                          </div>
+									                        </div>
+									                      </div>
+									                    </li>
+									    
+									                    <li>
+									                      <div class="col-xl-4">
+									                        <div class="h-200">
+									                          <div class="dropdown">
+									                            <button
+									                              class="btn btn-primary btn-md dropdown-toggle"
+									                              type="button"
+									                              data-toggle="dropdown"
+									                            >
+									                              Categories
+									                            </button>
+									                            <div class="dropdown-menu">
+									                              <a
+									                                class="dropdown-item"
+									                                href="{{ path('app_attribut_new') }}"
+									                                ><i class="fa fa-plus"></i> Categorie
+									                                Personnalise</a
+									                              >
+									                              <a class="dropdown-item" href="#"
+									                                ><i class="fa fa-pencil"></i> gerer les
+									                                variations</a
+									                              >
+									                            </div>
+									                          </div>
+									                        </div>
+									                      </div>
+									                    </li>
+									                    #}
+
+										<li>
+											<div class="col-12"> <div
+												class="box box-default" style="background-color:beige ;">
+
+												<!-- /.box-header -->
+												<div
+													class="box-body">
+													<!-- Nav tabs -->
+													<ul class="nav nav-tabs" id="myTab" role="tablist">
+														<li class="nav-item">
+															<a class="nav-link active" id="home-tab" href="{{ path('app_produit_index') }}" aria-controls="home5" aria-expanded="true">
+																<span class="hidden-sm-up">
+																	<i class="ion-home"></i>
+																</span>
+																<span class="hidden-xs-down">Liste Produits</span>
+															</a>
+														</li>
+
+														<li class="nav-item dropdown">
+															<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+																<span class="hidden-sm-up">
+																	<i class="ion-email"></i>
+																</span>
+																<span class="hidden-xs-down">Attributs</span>
+															</a>
+															<div class="dropdown-menu">
+																<a class="dropdown-item" id="dropdown1-tab" href="{{ path('app_attribut_new_editproduit' , { id: produit.id }) }}">
+																	Attribut Personnalise</a>
+															</div>
+														</li>
+														<li class="nav-item dropdown">
+															<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+																<span class="hidden-sm-up">
+																	<i class="ion-email"></i>
+																</span>
+																<span class="hidden-xs-down">Sous Categorie</span>
+															</a>
+															<div class="dropdown-menu">
+																<a class="dropdown-item" id="dropdown1-tab" href="{{ path('app_sous_categorie_new_produit',{ id : produit.id }) }}">
+																	Ajouter Une sous Categorie</a>
+															</div>
+														</li>
+
+
+													</ul>
+													<!-- Tab panes -->
+
+												</div>
+												<!-- /.box-body -->
+											</div>
+											<!-- /.box -->
+										</div>
+
+									</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br/>
+
+			<div class="col-12">
+				<div
+					class="box box-default">
+					<!-- /.box-header -->
+					<div
+						class="box-body">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs customtab2" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" data-toggle="tab" href="#home7" role="tab">
+									<span class="hidden-sm-up">
+										<i class="ion-home"></i>
+									</span>
+									<span class="hidden-xs-down">Produit Informations</span>
+								</a>
+							</li>
+						</ul>
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div class="tab-pane active" id="home7" role="tabpanel">
+								<div class="p-15">
+									<div class="row">
+										<div class="col-12">
+											<div class="box">
+												<div class="box-body">
+													<div id="content"></div>
+													<div class="form-group row">
+														<label class="col-form-label col-md-2">Désignation</label>
+														<div class="mb-3 col-md-10">
+															{{ form_row(form.designation) }}
+															<span class="form-text text-muted">{{
                                   form_errors(form.designation)
                                 }}</span>
-                              </div>
-                            </div>
-    
-                            <div class="form-group row">
-                              <label class="col-form-label col-md-2"
-                                >Description</label
-                              >
-                              <div class="mb-3 col-md-10">
-                                {{ form_row(form.description) }}
-                                <span class="form-text text-muted">{{
+														</div>
+													</div>
+
+													<div class="form-group row">
+														<label class="col-form-label col-md-2">Description</label>
+														<div class="mb-3 col-md-10">
+															{{ form_row(form.description) }}
+															<span class="form-text text-muted">{{
                                   form_errors(form.description)
                                 }}</span>
-                              </div>
-                            </div>
-                            <div class="form-group row">
-                              <label class="col-form-label col-md-2"
-                                >Description detaille</label
-                              >
-                              <div class="mb-3 col-md-10">
-                                {{ form_row(form.description_detaille) }}
-                                <span class="form-text text-muted">{{
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-form-label col-md-2">Description detaille</label>
+														<div class="mb-3 col-md-10">
+															{{ form_row(form.description_detaille) }}
+															<span class="form-text text-muted">{{
                                   form_errors(form.description_detaille)
                                 }}</span>
                               </div>

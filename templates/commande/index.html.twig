@@ -1,37 +1,167 @@
-{% extends 'base.html.twig' %} {% block title %}Commande index{% endblock %} {%
-block body %}
-<h1>Commande index</h1>
+{% extends 'admin.html.twig' %}
+{% block stylesheets %}
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Date_cmd</th>
-      <th>Adresse_livraison</th>
-      <th>Method_payement</th>
-      <th>actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for commande in commandes %}
-    <tr>
-      <td>{{ commande.id }}</td>
-      <td>
-        {{ commande.dateCmd ? commande.dateCmd|date('Y-m-d H:i:s') : '' }}
-      </td>
-      <td>{{ commande.adresseLivraison }}</td>
-      <td>{{ commande.methodPayement }}</td>
-      <td>
-        <a href="{{ path('app_commande_show', { id: commande.id }) }}">show</a>
-        <a href="{{ path('app_commande_edit', { id: commande.id }) }}">edit</a>
-      </td>
-    </tr>
-    {% else %}
-    <tr>
-      <td colspan="5">no records found</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{% endblock %}
+{# {% block title %}Produit index{% endblock %} #}
+{% block
+content %}
 
-{# <a href="{{ path('app_commande_new') }}">Create new</a> #} {% endblock %}
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<div class="container-full">
+			<div id="message">
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-success">
+						{{ message }}
+					</div>
+				{% endfor %}
+				{% for message in app.flashes('suppression') %}
+					<div class="alert btn-danger">
+						{{ message }}
+					</div>
+				{% endfor %}
+			</div>
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="d-flex align-items-center">
+					<div class="mr-auto">
+						<h3 class="page-title">Liste Produits</h3>
+						<div class="d-inline-block align-items-center">
+							<ol class="breadcrumb">
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle btn-primary" data-toggle="dropdown" href="#">
+										<span class="hidden-sm-up">
+											<i class="ion-email"></i>
+										</span>
+										<span class="hidden-xs-down">Voir les Commandes</span>
+									</a>
+									{# <div class="dropdown-menu">
+																																																																																																																																																																																																																																																																																																	<a class="dropdown-item" id="dropdown1-tab" href="{{ path('app_produit_new') }}">
+																																																																																																																																																																																																																																																																																																		Produit stable</a>
+																																																																																																																																																																																																																																																																																																	<a class="dropdown-item" id="dropdown2-tab" href="{{ path('app_produit_new_variable') }}">Produit Variable
+																																																																																																																																																																																																																																																																																																	</a>
+																																																																																																																																																																																																																																																																																																</div> #}
+								</li>
+							</ol>
+						</div>
+					</div>
+					<div>
+						<a href="#" style="font-size: 20px; color: blue">Corbeille
+							<i class="fa-solid fa-trash" style="font-size: 25px"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="row">
+
+
+					<div class="col-12">
+
+						<div
+							class="box">
+
+							<!-- /.box-header -->
+							<div class="box-body">
+								<form action="{{ path('app_cmd_delete_group') }}" method="POST">
+									<div class="table-responsive">
+
+										<table id="example5" class="table table-bordered table-striped" style="width:100%">
+											<thead>
+												<tr>
+													<th></th>
+													<th class="col-1">Date de la commandes</th>
+													<th class="col-2">Adresse livraison</th>
+													<th class="col-1">Méthode de payement</th>
+													<th class="col-1">Client</th>
+													<th>Contact client</th>
+													<th class="col-2">Etat</th>
+													<th class="col-3">actions</th>
+												</tr>
+											</thead>
+										</tr>
+									</thead>
+									<tbody>
+										{% for commande in commandes %}
+											<tr>
+												<td>
+													<div>
+														<input type="checkbox" id="{{ commande.id }}" name="check{{ commande.id }}"/>
+														<label for="{{ commande.id }}"></label>
+													</div>
+												</td>
+												<td>
+													{{ commande.dateCmd ? commande.dateCmd|date('Y-m-d H:i:s') : '' }}
+												</td>
+												<td>{{ commande.adresseLivraison }}</td>
+												<td>{{ commande.methodPayement }}</td>
+												<td>{{ commande.getUser().getNom() }}</td>
+												<td>{{ commande.getUser().getEmail() }}<br>
+													{{ commande.getUser().getTelephone }}</td>
+
+												<td>{{ commande.status }}</td>
+												<td>
+													<a href="{{ path('app_commande_show', {'id': commande.id}) }}" class="btn btn-md btn-primary">
+														<i class="fa fa-eye"></i>
+													</a>
+													{% if app.user %}
+														{% if 'ROLE_ADMIN' in app.user.Roles %}
+															<a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn btn-md btn-warning">
+																<i class="fa fa-edit"></i>
+															</a>
+															<a onclick="return confirm('vous voulez  le supprimer vraiment ??');" href="{{ path('app_cmd_delete_get', {'id': commande.id}) }}" class="btn btn-md btn-danger">
+																<i class="fa fa-trash"></i>
+															</a>
+														{% endif %}
+													{% endif %}
+												</td>
+											</tr>
+										{% else %}
+											<tr>
+												<td colspan="6">no records found</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</tr>
+							</tbody>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th>Date de la commandes</th>
+								<th>Adresse livraison</th>
+								<th>Méthode de payement</th>
+								<th>Etat</th>
+								<th>Client</th>
+								<th>Email client</th>
+								<th>actions</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="row">
+					{% if app.user %}
+						{% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
+							<div class="col-5"></div>
+							<div class="col-7">
+
+								<button class="btn" onclick="return confirm('vous voulez  les supprimer vraiment ??');">
+									<strong>supprimer</strong>
+									<i style="color: red" class="fa fa-trash"></i>
+								</button>
+							</div>
+						{% endif %}
+					{% endif %}
+				</div>
+
+			</form>
+
+		</div>
+		<!-- /.box-body -->
+	</div>
+	<!-- /.box -->
+</div>
+<!-- /.col --></div><!-- /.row --></section><!-- /.content --></div></div></div><!-- /.content-wrapper -->{% endblock %}{% block javascript %}<script src="{{ asset('assets/vendor_components/datatable/datatables.min.js') }}"></script><script src="{{ asset('main/js/pages/data-table.js') }}"></script>{% endblock %}

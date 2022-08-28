@@ -26,96 +26,20 @@
 	{# start the main block   #}
 
 	<!-- Start Top Products Area -->
-		<section class="top-products-area pt-100 pb-100"> 
-		<div class="container js-filter">
-		<div class="row row-content">
-			<div class="col-lg-3 js-filter-form">
-			<h5>Filtrez Les Produits Selon Vos Besoins</h5>
-				{% include 'frontend/boutique/_filter.html.twig' %}
-			</div>
-		<div class="col-lg-9">
-		<div class="row js-filter-content" id="content">
-			{% for produit in produits %}
-				<div class="col-lg-4">
-					<div class="top-products-item">
-						<div class="products-image">
-							<a href="{{ path('app_shop_details',{id : produit.id }) }}"><img style="width: 250px; height: 200px" src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }} " alt="image"></a>
-
-					<ul class="products-action">
-                  			<li>
-                   				<a    id="addtocart{{ produit.id }}"
-                    				class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
-									<i class="flaticon-shopping-cart"></i>
-								</a>
-            		      </li>
-                  			<li>
-                    			<a  id="addtowish{{ produit.id }}"
-                    				class="addtowish" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
-								<i class="flaticon-heart"></i>
-								</a>
-	    	              </li>
-    	    	          <li>
-        	    	        <a data-tooltip="tooltip" id="searchbtn{{ produit.id }}" class="search" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
-								<i class="flaticon-search"></i>
-							</a>
-        	         	 </li>
-            	    	</ul>
-
-							{% if produit.getReduction()|length != 0 %}
-							<div class="sale">
-							  <span>
-								{% for produit_reduction in
-								produit.getReduction() %} -{{
-								  produit_reduction.getPourcentage()
-								}}
-								{% endfor %}
-							  </span>
-							</div>
-							{% endif %}
-						</div>
-
-						<div class="products-content">
-							<h3>
-								<a href="{{ path('app_shop_details',{id : produit.id }) }}">{{ produit.designation|slice(0,13) ~ '...' }}</a>
-							</h3>
-							{% if produit.getReduction()|length != 0 %}
-							<div class="price">
-							  <span class="new-price">
-								{{ produit.getNouveauPrix() }}Dhs</span
-							  >
-							  <span class="old-price"
-								>{{ produit.getAncienPrix() }}Dhs</span
-							  >
-							</div>
-							{% else %}
-							<div class="price">
-							  <span class="new-price"
-								>{{ produit.getNouveauPrix() }}Dhs</span
-							  >
-							</div>
-							{% endif %}
-							<ul class="rating">
-								<li>
-									<i class='bx bxs-star'></i>
-									<i class='bx bxs-star'></i>
-									<i class='bx bxs-star'></i>
-									<i class='bx bxs-star'></i>
-									<i class='bx bx-star'></i>
-								</li>
-							</ul>
-						</div>
-					</div>
-
+		<section class="top-products-area pt-100 pb-100"> <div class="container js-filter">
+			<div class="row row-content">
+				<div class="col-lg-3 js-filter-form">
+					<h5>Filtrez Les Produits Selon Vos Besoins</h5>
+					{% include 'frontend/boutique/_filter.html.twig' %}
 				</div>
-			{% else %}
-				<div>Aucun Produit Trouvé</div>
-			{% endfor %}</div>
-		</div>
+				<div class="col-lg-9">
+					<div class="row js-filter-content" id="content">
+						{% include 'frontend/boutique/_produits.html.twig' %}
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div></section><!-- End Top Products Area -->{# end of the main block #}{% endblock %}
-{% block javascripts %}
+</section><!-- End Top Products Area -->{# end of the main block #}{% endblock %}{% block javascripts %}
 <script src="{{ asset('js/panier3.js') }}"></script>
-	<script src="{{ asset('FrontOffice/other/shop.js') }} "></script>
-
-{% endblock %}
+<script src="{{ asset('FrontOffice/other/shop.js') }} "></script>{% endblock %}

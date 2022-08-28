@@ -66,6 +66,22 @@ class FeadBackRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return FeadBack[] Returns an array of FeadBack objects
+     */
+    public function findFeedProd(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->select('p', 'f')
+            ->andWhere('f.produit IS NOT NULL ')
+            // ->setParameter('val', $value)
+            ->join('f.produit', 'p')
+            ->orderBy('f.id', 'DESC')
+            // ->groupBy('f.produit')
+            ->getQuery()
+            ->getResult();
+    }
+
 
     //    public function findOneBySomeField($value): ?FeadBack
     //    {

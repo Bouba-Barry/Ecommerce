@@ -1,271 +1,230 @@
-{% extends "frontend/index.html.twig" %} {% block content %}
-<p id="user_id" style="display: none">
-  {% if app.user %} {{ app.user.id }} {% endif %}
-</p>
-<!-- Start Page Banner -->
-<div class="page-banner-area item-bg3">
-  <div class="d-table">
-    <div class="d-table-cell">
-      <div class="container">
-        <div class="page-banner-content">
-          <h2>Checkout</h2>
-          <ul>
-            <li>
-              <a href="index.html">Home</a>
-            </li>
-            <li>Checkout</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Page Banner -->
+{% extends "frontend/index.html.twig" %}
+{% block content %}
+	<p id="user_id" style="display: none">
+		{% if app.user %}
+			{{ app.user.id }}
+		{% endif %}
+	</p>
+	<!-- Start Page Banner -->
+	<div class="page-banner-area item-bg3">
+		<div class="d-table">
+			<div class="d-table-cell">
+				<div class="container">
+					<div class="page-banner-content">
+						<h2>Checkout</h2>
+						<ul>
+							<li>
+								<a href="index.html">Home</a>
+							</li>
+							<li>Checkout</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Page Banner -->
 
-<!-- Start Checkout Area -->
-<section class="checkout-area ptb-100">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 col-md-12">
-        <div class="user-actions">
-          <i class="bx bx-link-external"></i>
-          <span
-            >Returning customer?
-            <a href="login.html">Click here to login</a>
-          </span>
-        </div>
-      </div>
-    </div>
-    {# <form> #}
-    {# {% if message is not empty %}
-    <div class="alert alert-infos">{{ message }}</div>
-    {% endif %} #}
-    <form action="{{ path('app_commande_new') }}" method="post">
-      <div class="row">
-        <div class="col-lg-6 col-md-12">
-          <div class="billing-details">
-            <h3 class="title">Billing Details</h3>
-            <div class="row">
-            
-            
-              <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                  <label>First Name <span class="required">*</span></label>
-                  <input
-                    readonly
-                    type="text"
-                    value="{{ app.user.prenom }}"
-                    class="form-control"
-                  />
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                  <label>Last Name <span class="required">*</span></label>
-                  <input
-                    readonly
-                    type="text"
-                    value="{{ app.user.nom }}"
-                    class="form-control"
-                  />
-                </div>
-              </div>
+	<!-- Start Checkout Area -->
+	<section class="checkout-area ptb-100">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12">
+					<div class="user-actions">
+						<i class="bx bx-link-external"></i>
+						<span>Returning customer?
+							<a href="login.html">Click here to login</a>
+						</span>
+					</div>
+				</div>
+			</div>
+			{# <form> #}
+			{# {% if message is not empty %}
+									    <div class="alert alert-infos">{{ message }}</div>
+									    {% endif %} #}
+			<form action="{{ path('app_commande_new') }}" method="post">
+				<div class="row">
+					<div class="col-lg-6 col-md-12">
+						<div class="billing-details">
+							<h3 class="title">Billing Details</h3>
+							<div class="row">
 
-              <div class="col-lg-12 col-md-6">
-                <div class="form-group">
-                  <label>Ville<span class="required">*</span></label>
-                  <input
-                    readonly
-                    type="text"
-                    value="{{ app.user.getVille().getNomVille() }}"
-                    class="form-control"
-                  />
-                </div>
-              </div>
-              <div class="col-lg-12 col-md-6">
-                <div class="form-group">
-                  <label>Address <span class="required">*</span></label>
-                  <input
-                    readonly
-                    type="text"
-                    value="{{ app.user.adresse }}"
-                    class="form-control"
-                    name="adresse"
-                  />
-                </div>
-              </div>
 
-              <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                  <label>Email Address<span class="required">*</span></label>
-                  <input
-                    type="email"
-                    readonly
-                    value="{{ app.user.email }}"
-                    class="form-control"
-                  />
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                  <label>Phone <span class="required">*</span></label>
-                  <input
-                    type="text"
-                    readonly
-                    value="{{ app.user.telephone }}"
-                    class="form-control"
-                  />
-                </div>
-              </div>
+								<div class="col-lg-6 col-md-6">
+									<div class="form-group">
+										<label>First Name
+											<span class="required">*</span>
+										</label>
+										<input readonly type="text" value="{{ app.user.prenom }}" class="form-control"/>
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6">
+									<div class="form-group">
+										<label>Last Name
+											<span class="required">*</span>
+										</label>
+										<input readonly type="text" value="{{ app.user.nom }}" class="form-control"/>
+									</div>
+								</div>
 
-              <div class="col-lg-12 col-md-12">
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    id="ship-different-address"
-                   
-                  />
-                  <label class="form-check-label" for="ship-different-address"
-                    >Ship to a different address?</label
-                  >
-                </div>
-              </div>
-              <div
-                id="adresse_livraison"
-                style="display: none"
-                class="col-lg-12 col-md-6"
-              >
-              <div class="form-group">
-              <div class="col-lg-12 col-md-12">
-              
-                
-                  <label> Region <span class="required">*</span></label>
-                  <div class="select-box">
-                    <select
-                      id="select_region"
-                      onchange="func()"
-                      class="form-control"
-                      name="region"
-                    >
-                      <option value="0">Choisissez une Region</option>
-                      <option value="1">Tanger-Tetouan-Al Hoceima</option>
-                      <option value="2">Oriental</option>
-                      <option value="3">Fès-Meknès</option>
-                      <option value="4">Rabat-Salé-Kénitra</option>
-                      <option value="5">Béni Mellal-Khénifra</option>
-                      <option value="6">Casablanca-Settat</option>
-                      <option value="7">Marrakesh-Safi</option>
-                      <option value="8">Drâa-Tafilalet</option>
-                      <option value="9">Souss-Massa</option>
-                      <option value="10">Guelmim-Oued Noun</option>
-                      <option value="11">Laâyoune-Sakia El Hamra</option>
-                      <option value="12">Dakhla-Oued Ed-Dahab</option>
-                    </select>
-                  </div>
-                  <label> Ville <span class="">*</span></label>
-                  <div id="select_ville" class="select-box">
-                    <select name="ville" class="form-control">
-                      <option>choisissez une ville</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-                <div  class="form-group">
-                  <div class="col-lg-12 col-md-12">
-                  <label
-                    >Address detaille
-                    <span class="required">*</span></label
-                  >
-                  <input type="text" class="form-control"  name="other_adresse" />
-                </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
- {# {% set Montant = 0 %} #}
-        <div class="col-lg-6 col-md-12">
-          <div class="order-details">
-            <h3 class="title">Your Order</h3>
-            <div class="order-table table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    
-                    <th scope="col">Total a payer</th>
-                  </tr>
-                </thead>
-                <tbody>
+								<div class="col-lg-12 col-md-6">
+									<div class="form-group">
+										<label>Ville<span class="required">*</span>
+										</label>
+										<input readonly type="text" value="{{ app.user.getVille() }}" class="form-control"/>
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-6">
+									<div class="form-group">
+										<label>Address
+											<span class="required">*</span>
+										</label>
+										<input readonly type="text" value="{{ app.user.adresse }}" class="form-control" name="adresse"/>
+									</div>
+								</div>
 
-                    
-                      
-                    
-                  
-                  <tr>
-                    <td class="product-total">
-                      <span class="subtotal-amount">
-                      {{ Montant }} DH
-                      </span>
-                    </td>
-                  </tr>
-           
-                </tbody>
-                {# {{ total}} #}
-              </table>
-            </div>
-              <input type="hidden" name="total" value=" {{ Montant }} " />
-            <div class="payment-box">
-              <div class="payment-method">
-                <p>
-                  <input
-                    type="radio"
-                    id="direct-bank-transfer"
-                    name="choice[]"
-                    checked
-                    value="bank"
-                  />
-                  <label for="direct-bank-transfer">Direct Bank Transfer</label>
-                  Make your payment directly into our bank account. Please use
-                  your Order ID as the payment reference. Your order will not be
-                  shipped until the funds have cleared in our account.
-                </p>
-                <p>
-                  <input type="radio" id="paypal" name="choice[]" value="paypal" />
-                  <label for="paypal">PayPal</label>
-                </p>
-                <p>
-                  <input
-                    type="radio"
-                    id="cash-on-delivery"
-                    name="choice[]"
-                    value="cash"
-                  />
-                  <label for="cash-on-delivery">Cash on Delivery</label>
-                </p>
-              </div>
-              
-              <a href="#"  class="default-btn">
-               <button style="background: none;
-               color: inherit;
-               border: none;
-               padding: 0;
-               font: inherit;
-               cursor: pointer;
-               outline: inherit;"> Proceed to Checkout</button>
-              </a>
-         
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-</section>
-<!-- End Checkout Area -->
+								<div class="col-lg-6 col-md-6">
+									<div class="form-group">
+										<label>Email Address<span class="required">*</span>
+										</label>
+										<input type="email" readonly value="{{ app.user.email }}" class="form-control"/>
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6">
+									<div class="form-group">
+										<label>Phone
+											<span class="required">*</span>
+										</label>
+										<input type="text" readonly value="{{ app.user.telephone }}" class="form-control"/>
+									</div>
+								</div>
 
-{% endblock %} {% block javascripts %}
-<script src="{{ asset('js/checkout.js') }}"></script>
-<script src="{{ asset('js/payment.js') }}"> </script>
+								<div class="col-lg-12 col-md-12">
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="ship-different-address"/>
+										<label class="form-check-label" for="ship-different-address">Ship to a different address?</label>
+									</div>
+								</div>
+								<div id="adresse_livraison" style="display: none" class="col-lg-12 col-md-6">
+									<div class="form-group">
+										<div class="col-lg-12 col-md-12">
+
+
+											<label>
+												Region
+												<span class="required">*</span>
+											</label>
+											<div class="select-box">
+												<select id="select_region" onchange="func()" class="form-control" name="region">
+													<option value="0">Choisissez une Region</option>
+													<option value="1">Tanger-Tetouan-Al Hoceima</option>
+													<option value="2">Oriental</option>
+													<option value="3">Fès-Meknès</option>
+													<option value="4">Rabat-Salé-Kénitra</option>
+													<option value="5">Béni Mellal-Khénifra</option>
+													<option value="6">Casablanca-Settat</option>
+													<option value="7">Marrakesh-Safi</option>
+													<option value="8">Drâa-Tafilalet</option>
+													<option value="9">Souss-Massa</option>
+													<option value="10">Guelmim-Oued Noun</option>
+													<option value="11">Laâyoune-Sakia El Hamra</option>
+													<option value="12">Dakhla-Oued Ed-Dahab</option>
+												</select>
+											</div>
+											<label>
+												Ville
+												<span class="">*</span>
+											</label>
+											<div id="select_ville" class="select-box">
+												<select name="ville" class="form-control">
+													<option>choisissez une ville</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-lg-12 col-md-12">
+											<label>Address detaille
+												<span class="required">*</span>
+											</label>
+											<input type="text" class="form-control" name="other_adresse"/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{# {% set Montant = 0 %} #}
+					<div class="col-lg-6 col-md-12">
+						<div class="order-details">
+							<h3 class="title">Your Order</h3>
+							<div class="order-table table-responsive">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+
+											<th scope="col">Total a payer</th>
+										</tr>
+									</thead>
+									<tbody>
+
+
+										<tr>
+											<td class="product-total">
+												<span class="subtotal-amount">
+													{{ Montant }}
+													DH
+												</span>
+											</td>
+										</tr>
+
+									</tbody>
+									{# {{ total}} #}
+								</table>
+							</div>
+							<input type="hidden" name="total" value=" {{ Montant }} "/>
+							<div class="payment-box">
+								<div class="payment-method">
+									<p>
+										<input type="radio" id="direct-bank-transfer" name="choice[]" checked value="bank"/>
+										<label for="direct-bank-transfer">Direct Bank Transfer</label>
+										Make your payment directly into our bank account. Please use
+																														                  your Order ID as the payment reference. Your order will not be
+																														                  shipped until the funds have cleared in our account.
+									</p>
+									<p>
+										<input type="radio" id="paypal" name="choice[]" value="paypal"/>
+										<label for="paypal">PayPal</label>
+									</p>
+									<p>
+										<input type="radio" id="cash-on-delivery" name="choice[]" value="cash"/>
+										<label for="cash-on-delivery">Cash on Delivery</label>
+									</p>
+								</div>
+
+								<a href="#" class="default-btn">
+									<button style="background: none;
+																																	               color: inherit;
+																																	               border: none;
+																																	               padding: 0;
+																																	               font: inherit;
+																																	               cursor: pointer;
+																																	               outline: inherit;">
+										Proceed to Checkout</button>
+								</a>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+	<!-- End Checkout Area -->
+
+{% endblock %}
+{% block javascripts %}
+	<script src="{{ asset('js/checkout.js') }}"></script>
+	<script src="{{ asset('js/payment.js') }}"></script>
 {% endblock %}

@@ -85,13 +85,18 @@ class CommandeRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
-    //    public function findOneBySomeField($value): ?Commande
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+
+    public function findCmdByAdmin($user)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            // ->andWhere('c. = ')
+            ->leftJoin('c.produit', 'p')
+            ->join('p.user', 'u')
+            ->andWhere('u.id = :user')
+            ->setParameter('user', $user)
+            ->groupBy('p.id')
+            ->getQuery()
+            ->getResult();
+    }
 }

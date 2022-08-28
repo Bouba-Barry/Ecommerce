@@ -1,0 +1,188 @@
+{% extends 'admin.html.twig' %}
+{% block stylesheets %}
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{% endblock %}
+{# {% block title %}Produit index{% endblock %} #}
+{% block
+content %}
+
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<div class="container-full">
+			<div id="message">
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-success">
+						{{ message }}
+					</div>
+				{% endfor %}
+				{% for message in app.flashes('suppression') %}
+					<div class="alert btn-danger">
+						{{ message }}
+					</div>
+				{% endfor %}
+			</div>
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="d-flex align-items-center">
+					<div class="mr-auto">
+						<h3 class="page-title">Les Avis de vos clients</h3>
+						<div class="d-inline-block align-items-center">
+							<ol class="breadcrumb">
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle btn-primary" data-toggle="dropdown" href="#">
+										<span class="hidden-sm-up">
+											<i class="ion-email"></i>
+										</span>
+										<span class="hidden-xs-down">Voir les Avis</span>
+									</a>
+									{# <div class="dropdown-menu">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				<a class="dropdown-item" id="dropdown1-tab" href="{{ path('app_produit_new') }}">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																					Produit stable</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				<a class="dropdown-item" id="dropdown2-tab" href="{{ path('app_produit_new_variable') }}">Produit Variable
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			</div> #}
+								</li>
+							</ol>
+						</div>
+					</div>
+					<div>
+						<a href="#" style="font-size: 20px; color: blue">Corbeille
+							<i class="fa-solid fa-trash" style="font-size: 25px"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="row">
+
+
+					<div class="col-12">
+
+						<div
+							class="box">
+
+							<!-- /.box-header -->
+							<div class="box-body">
+								<form action="{{ path('app_feedBack_delete_group') }}" method="POST">
+									<div class="table-responsive">
+
+										<table id="example5" class="table table-bordered table-striped" style="width:100%">
+											<thead>
+												<tr>
+
+													<th>Produit</th>
+													<th>sujet</th>
+													<th>Contenu</th>
+													<th>Date D'ajout</th>
+													<th>Pseudo du client</th>
+													<th>Contact Client</th>
+													<th>actions</th>
+													{% if app.user %}
+														{% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
+															<th></th>
+														{% endif %}
+													{% endif %}
+												</tr>
+
+											</thead>
+										</tr>
+									</thead>
+									<tbody>
+
+										{% for prod in feed_backs %}
+											{% set ligne = prod.getFeadBacks | length %}
+											<tr>
+												<td rowspan="{{ ligne }}">
+													<img src={{ asset('uploads/produits/' ~ prod.getImageProduit() ) }} width="80" height="70">
+												</td>
+												{# </tr> #}
+												{% for feed_back in prod.getFeadBacks() %}
+
+													{% if feed_back.titre %}
+														<td>{{ feed_back.titre }}
+														</td>
+													{% else %}
+														<td>
+															aucun sujet</td>
+													{% endif %}
+													<td>{{ feed_back.content }}</td>
+													<td>{{ feed_back.createAt ? feed_back.createAt|date('Y-m-d H:i:s') : '' }}</td>
+													<td>{{ feed_back.pseudo }}</td>
+													<td>{{ feed_back.getUser().getEmail() }}</td>
+													<td>
+														<a href="{{ path('app_fead_back_show', {'id': feed_back.id}) }}" class="btn btn-md btn-primary">
+															<i class="fa fa-eye"></i>
+														</a>
+														{% if app.user %}
+															{% if 'ROLE_ADMIN' in app.user.Roles %}
+																<a onclick="return confirm('vous voulez  le supprimer vraiment ??');" href="{{ path('app_fead_back_delete_get', {'id': feed_back.id}) }}" class="btn btn-md btn-danger">
+																	<i class="fa fa-trash"></i>
+																</a>
+															{% endif %}
+														{% endif %}
+													</td>
+
+													{% if app.user %}
+														{% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
+															<td>
+																<div>
+																	<input type="checkbox" id="{{ feed_back.id }}" name="check{{ feed_back.id }}"/>
+																	<label for="{{ feed_back.id }}"></label>
+																</div>
+															</td>
+														{% endif %}
+													{% endif %}
+												</tr>
+											{% endfor %}
+										{% else %}
+											<tr>
+												<td colspan="6">no records found</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</tbody>
+							</tr>
+						</tbody>
+					</tbody>
+					<tfoot>
+						<tr>
+
+							<th>Produit</th>
+							<th>Contenu</th>
+							<th>Date D'ajout</th>
+							<th>Pseudo du client</th>
+							<th>Contact Client</th>
+							<th>actions</th>
+							{% if app.user %}
+								{% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
+									<th></th>
+								{% endif %}
+							{% endif %}
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<div class="row">
+				{% if app.user %}
+					{% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
+						<div class="col-5"></div>
+						<div class="col-7">
+
+							<button class="btn" onclick="return confirm('vous voulez  les supprimer vraiment ??');">
+								<strong>supprimer</strong>
+								<i style="color: red" class="fa fa-trash"></i>
+							</button>
+						</div>
+					{% endif %}
+				{% endif %}
+			</div>
+
+		</form>
+
+	</div>
+	<!-- /.box-body -->
+</div>
+<!-- /.box --></div><!-- /.col --></div><!-- /.row --></section><!-- /.content --></div></div></div><!-- /.content-wrapper -->{% endblock %}{% block javascript %}<script src="{{ asset('assets/vendor_components/datatable/datatables.min.js') }}"></script><script src="{{ asset('main/js/pages/data-table.js') }}"></script>{% endblock %}
