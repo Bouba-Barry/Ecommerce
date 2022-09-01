@@ -35,6 +35,7 @@ use App\Repository\ProduitRepository;
 use App\Repository\AttributRepository;
 use App\Repository\FeadBackRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\CommandeRepository;
 use App\Repository\QuantiteRepository;
 use App\Repository\ReductionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -802,15 +803,13 @@ class HomeController extends AbstractController
         }
         $produits = $produitRepository->findAll();
 
-        $salesMonth = count($produitRepository->findSalesMonth());
-        // $total = 0;
-        // foreach ($salesMonth as $s) {
-        //     $s->ancien_prix
+        $bestEmployer = $userRepository->findBestEmployer();
+        $salesMonth = $produitRepository->findSaleMonth();
+        // dd($salesMonth[0]["revenu"]);
+        // dd($bestEmployer);
 
-        // }
-        // dd($salesMonth);
-
-
+        $cmdTraiter = count($commandeRepository->findCmdStat("traitée"));
+        $cmdAnnuler = count($commandeRepository->findCmdStat("annulée"));
         // produit ajouter il y'a au max un mois
         $productRecent = $produitRepository->findRecentProduct();
 
