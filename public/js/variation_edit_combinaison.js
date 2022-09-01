@@ -10,7 +10,6 @@ fetch(`/quantite/variations_produit/${produit_edit.value}`)
     }
   })
   .then((data) => {
-    console.log(data);
     check(data);
   })
 

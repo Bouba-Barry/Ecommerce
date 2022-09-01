@@ -38,6 +38,7 @@
 		rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/style.css') }} "/>
 		<!-- Responsive CSS -->
 		<link rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/responsive.css') }} "/> {% block style %}{% endblock %}
+		<link rel="stylesheet" href="{{ asset('FrontOffice/other/loading.css') }}">
 		<title>
 			{% block title %}TB-INFO
 			{% endblock %}
@@ -650,7 +651,8 @@
 						</span>
 					</button>
 
-					<div class="row">
+					<div id="loading" ></div>
+					<div id="row" class="row">
 						<div class="col-lg-6 col-md-6">
 							<div id="image_produit" class="products-image" style="width: 400px ;"></div>
 						</div>

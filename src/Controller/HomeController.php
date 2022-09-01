@@ -2,40 +2,44 @@
 
 namespace App\Controller;
 
-use App\Data\FilterData;
 use doctrine;
 use App\Entity\User;
 use App\Entity\Image;
+use App\Entity\Slide;
 use App\Entity\Ville;
 use App\Entity\Panier;
 use App\Entity\Region;
 use App\Entity\Produit;
+use App\Data\FilterData;
 use App\Entity\Attribut;
 use App\Entity\Quantite;
-use App\Entity\Categorie;
-use App\Entity\Reduction;
-use App\Entity\Variation;
-use Doctrine\ORM\Mapping\Id;
-use App\Entity\SousCategorie;
-use App\Form\FilterCateType;
 use App\Form\FilterForm;
 use App\Form\FilterType;
 use App\Form\SearchType;
+use App\Entity\Categorie;
+use App\Entity\Lien;
+use App\Entity\Reduction;
+use App\Entity\Variation;
+use App\Form\FilterCateType;
+use Doctrine\ORM\Mapping\Id;
+use App\Entity\SousCategorie;
 use App\Services\MailerService;
 use App\Form\ForgotPasswordType;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use Gedmo\Mapping\Annotation\Tree;
+use App\Repository\SlideRepository;
 use App\Repository\VilleRepository;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\AttributRepository;
 use App\Repository\FeadBackRepository;
-use App\Repository\CategorieRepository;
 use App\Repository\QuantiteRepository;
+use App\Repository\CategorieRepository;
 use App\Repository\ReductionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Null_;
 use App\Repository\SousCategorieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -45,8 +49,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Serializer\SerializerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Messenger\Transport\Serialization\Serializer;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -92,6 +96,22 @@ class HomeController extends AbstractController
 
         return $this->render('forgot.html.twig', []);
     }
+
+
+
+    #[Route('/slide', name: 'app_slide_gerer', methods: ['GET'])]
+    public function gererslide(MailerInterface $mailer): Response
+    {
+
+        $form = $this->createForm(ForgotPasswordType::class);
+
+
+        return $this->render('forgot.html.twig', []);
+    }
+
+
+
+
     #[Route('/resetpassword/{email}', name: 'app_reset', methods: ['GET', 'POST'])]
     public function reset($email, Request $request, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository, MailerInterface $mailer): Response
     {
@@ -162,7 +182,7 @@ class HomeController extends AbstractController
         //    if (count($this->getErrors()) > 0) {
         //          dd($this->getErrors());
         //      }
-        $this->json($mailer->send($email));
+        $mailer->send($email);
 
         return $this->json($random);
         // ...
@@ -255,6 +275,16 @@ class HomeController extends AbstractController
         return $this->json($json);
     }
 
+    #[Route('/getSlides', name: 'app_get_slides', methods: ['GET'])]
+    public function slides(SerializerInterface $serializer,SlideRepository $slideRepository ,VilleRepository $villeRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    {
+
+        $slides = $slideRepository->findAll();
+        $json = $serializer->serialize($slides, 'json', ['groups' => ['slide']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
+
     #[Route('/getReduction/{id}', name: 'app_get_reductions', methods: ['GET'])]
     public function getReductions(Reduction $reduction, SerializerInterface $serializer, VilleRepository $villeRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
     {
@@ -262,6 +292,46 @@ class HomeController extends AbstractController
         $json = json_decode($json);
         return $this->json($json);
     }
+
+
+    #[Route('/getSlide/{id}', name: 'app_get_slide', methods: ['GET'])]
+    public function getslide(Slide $slide, SerializerInterface $serializer, VilleRepository $villeRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    {
+        $json = $serializer->serialize($slide, 'json', ['groups' => ['slide']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
+
+
+
+    #[Route('/setchoisiSlide/{id}', name: 'app_setchoisi_slide', methods: ['GET'])]
+    public function setchoisislide(Slide $slide,SlideRepository $slideRepository ,SerializerInterface $serializer, VilleRepository $villeRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    {
+        
+
+        $slide->setChoisi("oui");
+        $slideRepository->add($slide,true);
+        foreach($slideRepository->findAll() as $slid){
+            if($slid != $slide){
+            $slid->setChoisi("non");
+            $slideRepository->add($slid,true);
+            }
+        }
+
+        return $this->json(1);
+
+    }
+
+
+
+    #[Route('/getlien/{id}', name: 'app_get_lien', methods: ['GET'])]
+    public function getlien(Lien $lien, SerializerInterface $serializer, VilleRepository $villeRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    {
+        $json = $serializer->serialize($lien, 'json', ['groups' => ['lien']]);
+        $json = json_decode($json);
+        return $this->json($json);
+    }
+
 
     #[Route('/getCategorie/{id}', name: 'app_get_categorie', methods: ['GET'])]
     public function getcategorie(Categorie  $categorie, SerializerInterface $serializer, VilleRepository $villeRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
@@ -475,9 +545,7 @@ class HomeController extends AbstractController
     {
 
         $json = $serializer->serialize($user, 'json', ['groups' => ['user:read']]);
-        // dd($this->json($res));
-        // dd($t);
-        // dd($json);
+
         $json = json_decode($json);
 
         return $this->json($json);
@@ -504,12 +572,31 @@ class HomeController extends AbstractController
 
 
     #[Route('/delete_reduction', name: 'app_delete_reduction', methods: ['GET'])]
-    public function delete_reduction(ReductionRepository $reductionRepository)
+    public function delete_reduction(ReductionRepository $reductionRepository,QuantiteRepository $quantiteRepository,ProduitRepository $produitRepository):JsonResponse
     {
 
-        $reduction = $reductionRepository->delete_reduction();
+        $reduction =  $reductionRepository->get_reduction_willfinish();
+        // $reduction =  $reductionRepository->find(10);
+       foreach($reduction as $red){
+        $prix = str_replace("%", "", $red->getPourcentage());
+          foreach($red->getProduits() as $produit ){
+            if($produit->gettype()=="stable"){
+                $produit->setNouveauPrix(NULL);
+                
+            }
+            else{
+                foreach($produit->getQuantites() as $quantite){
+                   $quantite->setPrix($quantite->getPrix()+($prix * ($quantite->getPrix()/($prix/100)) / 100 ));
+                   $quantiteRepository->add($quantite,true);
+                }
+            }
+             $produitRepository->add($produit,true);
+          }
+       }
 
-        return true;
+
+        $reductionRepository->delete_reduction();
+        return $this->json(1) ;
     }
 
     // #[Route('/check_reduction', name: 'app_check_reduction', methods: ['GET'])]
@@ -729,7 +816,7 @@ class HomeController extends AbstractController
 
 
     #[Route('', name: 'app_home')]
-    public function home(CategorieRepository $categorieRepository, SousCategorieRepository $sousCat, ProduitRepository $produitRepository, FeadBackRepository $feadBackRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
+    public function home(CategorieRepository $categorieRepository,SlideRepository $slideRepository ,SousCategorieRepository $sousCat, ProduitRepository $produitRepository, FeadBackRepository $feadBackRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
     {
         $NewProducts = $produitRepository->findRecentProduct(); //produit arriver il y'a 2 weeks et maxREsult 10
         // dd($NewProducts);
@@ -774,7 +861,8 @@ class HomeController extends AbstractController
             'sous_categories' => $SouscatePopulaire,
             'categories' => $categories,
             'marques' => $marque,
-            'popular_products_month' => $popular_products
+            'popular_products_month' => $popular_products,
+            'slide' =>$slideRepository->findOneBy(['choisi' => 'oui' ])
         ]);
     }
 

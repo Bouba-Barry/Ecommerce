@@ -1,0 +1,12 @@
+<form
+  method="post"
+  action="{{ path('app_slide_delete', { id: slide.id }) }}"
+  onsubmit="return confirm('vous voulez  le supprimer vraiment ??');"
+>
+  <input
+    type="hidden"
+    name="_token"
+    value="{{ csrf_token('delete' ~ slide.id) }}"
+  />
+  <button class="btn btn-md btn-danger"><i class="fa fa-trash"></i></button>
+</form>

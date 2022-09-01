@@ -3,7 +3,6 @@ let addtowish = document.getElementsByClassName("addtowish");
 
 for (let butt of top_products_item) {
   butt.addEventListener("mouseover", (e) => {
-    console.log(butt);
     let element =
       butt.firstElementChild.children[1].children[1].firstElementChild;
 
@@ -20,7 +19,6 @@ for (let butt of top_products_item) {
         }
       })
       .then((data) => {
-        console.log(data);
         check(data);
       })
       .catch((err) => {
@@ -44,7 +42,6 @@ for (let but of addtowish) {
     // console.log(but.id);
 
     i = findindex_addtowish(but);
-    console.log("le i : " + i);
 
     let vals = [];
 
@@ -54,7 +51,6 @@ for (let but of addtowish) {
     vals.push(matches[0]);
 
     if (but.getAttribute("data-original-title") == "remove from wishlist") {
-      console.log("awdi rk nadi");
       but.setAttribute("data-original-title", "Add to wishlist");
       but.innerHTML = '<i class="flaticon-heart"></i>';
       fetch(`/wish_delete/${vals}/${parseInt(user_id.innerHTML)}`);

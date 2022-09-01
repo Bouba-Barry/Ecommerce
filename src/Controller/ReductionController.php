@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reduction;
 use App\Form\ReductionType;
+use App\Repository\QuantiteRepository;
 use App\Repository\ReductionRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -82,20 +83,33 @@ class ReductionController extends AbstractController
 
 
     #[Route('/new', name: 'app_reduction_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReductionRepository $reductionRepository): Response
+    public function new(Request $request, ManagerRegistry $doctrine,ReductionRepository $reductionRepository,QuantiteRepository $quantiteRepository): Response
     {
         $reduction = new Reduction();
         $form = $this->createForm(ReductionType::class, $reduction);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // $entityManager = $doctrine->getManager();
 
             $produit = $form->get('produits')->getData();
 
             foreach ($produit as $var) {
                 $prix = str_replace("%", "", $reduction->getPourcentage());
+                if($var->gettype()=="variable"){
+                  foreach( $var->getQuantites()  as $quantite){
+                     $quantite->setPrix($quantite->getPrix()-($prix * $quantite->getPrix() / 100 ));
+                    //  $entityManager->persist($quantite);
+                    //  $entityManager->flush();
+                    // dd($quantite->getPrix());
+                    $var->addQuantite($quantite);
+                  }
+                }
+                else{
                 $var->setNouveauPrix($var->getAncienPrix() - ($prix * $var->getAncienPrix() / 100));
+                }
                 $reduction->addProduit($var);
+                
             }
 
             $reductionRepository->add($reduction, true);

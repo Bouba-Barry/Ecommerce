@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Reduction;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use PDO;
 
 /**
  * @extends ServiceEntityRepository<Reduction>
@@ -39,14 +40,28 @@ class ReductionRepository extends ServiceEntityRepository
         }
     }
 
+    public function get_reduction_willfinish(){
+        $conn = $this->getEntityManager()->getConnection();
+        $sql=("  SELECT * FROM  reduction where TIMEDIFF(CURRENT_TIMESTAMP(),date_fin)>=0 ");
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        $result=$resultSet->fetchAllAssociative();
+
+        $queryBuilder = $this->createQueryBuilder('v')
+            ->where('v.id in (:result) ')
+            ->setParameter(':result',$result);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
     public function delete_reduction(){
 
         $conn = $this->getEntityManager()->getConnection();
-        $sql=("DELETE from  reduction where TIMEDIFF(CURRENT_TIMESTAMP(),date_fin)>=0 ");
+        $sql=("DELETE from reduction  where TIMEDIFF(CURRENT_TIMESTAMP(),date_fin)>=0  ");
         $stmt = $conn->prepare($sql);
+        // from  reduction 
         $resultSet = $stmt->executeQuery();
 
-        return true;
+        return $resultSet->fetchAllAssociative();
 
     }
 

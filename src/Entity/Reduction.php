@@ -46,11 +46,9 @@ class Reduction
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     #[Groups(['prod:read'])]
     private $update_at;
-
     // #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     // private ?\DateTimeInterface $date_debut = null;
 
-    #[Assert\GreaterThanOrEqual('+1 hours', message: 'la data fin doit depasser d\'une heure la date actuelle')]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     #[Groups(['reduction','produit:read'])]
     private $date_fin;

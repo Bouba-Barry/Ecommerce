@@ -2,14 +2,10 @@ var noti = document.getElementById("panier");
 let addtocart = document.getElementsByClassName("addtocart");
 let top_products_item = document.getElementsByClassName("top-products-item");
 
-console.log(top_products_item);
-
 for (let butt of top_products_item) {
   butt.addEventListener("mouseover", (e) => {
-    console.log(butt);
     let element =
       butt.firstElementChild.children[1].firstElementChild.firstElementChild;
-    console.log(element);
 
     let vals = [];
     // vals.push(element.id.charAt(element.id.length - 1));
@@ -24,7 +20,6 @@ for (let butt of top_products_item) {
         }
       })
       .then((data) => {
-        console.log(data);
         check(data);
       })
       .catch((err) => {
@@ -48,7 +43,6 @@ for (let but of addtocart) {
     // console.log(but.id);
 
     i = findindex_addtocart(but);
-    console.log("le i : " + i);
 
     let vals = [];
 
@@ -58,7 +52,6 @@ for (let but of addtocart) {
     vals.push(matches[0]);
 
     if (but.getAttribute("data-original-title") == "remove from panier") {
-      console.log("awdi rk nadi");
       but.setAttribute("data-original-title", "Add to cart");
       but.innerHTML = '<i class="flaticon-shopping-cart"></i>';
       fetch(`/panier_delete/${vals}/${parseInt(user_id.innerHTML)}`);

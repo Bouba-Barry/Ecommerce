@@ -32,9 +32,10 @@
 					<h5>Filtrez Les Produits Selon Vos Besoins</h5>
 					{% include 'frontend/boutique/_filter.html.twig' %}
 				</div>
-				<div class="col-lg-9">
+				<div id="loadingshop"></div>
+				<div class="col-lg-9" id="produits">
 					<div class="row js-filter-content" id="content">
-						{% include 'frontend/boutique/_produits.html.twig' %}
+						{% include 'frontend/boutique/_produits.html.twig'  %}
 					</div>
 				</div>
 			</div>

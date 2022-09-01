@@ -1,0 +1,217 @@
+{% extends 'admin.html.twig' %} {% block stylesheet %} {% endblock stylesheet %}
+{# {% block title %}Produit index{% endblock %} #} {% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <div class="container-full">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="page-title">Tous les Slides</h3>
+          <div class="d-inline-block align-items-center">
+            <ol class="breadcrumb">
+              <li>
+                <a
+                  id="ajouterslide"
+                  class="btn btn-primary btn-md"
+                  data-tooltip="tooltip"
+                  data-placement="top"
+                  title="Quick View"
+                  data-toggle="modal"
+                  data-target="#products"
+                  >Ajouter Un slide
+
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="36"
+                    height="26"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-plus"
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line></svg
+                ></a>
+              </li>
+            </ol>
+          </div>
+        </div>
+        {#
+        <a
+          href="{{ path('app_sous_categorie_corbeille') }}"
+          style="font-size: 20px; color: blue"
+          >Corbeille
+          <i class="fa-solid fa-trash" style="font-size: 25px"></i>
+        </a>
+        #}
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <form action="{{ path('app_slide_delete_group') }}" method="POST">
+                <div class="table-responsive">
+                  <table
+                    id="example5"
+                    class="table table-bordered table-striped"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th class="col-1"></th>
+                        <th>video</th>
+                        <th>Affichage</th>
+                        <th>Images</th>
+                        <th>Action</th>
+                        <th class="col-1">choisi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for slide in slides %}
+                      <tr>
+                        <td>
+                          <div>
+                            <input
+                              type="checkbox"
+                              id="{{ slide.id }}"
+                              name="check{{ slide.id }}"
+                            />
+                            <label for="{{ slide.id }}"></label>
+                          </div>
+                        </td>
+                        <td>{{ slide.getVideo() }}</td>
+                        <td>{{ slide.getEtat() }}</td>
+                        {% if slide.getLiens()|length != 0 %}
+                        <td>oui</td>
+                        {% else %}
+                        <td>non</td>
+                        {% endif %}
+                        <td>
+                          <a
+                            href="{{
+                              path('app_slide_show', {
+                                id: slide.id
+                              })
+                            }}"
+                            class="btn btn-md btn-primary"
+                          >
+                            <i class="fa fa-eye"></i>
+                          </a>
+                          {# {% if slide.getLiens()|length == 0 %}
+                          <a
+                            href="{{
+                              path('app_slide_edit', {
+                                id: slide.id
+                              })
+                            }}"
+                            class="btn btn-md btn-warning"
+                          >
+                            <i class="fa fa-edit"></i>
+                          </a>
+                          {% endif %} #}
+                          <a
+                            onclick="return confirm('vous voulez  le supprimer vraiment ??');"
+                            href="{{
+                              path('app_slide_delete_get', {
+                                id: slide.id
+                              })
+                            }}"
+                            class="btn btn-md btn-danger"
+                          >
+                            <i class="fa fa-trash"></i>
+                          </a>
+                        </td>
+                        <td>
+                          {% if slide.getChoisi() == "oui" %}
+                          <div>
+                            <input
+                              type="radio"
+                              class="radio"
+                              checked="checked"
+                              id="radio{{ slide.id }}"
+                              name="radio{{ slide.id }}"
+                            />
+                            <label for="radio{{ slide.id }}"></label>
+                          </div>
+                          {% else %}
+
+                          <div>
+                            <input
+                              type="radio"
+                              class="radio"
+                              id="radio{{ slide.id }}"
+                              name="radio{{ slide.id }}"
+                            />
+                            <label for="radio{{ slide.id }}"></label>
+                          </div>
+
+                          {% endif %}
+                        </td>
+                      </tr>
+                      {% else %}
+                      <tr>
+                        <td colspan="9">no records found</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th></th>
+                        <th>video</th>
+
+                        <th>etat</th>
+                        <th>Images</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                <div class="row">
+                  <div class="col-5"></div>
+                  <div class="col-7">
+                    <button
+                      class="btn"
+                      onclick="return confirm('vous voulez  les supprimer vraiment ??');"
+                    >
+                      <strong>supprimer</strong
+                      ><i style="color: red" class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %} {% block javascript %}
+<script src="{{
+    asset('assets/vendor_components/datatable/datatables.min.js')
+  }} "></script>
+<script src="{{ asset('main/js/pages/data-table.js') }}"></script>
+<script src="{{ asset('main/js/slide/ajout_slide.js') }}"></script>
+
+<script src="{{ asset('main/js/slide/choisi.js') }}"></script>
+
+{% endblock %}

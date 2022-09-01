@@ -11,7 +11,6 @@ fetch(`/panier_length/${parseInt(user_id.innerHTML)}`)
     }
   })
   .then((data) => {
-    console.log(data);
     update_total_par_produit(data);
   })
   .catch((err) => {

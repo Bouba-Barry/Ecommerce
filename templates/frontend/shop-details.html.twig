@@ -190,6 +190,7 @@
 							{% else %}
 								<strong id="qte_reste"></strong>
 							{% endif %}
+							<div id="loadingdetails"></div>
 							<p>
 								{{ produit.description }}
 							</p>
@@ -306,7 +307,7 @@
 								<div class="tabs_item">
 									<div class="products-details-tab-content">
 										<p>
-											{{ produit.description }}
+											{{ produit.getDescriptionDetaille() }}
 										</p>
 									</div>
 								</div>

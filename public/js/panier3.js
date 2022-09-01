@@ -14,12 +14,30 @@ document.addEventListener("DOMContentLoaded", function () {
   let new_price = document.getElementById("new_price");
   let old_price = document.getElementById("old_price");
   let description_produit = document.getElementById("description_produit");
-
+  let row = document.getElementById("row");
+  const loader = document.querySelector("#loading");
+  row.style.display = "none";
+  console.log("ddddddd");
   for (let but of search) {
     but.addEventListener("click", (e) => {
-      // console.log(but.id);
+      console.log("dhfh");
+      row.style.display = "none";
+
+      function displayLoading() {
+        loader.classList.add("display");
+        // to stop loading after some time
+        setTimeout(() => {
+          loader.classList.remove("display");
+        }, 5000);
+      }
+
+      // hiding loading
+      function hideLoading() {
+        loader.classList.remove("display");
+      }
+      displayLoading();
+
       i = findindex_search(but);
-      console.log("le i : " + i);
 
       let vals = [];
       let matches = search[i].id.match(/(\d+)/);
@@ -34,7 +52,10 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         })
         .then((data) => {
-          console.log(data);
+          // console.log(data);
+
+          hideLoading();
+          row.style.display = "flex";
           getinfos_produits(data);
         })
         .catch((err) => {
@@ -69,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         })
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           filter_produits(data);
         })
         .catch((err) => {
@@ -117,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       filter_produits(data);
     })
     .catch((err) => {
@@ -176,7 +197,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // noti.classList.add("zero");
       let vals = [];
       let qte = [];
-      console.log(progressbtn1);
+      // console.log(progressbtn1);
       // vals.push(progressbtn1[i].id.charAt(progressbtn2[i].id.length - 1));
       // console.log("voila : " + progressbtn1[i].id);
 
@@ -207,11 +228,11 @@ document.addEventListener("DOMContentLoaded", function () {
       // console.log(but.id);
       i = findindex1(but);
 
-      console.log(addcard[i].style.display);
+      // console.log(addcard[i].style.display);
       if (Number(valprogress[i].value) > Number(valprogress[i].max)) {
         valprogress[i].value = valprogress[i].value - 1;
         noti.innerHTML = Number(noti.innerHTML);
-        console.log("nadi");
+        // console.log("nadi");
       } else if (
         addcard[i].textContent.includes("Ajouter au panier") == false ||
         addcard[i].style.display == "none"
@@ -267,8 +288,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // if (valprogress[i].innerHTML != 0) {
       //   valprogress[i].innerHTML--;
       // }
-      console.log("fin");
-      console.log(valprogress[i]);
+
       // console.log(add);
       let vals = [];
       let qte = [];
@@ -311,7 +331,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         valprogress[i].value = 1;
 
-        console.log(valprogress[i].parentNode.parentNode.children[1]);
         valprogress[i].parentNode.parentNode.children[1].innerHTML =
           "Ajouter au panier";
 
@@ -349,23 +368,19 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function findindexadd_card(button) {
-    console.log(addcard.length);
     for (let j = 0; j < addcard.length; j++) {
       if (addcard[j].id === button.id) {
-        console.log(j);
         return j;
       } else continue;
     }
   }
   function findindex2(button) {
-    console.log(progressbtn2.length);
     for (let j = 0; j < progressbtn2.length; j++) {
       if (progressbtn2[j].id === button.id) return j;
       else continue;
     }
   }
   function findindex1(button) {
-    console.log(progressbtn1.length);
     for (let j = 0; j < progressbtn1.length; j++) {
       if (progressbtn1[j].id === button.id) return j;
       else continue;
@@ -374,8 +389,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var valeurs = [];
   var qte = [];
   noti.addEventListener("click", function () {
-    console.log("m3lm");
-
     for (let i = 0; i < addcard.length; i++) {
       var matches = addcard[i].id.match(/(\d+)/);
       //   sessionStorage.setItem("clone", matches[0]);

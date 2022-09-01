@@ -1,0 +1,340 @@
+{% extends 'admin.html.twig' %} {% block stylesheet %} {% endblock stylesheet %}
+{# {% block title %}Produit index{% endblock %} #} {% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="page-title">Slide</h3>
+          <div class="d-inline-block align-items-center">
+            <ol class="breadcrumb">
+              {#
+              <li>
+                <a
+                  href="{{ path('app_categorie_index_aside') }}"
+                  class="btn btn-primary btn-md"
+                  >Liste Categories</a
+                >
+              </li>
+              #}
+
+   
+                  <!-- Nav tabs -->
+                  <ul class="nav nav-tabs customtab2" role="tablist">
+                    <li class="nav-item">
+                      <a
+                        class="nav-link active"
+                        data-toggle="tab"
+                        href="#informations"
+                        role="tab"
+                        ><span class="hidden-sm-up"
+                          ><i class="ion-home"></i
+                        ></span>
+                        <span class="hidden-xs-down">Informations du Slide</span></a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        data-toggle="tab"
+                        href="#sous_categories"
+                        role="tab"
+                        ><span class="hidden-sm-up"
+                          ><i class="ion-person"></i
+                        ></span>
+                        <span class="hidden-xs-down"> Images et Liens</span></a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                       
+                        href="{{ path('app_slide_index') }}"
+                        
+                        ><span class="hidden-sm-up"
+                          ><i class="ion-email"></i
+                        ></span>
+                        <span class="hidden-xs-down"></span>Tous les Slides</a
+                      >
+                    </li>
+                  </ul>
+                  <!-- Tab panes -->
+              
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- /.box -->
+
+
+
+         <div class="tab-content">
+                    <div class="tab-pane active" id="informations" role="tabpanel">
+                      <div class="p-15">
+                        <section class="content">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="box">
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                  <p style="display: none;" id="slide_id"> {{ slide.id }} </p>
+                              
+                                  
+                                  <div class="table-responsive">
+                                    <table
+                                      id="example5"
+                                      class="table table-bordered table-striped"
+                                      style="width: 100%"
+                                    >
+                                      <thead>
+                                        <tr>
+                                          <th>Video</th>
+                                          <th>Etat</th>
+                                          <th>Action</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <video style="width: auto ;height:auto" class="d-block w-100" autoplay muted loop>
+                                                <source
+                                                  src=" {{ asset('FrontOffice/video/' ~ slide.video ) }} "
+                                                  type="video/mp4"
+                                                />
+                                              </video>
+                                            </td>
+                                          <td>
+                                          {{ slide.etat }}
+                                          </td>
+                                          <td>
+                                            <a
+                                            id="editinfos"
+                                            data-tooltip="tooltip"
+                                            data-placement="top"
+                                            title="Quick View"
+                                            data-toggle="modal"
+                                            data-target="#products"
+                                              {# href="{{
+                                                path('app_categorie_edit', { id: categorie.id })
+                                              }}" #}
+                                              class="btn btn-md btn-warning mb-5"
+                                            >
+                                              <i class="fa fa-edit"></i>
+                                            </a>
+                                            {{ include("slide/_delete_form.html.twig") }}
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                                <!-- /.box-body -->
+                              </div>
+                              <!-- /.box -->
+                            </div>
+                            <!-- /.col -->
+                          </div>
+                          <!-- /.row -->
+                        </section>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="sous_categories" role="tabpanel">
+                      <div class="p-15">
+                        <section class="content">
+                    
+
+
+                            <div class="row">
+                              <div class="col-9"></div>
+                              <div class="col-3" style="
+                              display: flex;
+                              align-items: end;
+                              justify-content: end;
+                              
+                            ">
+                            <a href="#"
+                            id="ajouterimages"
+                            data-tooltip="tooltip"
+                            data-placement="top"
+                            title="Quick View"
+                            data-toggle="modal"
+                            data-target="#products" style="color:blue;"><strong> Ajouter des Images</strong>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                              </a>
+
+                              </div>
+                            <div class="col-12">
+                              <div class="box">
+                                <form
+                action="{{ path('app_lien_delete_group') }}"
+                method="POST"
+              >
+              <input type="text" style="display: none;" name="slide" value="{{ slide.id }}" >
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                 
+                                  <div class="table-responsive">
+                                    <table
+                                      id="example5"
+                                      class="table table-bordered table-striped"
+                                      style="width: 100%"
+                                    >
+                                      <thead>
+                                        <tr>
+                                         
+                                          <th class="col-1"></th>
+                                          <th>image</th>
+                                          <th>url</th>
+                                          <th>Action</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {% for image in liens %}
+                                        <tr>
+                                          <td>
+                                            <div>
+                                              <input
+                                                type="checkbox"
+                                                id="{{ image.id }}"
+                                                name="check{{  image.id }}"
+                                              />
+                                              <label for="{{  image.id }}"></label>
+                                            </div>
+                                          </td>
+                                          <td><img style="width:200px ; height:200px" src="{{ asset('FrontOffice/slide/' ~ image.getImage()) }}" alt=""></td>
+                                          <td><a href="{{ image.getUrl() }}">{{ image.getUrl() }}</a></td>
+                                          
+                                          <td>
+                                          
+                                            <a
+                                              {# href="{{
+                                                path('app_sous_categorie_edit_aside', {
+                                                  id: sous_categorie.id,
+                                                  slug: categorie.id
+                                                })
+                                              }}" #}
+
+                                              id="editimage{{ image.id }}"
+                                              data-tooltip="tooltip"
+                                              data-placement="top"
+                                              title="Quick View"
+                                              data-toggle="modal"
+                                              data-target="#products"
+                                              class="btn btn-md btn-warning editimage"
+                                            >
+                                              <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a
+                                            onclick="return confirm('vous voulez  le supprimer vraiment ??');"
+                                            href="{{
+                                              path('app_lien_delete_get', {
+                                                id: image.id , slug:slide.id
+                                              })
+                                            }}"
+                                            class="btn btn-md btn-danger"
+                                          >
+                                            <i class="fa fa-trash"></i>
+                                          </a>
+                                          
+                                          </td>
+                                        </tr>
+                                        {% else %}
+                                        <tr>
+                                          <td colspan="9">no records found</td>
+                                        </tr>
+                                        {% endfor %}
+                                      </tbody>
+                                      <tfoot>
+                                        <tr>
+                                         <th></th>
+                                          <th >image</th>
+                                          <th>url</th>
+                                          <th></th>
+                                        </tr>
+                                      </tfoot>
+                                    </table>
+                                  </div>
+
+
+                                  <div class="row">
+                                    <div class="col-5"></div>
+                                    <div class="col-7">
+                                      <button
+                                        class="btn"
+                                        onclick="return confirm('vous voulez  les supprimer vraiment ??');"
+                                      >
+                                        <strong>supprimer</strong
+                                        ><i style="color: red" class="fa fa-trash"></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </form>
+
+                                </div>
+                                <!-- /.box-body -->
+                              </div>
+                              <!-- /.box -->
+                            </div>
+                            <!-- /.col -->
+                          </div>
+                          <!-- /.row -->
+                        </section>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="messages7" role="tabpanel">
+                      <div class="p-15">
+                        <h3>Donec vitae laoreet neque, id convallis ante.</h3>
+                        <p>
+                          Duis cursus eros lorem, pretium ornare purus tincidunt
+                          eleifend. Etiam quis justo vitae erat faucibus
+                          pharetra. Morbi in ullamcorper diam. Morbi lacinia,
+                          sem vitae dignissim cursus, massa nibh semper magna,
+                          nec pellentesque lorem nisl quis ex.
+                        </p>
+                      </div>
+                      <h4>
+                        Fusce porta eros a nisl varius, non molestie metus
+                        mollis. Pellentesque tincidunt ante sit amet ornare
+                        lacinia.
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div> 
+    <!-- Main content -->
+
+    <!-- /.content -->
+  </div>
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}
+{% block javascript %} 
+
+  <script src="{{
+      asset('assets/vendor_components/datatable/datatables.min.js')
+    }} "></script>
+  <script src="{{ asset('main/js/pages/data-table.js') }}"></script>
+  <script src="{{ asset('main/js/slide/edit_slide.js') }}"></script>
+
+  
+
+
+  {% endblock %}

@@ -17,10 +17,27 @@ document.addEventListener("DOMContentLoaded", function () {
   let product_review = document.getElementById("product_review");
   let variation_choisi = document.getElementsByClassName("variation-choisi");
   let message = document.getElementById("message");
-
+  let row = document.getElementById("row");
+  const loader = document.querySelector("#loading");
+  row.style.display = "none";
   for (let but of search) {
     but.addEventListener("click", (e) => {
-      // console.log(but.id);
+      row.style.display = "none";
+
+      function displayLoading() {
+        loader.classList.add("display");
+        // to stop loading after some time
+        setTimeout(() => {
+          loader.classList.remove("display");
+        }, 5000);
+      }
+
+      // hiding loading
+      function hideLoading() {
+        loader.classList.remove("display");
+      }
+      displayLoading();
+
       i = findindex_search(but);
       // console.log("le i : " + i);
 
@@ -42,7 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         })
         .then((data) => {
-          console.log(data);
+          hideLoading();
+          row.style.display = "flex";
           getinfos_produits(data);
         })
         .catch((err) => {
@@ -98,7 +116,6 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         })
         .then((data) => {
-          console.log(data);
           filter_produits(data);
         })
         .catch((err) => {
@@ -149,7 +166,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     })
     .then((data) => {
-      console.log(data);
       filter_produits(data);
     })
     .catch((err) => {
@@ -176,12 +192,10 @@ document.addEventListener("DOMContentLoaded", function () {
   for (let i = 0; i < addcard.length; i++) {
     addcard[i].addEventListener("click", test);
     function test() {
-      console.log("testfunction");
       testclick();
     }
 
     function testclick() {
-      console.log("test test");
       // let vals = [];
       // var matches = addcard[i].id.match(/(\d+)/);
       // console.log(matches[0]);
@@ -189,7 +203,6 @@ document.addEventListener("DOMContentLoaded", function () {
       //   sessionStorage.setItem("clone", matches[0]);
       let verified = 0;
       if (variation_choisi.length != 0 && i == 0) {
-        console.log("aded1 ");
         for (let j = 0; j < variation_choisi.length; j = j + 2) {
           // console.log(variation_choisi[j]);
           if (variation_choisi[j].innerHTML != "") {
@@ -217,7 +230,6 @@ document.addEventListener("DOMContentLoaded", function () {
           addcard[i].style.outline = "none";
         }
       } else {
-        console.log("added ");
         addcard[i].innerHTML = "ajouté à la carte";
         setTimeout(function () {
           addcard[i].innerHTML = "";
@@ -279,7 +291,6 @@ document.addEventListener("DOMContentLoaded", function () {
           // console.log("qte : " + qte[0]);
 
           qte.push(Number(valprogress[i].value));
-          console.log("qte : " + qte[0]);
 
           fetch(
             `/quantite/panier/${vals}/${qte}/${variations}/${parseInt(
@@ -338,11 +349,10 @@ document.addEventListener("DOMContentLoaded", function () {
       // console.log(but.id);
       i = findindex1(but);
       //hadi hta t3awd tchofha
-      console.log("panier : " + valprogress[i].max);
+
       if (Number(valprogress[i].value) > Number(valprogress[i].max)) {
         valprogress[i].value = valprogress[i].value - 1;
         noti.innerHTML = Number(noti.innerHTML);
-        console.log("nadi");
       } else if (
         addcard[i].textContent.includes("Ajouter au panier") == false ||
         addcard[i].style.display == "none"
@@ -381,7 +391,7 @@ document.addEventListener("DOMContentLoaded", function () {
               }
             })
             .then((data) => {
-              console.log(data);
+              // console.log(data);
             })
             .catch((err) => {
               console.log("error");

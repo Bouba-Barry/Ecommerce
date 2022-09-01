@@ -58,3 +58,9 @@
   color: rgb(31, 3, 3);
   font-size: 25px;
 }
+.topslide {
+  position: absolute;
+  left: 30%;
+  width: auto;
+  top: 100px;
+}

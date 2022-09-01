@@ -8,7 +8,6 @@ submit.addEventListener("click", function () {
   //   errorNom = "";
   //   errorTitle = "";
   //   errorbody = "";
-  console.log("you click");
 
   let nom = document.querySelector("#name").value;
   let reviewtitle = document.querySelector("#review-title").value;

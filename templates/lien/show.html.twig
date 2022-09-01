@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lien{% endblock %}
+
+{% block body %}
+    <h1>Lien</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ lien.id }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ lien.image }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ lien.url }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_lien_index') }}">back to list</a>
+
+    <a href="{{ path('app_lien_edit', {'id': lien.id}) }}">edit</a>
+
+    {{ include('lien/_delete_form.html.twig') }}
+{% endblock %}

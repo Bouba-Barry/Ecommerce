@@ -9,6 +9,8 @@ parameters:
   pictures_directory: "%kernel.project_dir%/public/uploads/others"
   sous_categorie_directory: "%kernel.project_dir%/public/uploads/sousCategories"
   targetDirectory: "%kernel.project_dir%/public/uploads/sousCategories"
+  videoDirectory: "%kernel.project_dir%/public/FrontOffice/video"
+  slideDirectory: "%kernel.project_dir%/public/FrontOffice/slide"
 
 services:
   # default configuration for services in *this* file

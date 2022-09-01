@@ -1,9 +1,7 @@
 let select_region = document.getElementById("select_region");
 let select_ville = document.getElementById("select_ville");
-console.log(select_region);
-console.log(select_ville);
+
 function func() {
-  console.log(select_region.value);
   if (select_region.value == 0) {
     select_ville.innerHTML =
       '<select name="ville" class="form-control"><option>choisissez une ville</option></select>';
@@ -17,7 +15,6 @@ function func() {
         }
       })
       .then((data) => {
-        console.log(data);
         villes(data);
       })
       .catch((err) => {

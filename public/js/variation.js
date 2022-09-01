@@ -4,10 +4,6 @@ let image_principale_hidden = document.getElementById(
   "image_principale_hidden"
 );
 let valprogress = document.getElementsByClassName("valprogress");
-// let variation_nom = document.getElementById("variation_nom");
-// let variation_nom_hidden = document.getElementsByClassName(
-//   "hidden_variation_nom"
-// );
 let prix = document.getElementById("old_prix_variable");
 let addcard = document.getElementsByClassName("addcard");
 let qte_image = document.getElementsByClassName("qte_image");
@@ -20,6 +16,8 @@ let message = document.getElementById("message");
 let product_add_to_cart = document.getElementById("product-add-to-cart");
 let produit_id = document.getElementById("produit_id");
 let matches = produit_id.innerHTML.match(/(\d+)/);
+const loader = document.querySelector("#loadingdetails");
+loader.style.display = "none";
 let vals = [];
 
 setTimeout(function () {
@@ -66,13 +64,12 @@ message.innerHTML = "veuillez chosir la variation que vous voulez";
 
 for (let variable of variation_nom) {
   variable.addEventListener("click", function () {
+    displayLoading();
     i = findvariation_nom(variable);
     let numero;
-    console.log(" le i: " + i);
+
     for (let j = 0; j < variation_nom[i].classList.length; j++) {
-      console.log(variation_nom[i].classList[j]);
       if (variation_nom[i].classList[j].includes("variation-choisi")) {
-        console.log("yes yes ");
         numero = j;
       }
     }
@@ -88,7 +85,7 @@ for (let variable of variation_nom) {
       }
     }
     // }
-    console.log(vals);
+
     // window.location.href = "http://127.0.0.1:8000/quantite/check/" + vals;
     fetch(`/quantite/check/${vals}/${matches[0]}`)
       .then((response) => {
@@ -99,7 +96,7 @@ for (let variable of variation_nom) {
         }
       })
       .then((data) => {
-        console.log(data);
+        // hideLoading();
         check(data);
       })
       .catch((err) => {
@@ -114,7 +111,7 @@ for (let variable of variation_nom) {
         }
       })
       .then((data) => {
-        console.log(data);
+        // hideLoading();
         paniercheck(data);
       })
       .catch((err) => {
@@ -139,6 +136,7 @@ for (let variable of variation_nom) {
 
 for (let image of variation_id) {
   image.addEventListener("mouseover", function () {
+    displayLoading();
     i = findimage(image);
 
     image_principale.innerHTML = "<img src=" + image.src + ">";
@@ -155,7 +153,7 @@ for (let image of variation_id) {
       // }
       // qte_reste.innerHTML = "il reste " + qte_image[i].innerHTML + " en Stock";
       j = find_variation_choisi(variation_nom[i].classList[1]);
-      console.log("le j :" + j);
+
       variation_choisi[j].innerHTML = variation_nom[i].innerHTML;
     } //else {
     //   variation_nom.innerHTML = "default";
@@ -181,7 +179,7 @@ for (let image of variation_id) {
       }
     }
     // }
-    console.log(vals);
+
     // window.location.href = "http://127.0.0.1:8000/quantite/check/" + vals;
     fetch(`/quantite/check/${vals}/${matches[0]}`)
       .then((response) => {
@@ -192,7 +190,7 @@ for (let image of variation_id) {
         }
       })
       .then((data) => {
-        console.log(data);
+        // hideLoading();
         check(data);
       })
       .catch((err) => {
@@ -208,7 +206,6 @@ for (let image of variation_id) {
         }
       })
       .then((data) => {
-        console.log(data);
         paniercheck(data);
       })
       .catch((err) => {
@@ -227,6 +224,7 @@ function check(data) {
       valprogress[0].setAttribute("max", matches[0]);
     }
     product_add_to_cart.style.display = "inline-block";
+    // hideLoading();
   } else {
     qte_reste.innerHTML = "";
   }
@@ -240,10 +238,12 @@ function paniercheck(data) {
     valprogress[0].value = data[0].qte_produit;
     addcard[0].innerHTML = "ajouté à la carte";
     addcard[0].style.display = "none";
+    hideLoading();
   } else {
     addcard[0].innerHTML = "Ajouter au panier";
     valprogress[0].value = 1;
     addcard[0].style.display = "inline-block";
+    hideLoading();
   }
 }
 
@@ -267,4 +267,21 @@ function find_variation_choisi(variable) {
       return j;
     } else continue;
   }
+}
+
+function displayLoading() {
+  loader.style.display = "block";
+  // loader.style.width = "20rem";
+  // loader.style.height = "20rem";
+  loader.classList.add("display");
+  // to stop loading after some time
+  setTimeout(() => {
+    loader.classList.remove("display");
+  }, 5000);
+}
+
+// hiding loading
+function hideLoading() {
+  loader.style.display = "none";
+  loader.classList.remove("display");
 }

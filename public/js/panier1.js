@@ -39,11 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // let f = ff[0];
   // console.log(f.slice(1));
 
-  console.log(valprogress);
-
   for (let i = 0; i < valprogress.length - 1; i++) {
     if (valprogress[i].parentElement.classList.contains("variation-nom")) {
-      console.log("22");
       fetch(
         `/quantite/variations_panier_check/${parseInt(
           valprogress[i].parentElement.parentElement.previousElementSibling
@@ -61,8 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         })
         .then((data) => {
-          console.log(data[0].qte_stock + "and :" + i);
-          console.log(valprogress[i]);
           valprogress[i].setAttribute("max", data[0].qte_stock);
         })
         .catch((err) => {
@@ -89,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           })
           .then((data) => {
-            console.log(data);
             valprogress[i].setAttribute("max", data.qte_stock);
           })
           .catch((err) => {
@@ -125,7 +119,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (Number(valprogress[i].value) > Number(valprogress[i].max)) {
         valprogress[i].value = valprogress[i].value - 1;
         noti.innerHTML = Number(noti.innerHTML) - 1;
-        console.log("nadi");
       }
 
       if (but.parentElement.classList.contains("variation-nom")) {
@@ -135,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
           '["',
           ""
         );
-        console.log(variations);
+
         variations = variations.replace('"]', "");
         noti.innerHTML = Number(noti.innerHTML) + 1;
 
@@ -147,7 +140,6 @@ document.addEventListener("DOMContentLoaded", function () {
         variations = variations.replace('"', "");
         variations = variations.replace('"', "");
 
-        console.log(variations);
         fetch(
           `/quantite/panier_edit/${parseInt(
             valprogress[i].parentElement.parentElement.previousElementSibling
@@ -173,10 +165,10 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         // vals.push(progressbtn1[i].id.charAt(progressbtn1[i].id.length - 1));
         let matches = progressbtn1[i].id.match(/(\d+)/);
-        console.log(matches[0].slice(1));
+
         vals.push(matches[0].slice(1));
         qte.push(Number(valprogress[i].value));
-        console.log(parseInt(user_id.innerHTML));
+
         fetch(`/panier_edit/${vals}/${qte}/${parseInt(user_id.innerHTML)}`)
           .then((response) => {
             if (response.ok) {
@@ -253,7 +245,7 @@ document.addEventListener("DOMContentLoaded", function () {
         variations = variations.replace('"', "");
         variations = variations.replace('"', "");
         variations = variations.replace('"', "");
-        console.log(variations);
+
         if (valprogress[i].value == 1 && verify[i] == 0) {
           verify[i] = 1;
         }
@@ -322,13 +314,11 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       function update_total_par_produit(data) {
-        console.log(valprogress[i].value);
         let length = 0;
         for (let j = 0; j < valprogress.length; j = j + 2) {
-          console.log(valprogress[j].value);
           length = length + parseInt(valprogress[j].value);
         }
-        console.log(length);
+
         // panier.innerHTML = length;
 
         let somme =
@@ -339,12 +329,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let somme_subtotal = 0;
         let somme_total = 0;
         for (let i = 0; i < total_par_produit.length; i++) {
-          console.log("fhf");
-          console.log(total_par_produit[i].innerHTML.replace("DH", ""));
           somme_subtotal =
             somme_subtotal +
             parseInt(total_par_produit[i].innerHTML.replace("DH", ""));
-          console.log(somme_subtotal);
         }
         subtotal.innerHTML = somme_subtotal + "DH";
 
@@ -359,12 +346,9 @@ document.addEventListener("DOMContentLoaded", function () {
       let somme_subtotal = 0;
       let somme_total = 0;
       for (let i = 0; i < total_par_produit.length; i++) {
-        console.log("fhf");
-        console.log(total_par_produit[i].innerHTML.replace("DH", ""));
         somme_subtotal =
           somme_subtotal +
           parseInt(total_par_produit[i].innerHTML.replace("DH", ""));
-        console.log(somme_subtotal);
       }
       subtotal.innerHTML = somme_subtotal + "DH";
 
@@ -420,14 +404,12 @@ document.addEventListener("DOMContentLoaded", function () {
   total.innerHTML = somme_total + "DH";
 
   function findindex2(button) {
-    console.log(progressbtn2.length);
     for (let j = 0; j < progressbtn2.length; j++) {
       if (progressbtn2[j].id === button.id) return j;
       else continue;
     }
   }
   function findindex1(button) {
-    console.log(progressbtn1.length);
     for (let j = 0; j < progressbtn1.length; j++) {
       if (progressbtn1[j].id === button.id) return j;
       else continue;

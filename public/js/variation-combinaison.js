@@ -1,4 +1,3 @@
-console.log("i am");
 let produit = document.getElementById("quantite_produit");
 let variations = document.getElementById("quantite_variations");
 // let produit_id = produit.options[produit.selectedIndex].value;
@@ -12,7 +11,6 @@ fetch(`/quantite/variations_produit/${produit.value}`)
     }
   })
   .then((data) => {
-    console.log(data);
     check(data);
   })
   .catch((err) => {
@@ -20,7 +18,6 @@ fetch(`/quantite/variations_produit/${produit.value}`)
   });
 
 produit.addEventListener("click", function () {
-  console.log("voila : " + produit.value);
   fetch(`/quantite/variations_produit/${produit.value}`)
     .then((response) => {
       if (response.ok) {
@@ -30,7 +27,6 @@ produit.addEventListener("click", function () {
       }
     })
     .then((data) => {
-      console.log(data);
       check(data);
     })
     .catch((err) => {

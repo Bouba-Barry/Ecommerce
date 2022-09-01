@@ -37,13 +37,13 @@ paypal
     onApprove: (data, actions) => {
       return actions.order.capture().then(function (orderData) {
         // Successful capture! For dev/demo purposes:
-        console.log(
-          "Capture result",
-          orderData,
-          JSON.stringify(orderData, null, 2)
-        );
+        // console.log(
+        //   "Capture result",
+        //   orderData,
+        //   JSON.stringify(orderData, null, 2)
+        // );
         const transaction = orderData.purchase_units[0].payments.captures[0];
-        console.log(orderData);
+        // console.log(orderData);
         // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
         // When ready to go live, remove the alert and show a success message within this page. For example:
         // const element = document.getElementById('paypal-button-container');
@@ -72,13 +72,13 @@ paypal
         // createCookie("status", status);
         // createCookie("date_pay", date_pay);
 
-        console.log("nom=  " + nom);
-        console.log("email = " + email);
-        console.log("payer id = " + payer_id);
-        console.log(" montant " + montant);
-        console.log("status = " + status);
-        console.log("date = " + date_pay);
-        console.log("adresse = " + adresse);
+        // console.log("nom=  " + nom);
+        // console.log("email = " + email);
+        // console.log("payer id = " + payer_id);
+        // console.log(" montant " + montant);
+        // console.log("status = " + status);
+        // console.log("date = " + date_pay);
+        // console.log("adresse = " + adresse);
 
         // function setCookie(nom){
 
@@ -94,7 +94,7 @@ paypal
         };
 
         let str_json = JSON.stringify(vJson);
-        console.log(str_json);
+        // console.log(str_json);
 
         createCookie("val", str_json);
 

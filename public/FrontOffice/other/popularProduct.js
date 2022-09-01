@@ -11,11 +11,11 @@ class popularProduct {
     if (element === null) {
       return;
     }
-    console.log("je me construit");
+
     this.container = document.querySelector(".js-filter");
     this.content = document.querySelector("#content");
     this.form = document.querySelector("#filter");
-    console.log(this.form);
+
     this.bindEvents();
   }
 
@@ -32,7 +32,6 @@ class popularProduct {
   }
 
   async loadForm() {
-    console.log(this.form);
     const formdata = new FormData(this.form);
     const url = new URL(
       this.form.getAttribute("action") || window.location.href
@@ -53,7 +52,7 @@ class popularProduct {
     });
     if (response.status >= 200 && response.status < 300) {
       const data = await response.json();
-      console.log(data.content);
+
       this.content.innerHTML = data.content;
     } else {
       console.log("error");
