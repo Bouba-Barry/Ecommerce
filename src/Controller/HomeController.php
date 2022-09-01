@@ -34,13 +34,14 @@ use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\AttributRepository;
 use App\Repository\FeadBackRepository;
-use App\Repository\QuantiteRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\QuantiteRepository;
 use App\Repository\ReductionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use phpDocumentor\Reflection\Types\Null_;
 use App\Repository\SousCategorieRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,10 +75,12 @@ class HomeController extends AbstractController
     // }
 
     private $requestStack;
+    private $paginator;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, PaginatorInterface $paginator)
     {
         $this->requestStack = $requestStack;
+        $this->paginator = $paginator;
     }
 
     #[Route('/forgotpassword', name: 'app_forgot', methods: ['GET'])]
@@ -189,15 +192,30 @@ class HomeController extends AbstractController
     }
 
     #[Route('/discover_product/{id}', name: 'app_discover_product', methods: ['GET'])]
-    public function discover_product(Reduction $reduction, SerializerInterface $serializer, ProduitRepository $produitRepository, PanierRepository $panierRepository)
+    public function discover_product($id, Request $request, ReductionRepository $reductionRepository, ProduitRepository $produitRepository)
     {
 
-        $products = $reduction->getProduits();
-        // $json = $serializer->serialize($products, 'json', ['groups' => ['prod:read']]);
+        // $products = $reduction->getProduits();  
+        $data = new FilterData();
+        $form = $this->createForm(SearchType::class, $data, [
+            'method' => 'GET',
+        ]);
 
+        // $parametersToValidate = $request->query->all();
+        $form->handleRequest($request);
+        $produits = $produitRepository->findRedByProducts($data, $id);
+        // dd($produits);
+        $size = count($produits);
+        if ($request->isXmlHttpRequest()) {
 
-        return $this->render('frontend/discover_product.html.twig', [
-            'produits' => $products
+            return new JsonResponse([
+                'content' => $this->renderView('frontend/reduction/_produit.html.twig', ['produits' => $produits])
+            ]);
+        }
+        return $this->render('frontend/reduction/index.html.twig', [
+            'produits' => $produits,
+            'form' => $form->createView(),
+            'size' => $size,
         ]);
     }
 
@@ -207,10 +225,10 @@ class HomeController extends AbstractController
 
 
     #[Route('/checkout/{id}', name: 'app_checkout', methods: ['GET'])]
-    public function checkout(User $user,Request $request ,ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
+    public function checkout(User $user, Request $request, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
     {
         // dd($slug);
-        $slug=$request->cookies->get('total');
+        $slug = $request->cookies->get('total');
         // dd($slug);
         $panier = $panierRepository->findOneBy(['user' => $user]);
         $panier_produit = $panierRepository->find_produit_panier($panier->getId());
@@ -276,7 +294,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/getSlides', name: 'app_get_slides', methods: ['GET'])]
-    public function slides(SerializerInterface $serializer,SlideRepository $slideRepository ,VilleRepository $villeRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    public function slides(SerializerInterface $serializer, SlideRepository $slideRepository, VilleRepository $villeRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
     {
 
         $slides = $slideRepository->findAll();
@@ -305,21 +323,20 @@ class HomeController extends AbstractController
 
 
     #[Route('/setchoisiSlide/{id}', name: 'app_setchoisi_slide', methods: ['GET'])]
-    public function setchoisislide(Slide $slide,SlideRepository $slideRepository ,SerializerInterface $serializer, VilleRepository $villeRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
+    public function setchoisislide(Slide $slide, SlideRepository $slideRepository, SerializerInterface $serializer, VilleRepository $villeRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine): JsonResponse
     {
-        
+
 
         $slide->setChoisi("oui");
-        $slideRepository->add($slide,true);
-        foreach($slideRepository->findAll() as $slid){
-            if($slid != $slide){
-            $slid->setChoisi("non");
-            $slideRepository->add($slid,true);
+        $slideRepository->add($slide, true);
+        foreach ($slideRepository->findAll() as $slid) {
+            if ($slid != $slide) {
+                $slid->setChoisi("non");
+                $slideRepository->add($slid, true);
             }
         }
 
         return $this->json(1);
-
     }
 
 
@@ -394,7 +411,7 @@ class HomeController extends AbstractController
 
 
     #[Route('/panier_infos/{id}', name: 'app_panier_infos', methods: ['GET'])]
-    public function panier_infos(User $user,QuantiteRepository $quantiteRepository ,AttributRepository $attributRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
+    public function panier_infos(User $user, QuantiteRepository $quantiteRepository, AttributRepository $attributRepository, ProduitRepository $produitRepository, PanierRepository $panierRepository, ManagerRegistry $doctrine)
     {
 
 
@@ -447,7 +464,7 @@ class HomeController extends AbstractController
         //  dd($produits);
         return $this->render('frontend/cart.html.twig', [
             'panier_produits' => $obj,
-            'quantities'=>$quantiteRepository->findAll(),
+            'quantities' => $quantiteRepository->findAll(),
             'produits' => $produits,
             'length' => $length,
             'attributs' => $attributRepository->findAll(),
@@ -511,7 +528,7 @@ class HomeController extends AbstractController
         return $this->json($json);
     }
     #[Route('/getAttributs', name: 'app_get_all_attributs', methods: ['GET'])]
-    public function getallAttributs( AttributRepository $attributRepository, SerializerInterface $serializer): JsonResponse
+    public function getallAttributs(AttributRepository $attributRepository, SerializerInterface $serializer): JsonResponse
     {
 
         $attributs = $attributRepository->findAll();
@@ -524,7 +541,7 @@ class HomeController extends AbstractController
         return $this->json($json);
     }
 
- 
+
 
     #[Route('/getVariations/{id}', name: 'app_get_variations', methods: ['GET'])]
     public function getVariations(Produit $produit, AttributRepository $attributRepository, SerializerInterface $serializer): JsonResponse
@@ -572,31 +589,29 @@ class HomeController extends AbstractController
 
 
     #[Route('/delete_reduction', name: 'app_delete_reduction', methods: ['GET'])]
-    public function delete_reduction(ReductionRepository $reductionRepository,QuantiteRepository $quantiteRepository,ProduitRepository $produitRepository):JsonResponse
+    public function delete_reduction(ReductionRepository $reductionRepository, QuantiteRepository $quantiteRepository, ProduitRepository $produitRepository): JsonResponse
     {
 
         $reduction =  $reductionRepository->get_reduction_willfinish();
         // $reduction =  $reductionRepository->find(10);
-       foreach($reduction as $red){
-        $prix = str_replace("%", "", $red->getPourcentage());
-          foreach($red->getProduits() as $produit ){
-            if($produit->gettype()=="stable"){
-                $produit->setNouveauPrix(NULL);
-                
-            }
-            else{
-                foreach($produit->getQuantites() as $quantite){
-                   $quantite->setPrix($quantite->getPrix()+($prix * ($quantite->getPrix()/($prix/100)) / 100 ));
-                   $quantiteRepository->add($quantite,true);
+        foreach ($reduction as $red) {
+            $prix = str_replace("%", "", $red->getPourcentage());
+            foreach ($red->getProduits() as $produit) {
+                if ($produit->gettype() == "stable") {
+                    $produit->setNouveauPrix(NULL);
+                } else {
+                    foreach ($produit->getQuantites() as $quantite) {
+                        $quantite->setPrix($quantite->getPrix() + ($prix * ($quantite->getPrix() / ($prix / 100)) / 100));
+                        $quantiteRepository->add($quantite, true);
+                    }
                 }
+                $produitRepository->add($produit, true);
             }
-             $produitRepository->add($produit,true);
-          }
-       }
+        }
 
 
         $reductionRepository->delete_reduction();
-        return $this->json(1) ;
+        return $this->json(1);
     }
 
     // #[Route('/check_reduction', name: 'app_check_reduction', methods: ['GET'])]
@@ -693,7 +708,6 @@ class HomeController extends AbstractController
         return $this->render('frontend/boutique/shoplist.html.twig', [
             'produits' => $produits,
             'form' => $form->createView(),
-            'size' => $size
         ]);
     }
     #[ROUTE('/search', name: 'app_search_shop', methods: ['GET', 'POST'])]
@@ -772,7 +786,7 @@ class HomeController extends AbstractController
 
     #[Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') or is_granted('ROLE_COMPTABLE')  ")]
     #[Route('/admin', name: 'app_home_admin')]
-    public function index(UserRepository $userRepository, ProduitRepository $produitRepository): Response
+    public function index(UserRepository $userRepository, CommandeRepository $commandeRepository, ProduitRepository $produitRepository): Response
     {
 
         $clientRecent = $userRepository->findRecentClient();
@@ -782,8 +796,6 @@ class HomeController extends AbstractController
         $totalClient = count($clientTotal);
 
         if ($totalClient > 0) {
-
-
             $pourcentage = ($membreRecent * 100) / $totalClient;
         } else {
             $pourcentage = 0;
@@ -810,13 +822,16 @@ class HomeController extends AbstractController
             'totalClient' => $totalClient,
             'RecentClient' => $membreRecent,
             'pourClient' => $pourcentage,
-            'month_prod_sales' => $salesMonth,
+            'bestWorker' => $bestEmployer,
+            'cmdTraiter' => $cmdTraiter,
+            'cmdAnnuler' => $cmdAnnuler,
+            'revenu' => $salesMonth[0]["revenu"]
         ]);
     }
 
 
     #[Route('', name: 'app_home')]
-    public function home(CategorieRepository $categorieRepository,SlideRepository $slideRepository ,SousCategorieRepository $sousCat, ProduitRepository $produitRepository, FeadBackRepository $feadBackRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
+    public function home(CategorieRepository $categorieRepository, SlideRepository $slideRepository, SousCategorieRepository $sousCat, ProduitRepository $produitRepository, FeadBackRepository $feadBackRepository, ReductionRepository $reductionRepository, SerializerInterface $serializer): Response
     {
         $NewProducts = $produitRepository->findRecentProduct(); //produit arriver il y'a 2 weeks et maxREsult 10
         // dd($NewProducts);
@@ -849,7 +864,7 @@ class HomeController extends AbstractController
         // $min = $min->getId();
         $popular_products = $produitRepository->PopularProducts_This_Month();
         // dd($popular_products);
-        $categories = $categorieRepository->findBy([], ['create_at' => 'DESC'], 4);
+        $categories = $categorieRepository->findBy([], ['create_at' => 'ASC'], 4);
         $marque = $sousCat->findAll();
         return $this->render('frontend/home.html.twig', [
             'produits' => $produits,
@@ -862,7 +877,7 @@ class HomeController extends AbstractController
             'categories' => $categories,
             'marques' => $marque,
             'popular_products_month' => $popular_products,
-            'slide' =>$slideRepository->findOneBy(['choisi' => 'oui' ])
+            'slide' => $slideRepository->findOneBy(['choisi' => 'oui'])
         ]);
     }
 
@@ -1133,7 +1148,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/popular-products', name: 'app_famous', methods: ['GET', 'POST'])]
+    #[Route('/popular_products', name: 'app_famous', methods: ['GET', 'POST'])]
     public function popular_product(ProduitRepository $prod, Request $request)
     {
         $data = new FilterData();
@@ -1141,8 +1156,7 @@ class HomeController extends AbstractController
         // $parametersToValidate = $request->query->all();
         $form->handleRequest($request);
         $produits = $prod->PopularProd_Month($data);
-        // dd($produits);
-        $size = count($produits);
+
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse([
                 'content' => $this->renderView('frontend/popular_product/_produit.html.twig', ['produits' => $produits])
@@ -1151,7 +1165,6 @@ class HomeController extends AbstractController
         return $this->render('frontend/popular_product/index.html.twig', [
             'produits' => $produits,
             'form' => $form->createView(),
-            'size' => $size,
         ]);
     }
 }
