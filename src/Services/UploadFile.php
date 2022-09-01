@@ -11,10 +11,9 @@ class UploadFile
 
     private $targetDirectory;
     private $slugger;
-
     public function __construct($targetDirectory, SluggerInterface $slugger)
     {
-        $this->targetDirectory =  $targetDirectory;
+        $this->targetDirectory = $targetDirectory;
         $this->slugger = $slugger;
     }
 

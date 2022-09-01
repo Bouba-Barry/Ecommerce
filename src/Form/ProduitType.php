@@ -42,7 +42,7 @@ class ProduitType extends AbstractType
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'query_builder' => function (UserRepository $er) {
-                    return $er->findByAdmin("ROLE_SUPER_ADMIN");
+                    return $er->findByAdmin("ROLE_ADMIN", "ROLE_SUPER_ADMIN");
                 },
                 'choice_label' => 'nom',
 

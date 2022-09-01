@@ -40,10 +40,9 @@
 		<link rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/responsive.css') }} "/> {% block style %}{% endblock %}
 		<link rel="stylesheet" href="{{ asset('FrontOffice/other/loading.css') }}">
 		<title>
-			{% block title %}TB-INFO
-			{% endblock %}
+			{% block title %}{% endblock %}
 		</title>
-		<link rel="icon" href="{{ asset('images/shop.png') }}"/>
+		<link rel="icon" type="image/png" href=" {{ asset('FrontOffice/assets/img/favicon.png ') }}"/>
 	</head>
 
 	<body>
@@ -77,7 +76,6 @@
 							</li>
 						</ul>
 					</div>
-
 					<div class=" col-lg-6 form-search">
 						<form action="{{ path('app_search_shop') }}" method="GET" class="box-search">
 							<input type="text" name="q" class="form-control" placeholder="Rechercher Produit"/>
@@ -86,6 +84,7 @@
 							</button>
 						</form>
 					</div>
+
 					<div class="col-lg-3">
 						<ul class="top-header-social">
 							<li>
@@ -123,12 +122,7 @@
 						<div class="logo">
 
 							<img style="width:40px ;height:40px" src="{{ asset('images/shop.png') }}" alt=""/>
-							<a href="{{ path('app_home') }}" style="
-																																				                  font-size: 40px;
-																																				                  color: black;
-																																				                  font-weight: bold;
-																																				                  font-family: Courier New, Courier, monospace;
-																																				                ">
+							<a href="{{ path('app_home') }}" style=" font-size: 40px; color: black;	font-weight: bold;font-family: Courier New, Courier, monospace; ">
 								TB-INFO
 							</a>
 						</div>
@@ -139,24 +133,17 @@
 			<div class="main-navbar">
 				<div class="container">
 					<nav class="navbar navbar-expand-md navbar-light">
-						<img style="width:40px ;height:35px" src="{{ asset('images/shop.png') }}" alt=""/>
-						<a href="#" style="
-																																                font-size: 40px;
-																																                color: black;
-																																                font-weight: bold;
-																																                font-family: Courier New, Courier, monospace;
-																																              ">
-							TB-INFO
+						<a class="navbar-brand" href="#">
+							<img src=" {{ asset('FrontOffice/assets/img/logo.png') }} " alt="image"/>
 						</a>
 
 						<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-							<ul class="navbar-nav d-flex align-content-start">
+							<ul class="navbar-nav">
 								<li class="nav-item">
 									<a href="{{ path('app_home') }}" class="nav-link active">
 										Accueil
 									</a>
 								</li>
-
 
 								{% if not app.user %}
 									<li class="nav-item">
@@ -190,7 +177,6 @@
 									</a>
 								</li>
 
-               
 
 								<li class="nav-item">
 									<a href="{{ path('app_contact') }}" class="nav-link">
@@ -198,24 +184,111 @@
 									</a>
 								</li>
 
-								{% if app.user %}
-									<li class="nav-item item-to-move">
-										<a href="{{ path('app_wish', { id: app.user.id }) }}" class="nav-link">
-											<i class="bi bi-heart-fill"></i>
-										</a>
-									</li>
-									<li class="nav-item item-to-move">
-										<a href="{{ path('app_client_index') }}" class="nav-link">
-											<i class="bi bi-person-check-fill"></i>
-											{# <svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"far\" data-icon=\"circle-user\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\" class=\"svg-inline--fa fa-circle-user fa-xl\"><path fill=\"currentColor\" d=\"M256 112c-48.6 0-88 39.4-88 88C168 248.6 207.4 288 256 288s88-39.4 88-88C344 151.4 304.6 112 256 112zM256 240c-22.06 0-40-17.95-40-40C216 177.9 233.9 160 256 160s40 17.94 40 40C296 222.1 278.1 240 256 240zM256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 464c-46.73 0-89.76-15.68-124.5-41.79C148.8 389 182.4 368 220.2 368h71.69c37.75 0 71.31 21.01 88.68 54.21C345.8 448.3 302.7 464 256 464zM416.2 388.5C389.2 346.3 343.2 320 291.8 320H220.2c-51.36 0-97.35 26.25-124.4 68.48C65.96 352.5 48 306.3 48 256c0-114.7 93.31-208 208-208s208 93.31 208 208C464 306.3 446 352.5 416.2 388.5z\" class=\"\"></path></svg> #}
-										{# <i  class="flaticon2-user"></i> #}
-											{# <img src="{{ asset('images/other/user.png') }} " alt="user"> #}
-										</a>
-									</li>
-								{% endif %}
+
 							</ul>
 
-							<div class="others-options d-flex align-items-end">
+
+							<div class="autre">
+								{% if app.user %}
+									<ul class="item-to-move">
+
+										<li>
+											<a href="{{ path('app_client_index') }}" class="nav-link">
+												<i class="bi bi-person-check-fill"></i>
+											</a>
+										</li>
+										<li>
+											<a href="{{ path('app_wish', { id: app.user.id }) }}" class="nav-link">
+												<i class="bi bi-heart-fill"></i>
+											</a>
+										</li>
+
+									</ul>
+								{% endif %}
+								<div>
+									<div class="cart-btn">
+										{% if app.user %}
+											<a href="{{ path('app_panier_infos', { id: app.user.id }) }}">
+												<i class="flaticon-shopping-cart"></i>
+												<span id="panier">0</span>
+											</a>
+										{% else %}
+											<a href="#">
+												<i class="flaticon-shopping-cart"></i>
+												<span id="panier">0</span>
+											</a>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+
+							<div
+								class="others-options d-flex align-items-end">
+
+
+								{# <div class="option-item">
+																																																																																																																																																																																																																																																																																																																																																																																									<form action="{{ path('app_search_shop') }}" method="GET" class="search-box">
+																																																																																																																																																																																																																																																																																																																																																																																										<input type="text" name="searchInput" class="form-control" placeholder="Produit"/>
+																																																																																																																																																																																																																																																																																																																																																																																										<button type="submit">
+																																																																																																																																																																																																																																																																																																																																																																																											<i class="flaticon-search"></i>
+																																																																																																																																																																																																																																																																																																																																																																																										</button>
+																																																																																																																																																																																																																																																																																																																																																																																									</form>
+																																																																																																																																																																																																																																																																																																																																																																																								</div> #}
+
+								<div class="option-item">
+									<div class="burger-menu">
+										<span></span>
+										<span></span>
+										<span></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</nav>
+				</div>
+			</div>
+
+
+			<div class="others-option-for-responsive">
+				<div class="container">
+					<div class="dot-menu">
+						<div class="inner">
+							<div class="circle circle-one"></div>
+							<div class="circle circle-two"></div>
+							<div class="circle circle-three"></div>
+						</div>
+					</div>
+
+					<div class="container">
+						<div class="option-inner">
+							<div
+								class="others-options d-flex align-items-center">
+								{# <div class="option-item">
+																																	<div class="languages-list">
+																																		<select>
+																																			<option value="1">Eng</option>
+																																			<option value="2">Ger</option>
+																																			<option value="3">Span</option>
+																																		</select>
+																																	</div>
+																																</div> #}
+								<div class="option-item">
+									{% if app.user %}
+										<div>
+											<a href="{{ path('app_client_index') }}" class="nav-link">
+												<i class="bi bi-person-check-fill"></i>
+											</a>
+										</div>
+										<div>
+											<a href="{{ path('app_wish', { id: app.user.id }) }}" class="nav-link">
+												<i class="bi bi-heart-fill"></i>
+											</a>
+										</div>
+
+
+									{% endif %}
+
+								</div>
 								<div class="option-item">
 									<div class="cart-btn">
 										{% if app.user %}
@@ -232,68 +305,14 @@
 									</div>
 								</div>
 
-								<div class="option-item">
-									<div class="burger-menu">
-										<span></span>
-										<span></span>
-										<span></span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</nav>
-				</div>
-			</div>
-
-			<div class="others-option-for-responsive">
-				<div class="container">
-					<div class="dot-menu">
-						<div class="inner">
-							<div class="circle circle-one"></div>
-							<div class="circle circle-two"></div>
-							<div class="circle circle-three"></div>
-						</div>
-					</div>
-
-					<div class="container">
-						<div class="option-inner">
-							<div class="others-options d-flex align-items-center">
-								<div class="option-item">
-									<div
-										class="languages-list">{# <select>
-																																												                      <option value="1">Eng</option>
-																																												                      <option value="2">Ger</option>
-																																												                      <option value="3">Span</option>
-																																												                    </select> #}
-									</div>
-								</div>
-
-								<div class="option-item">
-									<div class="cart-btn">
-										<a href="cart.html">
-											<i class="flaticon-shopping-cart"></i>
-											<span>0</span>
-										</a>
-									</div>
-								</div>
-
 								{# <div class="option-item">
-																																                  <form
-																																                    action="{{ path('app_search_shop') }}"
-																																                    method="GET"
-																																                    class="search-box"
-																																                  >
-																																                    <input
-																																                      type="text"
-																																                      name="q"
-																																                      class="form-control"
-																																                      placeholder="Rechercher Produit"
-																																                    />
-																																                    <button type="submit">
-																																                      <i class="flaticon-search"></i>
-																																                    </button>
-																																                  </form>
-																																                </div> #}
+																																																																																																																																																																									<form action="{{ path('app_search_shop') }}" method="GET" class="search-box">
+																																																																																																																																																																										<input type="text" name="searchInput" class="form-control" placeholder="Rechercher Produit"/>
+																																																																																																																																																																										<button type="submit">
+																																																																																																																																																																											<i class="flaticon-search"></i>
+																																																																																																																																																																										</button>
+																																																																																																																																																																									</form>
+																																																																																																																																																																								</div> #}
 
 								<div class="option-item">
 									<div class="burger-menu">
@@ -315,103 +334,56 @@
 			<div class="sidebar-modal-inner">
 				<div class="sidebar-about-area">
 					<div class="title">
-						<h2>À propos de nous</h2>
+						<h2>About Us</h2>
 						<p>
-							Nous croyons que l'interaction avec la marque est la clé de la communication. Réel
-																												              les innovations et une expérience client positive sont au cœur de
-																												              communication réussie. Pas de faux produits et services. 
-																												              le client est roi, sa vie et ses besoins sont l'inspiration.
+							We believe brand interaction is key in communication. Real
+																																																																																																																																																																																																																																																																																																																																																							              innovations and a positive customer experience are the heart of
+																																																																																																																																																																																																																																																																																																																																																							              successful communication. No fake products and services. The
+																																																																																																																																																																																																																																																																																																																																																							              customer is king, their lives and needs are the inspiration.
 						</p>
 					</div>
 				</div>
 
-				{# <div class="sidebar-instagram-feed">
-																          <h2>Instagram</h2>
-																          <ul>
-																            <li>
-																              <a href="#"
-																                ><img
-																                  src=" {{
-																                    asset('FrontOffice/assets/img/instagram/instagram1.jpg')
-																                  }} "
-																                  alt="image"
-																              /></a>
-																            </li>
-																            <li>
-																              <a href="#"
-																                ><img
-																                  src=" {{
-																                    asset('FrontOffice/assets/img/instagram/instagram2.jpg')
-																                  }} "
-																                  alt="image"
-																              /></a>
-																            </li>
-																            <li>
-																              <a href="#"
-																                ><img
-																                  src=" {{
-																                    asset('FrontOffice/assets/img/instagram/instagram3.jpg')
-																                  }} "
-																                  alt="image"
-																              /></a>
-																            </li>
-																            <li>
-																              <a href="#"
-																                ><img
-																                  src=" {{
-																                    asset('FrontOffice/assets/img/instagram/instagram4.jpg')
-																                  }} "
-																                  alt="image"
-																              /></a>
-																            </li>
-																            <li>
-																              <a href="#"
-																                ><img
-																                  src=" {{
-																                    asset('FrontOffice/assets/img/instagram/instagram5.jpg')
-																                  }} "
-																                  alt="image"
-																              /></a>
-																            </li>
-																            <li>
-																              <a href="#"
-																                ><img
-																                  src=" {{
-																                    asset('FrontOffice/assets/img/instagram/instagram6.jpg')
-																                  }} "
-																                  alt="image"
-																              /></a>
-																            </li>
-																            <li>
-																              <a href="#"
-																                ><img
-																                  src=" {{
-																                    asset('FrontOffice/assets/img/instagram/instagram7.jpg')
-																                  }} "
-																                  alt="image"
-																              /></a>
-																            </li>
-																            <li>
-																              <a href="#"
-																                ><img
-																                  src=" {{
-																                    asset('FrontOffice/assets/img/instagram/instagram8.jpg')
-																                  }} "
-																                  alt="image"
-																              /></a>
-																            </li>
-																          </ul>
-																        </div> #}
+				<div class="sidebar-instagram-feed">
+					<h2>Instagram</h2>
+					<ul>
+						<li><a href="#"><img src=" {{
+																																																																																																																																																																																																																																																																																																																																																							                    asset('FrontOffice/assets/img/instagram/instagram1.jpg')
+																																																																																																																																																																																																																																																																																																																																																							                  }} " alt="image"/></a></li>
+						<li><a href="#"><img src=" {{
+																																																																																																																																																																																																																																																																																																																																																							                    asset('FrontOffice/assets/img/instagram/instagram2.jpg')
+																																																																																																																																																																																																																																																																																																																																																							                  }} " alt="image"/></a></li>
+						<li><a href="#"><img src=" {{
+																																																																																																																																																																																																																																																																																																																																																							                    asset('FrontOffice/assets/img/instagram/instagram3.jpg')
+																																																																																																																																																																																																																																																																																																																																																							                  }} " alt="image"/></a></li>
+						<li><a href="#"><img src=" {{
+																																																																																																																																																																																																																																																																																																																																																							                    asset('FrontOffice/assets/img/instagram/instagram4.jpg')
+																																																																																																																																																																																																																																																																																																																																																							                  }} " alt="image"/></a></li>
+						<li><a href="#"><img src=" {{
+																																																																																																																																																																																																																																																																																																																																																							                    asset('FrontOffice/assets/img/instagram/instagram5.jpg')
+																																																																																																																																																																																																																																																																																																																																																							                  }} " alt="image"/></a></li>
+						<li><a href="#"><img src=" {{
+																																																																																																																																																																																																																																																																																																																																																							                    asset('FrontOffice/assets/img/instagram/instagram6.jpg')
+																																																																																																																																																																																																																																																																																																																																																							                  }} " alt="image"/></a></li>
+						<li><a href="#"><img src=" {{
+																																																																																																																																																																																																																																																																																																																																																							                    asset('FrontOffice/assets/img/instagram/instagram7.jpg')
+																																																																																																																																																																																																																																																																																																																																																							                  }} " alt="image"/></a></li>
+						<li><a href="#"><img src=" {{
+																																																																																																																																																																																																																																																																																																																																																							                    asset('FrontOffice/assets/img/instagram/instagram8.jpg')
+																																																																																																																																																																																																																																																																																																																																																							                  }} " alt="image"/></a></li>
+					</ul>
+				</div>
 
 				<div class="sidebar-contact-area">
 					<div class="contact-info">
 						<div class="contact-info-content">
 							<h2>
 								<a href="tel:+0881306298615">
-									+212 6-96615495</a>
+									+088 130 629 8615
+								</a>
 								<span>OR</span>
 								<a href="mailto:orgo@gmail.com">
-									TB-INFO@gmail.com
+									orgo@gmail.com
 								</a>
 							</h2>
 
@@ -477,27 +449,27 @@
 
 							</p>
 							{# <ul class="social">
-																												                <li>
-																												                  <a href="#" class="facebook" target="_blank">
-																												                    <i class="bx bxl-facebook"></i>
-																												                  </a>
-																												                </li>
-																												                <li>
-																												                  <a href="#" class="twitter" target="_blank">
-																												                    <i class="bx bxl-twitter"></i>
-																												                  </a>
-																												                </li>
-																												                <li>
-																												                  <a href="#" class="pinterest" target="_blank">
-																												                    <i class="bx bxl-pinterest-alt"></i>
-																												                  </a>
-																												                </li>
-																												                <li>
-																												                  <a href="#" class="linkedin" target="_blank">
-																												                    <i class="bx bxl-linkedin"></i>
-																												                  </a>
-																												                </li>
-																												              </ul> #}
+																																																	                <li>
+																																																	                  <a href="#" class="facebook" target="_blank">
+																																																	                    <i class="bx bxl-facebook"></i>
+																																																	                  </a>
+																																																	                </li>
+																																																	                <li>
+																																																	                  <a href="#" class="twitter" target="_blank">
+																																																	                    <i class="bx bxl-twitter"></i>
+																																																	                  </a>
+																																																	                </li>
+																																																	                <li>
+																																																	                  <a href="#" class="pinterest" target="_blank">
+																																																	                    <i class="bx bxl-pinterest-alt"></i>
+																																																	                  </a>
+																																																	                </li>
+																																																	                <li>
+																																																	                  <a href="#" class="linkedin" target="_blank">
+																																																	                    <i class="bx bxl-linkedin"></i>
+																																																	                  </a>
+																																																	                </li>
+																																																	              </ul> #}
 						</div>
 					</div>
 
@@ -526,30 +498,30 @@
 									</div>
 									<br><br>
 
-                <div class="col-12">
-                  <li>
-                    <a href="#" class="twitter" target="_blank">
-                      <i class="bx bxl-twitter"></i>
-                    </a>
-                  </li>
-                </div>
-                <br><br>
-                  {# <li>
-                    <a href="#" class="pinterest" target="_blank">
-                      <i class="bx bxl-pinterest-alt"></i>
-                    </a>
-                  </li> #}
-                <div class="col-12">
-                  <li>
-                    <a href="#" class="linkedin" target="_blank">
-                      <i class="bx bxl-linkedin"></i>
-                    </a>
-                  </li>
-                </div>
-                </div>
-              </ul>
-            </div>
-          </div>
+									<div class="col-12">
+										<li>
+											<a href="#" class="twitter" target="_blank">
+												<i class="bx bxl-twitter"></i>
+											</a>
+										</li>
+									</div>
+									<br><br>
+									{# <li>
+																																																															                    <a href="#" class="pinterest" target="_blank">
+																																																															                      <i class="bx bxl-pinterest-alt"></i>
+																																																															                    </a>
+																																																															                  </li> #}
+									<div class="col-12">
+										<li>
+											<a href="#" class="linkedin" target="_blank">
+												<i class="bx bxl-linkedin"></i>
+											</a>
+										</li>
+									</div>
+								</div>
+							</ul>
+						</div>
+					</div>
 
 					<div class="col-lg-1 col-sm-2">
 						<div
@@ -593,7 +565,7 @@
 								<li>
 									<i class="bx bx-envelope"></i>
 									<span>Email</span>
-									<a href="mailto:hello@orgo.com">TB-INFO@gmail.com</a>
+									<a href="mailto:hello@orgo.com">TB-INFO@orgo.com</a>
 								</li>
 								<li>
 									<i class="bx bx-map"></i>
@@ -623,17 +595,17 @@
 							</p>
 						</div>
 
-            <div class="col-lg-6 col-md-6">
-              <ul>
-                <li><a href="terms-of-service.html">Terms & Conditions</a></li>
-                <li><a href="privacy-policy.html">Privacy Policy</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Copy Right Area -->
+						<div class="col-lg-6 col-md-6">
+							<ul>
+								<li><a href="terms-of-service.html">Terms & Conditions</a></li>
+								<li><a href="privacy-policy.html">Privacy Policy</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Copy Right Area -->
 
 		<!-- Start Go Top Area -->
 		<div class="go-top">
@@ -654,15 +626,15 @@
 					<div id="loading" ></div>
 					<div id="row" class="row">
 						<div class="col-lg-6 col-md-6">
-							<div id="image_produit" class="products-image" style="width: 400px ;"></div>
+							<div id="image_produit" class="products-image"></div>
 						</div>
 
 						<div class="col-lg-6 col-md-6">
 							<div class="product-content">
-								<h3 id="titre_produit"></h3>
+								<h3 id="titre_produit">Seasoned Tomatoes</h3>
 								<div class="price">
-									<span class="new-price" id="new_price"></span>
-									<span class="old-price" id="old_price"></span>
+									<span class="new-price" id="new_price">$541.00</span>
+									<span class="old-price" id="old_price">$652.00</span>
 								</div>
 								<div class="product-review">
 									<div class="rating">
@@ -672,13 +644,16 @@
 										<i class="bx bxs-star"></i>
 										<i class="bx bxs-star"></i>
 									</div>
-									<a href="#" class="rating-count"></a>
+									<a href="#" class="rating-count">5 reviews</a>
 								</div>
 								<div class="buy-checkbox-btn" id="product_review"></div>
 								{#
-																																                <div class="product-review" id="product_review_images"></div>
-																																                #}
-								<p id="description_produit"></p>
+																																																																																																																																																																																																																																																																																																																																																																																																								                <div class="product-review" id="product_review_images"></div>
+																																																																																																																																																																																																																																																																																																																																																																																																								                #}
+								<p id="description_produit">
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+																																																																																																																																																																																																																																																																																																																																																																																																																																																									                  do eiusmod tempor incididunt ut labore et.
+								</p>
 								<div class="product-add-to-cart">
 									<div class="input-counter">
 										<span class="minus-btn progressbtn2">
@@ -690,7 +665,7 @@
 										</span>
 									</div>
 									<button type="submit" class="default-btn addcard">
-										Ajouter au panier
+										Add to cart
 									</button>
 								</div>
 
@@ -752,44 +727,44 @@
 		<script src=" {{ asset('FrontOffice/assets/js/popper.min.js') }} "></script>
 		<!-- Bootstrap JS -->
 		<script src=" {{
-												        asset('FrontOffice/assets/js/bootstrap.min.js')
-												      }} "></script>
+																																																																																																																																																			        asset('FrontOffice/assets/js/bootstrap.min.js')
+																																																																																																																																																			      }} "></script>
 		<!-- Meanmenu JS -->
 		<script src=" {{
-												        asset('FrontOffice/assets/js/jquery.meanmenu.js')
-												      }} "></script>
+																																																																																																																																																			        asset('FrontOffice/assets/js/jquery.meanmenu.js')
+																																																																																																																																																			      }} "></script>
 		<!-- Nice Select JS -->
 		<script src=" {{
-												        asset('FrontOffice/assets/js/jquery.nice-select.min.js')
-												      }} "></script>
+																																																																																																																																																			        asset('FrontOffice/assets/js/jquery.nice-select.min.js')
+																																																																																																																																																			      }} "></script>
 		<!-- Owl Carousel JS -->
 		<script src=" {{
-												        asset('FrontOffice/assets/js/owl.carousel.min.js')
-												      }} "></script>
+																																																																																																																																																			        asset('FrontOffice/assets/js/owl.carousel.min.js')
+																																																																																																																																																			      }} "></script>
 		<!-- Magnific Popup JS -->
 		<script src=" {{
-												        asset('FrontOffice/assets/js/jquery.magnific-popup.min.js')
-												      }} "></script>
+																																																																																																																																																			        asset('FrontOffice/assets/js/jquery.magnific-popup.min.js')
+																																																																																																																																																			      }} "></script>
 		<!-- Odometer JS -->
 		<script src=" {{
-												        asset('FrontOffice/assets/js/odometer.min.js')
-												      }} "></script>
+																																																																																																																																																			        asset('FrontOffice/assets/js/odometer.min.js')
+																																																																																																																																																			      }} "></script>
 		<!-- Jquery Appear JS -->
 		<script src=" {{
-												        asset('FrontOffice/assets/js/jquery.appear.min.js')
-												      }} "></script>
+																																																																																																																																																			        asset('FrontOffice/assets/js/jquery.appear.min.js')
+																																																																																																																																																			      }} "></script>
 		<!-- Ajaxchimp JS -->
 		<script src=" {{
-												        asset('FrontOffice/assets/js/jquery.ajaxchimp.min.js')
-												      }} "></script>
+																																																																																																																																																			        asset('FrontOffice/assets/js/jquery.ajaxchimp.min.js')
+																																																																																																																																																			      }} "></script>
 		<!-- Form Validator JS -->
 		<script src=" {{
-												        asset('FrontOffice/assets/js/form-validator.min.js')
-												      }} "></script>
+																																																																																																																																																			        asset('FrontOffice/assets/js/form-validator.min.js')
+																																																																																																																																																			      }} "></script>
 		<!-- Contact JS -->
 		<script src=" {{
-												        asset('FrontOffice/assets/js/contact-form-script.js')
-												      }} "></script>
+																																																																																																																																																			        asset('FrontOffice/assets/js/contact-form-script.js')
+																																																																																																																																																			      }} "></script>
 		<!-- Wow JS -->
 		<script src=" {{ asset('FrontOffice/assets/js/wow.min.js') }} "></script>
 		<!-- Custom JS -->

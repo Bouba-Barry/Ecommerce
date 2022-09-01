@@ -120,12 +120,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         $queryBuilder = $this->createQueryBuilder('u')
             ->where("u.deletedAt is not NULL");
-            
+
         return $queryBuilder->getQuery()->getResult();
     }
 
-   
-    
+
+
 
     public function deletefromtrash($id)
     {
@@ -136,7 +136,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         WHERE  id=:id
         ";
         $stmt = $conn->prepare($sql);
-        $stmt->executeQuery(['id'=>$id]);
+        $stmt->executeQuery(['id' => $id]);
 
         // returns an array of arrays (i.e. a raw data set)
         return true;
@@ -144,11 +144,37 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
 
 
-    public function findByAdmin($role)
+    public function findByAdmin($role1, $role2)
     {
         $queryBuilder = $this->createQueryBuilder('u')
-            ->where("JSON_CONTAINS(u.roles, :role) = true")
-            ->setParameter('role', sprintf('"%s"', $role));
+            ->andWhere("(JSON_CONTAINS(u.roles, :role) = true) or (JSON_CONTAINS(u.roles, :role2) = true)  ")
+            ->setParameter('role', sprintf('"%s"', $role1))
+            ->setParameter('role2', sprintf('"%s"', $role2));
         return $queryBuilder;
+    }
+
+    /**
+     * @return User Returns an array of User objects
+     */
+    public function findBestEmployer()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        SELECT u.* FROM user u, commande_produit c, produit p
+        WHERE u.id = p.user_id and c.produit_id = p.id
+        Group By c.produit_id 
+        Order By COUNT(*) DESC
+        LIMIT 1
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        $result = $resultSet->fetchAllAssociative();
+        $queryBuilder = $this->createQueryBuilder('u')
+            ->where('u.id = :result ')
+            ->setParameter(':result', $result);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 }

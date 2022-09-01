@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Email;
 use App\Entity\User;
 use App\Entity\Panier;
 use App\Entity\Wishlist;
 use App\Form\UserType;
 use App\Form\ClientType;
+use App\Repository\EmailRepository;
 use App\Repository\UserRepository;
 use App\Repository\PanierRepository;
 use App\Repository\WishlistRepository;
@@ -150,21 +152,34 @@ class ClientController extends AbstractController
     }
 
     #[Route('/contact', name: 'app_contact', methods: ['GET', 'POST'])]
-    public function feedbackUser(Request $request, MailerService $mail): Response
+    public function feedbackUser(Request $request, EmailRepository $emailRepository): Response
     {
         if ($request->isMethod('POST')) {
 
             $name = $request->get('name');
-            $email = $request->get('email');
+            $email_emeteur = $request->get('email');
             $subject = $request->get('msg_subject');
             $msg = $request->get('message');
             $pattern = '/([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@gmail([\.])com/';
-            // if (preg_match($pattern, $email)) {
-            // }
             $to = 'boubatest1@gmail.com';
 
-            $twig = 'frontend/contact.html.twig';
-            $mail->send($subject, $email, $to, 'frontend/contact.html.twig');
+            if (preg_match($pattern, $email_emeteur) === false) {
+
+                $this->addFlash('mail_error', 'Votre email est invalide, Veuillez Réessayer ');
+
+                return $this->redirectToRoute('app_contact', [], Response::HTTP_SEE_OTHER);
+            } else {
+                $email = new Email();
+                $email->setNom($name);
+                $email->setMailEmeteur($email_emeteur);
+                $email->setTitre($subject);
+                $email->setContent($msg);
+                $emailRepository->add($email, true);
+
+                $this->addFlash('success', 'Merci de nous avoir contactez, Nous vous férrons un retour le plustôt possible ');
+
+                return $this->redirectToRoute('app_contact', [], Response::HTTP_SEE_OTHER);
+            }
         }
         return $this->render('frontend/contact.html.twig', []);
     }

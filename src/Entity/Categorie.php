@@ -50,6 +50,9 @@ class Categorie
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $icone = null;
+
     public function __construct()
     {
         $this->create_at = new \DateTimeImmutable('now');
@@ -147,6 +150,18 @@ class Categorie
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getIcone(): ?string
+    {
+        return $this->icone;
+    }
+
+    public function setIcone(?string $icone): self
+    {
+        $this->icone = $icone;
 
         return $this;
     }

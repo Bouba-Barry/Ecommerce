@@ -236,18 +236,15 @@ class ProduitRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
-    /**
-     * @return Produit[] Returns an array of Produit objects
-     */
-    public function findSalesMonth()
+    public function findSaleMonth()
     {
 
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = "
-        SELECT p.* FROM produit p, commande_produit f
-        WHERE p.id = f.produit_id and (DATEDIFF(CURRENT_TIMESTAMP(), f.create_at)  BETWEEN 1 and 31) 
-        ORDER BY p.id ASC
+        SELECT SUM(f.total_vente) as 'revenu' FROM produit p, commande_produit f
+        WHERE p.id = f.produit_id and (DATEDIFF(CURRENT_TIMESTAMP(), f.create_at)  BETWEEN 0 and 31)
+        ORDER BY f.create_at DESC
         ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
@@ -324,7 +321,7 @@ class ProduitRepository extends ServiceEntityRepository
         WHERE p.id = f.produit_id and (DATEDIFF(CURRENT_TIMESTAMP(), f.create_at)  BETWEEN 1 and 31)
         GROUP BY f.produit_id
         ORDER BY COUNT(*) DESC
-        LIMIT 16
+        LIMIT 8
         ";
         $stmt = $conn->prepare($sql2);
         $resultSet = $stmt->executeQuery();
@@ -768,6 +765,9 @@ class ProduitRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    // /**
+    //  * @return PaginationInterface
+    //  */
     public function PopularProd_Month(FilterData $data)
     {
 
@@ -781,11 +781,13 @@ class ProduitRepository extends ServiceEntityRepository
         ";
         $stmt = $conn->prepare($sql2);
         $resultSet = $stmt->executeQuery();
+
         // returns an array of arrays (i.e. a raw data set)
         $result = $resultSet->fetchAllAssociative();
         $query = $this->createQueryBuilder('p')
             ->where('p.id in (:result) ')
             ->setParameter(':result', $result)
+            ->select('p')
             ->join('p.sous_categorie', 's')
             ->join('s.categorie', 'c')
             ->leftJoin('p.reduction', 'r')
@@ -824,6 +826,12 @@ class ProduitRepository extends ServiceEntityRepository
                 ->setParameter('variation', $data->variations);
         }
 
+        // $query =  $query->getQuery();
+        // return $this->paginator->paginate(
+        //     $query,
+        //     1,
+        //     4
+        // );
         return $query->getQuery()->getResult();
     }
 
@@ -837,5 +845,57 @@ class ProduitRepository extends ServiceEntityRepository
             // ->orderBy('f.id', 'DESC')
             // ->groupBy('f.produit')
             ->getQuery()->getResult();
+    }
+
+    public function findRedByProducts(FilterData $data, $red)
+    {
+
+        $query = $this
+            ->createQueryBuilder('p')
+            ->leftJoin('p.reduction', 'r')
+            ->andWhere('r.id = :id ')
+            ->setParameter('id', $red)
+            ->select('p')
+            ->join('p.sous_categorie', 's')
+            ->join('s.categorie', 'c')
+            ->leftJoin('p.variation', 'v');
+
+        // if (!empty($red)) {
+        //     $query = $query
+        //         ->andWhere('r.id = (:id)')
+        //         ->setParameter('id', $red);
+        // }
+        if (!empty($data->q)) {
+            $query = $query
+                ->andWhere('p.designation LIKE :q ')
+                ->setParameter('q', "%{$data->q}%");
+        }
+        if (!empty($data->min)) {
+            $query = $query
+                ->andWhere('p.ancien_prix >= :min')
+                ->setParameter('min', $data->min);
+        }
+        if (!empty($data->max)) {
+            $query = $query
+                ->andWhere('p.ancien_prix <= :max ')
+                ->setParameter('max', $data->max);
+        };
+        if (!empty($data->categories)) {
+            $query = $query
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $data->categories);
+        };
+        // if (!empty($data->reductions)) {
+        //     $query = $query
+        //         ->andWhere('r.id = :reduction')
+        //         ->setParameter('reduction', $data->reductions);
+        // };
+        if (!empty($data->variations)) {
+            $query = $query
+                ->andWhere('v.id IN (:variation)')
+                ->setParameter('variation', $data->variations);
+        };
+        // ->join('p.sous_categories', 's')
+        return $query->getQuery()->getResult();
     }
 }

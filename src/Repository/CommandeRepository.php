@@ -99,4 +99,22 @@ class CommandeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @return Commande[]
+     */
+    public function findCmdStat($stat)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = " SELECT c.* FROM commande c
+        Where c.status = :stat and (DATEDIFF(CURRENT_TIMESTAMP(), c.date_cmd)  BETWEEN 0 and 31) ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery([
+            'stat' => $stat
+        ]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 }

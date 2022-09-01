@@ -1,4 +1,4 @@
-class shop {
+class reduction {
   /**
    *
    * @param {HtmlElement|null} element
@@ -11,11 +11,11 @@ class shop {
     if (element === null) {
       return;
     }
-    // console.log("je me construit");
+    console.log("je me construit");
     this.container = document.querySelector(".js-filter");
     this.content = document.querySelector("#content");
     this.form = document.querySelector("#filter");
-    // console.log(this.form);
+    console.log(this.form);
     this.bindEvents();
   }
 
@@ -32,9 +32,7 @@ class shop {
   }
 
   async loadForm() {
-    produits.style.display = "none";
-    displayLoading();
-    // console.log(this.form);
+    console.log(this.form);
     const formdata = new FormData(this.form);
     const url = new URL(
       this.form.getAttribute("action") || window.location.href
@@ -55,9 +53,7 @@ class shop {
     });
     if (response.status >= 200 && response.status < 300) {
       const data = await response.json();
-      // console.log(data.content);
-      hideLoading();
-      produits.style.display = "flex";
+      console.log(data.content);
       this.content.innerHTML = data.content;
     } else {
       console.log("error");
@@ -66,23 +62,5 @@ class shop {
 }
 
 let element = document.querySelector(".js-filter");
-let produits = document.getElementById("produits");
-const loader = document.querySelector("#loadingshop");
-loader.style.display = "none";
-new shop(element);
-function displayLoading() {
-  loader.style.display = "block";
-  loader.style.width = "20rem";
-  loader.style.height = "20rem";
-  loader.classList.add("display");
-  // to stop loading after some time
-  setTimeout(() => {
-    loader.classList.remove("display");
-  }, 5000);
-}
 
-// hiding loading
-function hideLoading() {
-  loader.style.display = "none";
-  loader.classList.remove("display");
-}
+new reduction(element);

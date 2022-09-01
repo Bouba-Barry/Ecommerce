@@ -1,0 +1,60 @@
+<div class="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s">
+	<div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			<video class="d-block w-100" autoplay muted loop>
+				<source src=" {{ asset('FrontOffice/video/slide.mp4') }} " type="video/mp4"/>
+			</video>
+			{% set val = 0 %}
+			{% for sous_categorie in sous_categories %}
+				{% if val ==
+      0 %}
+					<div class="carousel-item active">
+					{% else %}
+						<div class="carousel-item">
+						{% endif %}
+						{% set val = 1 %}
+						<div class="carousel-caption">
+							<div class="container">
+								<div class="row justify-content-center">
+									<p>Nos Collections De produis les plus Populaires</p>
+									<div class="col-lg-6">
+										<h5 class="display-2 text-light mb-5 animated slideInDown" style="color: red">
+											{{ sous_categorie.titre }}
+										</h5>
+										{#
+																																																																																																																																																																																																																																																																																																																																													                  <a href="" class="btn btn-warning btn-sm py-sm-2 px-sm-3"
+																																																																																																																																																																																																																																																																																																																																													                    >Ajouter au Panier</a
+																																																																																																																																																																																																																																																																																																																																													                  >
+																																																																																																																																																																																																																																																																																																																																													                  #}
+										<a href="{{ path('app_prod_sous_cat', { id: sous_categorie.id }) }}" class="default-btn py-sm-2 px-sm-3 ms-3">Voir Plus</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				{% endfor %}
+				<div
+					class="carousel-control-prev" data-bs-target="#header-carousel" data-bs-slide="prev">
+					{#
+																																																																																																																																																																																							          <span
+																																																																																																																																																																																							            class="carousel-control-prev-icon precedent"
+																																																																																																																																																																																							            aria-hidden="true"
+																																																																																																																																																																																							          ></span>
+																																																																																																																																																																																							          #}
+					<span class="carousel-control-prev-icon precedent" aria-hidden="true"></span>
+					<span class="precedent"></span>
+				</div>
+				<div
+					class="carousel-control-next" data-bs-target="#header-carousel" data-bs-slide="next">
+					{#
+																																																																																																																																																																																							          <span
+																																																																																																																																																																																							            class="carousel-control-prev-icon precedent"
+																																																																																																																																																																																							            aria-hidden="true"
+																																																																																																																																																																																							          ></span>
+																																																																																																																																																																																							          #}
+					<span class="carousel-control-next-icon suivant" aria-hidden="true"></span>
+					<span class="suivant"></span>
+				</div>
+			</div>
+		</div>

@@ -113,6 +113,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['prod:read'])]
     private Collection $wishlists;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Email::class)]
+    private Collection $emails;
+
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable('now');
@@ -122,6 +125,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->paniers = new ArrayCollection();
         $this->feadBacks = new ArrayCollection();
         $this->wishlists = new ArrayCollection();
+        $this->emails = new ArrayCollection();
     }
 
 
@@ -454,6 +458,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($wishlist->getUser() === $this) {
                 $wishlist->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Email>
+     */
+    public function getEmails(): Collection
+    {
+        return $this->emails;
+    }
+
+    public function addEmail(Email $email): self
+    {
+        if (!$this->emails->contains($email)) {
+            $this->emails[] = $email;
+            $email->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmail(Email $email): self
+    {
+        if ($this->emails->removeElement($email)) {
+            // set the owning side to null (unless already changed)
+            if ($email->getUser() === $this) {
+                $email->setUser(null);
             }
         }
 

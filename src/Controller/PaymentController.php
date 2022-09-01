@@ -252,7 +252,7 @@ class PaymentController extends AbstractController
 
                     // ajouter le produit dans la table commande_produit
                     $cmd = $commandeRepository->find($commandes);
-                    $cmd->setStatus('traitées');
+                    $cmd->setStatus('traitée');
 
                     $commandeRepository->add($cmd, true);
                     $p->removeProduit($prod);
@@ -315,7 +315,7 @@ class PaymentController extends AbstractController
         $session = $this->requestStack->getSession();
         $commandes = $session->get('commande');
         $cmd = $commandeRepository->find($commandes);
-        $cmd->setStatus('annulées');
+        $cmd->setStatus('annulée');
         $commandeRepository->add($cmd, true);
         return $this->render('payment/cancel.html.twig');
     }

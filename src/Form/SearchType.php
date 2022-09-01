@@ -24,14 +24,12 @@ class SearchType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $session = $this->requestStack->getSession();
-        $val = $session->get('red');
         $builder
-            // ->add('q', TextType::class, [
-            //     'label' => false,
-            //     'required' => false,
-            //     'attr' => ['class' => 'form-control', 'placeholder' => 'Recherchez'],
-            // ])
+            ->add('q', TextType::class, [
+                'label' => false,
+                'required' => false,
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Recherchez'],
+            ])
             ->add('variations', EntityType::class, [
                 'class' => Variation::class,
                 'choice_label' => 'nom',
@@ -59,20 +57,7 @@ class SearchType extends AbstractType
                 'label' => false,
                 'required' => false,
                 'attr' => ['class' => 'form-control', 'placeholder' => 'Prix Max'],
-            ])
-            ->add('reductions', EntityType::class, [
-                'class' => Reduction::class,
-                'choice_label' => 'pourcentage',
-                'expanded' => true,
-                'required' => false,
-                'multiple' => true,
-                'label' => false,
-                'attr' => ['class' => 'form-control'],
             ]);
-
-        if ($val <= 0) {
-            $builder->remove('reductions');
-        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

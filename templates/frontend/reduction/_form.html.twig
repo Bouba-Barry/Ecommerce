@@ -1,9 +1,9 @@
-{{ form_start(form,{'attr': { 'class': 'filter' ,'id': 'filter'}}) }}
-<div class="row" style="display:none">
-	<label>Par Produit</label>
-	{{form_row(form.q)}}
-</div>
+{# {% set filter = app.session.get('f') %} #}
 
+{{ form_start(form,{'attr': { 'class': 'filter' ,'id': 'filter'}}) }}
+
+<label>Par Produit</label>
+{{form_row(form.q)}}
 
 <label>Par categories</label>
 {{form_row(form.categories)}}
@@ -17,12 +17,6 @@
 		{{form_row(form.max)}}
 	</div>
 </div>
-
-
-{% if app.session.get('red') != 0 %}
-	<label>Par reductions</label>
-	{{form_row(form.reductions)}}
-{% endif %}
 
 <label>Par variations</label>
 {{form_row(form.variations)}}
