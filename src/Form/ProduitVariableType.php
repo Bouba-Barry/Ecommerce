@@ -26,7 +26,7 @@ class ProduitVariableType extends AbstractType
         ->add('user', EntityType::class, [
             'class' => User::class,
             'query_builder' => function (UserRepository $er) {
-                return $er->findByAdmin("ROLE_SUPER_ADMIN");
+                return $er->findByAdmin("ROLE_SUPER_ADMIN","ROLE_ADMIN");
             },
             'choice_label' => 'nom',
 

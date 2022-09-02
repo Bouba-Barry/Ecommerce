@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="description" content=""/>
+		<meta name="author" content=""/>
+		 <link rel="icon" href="{{ asset('images/shop.png') }}"/> 
+        
+		<title>TB-INFO</title>
+
+		<!-- Vendors Style-->
+		<link
+		rel="stylesheet" href="{{ asset('main/css/vendors_css.css') }}"/>
+		<link
+		rel="stylesheet"
+		href=" {{ asset('FrontOffice/assets/css/flaticon.css') }}"
+	  />
+		<!-- Style-->
+		<link rel="stylesheet" href="{{ asset('main/css/style.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('main/css/skin_color.css') }}"/> {% block stylesheets %}{% endblock %}
+		</head>
+
+		<body class="hold-transition light-skin sidebar-mini theme-primary fixed">
+			<div class="wrapper" style="overflow:scroll ;">
+
+
+
+				{% block content %}{% endblock %}
+				<!-- /.content-wrapper -->
+			
+
+				<!-- Control Sidebar -->
+			
+				<!-- /.control-sidebar -->
+
+				<!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+				<div class="control-sidebar-bg"></div>
+			</div>
+			<!-- ./wrapper -->
+
+			<!-- Vendor JS -->
+			<script src="https://kit.fontawesome.com/4c827d40eb.js" crossorigin="anonymous"></script>
+			<script src="{{ asset('main/js/vendors.min.js') }}"></script>
+			<script src="{{ asset('assets/icons/feather-icons/feather.min.js') }}"></script>
+			<script src="{{ asset( 'assets/vendor_components/easypiechart/dist/jquery.easypiechart.js' ) }}"></script>
+			<script src="{{ asset( 'assets/vendor_components/apexcharts-bundle/irregular-data-series.js' ) }}"></script>
+			<script src="{{ asset('assets/vendor_components/apexcharts-bundle/dist/apexcharts.js') }}"></script>
+
+
+
+             
+       
+          <!-- /.tab-pane -->
+          <!-- Settings tab content -->
+          
+          <!-- /.tab-pane -->
+        </div>
+      </aside>
+      <!-- /.control-sidebar -->
+
+      <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- Vendor JS -->
+    <script src="https://kit.fontawesome.com/4c827d40eb.js" crossorigin="anonymous"></script>
+    
+    <script src="{{
+        asset('assets/icons/feather-icons/feather.min.js')
+      }}"></script>
+    <script src="{{
+        asset(
+          'assets/vendor_components/easypiechart/dist/jquery.easypiechart.js'
+        )
+      }}"></script>
+    <script src="{{
+        asset(
+          'assets/vendor_components/apexcharts-bundle/irregular-data-series.js'
+        )
+      }}"></script>
+    <script src="{{
+        asset('assets/vendor_components/apexcharts-bundle/dist/apexcharts.js')
+      }}"></script>
+
+    <!-- Sunny Admin App -->
+
+    <script src="{{ asset('main/js/template.js') }}"></script>
+
+	<!--  begin  FrontOffice  -->
+	
+    <!-- Popper JS -->
+    
+    <!-- Bootstrap JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/bootstrap.min.js')
+      }} "></script>
+    <!-- Meanmenu JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/jquery.meanmenu.js')
+      }} "></script>
+    <!-- Nice Select JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/jquery.nice-select.min.js')
+      }} "></script>
+    <!-- Owl Carousel JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/owl.carousel.min.js')
+      }} "></script>
+    <!-- Magnific Popup JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/jquery.magnific-popup.min.js')
+      }} "></script>
+    <!-- Odometer JS -->
+   
+    <!-- Jquery Appear JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/jquery.appear.min.js')
+      }} "></script>
+    <!-- Ajaxchimp JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/jquery.ajaxchimp.min.js')
+      }} "></script>
+    <!-- Form Validator JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/form-validator.min.js')
+      }} "></script>
+    <!-- Contact JS -->
+    
+    <!-- Wow JS -->
+
+    <!-- Custom JS -->
+    <script src=" {{ asset('FrontOffice/assets/js/main.js') }} "></script>
+
+     <!-- end FrontOffice  -->
+
+	{#  apres on va voir ca !! <script src="{{ asset('main/js/vendors.min.js') }}"></script> #}
+    <script src="{{ asset('main/js/pages/dashboard.js') }}"></script>
+    <script src="{{ asset('js/delete_reduction.js') }}"></script>
+
+    {% block javascript %}{% endblock %}
+  </body>
+</html>

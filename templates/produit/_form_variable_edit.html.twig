@@ -1,351 +1,219 @@
-{% extends 'admin.html.twig' %}
-{# {% block title %}Ajouter Produit{% endblock
-    %} #}
-{% block content %}
-	{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{% extends 'admin1.html.twig' %} {# {% block title %}Ajouter Produit{% endblock
+%} #} {% block content %}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper">
-		<div
-			class="container-full">
-			<!-- Content Header (Page header) -->
-			<div class="content-header">
-				<div class="d-flex align-items-center">
-					<div class="mr-auto">
-						<h3 class="page-title">Ajouter Produit</h3>
-						<div class="d-inline-block align-items-center">
-							<nav>
-								<ol class="breadcrumb">
-									{# <li>
-									                      <a
-									                        href="{{ path('app_produit_index') }}"
-									                        class="btn btn-primary btn-md"
-									                        >Retour à la Liste</a
-									                      >
-									                    </li> #}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" style="margin-left: 0px; padding-top: 0px">
+  <div class="container-full">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="page-title">Ajouter Produit</h3>
+          <div class="d-inline-block align-items-center"></div>
+        </div>
+      </div>
+    </div>
+    <br />
 
-
-									{#
-									                      <div class="col-xl-4">
-									                        <div class="h-200">
-									                          <div class="dropdown">
-									                            <button
-									                              class="btn btn-primary btn-md dropdown-toggle"
-									                              type="button"
-									                              data-toggle="dropdown"
-									                            >
-									                              Attributs
-									                            </button>
-									                            <div class="dropdown-menu">
-									                              <a
-									                                class="dropdown-item"
-									                                href="{{ path('app_attribut_new') }}"
-									                                ><i class="fa fa-plus"></i> Attribut Personnalise</a
-									                              >
-									                              <a class="dropdown-item" href="#"
-									                                ><i class="fa fa-pencil"></i> gerer les
-									                                variations</a
-									                              >
-									                            </div>
-									                          </div>
-									                        </div>
-									                      </div>
-									                    </li>
-									    
-									                    <li>
-									                      <div class="col-xl-4">
-									                        <div class="h-200">
-									                          <div class="dropdown">
-									                            <button
-									                              class="btn btn-primary btn-md dropdown-toggle"
-									                              type="button"
-									                              data-toggle="dropdown"
-									                            >
-									                              Categories
-									                            </button>
-									                            <div class="dropdown-menu">
-									                              <a
-									                                class="dropdown-item"
-									                                href="{{ path('app_attribut_new') }}"
-									                                ><i class="fa fa-plus"></i> Categorie
-									                                Personnalise</a
-									                              >
-									                              <a class="dropdown-item" href="#"
-									                                ><i class="fa fa-pencil"></i> gerer les
-									                                variations</a
-									                              >
-									                            </div>
-									                          </div>
-									                        </div>
-									                      </div>
-									                    </li>
-									                    #}
-
-										<li>
-											<div class="col-12"> <div
-												class="box box-default" style="background-color:beige ;">
-
-												<!-- /.box-header -->
-												<div
-													class="box-body">
-													<!-- Nav tabs -->
-													<ul class="nav nav-tabs" id="myTab" role="tablist">
-														<li class="nav-item">
-															<a class="nav-link active" id="home-tab" href="{{ path('app_produit_index') }}" aria-controls="home5" aria-expanded="true">
-																<span class="hidden-sm-up">
-																	<i class="ion-home"></i>
-																</span>
-																<span class="hidden-xs-down">Liste Produits</span>
-															</a>
-														</li>
-
-														<li class="nav-item dropdown">
-															<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-																<span class="hidden-sm-up">
-																	<i class="ion-email"></i>
-																</span>
-																<span class="hidden-xs-down">Attributs</span>
-															</a>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" id="dropdown1-tab" href="{{ path('app_attribut_new_editproduit' , { id: produit.id }) }}">
-																	Attribut Personnalise</a>
-															</div>
-														</li>
-														<li class="nav-item dropdown">
-															<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-																<span class="hidden-sm-up">
-																	<i class="ion-email"></i>
-																</span>
-																<span class="hidden-xs-down">Sous Categorie</span>
-															</a>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" id="dropdown1-tab" href="{{ path('app_sous_categorie_new_produit',{ id : produit.id }) }}">
-																	Ajouter Une sous Categorie</a>
-															</div>
-														</li>
-
-
-													</ul>
-													<!-- Tab panes -->
-
-												</div>
-												<!-- /.box-body -->
-											</div>
-											<!-- /.box -->
-										</div>
-
-									</li>
-								</ol>
-							</nav>
-						</div>
-					</div>
-				</div>
-			</div>
-			<br/>
-
-			<div class="col-12">
-				<div
-					class="box box-default">
-					<!-- /.box-header -->
-					<div
-						class="box-body">
-						<!-- Nav tabs -->
-						<ul class="nav nav-tabs customtab2" role="tablist">
-							<li class="nav-item">
-								<a class="nav-link active" data-toggle="tab" href="#home7" role="tab">
-									<span class="hidden-sm-up">
-										<i class="ion-home"></i>
-									</span>
-									<span class="hidden-xs-down">Produit Informations</span>
-								</a>
-							</li>
-						</ul>
-						<!-- Tab panes -->
-						<div class="tab-content">
-							<div class="tab-pane active" id="home7" role="tabpanel">
-								<div class="p-15">
-									<div class="row">
-										<div class="col-12">
-											<div class="box">
-												<div class="box-body">
-													<div id="content"></div>
-													<div class="form-group row">
-														<label class="col-form-label col-md-2">Désignation</label>
-														<div class="mb-3 col-md-10">
-															{{ form_row(form.designation) }}
-															<span class="form-text text-muted">{{
-                                  form_errors(form.designation)
-                                }}</span>
-														</div>
-													</div>
-
-													<div class="form-group row">
-														<label class="col-form-label col-md-2">Description</label>
-														<div class="mb-3 col-md-10">
-															{{ form_row(form.description) }}
-															<span class="form-text text-muted">{{
-                                  form_errors(form.description)
-                                }}</span>
-														</div>
-													</div>
-													<div class="form-group row">
-														<label class="col-form-label col-md-2">Description detaille</label>
-														<div class="mb-3 col-md-10">
-															{{ form_row(form.description_detaille) }}
-															<span class="form-text text-muted">{{
-                                  form_errors(form.description_detaille)
-                                }}</span>
-                              </div>
-                            </div>
-    
-                            {# <div class="form-group row">
-                              <label class="col-form-label col-md-2"
-                                >Prix Produit</label
-                              >
-                              <div class="mb-3 col-md-10">
-                                {{ form_row(form.ancien_prix) }}
-                                <span class="form-text text-muted">{{
-                                  form_errors(form.ancien_prix)
-                                }}</span>
-                              </div>
-                            </div> #}
-
-
-                            {#
-                            <div class="form-group row">
-                              <label class="col-form-label col-md-2"
-                                >Quantite En Stock</label
-                              >
-                              <div class="mb-3 col-md-10">
-                                {{ form_row(form.qte_stock) }}
-                                <span class="form-text">{{
-                                  form_errors(form.qte_stock)
-                                }}</span>
-                              </div>
-                            </div>
-                            #}
-    
-                            <div class="form-group row">
-                              <label class="col-form-label col-md-2">User</label>
-                              <div class="mb-3 col-md-10">
-                                {{ form_row(form.user) }}
-                                {#
-                                <span class="form-text text-muted">{{
-                                  form_errors(form.user)
-                                }}</span>
-                                #}
-                              </div>
-                            </div>
-    
-                            
-    
-                            <div class="form-group row">
-                              <label class="col-form-label col-md-2"
-                                >Sous Catégorie</label
-                              >
-                              <div class="mb-3 col-md-10">
-                                {{ form_row(form.sous_categorie) }}
-                                {#
-                                <span class="form-text text-muted"
-                                  >Using <code>input type="datetime"</code></span
-                                >
-                                #}
-                              </div>
-                            </div>
-    
-                            <div class="form-group row">
-                              <label class="col-form-label col-md-2"
-                                >Attributs</label
-                              >
-                              <div class="mb-3 col-md-10">
-                                {{ form_row(form.attributs) }}
-    
-                                {#
-                                <span class="form-text text-muted"
-                                  >Using <code>input type="datetime"</code></span
-                                >
-                                #}
-                              </div>
-                            </div>
-    
-                            {#
-                            <div class="form-group row">
-                              <label class="col-form-label col-md-2"
-                                >Image du Produit</label
-                              >
-                              <div class="mb-3 col-md-10">
-                                {{ form_row(form.photo) }}
-                                {#
-                                <span class="form-text text-muted"
-                                  >Using <code>input type="datetime"</code></span
-                                >
-                              </div>
-                            </div>
-                            #}
-                        <div class="row">
-    
-                            <div class="mb-3 col-4">
-                              <button
-                                class="btn btn-info btn-rounded margin-top-10"
-                              >
-                                {{ button_label|default('Gere les variations') }}
-                              </button>
-                            </div>
-                            <div class="col-4"></div>
-                            <div class="mb-3 col-4">
-                                <a
-                                  class="btn btn-info btn-rounded margin-top-10"
-                                  href="{{ path('app_quantite_index_variable' , { id : produit.id } ) }}"
-                                >
-                                  Modifier les variations
-                            </a>
-                            </div>
-                        </div>
+    <div class="col-12">
+      <div class="box box-default">
+        <!-- /.box-header -->
+        <div class="box-body">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs customtab2" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                data-toggle="tab"
+                href="#home7"
+                role="tab"
+              >
+                <span class="hidden-sm-up">
+                  <i class="ion-home"></i>
+                </span>
+                <span class="hidden-xs-down">Produit Informations</span>
+              </a>
+            </li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="home7" role="tabpanel">
+              <div class="p-15">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="box">
+                      <div class="box-body">
+                        <div id="content"></div>
+                        <div class="form-group row">
+                          <label class="col-form-label col-md-2"
+                            >Désignation</label
+                          >
+                          <div class="mb-3 col-md-10">
+                            {{ form_row(form.designation) }}
+                            <span class="form-text text-muted">{{
+                              form_errors(form.designation)
+                            }}</span>
                           </div>
-    
-                          <!-- /.box-body -->
                         </div>
-                        <!-- /.box -->
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-md-2"
+                            >Description</label
+                          >
+                          <div class="mb-3 col-md-10">
+                            {{ form_row(form.description) }}
+                            <span class="form-text text-muted">{{
+                              form_errors(form.description)
+                            }}</span>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-form-label col-md-2"
+                            >Description detaille</label
+                          >
+                          <div class="mb-3 col-md-10">
+                            {{ form_row(form.description_detaille) }}
+                            <span class="form-text text-muted">{{
+                              form_errors(form.description_detaille)
+                            }}</span>
+                          </div>
+                        </div>
+
+                        {#
+                        <div class="form-group row">
+                          <label class="col-form-label col-md-2"
+                            >Prix Produit</label
+                          >
+                          <div class="mb-3 col-md-10">
+                            {{ form_row(form.ancien_prix) }}
+                            <span class="form-text text-muted">{{
+                              form_errors(form.ancien_prix)
+                            }}</span>
+                          </div>
+                        </div>
+                        #} {#
+                        <div class="form-group row">
+                          <label class="col-form-label col-md-2"
+                            >Quantite En Stock</label
+                          >
+                          <div class="mb-3 col-md-10">
+                            {{ form_row(form.qte_stock) }}
+                            <span class="form-text">{{
+                              form_errors(form.qte_stock)
+                            }}</span>
+                          </div>
+                        </div>
+                        #}
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-md-2">User</label>
+                          <div class="mb-3 col-md-10">
+                            {{ form_row(form.user) }}
+                            {#
+                            <span class="form-text text-muted">{{
+                              form_errors(form.user)
+                            }}</span>
+                            #}
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-md-2"
+                            >Sous Catégorie</label
+                          >
+                          <div class="mb-3 col-md-10">
+                            {{ form_row(form.sous_categorie) }}
+                            {#
+                            <span class="form-text text-muted"
+                              >Using <code>input type="datetime"</code></span
+                            >
+                            #}
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-md-2"
+                            >Attributs</label
+                          >
+                          <div class="mb-3 col-md-10">
+                            {{ form_row(form.attributs) }}
+
+                            {#
+                            <span class="form-text text-muted"
+                              >Using <code>input type="datetime"</code></span
+                            >
+                            #}
+                          </div>
+                        </div>
+
+                        {#
+                        <div class="form-group row">
+                          <label class="col-form-label col-md-2"
+                            >Image du Produit</label
+                          >
+                          <div class="mb-3 col-md-10">
+                            {{ form_row(form.photo) }}
+                            {#
+                            <span class="form-text text-muted"
+                              >Using <code>input type="datetime"</code></span
+                            >
+                          </div>
+                        </div>
+                        #}
+                        <div class="row">
+                          <div class="mb-3 col-4">
+                            <button
+                              class="btn btn-info btn-rounded margin-top-10"
+                            >
+                              {{ button_label|default('Modifier') }}
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                      <!-- ./col -->
+
+                      <!-- /.box-body -->
                     </div>
+                    <!-- /.box -->
                   </div>
-                </div>
-                <div class="tab-pane" id="profile7" role="tabpanel">
-                  <div class="p-15"></div>
-                </div>
-                <div class="tab-pane" id="messages7" role="tabpanel">
-                  <div class="p-15">
-                    <h3>Donec vitae laoreet neque, id convallis ante.</h3>
-                    <p>
-                      Duis cursus eros lorem, pretium ornare purus tincidunt
-                      eleifend. Etiam quis justo vitae erat faucibus pharetra. Morbi
-                      in ullamcorper diam. Morbi lacinia, sem vitae dignissim
-                      cursus, massa nibh semper magna, nec pellentesque lorem nisl
-                      quis ex.
-                    </p>
-                  </div>
-                  <h4>
-                    Fusce porta eros a nisl varius, non molestie metus mollis.
-                    Pellentesque tincidunt ante sit amet ornare lacinia.
-                  </h4>
+                  <!-- ./col -->
                 </div>
               </div>
             </div>
-            <!-- /.box-body -->
+            <div class="tab-pane" id="profile7" role="tabpanel">
+              <div class="p-15"></div>
+            </div>
+            <div class="tab-pane" id="messages7" role="tabpanel">
+              <div class="p-15">
+                <h3>Donec vitae laoreet neque, id convallis ante.</h3>
+                <p>
+                  Duis cursus eros lorem, pretium ornare purus tincidunt
+                  eleifend. Etiam quis justo vitae erat faucibus pharetra. Morbi
+                  in ullamcorper diam. Morbi lacinia, sem vitae dignissim
+                  cursus, massa nibh semper magna, nec pellentesque lorem nisl
+                  quis ex.
+                </p>
+              </div>
+              <h4>
+                Fusce porta eros a nisl varius, non molestie metus mollis.
+                Pellentesque tincidunt ante sit amet ornare lacinia.
+              </h4>
+            </div>
           </div>
-          <!-- /.box -->
         </div>
-    
-        <!-- Main content -->
-        {#
-        <section class="content">
-          <!-- /.row -->
-        </section>
-        #}
-        <!-- /.content -->
+        <!-- /.box-body -->
       </div>
+      <!-- /.box -->
     </div>
-    <!-- /.content-wrapper -->
-    {% endblock %}
-    
+
+    <!-- Main content -->
+    {#
+    <section class="content">
+      <!-- /.row -->
+    </section>
+    #}
+    <!-- /.content -->
+  </div>
+</div>
+<!-- /.content-wrapper -->
+{% endblock %}

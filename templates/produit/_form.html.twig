@@ -1,9 +1,9 @@
-{% extends 'admin.html.twig' %} {# {% block title %}Ajouter Produit{% endblock
+{% extends 'admin1.html.twig' %} {# {% block title %}Ajouter Produit{% endblock
 %} #} {% block content %}
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="margin-left: 0px; padding-top: 0px">
   <div class="container-full">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -13,6 +13,7 @@
           <div class="d-inline-block align-items-center">
             <nav>
               <ol class="breadcrumb">
+                {#
                 <li>
                   <a
                     href="{{ path('app_produit_index') }}"
@@ -20,6 +21,7 @@
                     >Retour à la Liste</a
                   >
                 </li>
+                #}
               </ol>
             </nav>
           </div>

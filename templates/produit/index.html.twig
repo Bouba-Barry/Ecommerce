@@ -35,7 +35,7 @@ content %}
 							<a class="nav-link dropdown-toggle btn-primary " data-toggle="dropdown" href="#" >
 							  <span class="hidden-sm-up"><i class="ion-email"></i></span> <span class="hidden-xs-down">Ajouter Un produit</span>
 							</a>
-							<div class="dropdown-menu "> <a class="dropdown-item popup-youtube" id="dropdown1-tab"   href="{{ path('app_produit_new') }}" > Produit stable</a> <a class="dropdown-item" id="dropdown2-tab" href="{{ path('app_produit_new_variable') }}" >Produit Variable
+							<div class="dropdown-menu "> <a class="dropdown-item popup-youtube" id="dropdown1-tab"   href="{{ path('app_produit_new') }}" > Produit stable</a> <a class="dropdown-item popup-youtube" id="dropdown2-tab" href="{{ path('app_produit_new_variable') }}" >Produit Variable
 							 </a> </div>
 						  </li>
 					  </ol>
@@ -106,13 +106,9 @@ content %}
                           				<i class="fa fa-eye"></i>
                         			</a>
 								{% if produit.getType()=="stable" %}
-                        			<a data-tooltip="tooltip"
-									data-placement="top"
-									title="Quick View"
-									data-toggle="modal"
-									data-target="#products"  
-									id="edit{{ produit.id }}"
-									class="btn btn-md btn-warning edit">
+                        			<a 
+									href="{{ path('app_produit_edit',{ id:produit.id }) }}"
+									class="btn btn-md btn-warning edit popup-youtube">
 		                          <i class="fa fa-edit"></i>
          	               		</a>
 								{% else %}
@@ -185,6 +181,6 @@ content %}
 <script src="{{ asset('main/js/pages/data-table.js') }}"></script>
 
 <script src="{{ asset('main/js/produit/edit_produit_stable_index.js') }}"></script>
-		<script src=" {{ asset('FrontOffice/assets/js/main.js') }} "></script>
+	
 
 {% endblock %}

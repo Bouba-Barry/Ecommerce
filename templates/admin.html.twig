@@ -236,7 +236,7 @@
 										<ul class="treeview-menu">
 									
 											<li>
-												<a href="{{ path('app_produit_new') }}">
+												<a  class="popup-youtube" href="{{ path('app_produit_new') }}">
 													<i class="ti-more"></i>Un Produit Stable</a>
 											</li>
 											<li>
@@ -969,7 +969,54 @@
     <!-- Sunny Admin App -->
 
     <script src="{{ asset('main/js/template.js') }}"></script>
+
+	<!--  begin  FrontOffice  -->
 	
+    <!-- Popper JS -->
+    
+    <!-- Bootstrap JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/bootstrap.min.js')
+      }} "></script>
+    <!-- Meanmenu JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/jquery.meanmenu.js')
+      }} "></script>
+    <!-- Nice Select JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/jquery.nice-select.min.js')
+      }} "></script>
+    <!-- Owl Carousel JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/owl.carousel.min.js')
+      }} "></script>
+    <!-- Magnific Popup JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/jquery.magnific-popup.min.js')
+      }} "></script>
+    <!-- Odometer JS -->
+   
+    <!-- Jquery Appear JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/jquery.appear.min.js')
+      }} "></script>
+    <!-- Ajaxchimp JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/jquery.ajaxchimp.min.js')
+      }} "></script>
+    <!-- Form Validator JS -->
+    <script src=" {{
+        asset('FrontOffice/assets/js/form-validator.min.js')
+      }} "></script>
+    <!-- Contact JS -->
+    
+    <!-- Wow JS -->
+
+    <!-- Custom JS -->
+    <script src=" {{ asset('FrontOffice/assets/js/main.js') }} "></script>
+
+     <!-- end FrontOffice  -->
+
 	{#  apres on va voir ca !! <script src="{{ asset('main/js/vendors.min.js') }}"></script> #}
     <script src="{{ asset('main/js/pages/dashboard.js') }}"></script>
     <script src="{{ asset('js/delete_reduction.js') }}"></script>
