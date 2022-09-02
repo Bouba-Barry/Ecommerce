@@ -89,7 +89,8 @@ class UserController extends AbstractController
     {
 
         $user = $this->getUser();
-
+        $CA=$userRepository->CAuser($user->getId())  ;
+        // dd($CA);
         //  dd($user->getTelephone());
         // $user = $this->getUser();
         // dd($user);
@@ -185,7 +186,8 @@ class UserController extends AbstractController
             'user' => $this->getUser(),
             'users' => $userRepository->findAll(),
             'form' => $form,
-            'form2' => $form2
+            'form2' => $form2,
+            'CA' => $CA 
         ]);
     }
 

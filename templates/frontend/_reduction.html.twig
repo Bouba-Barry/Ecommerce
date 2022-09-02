@@ -1,37 +1,43 @@
 <section class="overview-area ptb-100">
-	<div class="testimonial-slider owl-carousel owl-theme">
-		{% for reduction in reductions %}
-			<div class="container testimonial-item1">
-				<div class="row align-items-center">
-					<div class="col-lg-6 col-sm-6">
-						<div class="overview-content">
-							<h3>
-								{{ reduction.pourcentage }}
+  <div class="testimonial-slider owl-carousel owl-theme">
+    {% for reduction in reductions %}
+    <div class="container testimonial-item1">
+      <div class="row align-items-center">
+        <div class="col-lg-6 col-sm-6">
+          <div class="overview-content">
+            <h3>
+              {{ reduction.pourcentage }}
 
-								Jusqu' au
-								{{ reduction.datefin|date('Y-m-d \\HH:i:s') }}
-							</h3>
-							<p>
-								{{ reduction.designation|slice(0,13) ~ '...' }}
-							</p>
+              Jusqu' au
+              {{ reduction.datefin|date('Y-m-d \\HH:i:s') }}
+            </h3>
+            <p>
+              {{ reduction.designation|slice(0,13) ~ '...' }}
+            </p>
 
-							<div class="overview-btn">
-								<a href="{{ path('app_discover_product', { id: reduction.id }) }}" class="default-btn">Decouvrez Les Produits
-								</a>
-							</div>
-						</div>
-					</div>
+            <div class="overview-btn">
+              <a
+                href="{{ path('app_discover_product', { id: reduction.id }) }}"
+                class="default-btn"
+                >Decouvrez Les Produits
+              </a>
+            </div>
+          </div>
+        </div>
 
-					<div class="col-lg-6 col-sm-6">
-						<div class="overview-video">
-							<a href="{{ path('app_client_new') }} " class="video-btn popup-youtube">
-								<i style="font-size: 35px; position: absolute; top: 30%;left: 10%;">
-									-{{ reduction.pourcentage }}</i>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		{% endfor %}
-	</div>
+        <div class="col-lg-6 col-sm-6">
+          <div class="overview-video">
+            <a href="{{ path('app_client_new') }} " class="video-btn">
+              <i
+                style="font-size: 35px; position: absolute; top: 30%; left: 10%"
+              >
+                -{{ reduction.pourcentage }}</i
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 </section>

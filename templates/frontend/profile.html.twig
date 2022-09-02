@@ -1,165 +1,177 @@
-{% extends "frontend/index.html.twig" %}
+{% extends "frontend/index.html.twig" %} {% block content %} {# {% if app.user
+and "ROLE_USER" in app.user.role %} #}
+<!-- Start Page Banner -->
+<div class="page-banner-area item-bg1">
+  <div class="d-table">
+    <div class="d-table-cell">
+      <div class="container">
+        <div class="page-banner-content">
+          <h2>PROFILE</h2>
+          <ul>
+            <li>
+              <a href="index.html">Home</a>
+            </li>
+            <li>Details De Vos Activités</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Banner --><!-- Start Gallery Details Area -->
+<section class="gallery-details-area pt-100 pb-70">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-12">
+        <div class="gallery-details-information">
+          <ul>
+            <li>
+              <div class="icon">
+                <i class="bx bx-user"></i>
+              </div>
+              <span>Client:</span>
+              <a href="#" target="_blank">{{ user.nom }}</a>
+              <a href="#" target="_blank">{{ user.prenom }}</a>
+            </li>
+            <li>
+              <div class="icon">
+                <i class="bx bxs-map"></i>
+              </div>
+              <span>Location:</span>
+              {{ user.adresse }}
+            </li>
+            <li>
+              <div class="icon">
+                <i class="bx bx-mail-send"></i>
+              </div>
+              <span>Email: </span>
+              <a href="{{ user.email }}">{{ user.email }}</a>
+            </li>
+            <li>
+              <div class="icon">
+                <i class="bx bx-check"></i>
+              </div>
+              <span>Inscrit Depuis</span>
+              {{ user.createAt|date("d/m/Y", "Europe/Paris") }}
+            </li>
+            <li>
+              <a href="{{ path('app_logout') }}" class="icon">
+                <i class="bx bx-lock"></i>
+              </a>
+              <span>Deconnexion</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="alert alert-info">
+          Modifiez Vos Informations personnel Ici
+        </div>
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        <div class="row">
+          <div class="col-lg-6">
+            <label>Nom</label>
+            {{ form_row(form.nom) }}
+          </div>
 
+          <div class="col-lg-6">
+            <label>prenom</label>
+            {{ form_row(form.prenom) }}
+            <span>{{ form_errors(form.prenom) }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>email</label>
+          {{ form_row(form.email) }}
+          <span>{{ form_errors(form.email) }}</span>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <label>Password</label>
+            {{ form_row(form.password.first) }}
+            <span>{{ form_errors(form.password.first) }}</span>
+          </div>
 
-{% block content %}
+          <div class="col-lg-6">
+            <label>Password</label>
+            {{ form_row(form.password.second) }}
+          </div>
+          {#
+          <p class="description">Au Moins 8 Caractères Pour le Password</p>
+          #}
+        </div>
+        <div class="row">
+          <div class="col-lg-8">
+            <label>adresse</label>
+            {{ form_row(form.adresse) }}
+            <span>{{ form_errors(form.adresse) }}</span>
+          </div>
 
-	{# {% if app.user and "ROLE_USER" in app.user.role %} #}
-	<!-- Start Page Banner -->
-		<div class="page-banner-area item-bg1"> <div class="d-table">
-			<div class="d-table-cell">
-				<div class="container">
-					<div class="page-banner-content">
-						<h2>PROFILE</h2>
-						<ul>
-							<li>
-								<a href="index.html">Home</a>
-							</li>
-							<li>Details De Vos Activités</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div><!-- End Page Banner --><!-- Start Gallery Details Area --><section class="gallery-details-area pt-100 pb-70">
-		<div class="container">
-			<div class="row">
+          <div class="col-lg-4">
+            <label>Telephone</label>
+            {{ form_row(form.telephone) }}
+            <span>{{ form_errors(form.telephone) }}</span>
+          </div>
+        </div>
+        <div class="">
+          <button class="btn btn-warning btn-rounded margin-top-10">
+            {{ button_label|default('Modifiez le Profile') }}
+          </button>
+        </div>
+        {{ form_end(form) }}
+      </div>
+    </div>
+  </div>
 
-				<div class="col-lg-4 col-md-12">
-					<div class="gallery-details-information">
-						<ul>
-							<li>
-								<div class="icon">
-									<i class='bx bx-user'></i>
-								</div>
-								<span>Client:</span>
-								<a href="#" target="_blank">{{ user.nom }}</a>
-								<a href="#" target="_blank">{{ user.prenom }}</a>
-							</li>
-							<li>
-								<div class="icon">
-									<i class='bx bxs-map'></i>
-								</div>
-								<span>Location:</span>
-								{{ user.adresse }}
-							</li>
-							<li>
-								<div class="icon">
-									<i class='bx bx-mail-send'></i>
-								</div>
-								<span>Email:
-								</span>
-								<a href="{{ user.email }}">{{ user.email }}</a>
-							</li>
-							<li>
-								<div class="icon">
-									<i class='bx bx-check'></i>
-								</div>
-								<span>Inscrit Depuis</span>
-								{{ user.createAt|date("d/m/Y", "Europe/Paris") }}
-							</li>
-							<li>
-								<a href="{{ path('app_logout') }}" class="icon">
-									<i class='bx bx-lock'></i>
-								</a>
-								<span>Deconnexion</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-8">
-					<div class="alert alert-info">Modifiez Vos Informations personnel Ici</div>
-					{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-					<div class="row">
+  <section class="cart-area ptb-100">
+    <div class="container">
+      <div class="row">
+        <div class="alert alert-warning">
+          Passer En Revus La liste de Vos Commandes
+        </div>
+        <table
+          id="example5"
+          class="table table-bordered table-striped"
+          style="width: 100%"
+        >
+          <thead>
+            <tr>
+              {#
+              <th class="col-1">COMMANDES</th>
+              #}
+              <th class="col-2">Date Commande</th>
+              <th class="col-2">adresse livraison</th>
+              <th class="col-5">Produit Concerné</th>
+              <th class="col-2">Status de La Commande</th>
+              {#
+              <th class="col-1">Quantié</th>
+              #}
+            </tr>
+          </thead>
 
-						<div class="col-lg-6">
-							<label>Nom</label>
-							{{ form_row(form.nom) }}
-						</div>
-
-						<div class="col-lg-6">
-							<label>prenom</label>
-							{{ form_row(form.prenom) }}
-							<span>{{ form_errors(form.prenom)}}</span>
-						</div>
-					</div>
-					<div class="form-group">
-						<label>email</label>
-						{{ form_row(form.email) }}
-						<span>{{ form_errors(form.email)}}</span>
-					</div>
-					<div class="row">
-
-						<div class="col-lg-6">
-							<label>Password</label>
-							{{ form_row(form.password.first) }}
-							<span>{{ form_errors(form.password.first)}}</span>
-						</div>
-
-						<div class="col-lg-6">
-							<label>Password</label>
-							{{ form_row(form.password.second) }}
-						</div>
-						{# <p class="description">Au Moins 8 Caractères Pour le Password</p> #}
-					</div>
-					<div class="row">
-
-						<div class="col-lg-8">
-							<label>adresse</label>
-							{{ form_row(form.adresse) }}
-							<span>{{ form_errors(form.adresse)}}</span>
-						</div>
-
-						<div class="col-lg-4">
-							<label>Telephone</label>
-							{{ form_row(form.telephone) }}
-							<span>{{ form_errors(form.telephone)}}</span>
-						</div>
-					</div>
-					<div class="">
-						<button class="btn btn-warning btn-rounded margin-top-10">
-							{{ button_label|default('Modifiez le Profile') }}
-						</button>
-					</div>
-					{{ form_end(form) }}
-				</div>
-			</div>
-		</div>
-
-		<section class="cart-area ptb-100">
-			<div class="container">
-				<div class="row">
-					<div class="alert alert-warning">Passer En Revus La liste de Vos Commandes</div>
-					<table id="example5" class="table table-bordered table-striped" style="width:100%">
-						<thead>
-							<tr>
-								{# <th class="col-1">COMMANDES</th> #}
-								<th class="col-2">Date Commande</th>
-								<th class="col-2">adresse livraison</th>
-								<th class="col-5">Produit Concerné</th>
-								<th class="col-2">Status de La Commande</th>
-								{# <th class="col-1">Quantié</th> #}
-
-							</tr>
-						</thead>
-
-						<tbody>
-							{% for order in orders %}
-								<tr>
-									{# <td>{{ order.id }}</td> #}
-									<td>{{ order.dateCmd ? order.dateCmd|date('Y-m-d H:i:s') : '' }}</td>
-									<td>{{ order.getAdresseLivraison() }}</td>
-									<td>
-										{% for item in order.getProduit() %}
-											{{ item.getDesignation() }}
-											<br>
-										{% endfor %}
-									</td>
-									<td>{{ order.status }}</td>
-								</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</section>
-	</section><!-- End Gallery Details Area -->{% endblock %}
+          <tbody>
+            {% for order in orders %}
+            <tr>
+              {#
+              <td>{{ order.id }}</td>
+              #}
+              <td>
+                {{ order.dateCmd ? order.dateCmd|date('Y-m-d H:i:s') : '' }}
+              </td>
+              <td>{{ order.getAdresseLivraison() }}</td>
+              <td>
+                {% for item in order.getProduit() %}
+                {{ item.getDesignation() }}
+                <br />
+                {% endfor %}
+              </td>
+              <td>{{ order.status }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</section>
+<!-- End Gallery Details Area -->{% endblock %}

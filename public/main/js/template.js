@@ -4,6 +4,7 @@
 //Primary use:	Sunny Admin - Responsive Admin Template
 
 //should be included in all pages. It controls some layout
+
 let elements_li = document.getElementsByClassName("treeview");
 
 for (let li_element of elements_li) {

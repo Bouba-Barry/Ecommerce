@@ -89,7 +89,7 @@
                 <span class="font-size-20">{{ user.produits | length }}</span>
               </li>
               <li>
-                <span class="opacity-60">Qte Total</span><br />
+                <span class="opacity-60">Quantité Total</span><br />
                 <span class="font-size-20">
                   {% set qte = 0 %} {% for produit in user.produits %} {% set
                   qte = qte + produit.getQteStock() %} {% endfor %}
@@ -98,8 +98,8 @@
               </li>
 
               <li>
-                <span class="opacity-60">CA</span><br />
-                <span class="font-size-20">30000DH</span>
+                <span class="opacity-60">Chiffre D'Affaire</span><br />
+                <span class="font-size-20">{{ CA }}</span>
               </li>
             </ul>
           </div>
@@ -116,7 +116,7 @@
                       }}</span>
                     </p>
                     <p>
-                      Phone :<span class="text-gray pl-10">{{
+                      Telephone :<span class="text-gray pl-10">{{
                         user.telephone
                       }}</span>
                     </p>
@@ -237,7 +237,7 @@
                 <a
                   class="avatar"
                   href="#"
-                  title="Contacter {{ user1.nom }} {{ user1.prenom }}"
+                  title="{{ user1.nom }} {{ user1.prenom }}"
                   ><img
                     src="{{asset('uploads/users/' ~ user1.profile )}}"
                     alt=""

@@ -177,4 +177,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $queryBuilder->getQuery()->getResult();
     }
+
+    public function CAuser($id){
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "
+        SELECT SUM(c.total_vente) FROM  commande_produit c, produit p
+        WHERE p.user_id=:id and c.produit_id = p.id
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['id' => $id]);
+
+        return $resultSet->fetchOne();
+
+
+    }
+
 }
