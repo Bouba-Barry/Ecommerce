@@ -79,10 +79,11 @@ class FeadBackController extends AbstractController
         $feadBack = new FeadBack();
         $form = $this->createForm(FeadBackType::class, $feadBack);
         $form->handleRequest($request);
-
+        $sujet = $request->get('msg_subject');
         if ($form->isSubmitted() && $form->isValid()) {
 
             $feadBack->setUser($this->getUser());
+            $feadBack->setTitre($sujet);
 
             $feadBackRepository->add($feadBack, true);
             $this->addFlash('success', 'Votre avis a été pris en compte avec succès');

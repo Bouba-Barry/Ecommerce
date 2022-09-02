@@ -51,18 +51,21 @@
 						<div class="box overflow-hidden pull-up hov-rs">
 							<div class="box-body text-center">
 								<div class="icon bg-warning-light rounded w-60 h-60 mx-auto">
-									<i class="text-warning mr-0 font-size-24 mdi mdi-car"></i>
+									<i class="text-secondary mr-0 font-size-24 mdi mdi-chart-line"></i>
+
 								</div>
 								<div>
 									<p class="text-mute mt-20 mb-0 font-size-16">
-										Stats sales this Month
+										Revenu Total du jour
 									</p>
-									<h3 class="text-dark mb-0 font-weight-500">
-										14550 $
-										<small class="text-info">
-											<i class="fa fa-caret-down"></i>
-										</small>
-									</h3>
+									<h6 class="text-dark mb-0 font-weight-500">
+										{% if dayRevenus %}
+											{{ dayRevenus }}
+										{% else %}
+											0 dh
+										{% endif %}
+										<small class="text-info"></small>
+									</h6>
 								</div>
 							</div>
 						</div>
@@ -136,8 +139,8 @@
 								<div class="box overflow-hidden">
 									<div class="box-body pb-0">
 										<div>
-											<h2 class="text-dark mb-0 font-weight-500">{{ totalClient }}</h2>
-											<p class="text-mute mb-0 font-size-20">Le TOTAL DE CLIENT</p>
+											<h2 class="text-dark mb-0 font-weight-500">{{ nbreVenteProd }}</h2>
+											<p class="text-mute mb-0 font-size-20">Un apperçu du nombre de produits que vous revendez par mois</p>
 										</div>
 									</div>
 									<div class="box-body p-0">
@@ -183,110 +186,110 @@
 
 					</div>
 					{# <div class="col-xxxl-5 col-xl-6 col-12">
-																<div class="box overflow-hidden">
-																	<div class="box-body p-0">
-																		<div class="row no-gutters">
-																			<div class="col-md-6 col-12">
-																				<div class="box no-shadow mb-0 rounded-0">
-																					<div class="box-header no-border">
-																						<h4 class="box-title mb-0">Last Posts</h4>
-																					</div>
-																					<div class="box-body p-0">
-																						<div class="media-list media-list-hover">
-																							<a class="media media-single hover-white" href="#">
-																								<div class="media-body">
-																									<h5>
-																										Meet Craftwork. Thoroghly Handpicked UI
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										                                    Freebies
-																									</h5>
-																								</div>
-																							</a>
-																							<a class="media media-single hover-white" href="#">
-																								<div class="media-body">
-																									<h5>Cook Design Right!</h5>
-																								</div>
-																							</a>
-																							<a class="media media-single hover-white" href="#">
-																								<div class="media-body">
-																									<h5>5 Reasons to Start Own Bussines</h5>
-																								</div>
-																							</a>
-																							<a class="media media-single hover-white" href="#">
-																								<div class="media-body">
-																									<h5>How to Make Interface</h5>
-																								</div>
-																							</a>
-																							<a class="media media-single hover-white" href="#">
-																								<div class="media-body">
-																									<h5>Show Me Your Design</h5>
-																								</div>
-																							</a>
-																							<a class="media media-single hover-white" href="#">
-																								<div class="media-body">
-																									<h5>
-																										She gave my mother such a turn, that I have
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										                                    always bee...
-																									</h5>
-																								</div>
-																							</a>
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																			<div class="col-md-6 col-12">
-																				<div class="box no-shadow mb-0 bg-img rounded-0" data-overlay="5" style="
-																																																																																																																																																																																																																																																																																																																																																																																																																																																										                            background-image: url(../images/gallery/landscape7.jpg);
-																																																																																																																																																																																																																																																																																																																																																																																																																																																										                          ">
-																					<div class="box-header no-border">
-																						<h4 class="box-title mb-0">
-																							<span class="avatar avatar-lg bg-success">DK</span>
-																						</h4>
-																						<ul class="box-controls">
-																							<li>
-																								<a href="javascript:void(0)">
-																									<i class="ti-reload text-white"></i>
-																								</a>
-																							</li>
-																						</ul>
-																					</div>
-																					<div class="box-body">
-																						<div class="text-right mt-100 pt-20">
-																							<h3 class="text-white">
-																								<small class="mr-10">
-																									<i class="fa fa-commenting"></i>
-																								</small>
-																								3
-																							</h3>
-																							<h2 class="text-white">
-																								<small class="mr-10">
-																									<i class="fa fa-heart"></i>
-																								</small>
-																								23
-																							</h2>
-																							<h1 class="text-white">
-																								<small class="mr-10">
-																									<i class="fa fa-eye"></i>
-																								</small>
-																								189
-																							</h1>
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-															<div class="col-xxxl-7 col-xl-6 col-12">
-																<div class="box">
-																	<div class="box-header">
-																		<h4 class="box-title">Recent Stats</h4>
-																	</div>
-																	<div class="box-body">
-																		<div id="recent_trend"></div>
-																	</div>
-																</div>
-															</div> #}
+																																																																							<div class="box overflow-hidden">
+																																																																								<div class="box-body p-0">
+																																																																									<div class="row no-gutters">
+																																																																										<div class="col-md-6 col-12">
+																																																																											<div class="box no-shadow mb-0 rounded-0">
+																																																																												<div class="box-header no-border">
+																																																																													<h4 class="box-title mb-0">Last Posts</h4>
+																																																																												</div>
+																																																																												<div class="box-body p-0">
+																																																																													<div class="media-list media-list-hover">
+																																																																														<a class="media media-single hover-white" href="#">
+																																																																															<div class="media-body">
+																																																																																<h5>
+																																																																																	Meet Craftwork. Thoroghly Handpicked UI
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	                                    Freebies
+																																																																																</h5>
+																																																																															</div>
+																																																																														</a>
+																																																																														<a class="media media-single hover-white" href="#">
+																																																																															<div class="media-body">
+																																																																																<h5>Cook Design Right!</h5>
+																																																																															</div>
+																																																																														</a>
+																																																																														<a class="media media-single hover-white" href="#">
+																																																																															<div class="media-body">
+																																																																																<h5>5 Reasons to Start Own Bussines</h5>
+																																																																															</div>
+																																																																														</a>
+																																																																														<a class="media media-single hover-white" href="#">
+																																																																															<div class="media-body">
+																																																																																<h5>How to Make Interface</h5>
+																																																																															</div>
+																																																																														</a>
+																																																																														<a class="media media-single hover-white" href="#">
+																																																																															<div class="media-body">
+																																																																																<h5>Show Me Your Design</h5>
+																																																																															</div>
+																																																																														</a>
+																																																																														<a class="media media-single hover-white" href="#">
+																																																																															<div class="media-body">
+																																																																																<h5>
+																																																																																	She gave my mother such a turn, that I have
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	                                    always bee...
+																																																																																</h5>
+																																																																															</div>
+																																																																														</a>
+																																																																													</div>
+																																																																												</div>
+																																																																											</div>
+																																																																										</div>
+																																																																										<div class="col-md-6 col-12">
+																																																																											<div class="box no-shadow mb-0 bg-img rounded-0" data-overlay="5" style="
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	                            background-image: url(../images/gallery/landscape7.jpg);
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	                          ">
+																																																																												<div class="box-header no-border">
+																																																																													<h4 class="box-title mb-0">
+																																																																														<span class="avatar avatar-lg bg-success">DK</span>
+																																																																													</h4>
+																																																																													<ul class="box-controls">
+																																																																														<li>
+																																																																															<a href="javascript:void(0)">
+																																																																																<i class="ti-reload text-white"></i>
+																																																																															</a>
+																																																																														</li>
+																																																																													</ul>
+																																																																												</div>
+																																																																												<div class="box-body">
+																																																																													<div class="text-right mt-100 pt-20">
+																																																																														<h3 class="text-white">
+																																																																															<small class="mr-10">
+																																																																																<i class="fa fa-commenting"></i>
+																																																																															</small>
+																																																																															3
+																																																																														</h3>
+																																																																														<h2 class="text-white">
+																																																																															<small class="mr-10">
+																																																																																<i class="fa fa-heart"></i>
+																																																																															</small>
+																																																																															23
+																																																																														</h2>
+																																																																														<h1 class="text-white">
+																																																																															<small class="mr-10">
+																																																																																<i class="fa fa-eye"></i>
+																																																																															</small>
+																																																																															189
+																																																																														</h1>
+																																																																													</div>
+																																																																												</div>
+																																																																											</div>
+																																																																										</div>
+																																																																									</div>
+																																																																								</div>
+																																																																							</div>
+																																																																						</div>
+																																																																						<div class="col-xxxl-7 col-xl-6 col-12">
+																																																																							<div class="box">
+																																																																								<div class="box-header">
+																																																																									<h4 class="box-title">Recent Stats</h4>
+																																																																								</div>
+																																																																								<div class="box-body">
+																																																																									<div id="recent_trend"></div>
+																																																																								</div>
+																																																																							</div>
+																																																																						</div> #}
 					<div class="col-12">
 						<div class="box">
 							<div class="box-header">
@@ -326,8 +329,8 @@
 															<div class="d-flex align-items-center">
 																<div class="flex-shrink-0 mr-20">
 																	<div class="bg-img h-50 w-50" style="
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                                      background-image: url('{{ asset('uploads/produits/' ~ produit.getImageProduit() ) }}');
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                                    "></div>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		                                      background-image: url('{{ asset('uploads/produits/' ~ produit.getImageProduit() ) }}');
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		                                    "></div>
 																</div>
 
 																<div>
@@ -379,8 +382,8 @@
 																<i class="fa fa-eye"></i>
 															</a>
 															{# <a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-md btn-warning">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                          <i class="fa fa-edit"></i>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										         	               		</a> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	                          <i class="fa fa-edit"></i>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															         	               		</a> #}
 														</td>
 													</tr>
 

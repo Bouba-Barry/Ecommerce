@@ -1,296 +1,274 @@
-{% extends "frontend/index.html.twig" %} {% block content %} {#
-<p id="panierlength" style="display: none">{{ length }}</p>
-#}
-<p id="user_id" style="display: none">
-  {% if app.user %} {{ app.user.id }} {% endif %}
-</p>
-<!-- Start Page Banner -->
-<div class="page-banner-area item-bg2">
-  <div class="d-table">
-    <div class="d-table-cell">
-      <div class="container">
-        <div class="page-banner-content">
-          
-          <h2>Chariot</h2>
-          <ul>
-            <li>
-              <a href="index.html">Acceuil</a>
-            </li>
-            <li>Chariot</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Page Banner -->
+{% extends "frontend/index.html.twig" %}
+{% block title %}
+	Panier
+{% endblock %}
+{% block content %}
+	{#
+				<p id="panierlength" style="display: none">{{ length }}</p>
+				#}
+	<p id="user_id" style="display: none">
+		{% if app.user %}
+			{{ app.user.id }}
+		{% endif %}
+	</p>
+	<!-- Start Page Banner -->
+	<div class="page-banner-area item-bg2">
+		<div class="d-table">
+			<div class="d-table-cell">
+				<div class="container">
+					<div class="page-banner-content">
 
-<!-- Start Cart Area -->
-<section class="cart-area ptb-100">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 col-md-12">
-        <form>
-          <div class="cart-table table-responsive">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">Product</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Variations</th>
-                  <th scope="col">Unit Price</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for panier_produit in panier_produits %} {% for produit in
-                produits %} {% if produit.id == panier_produit.produit_id %}
-                
-                {% set panier_prod_variations = panier_produit.variations|replace({'["': "" , '"]':"" })  %}
-                {% set panier_prod_variations = panier_prod_variations|replace({'"': ""})  %}
-                {% set foo = panier_prod_variations|split(',') %}
-                
+						<h2>Chariot</h2>
+						<ul>
+							<li>
+								<a href="index.html">Acceuil</a>
+							</li>
+							<li>Chariot</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Page Banner -->
 
-                <tr>
-                  <td class="product-thumbnail">
-                    <a href="#">
-                      <img
-                        src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}"
-                        alt="item"
-                      />
-                    </a>
-                  </td>
-                  <td class="product-name">
-                    <a href="#">{{ produit.designation }}</a>
-                  </td>
-                  <td style="display: none">{{ produit.id }}</td>
-                  {% if panier_produit.variations|length != 0 %}
-                  <td class="product-name">
-                    <p style="display: none;">{{ panier_produit.variations }}</p>
-                    {% for attribut in attributs %}
-                      {% for variation in foo  %}
-                      {% for variation_attribut in attribut.getVariations() %}
-                        {% if variation == variation_attribut.getNom() %}
-                        <a href="#"> {{ attribut.getNom() }} : {{ variation }} </a><br>
-                        {% endif %}
-                      {% endfor %}
-                      {% endfor %}
-                    {% endfor %}
-                    
-                  </td>
-                  {% else %}
-                  <td class="product-name">
-                    <a href="#"></a>
-                  </td>
-                  {% endif %}
-                  {% if produit.getType()=="stable" %}
-                 
-                  <td class="product-price">
-                    <span class="unit-amount prix">
-                      {% if produit.getReduction()|length != 0 %}{{
+	<!-- Start Cart Area -->
+	<section class="cart-area ptb-100">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12">
+					<form>
+						<div class="cart-table table-responsive">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th scope="col">Produit</th>
+										<th scope="col">Nom</th>
+										<th scope="col">Variations</th>
+										<th scope="col">Prix Unitaire</th>
+										<th scope="col">Quantité</th>
+										<th scope="col">Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for panier_produit in panier_produits %}
+										{% for produit in
+                produits %}
+											{% if produit.id == panier_produit.produit_id %}
+
+												{% set panier_prod_variations = panier_produit.variations|replace({'["': "" , '"]':"" })  %}
+												{% set panier_prod_variations = panier_prod_variations|replace({'"': ""})  %}
+												{% set foo = panier_prod_variations|split(',') %}
+
+
+												<tr>
+													<td class="product-thumbnail">
+														<a href="#">
+															<img src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }}" alt="item"/>
+														</a>
+													</td>
+													<td class="product-name">
+														<a href="#">{{ produit.designation }}</a>
+													</td>
+													<td style="display: none">{{ produit.id }}</td>
+													{% if panier_produit.variations|length != 0 %}
+														<td class="product-name">
+															<p style="display: none;">{{ panier_produit.variations }}</p>
+															{% for attribut in attributs %}
+																{% for variation in foo  %}
+																	{% for variation_attribut in attribut.getVariations() %}
+																		{% if variation == variation_attribut.getNom() %}
+																			<a href="#">
+																				{{ attribut.getNom() }}
+																				:
+																				{{ variation }}
+																			</a><br>
+																		{% endif %}
+																	{% endfor %}
+																{% endfor %}
+															{% endfor %}
+
+														</td>
+													{% else %}
+														<td class="product-name">
+															<a href="#"></a>
+														</td>
+													{% endif %}
+													{% if produit.getType()=="stable" %}
+
+														<td class="product-price">
+															<span class="unit-amount prix">
+																{% if produit.getReduction()|length != 0 %}
+																	{{
                         produit.getNouveauPrix()
-                      }} DH {% else %} {{ produit.getAncienPrix() }} DH {% endif
-                      %}</span
-                    >
-                  </td>
-                  {% else %}
-                  <td class="product-price">
-                    {% for quantite in quantities %}
-                    
+                      }}
+																	DH
+																{% else %}
+																	{{ produit.getAncienPrix() }}
+																	DH
+																{% endif
+                      %}
+															</span>
+														</td>
+													{% else %}
+														<td class="product-price">
+															{% for quantite in quantities %}
 
-                    {% set var = "[" %}
-                    {% for variation in quantite.Variations  %}
 
-                     {% set var = var ~ '"' ~ variation ~ '",'  %}
-                      
-                    {% endfor %}
-                    
-                    {% set var = var|slice(0,var|length-1) %}
-                    {% set var = var ~ ']' %}
-                    {# <pre>ddd
-                      {{ dump(var) }}
-                    </pre>
-                    <pre>d
-                      {{ dump(panier_produit.variations) }}
-                    </pre> #}
-                    
-                      {% if quantite.getProduit().getId() == panier_produit.produit_id and var == panier_produit.variations %}
-                      <span class="unit-amount prix" >
-                        {{ quantite.prix }}DH </span
-                         >
-                      {% endif %}
-                   
-                      {% endfor %}
-                   
-                  </td>
-                  {% endif %}
+																{% set var = "[" %}
+																{% for variation in quantite.Variations  %}
 
-                  {% if panier_produit.variations != "" %}
-                  <td class="product-quantity">
-                    <div class="input-counter variation-nom">
-                      <span
-                        id="progressbtn2{{ produit.id }}{{
-                          panier_produit.variations
-                        }}"
-                        class="minus-btn progressbtn2"
-                      >
-                        <i class="bx bx-minus"></i>
-                      </span>
-                      <input
-                        min="1"
-                        type="text"
-                        class="valprogress"
-                        value="{{ panier_produit.qte_produit }}"
-                      />
-                      <span
-                        class="plus-btn progressbtn1"
-                        id="progressbtn1{{ produit.id }}{{
-                          panier_produit.variations
-                        }}"
-                      >
-                        <i class="bx bx-plus"></i>
-                      </span>
-                    </div>
-                  </td>
-                  {% else %}
-                  <td class="product-quantity">
-                    <div class="input-counter">
-                      <span
-                        id="progressbtn2{{ produit.id }}"
-                        class="minus-btn progressbtn2"
-                      >
-                        <i class="bx bx-minus"></i>
-                      </span>
-                      <input
-                        min="1"
-                        type="text"
-                        class="valprogress"
-                        value="{{ panier_produit.qte_produit }}"
-                      />
-                      <span
-                        class="plus-btn progressbtn1"
-                        id="progressbtn1{{ produit.id }}"
-                      >
-                        <i class="bx bx-plus"></i>
-                      </span>
-                    </div>
-                  </td>
-                  {% endif %}
-                  <td class="product-subtotal">
-                    {% if produit.getType()=="stable" %}
-                    <span class="subtotal-amount total_par_produit">
-                      {% if produit.getReduction()|length != 0 %}{{
+																	{% set var = var ~ '"' ~ variation ~ '",'  %}
+
+																{% endfor %}
+
+																{% set var = var|slice(0,var|length-1) %}
+																{% set var = var ~ ']' %}
+																{# <pre>ddd
+																																																																                      {{ dump(var) }}
+																																																																                    </pre>
+																																																																                    <pre>d
+																																																																                      {{ dump(panier_produit.variations) }}
+																																																																                    </pre> #}
+
+																{% if quantite.getProduit().getId() == panier_produit.produit_id and var == panier_produit.variations %}
+																	<span class="unit-amount prix">
+																		{{ quantite.prix }}DH
+																	</span>
+																{% endif %}
+
+															{% endfor %}
+
+														</td>
+													{% endif %}
+
+													{% if panier_produit.variations != "" %}
+														<td class="product-quantity">
+															<div class="input-counter variation-nom">
+																<span id="progressbtn2{{ produit.id }}{{
+																																																																				                          panier_produit.variations
+																																																																				                        }}" class="minus-btn progressbtn2">
+																	<i class="bx bx-minus"></i>
+																</span>
+																<input min="1" type="text" class="valprogress" value="{{ panier_produit.qte_produit }}"/>
+																<span class="plus-btn progressbtn1" id="progressbtn1{{ produit.id }}{{
+																																																																								                          panier_produit.variations
+																																																																								                        }}">
+																	<i class="bx bx-plus"></i>
+																</span>
+															</div>
+														</td>
+													{% else %}
+														<td class="product-quantity">
+															<div class="input-counter">
+																<span id="progressbtn2{{ produit.id }}" class="minus-btn progressbtn2">
+																	<i class="bx bx-minus"></i>
+																</span>
+																<input min="1" type="text" class="valprogress" value="{{ panier_produit.qte_produit }}"/>
+																<span class="plus-btn progressbtn1" id="progressbtn1{{ produit.id }}">
+																	<i class="bx bx-plus"></i>
+																</span>
+															</div>
+														</td>
+													{% endif %}
+													<td class="product-subtotal">
+														{% if produit.getType()=="stable" %}
+															<span class="subtotal-amount total_par_produit">
+																{% if produit.getReduction()|length != 0 %}
+																	{{
                         panier_produit.qte_produit * produit.getNouveauPrix()
-                      }}DH {% else %}
-                      {{
+                      }}DH
+																{% else %}
+																	{{
                         panier_produit.qte_produit * produit.getAncienPrix()
-                      }}DH {% endif %}
-                    </span>
-                    {% else %}
-                    
-                    {% for quantite in quantities %}
-                    {% set var = "[" %}
-                    {% for variation in quantite.Variations  %}
-                     {% set var = var ~ '"' ~ variation ~ '",'  %}
-                      
-                    {% endfor %}
-                    
-                    {% set var = var|slice(0,var|length-1) %}
-                    {% set var = var ~ ']' %}
-            
-                    
-                      {% if quantite.getProduit().getId() == panier_produit.produit_id and var == panier_produit.variations %}
-                      <span class="subtotal-amount total_par_produit">
-                       {{
+                      }}DH
+																{% endif %}
+															</span>
+														{% else %}
+
+															{% for quantite in quantities %}
+																{% set var = "[" %}
+																{% for variation in quantite.Variations  %}
+																	{% set var = var ~ '"' ~ variation ~ '",'  %}
+
+																{% endfor %}
+
+																{% set var = var|slice(0,var|length-1) %}
+																{% set var = var ~ ']' %}
+
+
+																{% if quantite.getProduit().getId() == panier_produit.produit_id and var == panier_produit.variations %}
+																	<span class="subtotal-amount total_par_produit">
+																		{{
                           panier_produit.qte_produit * quantite.prix
-                        }} DH 
-                      </span>
-                      {% endif %}
-                   
-                      {% endfor %}
+                        }}
+																		DH
+																	</span>
+																{% endif %}
+
+															{% endfor %}
 
 
+														{% endif %}
 
+														{% if panier_produit.variations != "" %}
+															<a href="{{ path('app_panier_delete_variations', { id: produit.id, user_id: app.user.id, variations : panier_produit.variations, }) }}" class="remove">
+																<i class="bx bx-trash"></i>
+															</a>
+														</td>
+													{% else %}
+														<a href="{{ path('app_panier_delete', { id: produit.id, user_id: app.user.id }) }}" class="remove">
+															<i class="bx bx-trash"></i>
+														</a>
+													</td>
+												{% endif %}
+											</tr>
+										{% endif %}
+									{% endfor %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					<div class="cart-buttons">
+						<div class="row align-items-center">
+							<div class="col-lg-7 col-sm-7 col-md-7">
+								<a href="{{ path('app_home') }}" class="default-btn">
+									retour à l'accueil
+								</a>
+							</div>
+						</div>
+					</div>
 
-                    {% endif %}
-
-                    {% if panier_produit.variations != "" %}
-                    <a
-                    href="{{
-                      path('app_panier_delete_variations', {
-                        id: produit.id,
-                        user_id: app.user.id,
-                        variations : panier_produit.variations,
-                      })
-                    }}"
-                    class="remove"
-                  >
-                    <i class="bx bx-trash"></i>
-                  </a>
-                </td>
-                    {% else %}
-                    <a
-                      href="{{
-                        path('app_panier_delete', {
-                          id: produit.id,
-                          user_id: app.user.id
-                        })
-                      }}"
-                      class="remove"
-                    >
-                      <i class="bx bx-trash"></i>
-                    </a>
-                  </td>
-                  {% endif %}
-                </tr>
-                {% endif %} {% endfor %} {% endfor %}
-              </tbody>
-            </table>
-          </div>
-          <div class="cart-buttons">
-            <div class="row align-items-center">
-              <div class="col-lg-7 col-sm-7 col-md-7">
-                <a href="{{ path('app_home') }}" class="default-btn">
-                  retour à l'accueil
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="cart-totals">
-            <h3>Totaux du panier</h3>
-            <ul>
-              <li>
-                sous total
-                <span id="subtotal"> </span>
-              </li>
-              <li>
-                TVA
-                <span id="tva">20%</span>
-              </li>
-              <li>
-                Total
-                <span><b id="total"></b></span>
-              </li>
-            </ul>
-            <a href="#" id="checkout_process" class="default-btn">
-              Passer à la caisse
-            </a>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+					<div class="cart-totals">
+						<h3>Totaux du panier</h3>
+						<ul>
+							<li>
+								sous total
+								<span id="subtotal"></span>
+							</li>
+							<li>
+								TVA
+								<span id="tva">20%</span>
+							</li>
+							<li>
+								Total
+								<span>
+									<b id="total"></b>
+								</span>
+							</li>
+						</ul>
+						<a href="#" id="checkout_process" class="default-btn">
+							Passer à la caisse
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </section>
-<!-- End Cart Area -->
-
-<!-- Start Footer Area -->
+<!-- End Cart Area --><!-- Start Footer Area -->
 
 <!-- End Go Top Area -->
 
-<!-- Jquery Slim JS -->
-{% endblock %} {% block javascripts %}
-<script src="{{ asset('js/panier1.js') }}"></script>
-
-{% endblock %}
+<!-- Jquery Slim JS -->{% endblock %}{% block javascripts %}
+<script src="{{ asset('js/panier1.js') }}"></script>{% endblock %}

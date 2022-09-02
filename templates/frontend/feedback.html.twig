@@ -1,5 +1,7 @@
 {% extends "frontend/index.html.twig" %}
-
+{% block title %}
+	Contact
+{% endblock %}
 {% block content %}
 
 
@@ -7,15 +9,15 @@
 	<section class="contact-area ptb-100">
 		<div class="container">
 			<div id="message">
-			{% for message in app.flashes('success') %}
-			<div class="alert alert-success">
-			  {{ message }}
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-success">
+						{{ message }}
+					</div>
+				{% endfor %}
 			</div>
-			{% endfor %}
-		  </div>
 			<div class="section-title">
 				<h2>Partager Votre Expérience Avec Les Autres</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua quis ipsum suspendisse</p>
+				<p>Aidez Nous, en partageans Votre Expérience, votre vecu lors de vos achats. Car Nous tiendrons aussi compte de Vos avis pour nous améliorer</p>
 			</div>
 
 			<div
@@ -23,41 +25,21 @@
 				{# <form action=" {{ path('app_client_feedback',{'id': app.user.id }) }}" method="post"> #}
 				{{ form_start(form)}}
 				<div class="row">
+
 					<div class="col-lg-6 col-md-6">
 						<div class="form-group">
-							<label>Pseudo Or Name *</label>
+							<label>Nom Ou pseudo *</label>
 							{# <input type="text" name="name" id="name" class="form-control" required data-error="Please enter your name"> #}
 							{{ form_row(form.pseudo) }}
 							<div class="help-block with-errors"></div>
 						</div>
 					</div>
+					{# </div> #}
 
-					{# <div class="col-lg-6 col-md-6">
-																																																																		<div class="form-group">
-																																																																			<label>Last Name*</label>
-																																																																			<input type="text" name="name" id="name" class="form-control" required data-error="Please enter your name">
-																																																																			<div class="help-block with-errors"></div>
-																																																																		</div>
-																																																																	</div> #}
 
-					{# <div class="col-lg-6 col-md-6">
-																																																																																																						<div class="form-group">
-																																																																																																							<label>Your Email*</label>
-																																																																																																							<input type="email" name="email" id="email" class="form-control" required data-error="Please enter your email">
-																																																																																																							<div class="help-block with-errors"></div>
-																																																																																																						</div>
-																																																																																																					</div> #}
-
-					{# <div class="col-lg-6 col-md-6">
-																																																																																																<div class="form-group">
-																																																																																																	<label>Your Phone*</label>
-																																																																																																	<input type="text" name="phone_number" id="phone_number" required data-error="Please enter your number" class="form-control">
-																																																																																																	<div class="help-block with-errors"></div>
-																																																																																																</div>
-																																																																																															</div> #}
-
-						<div class="col-lg-6 col-md-6"> <div class="form-group">
-							<label>Your Subject*</label>
+					<div class="col-lg-6 col-md-6">
+						<div class="form-group">
+							<label>Sujet*</label>
 							<input type="text" name="msg_subject" id="msg_subject" class="form-control" required data-error="Please enter your subject">
 							<div class="help-block with-errors"></div>
 						</div>
@@ -65,7 +47,7 @@
 
 					<div class="col-lg-12 col-md-12">
 						<div class="form-group">
-							<label>Your Message*</label>
+							<label>Votre message*</label>
 							{# <textarea name="message" class="form-control" id="message" cols="30" rows="6" required data-error="Write your message"></textarea> #}
 							{{ form_row(form.content) }}
 							<div class="help-block with-errors"></div>
@@ -73,7 +55,7 @@
 					</div>
 
 					<div class="col-lg-12 col-md-12">
-						<button class="btn btn-warning">{{ button_label|default('Send') }}</button>
+						<button class="default-btn">{{ button_label|default('Soumettre') }}</button>
 
 
 						<div id="msgSubmit" class="h3 text-center hidden"></div>
@@ -84,6 +66,4 @@
 				{{ form_end(form) }}
 			</div>
 		</div>
-	</section>
-	<!-- End Contact Area -->
-{% endblock %}
+	</section><!-- End Contact Area -->{% endblock %}
