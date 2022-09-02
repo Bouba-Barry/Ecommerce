@@ -807,12 +807,13 @@ class HomeController extends AbstractController
         $salesMonth = $produitRepository->findSaleMonth();
         // dd($salesMonth[0]["revenu"]);
         // dd($bestEmployer);
-
+        $saleDay = $commandeRepository->findSaleDays();
         $cmdTraiter = count($commandeRepository->findCmdStat("traitée"));
         $cmdAnnuler = count($commandeRepository->findCmdStat("annulée"));
         // produit ajouter il y'a au max un mois
         $productRecent = $produitRepository->findRecentProduct();
 
+        $prod_vente_month = $commandeRepository->findNbreOrder();
 
         return $this->render('home/dashbord.html.twig', [
             'clients' => $clientRecent,
@@ -824,7 +825,9 @@ class HomeController extends AbstractController
             'bestWorker' => $bestEmployer,
             'cmdTraiter' => $cmdTraiter,
             'cmdAnnuler' => $cmdAnnuler,
-            'revenu' => $salesMonth[0]["revenu"]
+            'revenu' => $salesMonth[0]["revenu"],
+            'dayRevenus' => $saleDay[0]["revenu"],
+            'nbreVenteProd' => $prod_vente_month[0]['prod_vente']
         ]);
     }
 

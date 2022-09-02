@@ -1,5 +1,7 @@
 {% extends 'frontend/index.html.twig' %}
-
+{% block title %}
+	Inscription
+{% endblock %}
 {% block content %}
 
 	<!-- Start Page Banner -->
@@ -8,12 +10,12 @@
 			<div class="d-table-cell">
 				<div class="container">
 					<div class="page-banner-content">
-						<h2>Register</h2>
+						<h2>Inscription</h2>
 						<ul>
 							<li>
-								<a href="index.html">Home</a>
+								<a href="{{ path('app_home') }}">Accueil</a>
 							</li>
-							<li>Register</li>
+							<li>Inscription</li>
 						</ul>
 					</div>
 				</div>
@@ -27,7 +29,7 @@
 	<section class="register-area ptb-100">
 		<div class="container">
 			<div class="register-form">
-				<h2>Register</h2>
+				<h2>Créer Un Compte</h2>
 
 				{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 				<div class="form-group">

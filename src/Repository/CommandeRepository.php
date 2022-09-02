@@ -117,4 +117,39 @@ class CommandeRepository extends ServiceEntityRepository
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
+
+    public function findSaleDays()
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        SELECT SUM(f.total_vente) as 'revenu' FROM produit p, commande_produit f
+        WHERE p.id = f.produit_id and (DATEDIFF(CURRENT_TIMESTAMP(), f.create_at)  BETWEEN 0 and 1)
+        ORDER BY f.create_at DESC
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+
+    public function findNbreOrder()
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "
+        SELECT SUM(f.qte_cmd) as 'prod_vente' FROM produit p, commande_produit f
+        WHERE p.id = f.produit_id and (DATEDIFF(CURRENT_TIMESTAMP(), f.create_at)  BETWEEN 0 and 31)
+        Group by f.produit_id
+        ORDER BY f.create_at DESC
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 }

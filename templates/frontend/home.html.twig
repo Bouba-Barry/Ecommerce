@@ -16,6 +16,7 @@
       </video>
       {% else %} {% set val = 0 %} {% for image in slide.getLiens() %} {% if val
       == 0 %}
+<<<<<<< HEAD
       <div class="carousel-item active">
         {% else %}
         <div class="carousel-item">
@@ -71,6 +72,42 @@
       </div>
     </div>
     {% else %} {% include 'frontend/_reduction.html.twig' %} {% endif %}
+=======
+								<div class="carousel-item active">
+								{% else %}
+									<div class="carousel-item">
+									{% endif %}
+									{% set val = 1 %}
+									<div class="carousel-caption">
+										<div class="container">
+											<div class="row justify-content-center">
+												<div class="col-lg-2"></div>
+												<div class="col-12 col-lg-8">
+													<a href="{{ image.getUrL() }}">
+														<img style="width: 100%; height: 100%" src="{{ asset('FrontOffice/slide/' ~ image.getImage() ) }}" alt=""/>
+													</a>
+												</div>
+												<div class="col-lg-2"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						{% endif %}
+						<div class="carousel-control-prev" data-bs-target="#header-carousel" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon precedent" aria-hidden="true"></span>
+							<span class="precedent"></span>
+						</div>
+						<div class="carousel-control-next" data-bs-target="#header-carousel" data-bs-slide="next">
+							<span class="carousel-control-next-icon suivant" aria-hidden="true"></span>
+							<span class="suivant"></span>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				{% include 'frontend/_reduction.html.twig' %}
+			{% endif %}
+>>>>>>> c52866b (translate all the pages)
 
     <!-- End Main Banner Area -->
 
@@ -88,6 +125,7 @@
           <p></p>
         </div>
 
+<<<<<<< HEAD
         <div class="row">
           {% for categorie in categories %}
           <div class="col-lg-3 col-md-6">
@@ -166,6 +204,40 @@
             <h2>Produits Le plus Achété Du Mois</h2>
             <p></p>
           </div>
+=======
+					<div class="row">
+						{% for categorie in categories %}
+							<div class="col-lg-3 col-md-6">
+								<div class="single-services-box">
+									<div class="icon">
+										{% if categorie.getIcone() == NULL %}
+											<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slack">
+												<path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"></path>
+												<path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path>
+												<path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"></path>
+												<path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"></path>
+												<path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"></path>
+												<path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"></path>
+												<path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"></path>
+												<path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"></path>
+											</svg>
+										{% else %}
+											<img src="{{ asset('uploads/categories/' ~ categorie.getIcone() ) }} "/>
+										{% endif %}
+									</div>
+									<h3>{{ categorie.titre }}</h3>
+
+									<a href="{{ path('app_prod_by_cate', { id: categorie.id }) }}" class="read-btn">Voir Les produits +</a>
+								</div>
+							</div>
+
+						{% endfor %}
+					</div>
+				</div>
+				{# --------- End Top------ #}
+				<!-- Start Detox Water Area -->
+
+>>>>>>> c52866b (translate all the pages)
 
           <div class="detox-water-image">
             <img
@@ -340,6 +412,7 @@
               <p></p>
             </div>
 
+<<<<<<< HEAD
             <div class="inner-content">
               <div class="icon">
                 <i class="flaticon-leaf"></i>
@@ -362,6 +435,30 @@
                 nous nous assurons de sa livraison
               </p>
             </div>
+=======
+							<div class="inner-content">
+								<div class="icon">
+									<i class="flaticon-leaf"></i>
+								</div>
+								<h4>Qualité-Quantité-Nouveautés</h4>
+								<p>
+									Notre Société possède plusieurs Boutiques Dans plusieurs
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													                Localité, Ces Boutiques Sont régulièrement Mis à jour et
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													                contiennent chaque Nouveautés de Produits
+								</p>
+							</div>
+
+							<div class="inner-content">
+								<div class="icon">
+									<i class="flaticon-heart"></i>
+								</div>
+								<h4>Services Rapides</h4>
+								<p>
+									Nous prenons à coeurs toutes les commandes de nos clients et
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													                nous nous assurons de sa livraison
+								</p>
+							</div>
+>>>>>>> c52866b (translate all the pages)
 
             <div class="inner-content">
               <div class="icon">
@@ -441,6 +538,7 @@
                   </div>
                 </div>
 
+<<<<<<< HEAD
                 <div class="products-content">
                   <h3>
                     <a
@@ -517,6 +615,62 @@
                 officia deserunt mollit anim id est laborum. Sed ut perspiciatis
                 unde omnis iste.
               </p>
+=======
+										<div class="products-content">
+											<h3>
+												<a href="{{ path('app_shop_details', { id: newproduct.id }) }}">{{ newproduct.designation|slice(0,13) ~ '...' }}</a>
+											</h3>
+											<div class="price">
+												{% if newproduct.getNouveauPrix() %}
+													<span class="new-price">{{ newproduct.getNouveauPrix() }}Dhs</span>
+													<span class="old-price">{{ newproduct.getAncienPrix() }}Dhs</span>
+												{% else %}
+
+													<span class="new-price">{{ newproduct.getAncienPrix() }}Dhs</span>
+												{% endif %}
+											</div>
+											<ul class="rating">
+												<li>
+													<i class="bx bxs-star"></i>
+													<i class="bx bxs-star"></i>
+													<i class="bx bxs-star"></i>
+													<i class="bx bxs-star"></i>
+													<i class="bx bx-star"></i>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							{% else %}
+								<div class="alert alert-info">Aucun Arrivage Disponible</div>
+							{% endfor %}
+						</div>
+					</div>
+				</section>
+				<!-- End Featured Products Area -->
+
+				<!-- Start Testimonial Area -->
+				<section class="testimonial-area ptb-100">
+					<div class="container">
+						<div class="section-title">
+							<h2>Le Retour Des Clients</h2>
+							<p>
+								Votre Avis nous importe beaucoup, il nous aide à découvrir Vos
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								              attend pour vous bien servir
+							</p>
+						</div>
+
+						<div class="testimonial-slider owl-carousel owl-theme">
+
+							{% for review in reviews %}
+								<div class="testimonial-item">
+									<div class="info">
+										<img src=" {{ asset('images/other/user.png') }} " style="width: 200; height: 150" alt="image"/>
+										<h3>{{ review.pseudo }}</h3>
+										<span>{{ review.titre }}</span>
+									</div>
+									<p>{{ review.content }}</p>
+>>>>>>> c52866b (translate all the pages)
 
               <div class="icon">
                 <i class="flaticon-right-quotes-symbol"></i>
@@ -628,6 +782,7 @@
                 {% endif %}
               </div>
 
+<<<<<<< HEAD
               <div class="products-content">
                 <h3>
                   <a
@@ -701,6 +856,51 @@
                     }} "
                     alt="image"
                 /></a>
+=======
+									<div class="products-content">
+										<h3>
+											<a href="{{ path('app_shop_details', { id: bestSeller.id }) }}">{{ bestSeller.designation|slice(0,13) ~ '...' }}</a>
+										</h3>
+										<div class="price">
+											{% if bestSeller.getNouveauPrix() %}
+												<span class="new-price">{{ bestSeller.getNouveauPrix() }}Dhs</span>
+												<span class="old-price">{{ bestSeller.getAncienPrix() }}Dhs</span>
+											{% else %}
+												<span class="new-price">{{ bestSeller.getAncienPrix() }}Dhs</span>
+											{% endif %}
+										</div>
+										<ul class="rating">
+											<li>
+												<i class="bx bxs-star"></i>
+												<i class="bx bxs-star"></i>
+												<i class="bx bxs-star"></i>
+												<i class="bx bxs-star"></i>
+												<i class="bx bx-star"></i>
+											</li>
+										</ul>
+									</div>
+								</div>
+							{% else %}
+								<div>Aucun Best Sellers Dans le site</div>
+							{% endfor %}
+						</div>
+					</div>
+				</section>
+				<!-- End Best Sellers Products Area -->
+
+				<!-- Start Overview Area -->
+				{% if slide %}
+					{% include 'frontend/_reduction.html.twig' %}
+				{% else %}
+					{% include 'frontend/_slider.html.twig' %}
+				{% endif %}
+				<!-- End Overview Area -->
+
+				<!-- Start Most Viewed Products Area -->
+				<!-- End Most Viewed Products Area -->
+
+				<!-- Start Blog Area -->
+>>>>>>> c52866b (translate all the pages)
 
                 <ul class="products-action">
                   <li>
@@ -737,10 +937,13 @@
                   </li>
                 </ul>
 
+<<<<<<< HEAD
                 <div class="new">
                   <span>New</span>
                 </div>
               </div>
+=======
+>>>>>>> c52866b (translate all the pages)
 
               <div class="products-content">
                 <h3>
@@ -767,6 +970,7 @@
       #}
       <!-- End Most Viewed Products Area -->
 
+<<<<<<< HEAD
       <!-- Start Blog Area -->
       {#
       <section class="blog-area pt-100 pb-70">
@@ -929,3 +1133,32 @@
 <script src="{{ asset('js/panier3.js') }}"></script>
 <script src="{{ asset('FrontOffice/other/slide.js') }}"></script>
 {% endblock %}
+=======
+				<!-- Start Partner Area -->
+					<div class="row"> <div class="col-12"></div>
+				</div>
+				<div class="partner-area">
+					<div class="container">
+						<div class="partner-slider owl-carousel owl-theme mt-50 mb-50">
+							{% for marque in marques %}
+								{% if marque.getPicture() %}
+									<div class="partner-item">
+										<img src=" {{ asset('uploads/sousCategories/' ~ marque.getPicture())
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		}} " style="width: 70px; height: 50px" alt="image"/>
+									</div>
+								{% endif %}
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+				<!-- End Partner Area -->
+				{# 				
+																															</section>
+																														</div>
+																													</div> #}
+			{% endblock %}
+			{% block javascripts %}
+				<script src="{{ asset('js/panier3.js') }}"></script>
+				<script src="{{ asset('FrontOffice/other/slide.js') }}"></script>
+			{% endblock %}
+>>>>>>> c52866b (translate all the pages)

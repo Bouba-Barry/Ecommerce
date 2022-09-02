@@ -37,11 +37,11 @@ content %}
 										<span class="hidden-xs-down">Voir les Commandes</span>
 									</a>
 									{# <div class="dropdown-menu">
-																																																																																																																																																																																																																																																																																																	<a class="dropdown-item" id="dropdown1-tab" href="{{ path('app_produit_new') }}">
-																																																																																																																																																																																																																																																																																																		Produit stable</a>
-																																																																																																																																																																																																																																																																																																	<a class="dropdown-item" id="dropdown2-tab" href="{{ path('app_produit_new_variable') }}">Produit Variable
-																																																																																																																																																																																																																																																																																																	</a>
-																																																																																																																																																																																																																																																																																																</div> #}
+																																																																																																																																																																																																																																																																																																										<a class="dropdown-item" id="dropdown1-tab" href="{{ path('app_produit_new') }}">
+																																																																																																																																																																																																																																																																																																											Produit stable</a>
+																																																																																																																																																																																																																																																																																																										<a class="dropdown-item" id="dropdown2-tab" href="{{ path('app_produit_new_variable') }}">Produit Variable
+																																																																																																																																																																																																																																																																																																										</a>
+																																																																																																																																																																																																																																																																																																									</div> #}
 								</li>
 							</ol>
 						</div>
@@ -109,7 +109,7 @@ content %}
 													</a>
 													{% if app.user %}
 														{% if 'ROLE_ADMIN' in app.user.Roles %}
-															<a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn btn-md btn-warning">
+															<a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn btn-md btn-warning popup-youtube">
 																<i class="fa fa-edit"></i>
 															</a>
 															<a onclick="return confirm('vous voulez  le supprimer vraiment ??');" href="{{ path('app_cmd_delete_get', {'id': commande.id}) }}" class="btn btn-md btn-danger">
@@ -164,4 +164,4 @@ content %}
 	</div>
 	<!-- /.box -->
 </div>
-<!-- /.col --></div><!-- /.row --></section><!-- /.content --></div></div></div><!-- /.content-wrapper -->{% endblock %}{% block javascript %}<script src="{{ asset('assets/vendor_components/datatable/datatables.min.js') }}"></script><script src="{{ asset('main/js/pages/data-table.js') }}"></script>{% endblock %}
+<!-- /.col --></div><!-- /.row --></section><!-- /.content --></div></div></div><!-- /.content-wrapper -->{% endblock %}{% block javascript %}<script src="{{ asset('assets/vendor_components/datatable/datatables.min.js') }}"></script><script src="{{ asset('main/js/pages/data-table.js') }}"></script><script src="{{ asset('FrontOffice/js/main.js') }}"></script><script src="{{ asset('FrontOffice/js/jquery.magnific-popup.min.js') }}"></script>{% endblock %}

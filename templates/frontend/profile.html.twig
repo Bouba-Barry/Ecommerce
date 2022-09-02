@@ -107,6 +107,7 @@ and "ROLE_USER" in app.user.role %} #}
             <span>{{ form_errors(form.adresse) }}</span>
           </div>
 
+<<<<<<< HEAD
           <div class="col-lg-4">
             <label>Telephone</label>
             {{ form_row(form.telephone) }}
@@ -122,6 +123,28 @@ and "ROLE_USER" in app.user.role %} #}
       </div>
     </div>
   </div>
+=======
+	{# {% if app.user and "ROLE_USER" in app.user.role %} #}
+	<!-- Start Page Banner -->
+		<div class="page-banner-area item-bg1"> <div class="d-table">
+			<div class="d-table-cell">
+				<div class="container">
+					<div class="page-banner-content">
+						<h2>PROFILE</h2>
+						<ul>
+							<li>
+								<a href="{{ path('app_home') }}">Accueil</a>
+							</li>
+							<li>Details De Vos Activités</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- End Page Banner --><!-- Start Gallery Details Area --><section class="gallery-details-area pt-100 pb-70">
+		<div class="container">
+			<div class="row">
+>>>>>>> c52866b (translate all the pages)
 
   <section class="cart-area ptb-100">
     <div class="container">
