@@ -1,5 +1,5 @@
 {% for produit in produits %}
-	<div class="col-lg-4">
+	<div class="col-lg-4 col-md-6">
 		<div class="top-products-item">
 			<div class="products-image">
 				<a href="{{ path('app_shop_details', { id: produit.id }) }}"><img style="width: 250px; height: 200px" src="{{ asset('uploads/produits/' ~ produit.getImageProduit()) }} " alt="image"/></a>

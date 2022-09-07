@@ -1,66 +1,60 @@
-			{% for produit in produits %}
-				<div class="col-lg-3 col-md-6">
-					<div class="top-products-item">
-						<div class="products-image">
-							<a href="{{ path('app_shop_details',{id : produit.id }) }}"><img style="width: 250px; height: 200px" src="{{ asset('uploads/produits/' ~ produit.getImageProduit() ) }} " alt="image"></a>
+{% for produit in produits %}
+	<div class="col-lg-4 col-md-6">
+		<div class="top-products-item">
+			<div class="products-image">
+				<a href="{{ path('app_shop_details',{id : produit.id }) }}"><img style="width: 250px; height: 200px" src="{{ asset('uploads/produits/' ~ produit.getImageProduit() ) }} " alt="image"></a>
 
 				<ul class="products-action">
-                  			<li>
-                   				<a    id="addtocart{{ produit.id }}"
-                    				class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
-									<i class="flaticon-shopping-cart"></i>
-								</a>
-            		      </li>
-                  			<li>
-                    			<a  id="addtowish{{ produit.id }}"
-                    				class="addtowish" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
-								<i class="flaticon-heart"></i>
-								</a>
-	    	              </li>
-    	    	          <li>
-        	    	        <a data-tooltip="tooltip" id="searchbtn{{ produit.id }}" class="search" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
-								<i class="flaticon-search"></i>
-							</a>
-        	         	 </li>
-            	    	</ul>
+					<li>
+						<a id="addtocart{{ produit.id }}" class="addtocart" data-tooltip="tooltip" data-placement="top" title="Add to Cart">
+							<i class="flaticon-shopping-cart"></i>
+						</a>
+					</li>
+					<li>
+						<a id="addtowish{{ produit.id }}" class="addtowish" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist">
+							<i class="flaticon-heart"></i>
+						</a>
+					</li>
+					<li>
+						<a data-tooltip="tooltip" id="searchbtn{{ produit.id }}" class="search" data-placement="top" title="Quick View" data-toggle="modal" data-target="#productsQuickView">
+							<i class="flaticon-search"></i>
+						</a>
+					</li>
+				</ul>
 
-						{% if produit.getReduction()|length != 0 %}
-                            <div class="sale">
-                                <span>
-                                    {% for produit_reduction in produit.getReduction() %}
-                                        -{{
+				{% if produit.getReduction()|length != 0 %}
+					<div class="sale">
+						<span>
+							{% for produit_reduction in produit.getReduction() %}
+								-{{
                                    produit_reduction.getPourcentage()
                                            }}
-                                    {% endfor %}
-      </span>
-    </div>{% endif %}
-						</div>
-
-						<div class="products-content">
-							<h3>
-								<a href="{{ path('app_shop_details',{id : produit.id }) }}">{{ produit.designation }}</a>
-							</h3>
-							{% if produit.getNouveauPrix() %}
-							<div class="price">
-							  <span class="new-price">
-								{{ produit.getNouveauPrix() }}Dhs</span
-							  >
-							  <span class="old-price"
-								>{{ produit.getAncienPrix() }}Dhs</span
-							  >
-							</div>
-							{% else %}
-							<div class="price">
-							  <span class="new-price"
-								>{{ produit.getAncienPrix() }}Dhs</span
-							  >
-							</div>
-							{% endif %}
-							
-						</div>
+							{% endfor %}
+						</span>
 					</div>
+				{% endif %}
+			</div>
 
-				</div>
-			{% else %}
-				<div>NO record found</div>
-			{% endfor %}
+			<div class="products-content">
+				<h3>
+					<a href="{{ path('app_shop_details',{id : produit.id }) }}">{{ produit.designation }}</a>
+				</h3>
+				{% if produit.getNouveauPrix() %}
+					<div class="price">
+						<span class="new-price">
+							{{ produit.getNouveauPrix() }}Dhs</span>
+						<span class="old-price">{{ produit.getAncienPrix() }}Dhs</span>
+					</div>
+				{% else %}
+					<div class="price">
+						<span class="new-price">{{ produit.getAncienPrix() }}Dhs</span>
+					</div>
+				{% endif %}
+
+			</div>
+		</div>
+
+	</div>
+{% else %}
+	<div>NO record found</div>
+{% endfor %}

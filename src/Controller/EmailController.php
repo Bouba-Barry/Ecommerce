@@ -93,4 +93,25 @@ class EmailController extends AbstractController
 
         return $this->redirectToRoute('app_email_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/delete/group', name: 'app_email_delete_group', methods: ['POST'])]
+    public function deletegroup(Request $request, EmailRepository $emailRepository): Response
+    {
+        // dd($request->get('check1'));
+        $array = [];
+        foreach ($emailRepository->findAll() as $email) {
+            if ($request->get('check' . $email->getId()) != null) {
+
+                array_push($array, $email->getId());
+            }
+        }
+        foreach ($array as $mail) {
+            $emailRepository->remove($emailRepository->find($mail), true);
+        }
+        // if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+        // $userRepository->remove($user, true);
+        $this->addFlash('suppression', 'La suppression est effectue  avec succes');
+
+        return $this->redirectToRoute('app_email_index', [], Response::HTTP_SEE_OTHER);
+    }
 }
