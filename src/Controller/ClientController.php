@@ -80,7 +80,7 @@ class ClientController extends AbstractController
 
 
         $userlogged = $this->getUser();
-        if (in_array("ROLE_USER", $userlogged->getRoles())) {
+        if ($userlogged) {
             $user = $userRepository->find($userlogged);
             $form = $this->createForm(ClientType::class, $user);
 

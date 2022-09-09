@@ -788,6 +788,15 @@
   .mean-container a.meanmenu-reveal {
     padding: 0 0 0 0;
   }
+  .item-to-move{
+    /* position: absolute !important;
+    top: 20px !important;
+    display: block; */
+    display: none !important;
+  }
+  .autre .cart-btn{
+    display: none;
+  }
   .mean-container a.meanmenu-reveal span {
     display: block;
     background: #000;

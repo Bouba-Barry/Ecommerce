@@ -22,18 +22,7 @@ content %}
 				<div class="d-flex align-items-center">
 					<div class="mr-auto">
 						<h3 class="page-title">Liste Produits</h3>
-						<div class="d-inline-block align-items-center">
-							<ol class="breadcrumb">
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle btn-primary" data-toggle="dropdown" href="#">
-										<span class="hidden-sm-up">
-											<i class="ion-email"></i>
-										</span>
-										<span class="hidden-xs-down">Details Commandes</span>
-									</a>
-								</li>
-							</ol>
-						</div>
+						<div class="d-inline-block align-items-center"></div>
 					</div>
 					<div>
 						<a href="#" style="font-size: 20px; color: blue">Corbeille
@@ -80,8 +69,9 @@ content %}
 												<td>{{ commande.status }}</td>
 												<td>
 													{% for prod in commande.getProduit() %}
+														<img src={{ asset('uploads/produits/' ~ prod.getImageProduit() ) }} width="80" height="70">
 														{{ prod.designation }}
-														{{ prod.getUser.getNom() }}
+
 														<br>
 													{% endfor %}
 												</td>
@@ -89,13 +79,13 @@ content %}
 										</tbody>
 									</td>
 									{# <td>
-																																																																																		<a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn btn-md btn-warning">
-																																																																																			<i class="fa fa-edit"></i>
-																																																																																		</a>
-																																																																																		<a onclick="return confirm('vous voulez  le supprimer vraiment ??');" href="{{ path('app_cmd_delete_get', {'id': commande.id}) }}" class="btn btn-md btn-danger">
-																																																																																			<i class="fa fa-trash"></i>
-																																																																																		</a>
-																																																																																	</td> #}
+																																																																																																																																																	<a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn btn-md btn-warning">
+																																																																																																																																																		<i class="fa fa-edit"></i>
+																																																																																																																																																	</a>
+																																																																																																																																																	<a onclick="return confirm('vous voulez  le supprimer vraiment ??');" href="{{ path('app_cmd_delete_get', {'id': commande.id}) }}" class="btn btn-md btn-danger">
+																																																																																																																																																		<i class="fa fa-trash"></i>
+																																																																																																																																																	</a>
+																																																																																																																																																</td> #}
 								</tr>
 
 							</tbody>
