@@ -6,17 +6,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<meta name="description" content=""/>
 		<meta name="author" content=""/>
-		 <link rel="icon" href="{{ asset('images/shop.png') }}"/> 
-        
+		<link rel="icon" href="{{ asset('images/shop.png') }}"/>
+
 		<title>TB-INFO</title>
 
 		<!-- Vendors Style-->
+		<link rel="stylesheet" href="{{ asset('main/css/vendors_css.css') }}"/>
 		<link
-		rel="stylesheet" href="{{ asset('main/css/vendors_css.css') }}"/>
-		<link
-		rel="stylesheet"
-		href=" {{ asset('FrontOffice/assets/css/flaticon.css') }}"
-	  />
+		rel="stylesheet" href=" {{ asset('FrontOffice/assets/css/flaticon.css') }}"/>
 		<!-- Style-->
 		<link rel="stylesheet" href="{{ asset('main/css/style.css') }}"/>
 		<link rel="stylesheet" href="{{ asset('main/css/skin_color.css') }}"/> {% block stylesheets %}{% endblock %}
@@ -90,51 +87,51 @@
 													<a href="#">
 														<i class="fa fa-users text-info"></i>
 														Curabitur id
-																												                          eros quis nunc suscipit blandit.
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								                          eros quis nunc suscipit blandit.
 													</a>
 												</li>
 												<li>
 													<a href="#">
 														<i class="fa fa-warning text-warning"></i>
 														Duis
-																												                          malesuada justo eu sapien elementum, in semper diam
-																												                          posuere.
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								                          malesuada justo eu sapien elementum, in semper diam
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								                          posuere.
 													</a>
 												</li>
 												<li>
 													<a href="#">
 														<i class="fa fa-users text-danger"></i>
 														Donec at nisi
-																												                          sit amet tortor commodo porttitor pretium a erat.
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								                          sit amet tortor commodo porttitor pretium a erat.
 													</a>
 												</li>
 												<li>
 													<a href="#">
 														<i class="fa fa-shopping-cart text-success"></i>
 														In
-																												                          gravida mauris et nisi
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								                          gravida mauris et nisi
 													</a>
 												</li>
 												<li>
 													<a href="#">
 														<i class="fa fa-user text-danger"></i>
 														Praesent eu
-																												                          lacus in libero dictum fermentum.
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								                          lacus in libero dictum fermentum.
 													</a>
 												</li>
 												<li>
 													<a href="#">
 														<i class="fa fa-user text-primary"></i>
 														Nunc fringilla
-																												                          lorem
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								                          lorem
 													</a>
 												</li>
 												<li>
 													<a href="#">
 														<i class="fa fa-user text-success"></i>
 														Nullam euismod
-																												                          dolor ut quam interdum, at scelerisque ipsum
-																												                          imperdiet.
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								                          dolor ut quam interdum, at scelerisque ipsum
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								                          imperdiet.
 													</a>
 												</li>
 											</ul>
@@ -155,7 +152,7 @@
 											<a class="dropdown-item" href="{{ path('app_user_profile') }}">
 												<i class="ti-user text-muted mr-2"></i>
 												Profile</a>
-											
+
 											<a class="dropdown-item" href="#">
 												<i class="ti-settings text-muted mr-2"></i>
 												Settings</a>
@@ -187,7 +184,7 @@
 									href="#">
 									<!-- logo for regular state and mobile devices -->
 									<div class="d-flex align-items-center justify-content-center">
-										<img style="width:40px ;height:40px"  src="{{ asset('images/shop.png') }}" alt=""/> 
+										<img style="width:40px ;height:40px" src="{{ asset('images/shop.png') }}" alt=""/>
 										<h3>
 											<b>TB-INFO</b>
 											Admin</h3>
@@ -204,26 +201,32 @@
 									<span>Dashboard</span>
 								</a>
 								{# <ul class="treeview-menu">
-									<li>
-										<a href="{{ path('app_home_admin') }}">
-											<i class="ti-more"></i>Dashboard</a>
-									</li>
-								
-								</ul> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																									<li>
+																																																																																																																																																																																																																																																																																																																																																																																																																										<a href="{{ path('app_home_admin') }}">
+																																																																																																																																																																																																																																																																																																																																																																																																																											<i class="ti-more"></i>Dashboard</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																									</li>
+																																																																																																																																																																																																																																																																																																																																																																																																																								
+																																																																																																																																																																																																																																																																																																																																																																																																																								</ul> #}
 							</li>
 
 							<li class="treeview">
-								<a  href="#">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+								<a href="#">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid">
+										<rect x="3" y="3" width="7" height="7"></rect>
+										<rect x="14" y="3" width="7" height="7"></rect>
+										<rect x="14" y="14" width="7" height="7"></rect>
+										<rect x="3" y="14" width="7" height="7"></rect>
+									</svg>
 									<span>Gérer vos Produits</span>
 									<span class="pull-right-container">
 										<i class="fa fa-angle-right pull-right"></i>
 									</span>
 								</a>
-								<ul class="treeview-menu" >
-									
-									<li >
+								<ul class="treeview-menu">
+
+									<li>
 										<a href="{{ path('app_produit_index') }}">
+<<<<<<< HEAD
 											<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></i>Liste des Produits</a>
 									</li>
 									<li class="treeview">
@@ -247,17 +250,32 @@
 									</li>
 									
 								</ul>
+=======
+											<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+												<line x1="8" y1="6" x2="21" y2="6"></line>
+												<line x1="8" y1="12" x2="21" y2="12"></line>
+												<line x1="8" y1="18" x2="21" y2="18"></line>
+												<line x1="3" y1="6" x2="3.01" y2="6"></line>
+												<line x1="3" y1="12" x2="3.01" y2="12"></line>
+												<line x1="3" y1="18" x2="3.01" y2="18"></line>
+											</svg>
+										</i>Liste des Produits</li>
+								</a>
+>>>>>>> 6e9a64da1502c490eb852742e4e0e2aa59b02872
 							</li>
-
 							<li class="treeview">
 								<a href="#">
-									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="27" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-									<span>Gérer vos Utilisateurs</span>
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+										<line x1="12" y1="5" x2="12" y2="19"></line>
+										<line x1="5" y1="12" x2="19" y2="12"></line>
+									</svg>
+									<span>Ajouter Un Produit</span>
 									<span class="pull-right-container">
 										<i class="fa fa-angle-right pull-right"></i>
 									</span>
 								</a>
 								<ul class="treeview-menu">
+<<<<<<< HEAD
 									<li>
 										<a href="{{ path('app_user_index') }}">
 											<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
@@ -271,17 +289,11 @@
 								
 								</ul>
 							</li>
+=======
+>>>>>>> 6e9a64da1502c490eb852742e4e0e2aa59b02872
 
-							<li class="treeview">
-								<a href="#">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-									<span>Gérer vos Reductions</span>
-									<span class="pull-right-container">
-										<i class="fa fa-angle-right pull-right"></i>
-									</span>
-								</a>
-								<ul class="treeview-menu">
 									<li>
+<<<<<<< HEAD
 										<a href="{{ path('app_reduction_index') }}" >
 											<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
 											Liste Reductions</a>
@@ -290,11 +302,22 @@
 										<a href="{{ path('app_reduction_new') }}" class="popup-youtube">
 											<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 											Ajouter Une Reduction</a>
+=======
+										<a class="popup-youtube" href="{{ path('app_produit_new') }}">
+											<i class="ti-more"></i>Un Produit Stable</a>
+									</li>
+									<li>
+										<a href="{{ path('app_produit_new_variable') }}">
+											<i class="ti-more"></i>Un Produit Variable</a>
+>>>>>>> 6e9a64da1502c490eb852742e4e0e2aa59b02872
 									</li>
 								</ul>
 							</li>
 
+						</ul>
+					</li>
 
+<<<<<<< HEAD
 							<li class="treeview">
 								<a href="#">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slack"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"></path><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"></path><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"></path><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"></path><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"></path><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"></path><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"></path></svg>
@@ -523,30 +546,424 @@
 							</li>
 							
 
+=======
+					<li class="treeview">
+						<a href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="36" height="27" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+								<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+								<circle cx="9" cy="7" r="4"></circle>
+								<path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+								<path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+							</svg>
+							<span>Gérer vos Utilisateurs</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+>>>>>>> 6e9a64da1502c490eb852742e4e0e2aa59b02872
 							<li>
-								<a href="{{ path('app_logout') }}">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>									<span>Log Out</span>
-								</a>
+								<a href="{{ path('app_user_index') }}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+										<line x1="8" y1="6" x2="21" y2="6"></line>
+										<line x1="8" y1="12" x2="21" y2="12"></line>
+										<line x1="8" y1="18" x2="21" y2="18"></line>
+										<line x1="3" y1="6" x2="3.01" y2="6"></line>
+										<line x1="3" y1="12" x2="3.01" y2="12"></line>
+										<line x1="3" y1="18" x2="3.01" y2="18"></line>
+									</svg>
+									Liste des Utilisateurs</a>
+							</li>
+							<li>
+								<a href="{{ path('app_user_new') }}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+										<line x1="12" y1="5" x2="12" y2="19"></line>
+										<line x1="5" y1="12" x2="19" y2="12"></line>
+									</svg>
+									Ajouter Un Utilisateur</a>
+							</li>
+
+						</ul>
+					</li>
+
+					<li class="treeview">
+						<a href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders">
+								<line x1="4" y1="21" x2="4" y2="14"></line>
+								<line x1="4" y1="10" x2="4" y2="3"></line>
+								<line x1="12" y1="21" x2="12" y2="12"></line>
+								<line x1="12" y1="8" x2="12" y2="3"></line>
+								<line x1="20" y1="21" x2="20" y2="16"></line>
+								<line x1="20" y1="12" x2="20" y2="3"></line>
+								<line x1="1" y1="14" x2="7" y2="14"></line>
+								<line x1="9" y1="8" x2="15" y2="8"></line>
+								<line x1="17" y1="16" x2="23" y2="16"></line>
+							</svg>
+							<span>Gérer vos Reductions</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="{{ path('app_reduction_index') }}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+										<line x1="8" y1="6" x2="21" y2="6"></line>
+										<line x1="8" y1="12" x2="21" y2="12"></line>
+										<line x1="8" y1="18" x2="21" y2="18"></line>
+										<line x1="3" y1="6" x2="3.01" y2="6"></line>
+										<line x1="3" y1="12" x2="3.01" y2="12"></line>
+										<line x1="3" y1="18" x2="3.01" y2="18"></line>
+									</svg>
+									Liste Reductions</a>
+							</li>
+							<li>
+								<a href="{{ path('app_reduction_new') }}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+										<line x1="12" y1="5" x2="12" y2="19"></line>
+										<line x1="5" y1="12" x2="19" y2="12"></line>
+									</svg>
+									Ajouter Une Reduction</a>
 							</li>
 						</ul>
-					</section>
+					</li>
 
-					<div
-						class="sidebar-footer">
-						<!-- item-->
-						<a href="javascript:void(0)" class="link" data-toggle="tooltip" title="" data-original-title="Settings" aria-describedby="tooltip92529">
-							<i class="ti-settings"></i>
+
+					<li class="treeview">
+						<a href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slack">
+								<path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"></path>
+								<path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path>
+								<path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"></path>
+								<path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"></path>
+								<path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"></path>
+								<path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"></path>
+								<path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"></path>
+								<path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"></path>
+							</svg>
+							<span>Gérer vos Categories
+							</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
 						</a>
-						<!-- item-->
-						<a href="mailbox_inbox.html" class="link" data-toggle="tooltip" title="" data-original-title="Email">
-							<i class="ti-email"></i>
+						<ul class="treeview-menu">
+							<li>
+								<a href="{{ path('app_categorie_index') }}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+										<line x1="8" y1="6" x2="21" y2="6"></line>
+										<line x1="8" y1="12" x2="21" y2="12"></line>
+										<line x1="8" y1="18" x2="21" y2="18"></line>
+										<line x1="3" y1="6" x2="3.01" y2="6"></line>
+										<line x1="3" y1="12" x2="3.01" y2="12"></line>
+										<line x1="3" y1="18" x2="3.01" y2="18"></line>
+									</svg>
+									Liste des Categories</a>
+							</li>
+							<li>
+								<a href="{{ path('app_categorie_new_aside') }}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+										<line x1="12" y1="5" x2="12" y2="19"></line>
+										<line x1="5" y1="12" x2="19" y2="12"></line>
+									</svg>
+									Ajouter Une Categorie</a>
+							</li>
+						</ul>
+					</li>
+
+					<li class="treeview">
+						<a href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+								<line x1="3" y1="12" x2="21" y2="12"></line>
+								<line x1="3" y1="6" x2="21" y2="6"></line>
+								<line x1="3" y1="18" x2="21" y2="18"></line>
+							</svg>
+							<span>Gérer Vos Attributs
+							</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
 						</a>
-						<!-- item-->
-						<a href="javascript:void(0)" class="link" data-toggle="tooltip" title="" data-original-title="Logout">
-							<i class="ti-lock"></i>
+						<ul class="treeview-menu">
+							<li>
+								<a href="{{ path('app_attribut_index_aside') }}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+										<line x1="8" y1="6" x2="21" y2="6"></line>
+										<line x1="8" y1="12" x2="21" y2="12"></line>
+										<line x1="8" y1="18" x2="21" y2="18"></line>
+										<line x1="3" y1="6" x2="3.01" y2="6"></line>
+										<line x1="3" y1="12" x2="3.01" y2="12"></line>
+										<line x1="3" y1="18" x2="3.01" y2="18"></line>
+									</svg>
+									Liste des Attributs</a>
+							</li>
+							<li>
+								<a href="{{ path('app_attribut_new') }}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+										<line x1="12" y1="5" x2="12" y2="19"></line>
+										<line x1="5" y1="12" x2="19" y2="12"></line>
+									</svg>
+									Ajouter Un Attribut</a>
+							</li>
+						</ul>
+					</li>
+
+
+					{# <li class="treeview">
+																																																																																																																																																																																																																																																																		<a href="#">
+																																																																																																																																																																																																																																																																			<i data-feather="server"></i>
+																																																																																																																																																																																																																																																																			<span>Tables</span>
+																																																																																																																																																																																																																																																																			<span class="pull-right-container">
+																																																																																																																																																																																																																																																																				<i class="fa fa-angle-right pull-right"></i>
+																																																																																																																																																																																																																																																																			</span>
+																																																																																																																																																																																																																																																																		</a>
+																																																																																																																																																																																																																																																										
+																																																																																																																																																																																																																																																																		{% if 'ROLE_ADMIN' in app.user.ROLES %}
+																																																																																																																																																																																																																																																																			<ul class="treeview-menu">
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_produit_index') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Liste Des Produits</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																																				{% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
+																																																																																																																																																																																																																																																																					<li>
+																																																																																																																																																																																																																																																																						<a href="{{ path('app_user_index') }}">
+																																																																																																																																																																																																																																																																							<i class="ti-more"></i>Liste Users</a>
+																																																																																																																																																																																																																																																																					</li>
+																																																																																																																																																																																																																																																																				{% endif %}
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_categorie_index') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Liste Categorie</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_sous_categorie_index') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Liste sous_categorie</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_reduction_index') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Liste des Reduction</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_variation_index') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Liste des variation</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_attribut_index') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Liste des Attributs</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																																			</ul>
+																																																																																																																																																																																																																																																																		{% endif %}
+																																																																																																																																																																																																																																																																	</li> #}
+
+
+					{# <li class="treeview">
+																																																																																																																																																																																																																																																																		<a href="#">
+																																																																																																																																																																																																																																																																			<i data-feather="inbox"></i>
+																																																																																																																																																																																																																																																																			<span>Forms</span>
+																																																																																																																																																																																																																																																																			<span class="pull-right-container">
+																																																																																																																																																																																																																																																																				<i class="fa fa-angle-right pull-right"></i>
+																																																																																																																																																																																																																																																																			</span>
+																																																																																																																																																																																																																																																																		</a>
+																																																																																																																																																																																																																																																										
+																																																																																																																																																																																																																																																																		{% if 'ROLE_SUPER_ADMIN' in app.user.Roles or 'ROLE_ADMIN' in
+																																																																																																																																																																																																																																																										              app.user.Roles %}
+																																																																																																																																																																																																																																																																			<ul class="treeview-menu">
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_produit_new') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Ajout Produit</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																										                                        
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_quantite_new') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>ajout quantite</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																										
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_categorie_new') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Ajout Categorie</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_sous_categorie_new') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Ajout Sous Categorie</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_reduction_new') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Ajout de Réduction</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																										
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_image_new') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Ajout Image</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																										
+																																																																																																																																																																																																																																																																				{% if 'ROLE_SUPER_ADMIN' in app.user.Roles %}
+																																																																																																																																																																																																																																																																					<li>
+																																																																																																																																																																																																																																																																						<a href="{{ path('app_user_new') }}">
+																																																																																																																																																																																																																																																																							<i class="ti-more"></i>Ajout User</a>
+																																																																																																																																																																																																																																																																					</li>
+																																																																																																																																																																																																																																																																				{% endif %}
+																																																																																																																																																																																																																																																										
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_attribut_new') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Ajout Attribut</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																																				<li>
+																																																																																																																																																																																																																																																																					<a href="{{ path('app_variation_new') }}">
+																																																																																																																																																																																																																																																																						<i class="ti-more"></i>Ajout Variation</a>
+																																																																																																																																																																																																																																																																				</li>
+																																																																																																																																																																																																																																																																			</ul>
+																																																																																																																																																																																																																																																																		{% endif %}
+																																																																																																																																																																																																																																																																	</li> #}
+
+
+					<li class="treeview">
+						<a href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-command">
+								<path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path>
+							</svg>
+							<span>Gérer vos commandes</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
 						</a>
-					</div>
-				</aside>
+						<ul class="treeview-menu">
+							<li>
+								<a href="{{ path('app_commande_index') }}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+										<line x1="8" y1="6" x2="21" y2="6"></line>
+										<line x1="8" y1="12" x2="21" y2="12"></line>
+										<line x1="8" y1="18" x2="21" y2="18"></line>
+										<line x1="3" y1="6" x2="3.01" y2="6"></line>
+										<line x1="3" y1="12" x2="3.01" y2="12"></line>
+										<line x1="3" y1="18" x2="3.01" y2="18"></line>
+									</svg>
+									Liste des Commandes</a>
+							</li>
+							{# <li>
+																																																																																																																																																																																																																																																																																																																																																																								<a href="{{ path('app_user_new') }}">
+																																																																																																																																																																																																																																																																																																																																																																									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+																																																																																																																																																																																																																																																																																																																																																																									Ajouter Un</a>
+																																																																																																																																																																																																																																																																																																																																																																							</li> #}
+
+						</ul>
+					</li>
+
+					<li class="treeview">
+						<a href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3">
+								<path d="M12 20h9"></path>
+								<path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+							</svg>
+							<span>
+								Gérer Les Avis</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="{{ path('app_fead_back_index') }}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+										<line x1="8" y1="6" x2="21" y2="6"></line>
+										<line x1="8" y1="12" x2="21" y2="12"></line>
+										<line x1="8" y1="18" x2="21" y2="18"></line>
+										<line x1="3" y1="6" x2="3.01" y2="6"></line>
+										<line x1="3" y1="12" x2="3.01" y2="12"></line>
+										<line x1="3" y1="18" x2="3.01" y2="18"></line>
+									</svg>
+									Les Avis sur le site</a>
+							</li>
+							<li>
+								<a href="{{ path('app_fead_back_index') }}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+										<line x1="12" y1="5" x2="12" y2="19"></line>
+										<line x1="5" y1="12" x2="19" y2="12"></line>
+									</svg>
+									Les Avis sur les Produits
+								</a>
+							</li>
+
+						</ul>
+					</li>
+
+					<li class="treeview">
+						<a href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sidebar">
+								<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+								<line x1="9" y1="3" x2="9" y2="21"></line>
+							</svg>
+							<span>Gérer votre Slide</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="{{ path('app_slide_index') }}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tool">
+										<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+									</svg>
+									Gérer votre Slide</a>
+							</li>
+
+						</ul>
+					</li>
+
+
+					<li class="treeview">
+						<a href="#">
+							<img src="{{ asset('assets/icons/email-svgrepo-com.svg') }}" width="20px" height="15px" style="margin-left: 12px; margin-right: 8px;"/>
+
+							<span>Gerez Vos Mails</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="{{ path('app_email_index') }}">
+
+									.... Inbox</a>
+							</li>
+							{# <li>
+																																																																																																																																																																																																																																																																																																																																																																								<a href="{{ path('app_user_new') }}">
+																																																																																																																																																																																																																																																																																																																																																																									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+																																																																																																																																																																																																																																																																																																																																																																									Ajouter Un</a>
+																																																																																																																																																																																																																																																																																																																																																																							</li> #}
+
+						</ul>
+					</li>
+
+					<li>
+						<a href="{{ path('app_logout') }}">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out">
+								<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+								<polyline points="16 17 21 12 16 7"></polyline>
+								<line x1="21" y1="12" x2="9" y2="12"></line>
+							</svg>
+							<span>Deconnexion</span>
+						</a>
+					</li>
+				</ul>
+			</section>
+
+			<div
+				class="sidebar-footer">
+				<!-- item-->
+				<a href="javascript:void(0)" class="link" data-toggle="tooltip" title="" data-original-title="Settings" aria-describedby="tooltip92529">
+					<i class="ti-settings"></i>
+				</a>
+				<!-- item-->
+				<a href="mailbox_inbox.html" class="link" data-toggle="tooltip" title="" data-original-title="Email">
+					<i class="ti-email"></i>
+				</a>
+				<!-- item-->
+				<a href="javascript:void(0)" class="link" data-toggle="tooltip" title="" data-original-title="Logout">
+					<i class="ti-lock"></i>
+				</a>
+			</div>
+		</body>
+	</html>
+</aside>
 {# 
 									  <div
 									  class="modal fade productsQuickView"
@@ -577,397 +994,345 @@
 									</div> #}
 
 
+{% block content %}{% endblock %}
+<!-- /.content-wrapper -->
+<footer class="main-footer">
+	<div class="pull-right d-none d-sm-inline-block">
+		<ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
+			<li class="nav-item">
+				<a class="nav-link" href="javascript:void(0)">FAQ</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#">Purchase Now</a>
+			</li>
+		</ul>
+	</div>
+	&copy; 2020
+	<a href="#">Psd to Html Expert</a>. All Rights Reserved.
+</footer>
 
-				{% block content %}{% endblock %}
-				<!-- /.content-wrapper -->
-				<footer class="main-footer">
-					<div class="pull-right d-none d-sm-inline-block">
-						<ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-							<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0)">FAQ</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Purchase Now</a>
-							</li>
-						</ul>
-					</div>
-					&copy; 2020
-					<a href="#">Psd to Html Expert</a>. All Rights Reserved.
-				</footer>
-
-				<!-- Control Sidebar -->
-				<aside class="control-sidebar">
-					<div class="rpanel-title">
-						<span class="pull-right btn btn-circle btn-danger">
-							<i class="ion ion-close text-white" data-toggle="control-sidebar"></i>
-						</span>
-					</div>
-					<!-- Create the tabs -->
-					<ul class="nav nav-tabs control-sidebar-tabs">
-						<li class="nav-item">
-							<a href="#control-sidebar-home-tab" data-toggle="tab" class="active">Chat</a>
-						</li>
-						<li class="nav-item">
-							<a href="#control-sidebar-settings-tab" data-toggle="tab">Todo</a>
-						</li>
-					</ul>
-					<!-- Tab panes -->
-					<div
-						class="tab-content">
-						<!-- Home tab content -->
-						<div class="tab-pane active" id="control-sidebar-home-tab">
-							<div class="flexbox">
-								<a href="javascript:void(0)" class="text-grey">
-									<i class="ti-minus"></i>
-								</a>
-								<p>Users</p>
-								<a href="javascript:void(0)" class="text-right text-grey">
-									<i class="ti-plus"></i>
-								</a>
-							</div>
-							<div class="lookup lookup-sm lookup-right d-none d-lg-block">
-								<input type="text" name="s" placeholder="Search" class="w-p100"/>
-							</div>
-							<div class="media-list media-list-hover mt-20">
-								<div class="media py-10 px-0">
-									<a class="avatar avatar-lg status-success" href="#">
-										<img src="{{ asset('images/avatar/1.jpg') }}" alt="..."/>
-									</a>
-									<div class="media-body">
-										<p class="font-size-16">
-											<a class="hover-primary" href="#">
-												<strong>Tyler</strong>
-											</a>
-										</p>
-										<p>Praesent tristique diam...</p>
-										<span>Just now</span>
-									</div>
-								</div>
-
-								<div class="media py-10 px-0">
-									<a class="avatar avatar-lg status-danger" href="#">
-										<img src="{{ asset('images/avatar/2.jpg') }}" alt="..."/>
-									</a>
-									<div class="media-body">
-										<p class="font-size-16">
-											<a class="hover-primary" href="#">
-												<strong>Luke</strong>
-											</a>
-										</p>
-										<p>Cras tempor diam ...</p>
-										<span>33 min ago</span>
-									</div>
-								</div>
-
-								<div class="media py-10 px-0">
-									<a class="avatar avatar-lg status-warning" href="#">
-										<img src="{{ asset('images/avatar/3.jpg') }}" alt="..."/>
-									</a>
-									<div class="media-body">
-										<p class="font-size-16">
-											<a class="hover-primary" href="#">
-												<strong>Evan</strong>
-											</a>
-										</p>
-										<p>In posuere tortor vel...</p>
-										<span>42 min ago</span>
-									</div>
-								</div>
-
-								<div class="media py-10 px-0">
-									<a class="avatar avatar-lg status-primary" href="#">
-										<img src="{{ asset('images/avatar/4.jpg') }}" alt="..."/>
-									</a>
-									<div class="media-body">
-										<p class="font-size-16">
-											<a class="hover-primary" href="#">
-												<strong>Evan</strong>
-											</a>
-										</p>
-										<p>In posuere tortor vel...</p>
-										<span>42 min ago</span>
-									</div>
-								</div>
-
-								<div class="media py-10 px-0">
-									<a class="avatar avatar-lg status-success" href="#">
-										<img src="{{ asset('images/avatar/1.jpg') }}" alt="..."/>
-									</a>
-									<div class="media-body">
-										<p class="font-size-16">
-											<a class="hover-primary" href="#">
-												<strong>Tyler</strong>
-											</a>
-										</p>
-										<p>Praesent tristique diam...</p>
-										<span>Just now</span>
-									</div>
-								</div>
-
-								<div class="media py-10 px-0">
-									<a class="avatar avatar-lg status-danger" href="#">
-										<img src="{{ asset('images/avatar/2.jpg') }}" alt="..."/>
-									</a>
-									<div class="media-body">
-										<p class="font-size-16">
-											<a class="hover-primary" href="#">
-												<strong>Luke</strong>
-											</a>
-										</p>
-										<p>Cras tempor diam ...</p>
-										<span>33 min ago</span>
-									</div>
-								</div>
-
-								<div class="media py-10 px-0">
-									<a class="avatar avatar-lg status-warning" href="#">
-										<img src="{{ asset('images/avatar/3.jpg') }}" alt="..."/>
-									</a>
-									<div class="media-body">
-										<p class="font-size-16">
-											<a class="hover-primary" href="#">
-												<strong>Evan</strong>
-											</a>
-										</p>
-										<p>In posuere tortor vel...</p>
-										<span>42 min ago</span>
-									</div>
-								</div>
-
-								<div class="media py-10 px-0">
-									<a class="avatar avatar-lg status-primary" href="#">
-										<img src="{{ asset('images/avatar/4.jpg') }}" alt="..."/>
-									</a>
-									<div class="media-body">
-										<p class="font-size-16">
-											<a class="hover-primary" href="#">
-												<strong>Evan</strong>
-											</a>
-										</p>
-										<p>In posuere tortor vel...</p>
-										<span>42 min ago</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- /.tab-pane -->
-						<!-- Settings tab content -->
-						<div class="tab-pane" id="control-sidebar-settings-tab">
-							<div class="flexbox">
-								<a href="javascript:void(0)" class="text-grey">
-									<i class="ti-minus"></i>
-								</a>
-								<p>Todo List</p>
-								<a href="javascript:void(0)" class="text-right text-grey">
-									<i class="ti-plus"></i>
-								</a>
-							</div>
-							<ul class="todo-list mt-20">
-								<li
-									class="py-15 px-5 by-1">
-									<!-- checkbox -->
-									<input type="checkbox" id="basic_checkbox_1" class="filled-in"/>
-									<label for="basic_checkbox_1" class="mb-0 h-15"></label>
-									<!-- todo text -->
-									<span class="text-line">Nulla vitae purus</span>
-									<!-- Emphasis label -->
-									<small class="badge bg-danger">
-										<i class="fa fa-clock-o"></i>
-										2 mins</small>
-									<!-- General tools such as edit or delete-->
-									<div class="tools">
-										<i class="fa fa-edit"></i>
-										<i class="fa fa-trash-o"></i>
-									</div>
-								</li>
-								<li
-									class="py-15 px-5">
-									<!-- checkbox -->
-									<input type="checkbox" id="basic_checkbox_2" class="filled-in"/>
-									<label for="basic_checkbox_2" class="mb-0 h-15"></label>
-									<span class="text-line">Phasellus interdum</span>
-									<small class="badge bg-info">
-										<i class="fa fa-clock-o"></i>
-										4 hours</small>
-									<div class="tools">
-										<i class="fa fa-edit"></i>
-										<i class="fa fa-trash-o"></i>
-									</div>
-								</li>
-								<li
-									class="py-15 px-5 by-1">
-									<!-- checkbox -->
-									<input type="checkbox" id="basic_checkbox_3" class="filled-in"/>
-									<label for="basic_checkbox_3" class="mb-0 h-15"></label>
-									<span class="text-line">Quisque sodales</span>
-									<small class="badge bg-warning">
-										<i class="fa fa-clock-o"></i>
-										1 day</small>
-									<div class="tools">
-										<i class="fa fa-edit"></i>
-										<i class="fa fa-trash-o"></i>
-									</div>
-								</li>
-								<li
-									class="py-15 px-5">
-									<!-- checkbox -->
-									<input type="checkbox" id="basic_checkbox_4" class="filled-in"/>
-									<label for="basic_checkbox_4" class="mb-0 h-15"></label>
-									<span class="text-line">Proin nec mi porta</span>
-									<small class="badge bg-success">
-										<i class="fa fa-clock-o"></i>
-										3 days</small>
-									<div class="tools">
-										<i class="fa fa-edit"></i>
-										<i class="fa fa-trash-o"></i>
-									</div>
-								</li>
-								<li
-									class="py-15 px-5 by-1">
-									<!-- checkbox -->
-									<input type="checkbox" id="basic_checkbox_5" class="filled-in"/>
-									<label for="basic_checkbox_5" class="mb-0 h-15"></label>
-									<span class="text-line">Maecenas scelerisque</span>
-									<small class="badge bg-primary">
-										<i class="fa fa-clock-o"></i>
-										1 week</small>
-									<div class="tools">
-										<i class="fa fa-edit"></i>
-										<i class="fa fa-trash-o"></i>
-									</div>
-								</li>
-								<li
-									class="py-15 px-5">
-									<!-- checkbox -->
-									<input type="checkbox" id="basic_checkbox_6" class="filled-in"/>
-									<label for="basic_checkbox_6" class="mb-0 h-15"></label>
-									<span class="text-line">Vivamus nec orci</span>
-									<small class="badge bg-info">
-										<i class="fa fa-clock-o"></i>
-										1 month</small>
-									<div class="tools">
-										<i class="fa fa-edit"></i>
-										<i class="fa fa-trash-o"></i>
-									</div>
-								</li>
-								<li
-									class="py-15 px-5 by-1">
-									<!-- checkbox -->
-									<input type="checkbox" id="basic_checkbox_7" class="filled-in"/>
-									<label for="basic_checkbox_7" class="mb-0 h-15"></label>
-									<!-- todo text -->
-									<span class="text-line">Nulla vitae purus</span>
-									<!-- Emphasis label -->
-									<small class="badge bg-danger">
-										<i class="fa fa-clock-o"></i>
-										2 mins</small>
-									<!-- General tools such as edit or delete-->
-									<div class="tools">
-										<i class="fa fa-edit"></i>
-										<i class="fa fa-trash-o"></i>
-									</div>
-								</li>
-								<li
-									class="py-15 px-5">
-									<!-- checkbox -->
-									<input type="checkbox" id="basic_checkbox_8" class="filled-in"/>
-									<label for="basic_checkbox_8" class="mb-0 h-15"></label>
-									<span class="text-line">Phasellus interdum</span>
-									<small class="badge bg-info">
-										<i class="fa fa-clock-o"></i>
-										4 hours</small>
-									<div class="tools">
-										<i class="fa fa-edit"></i>
-										<i class="fa fa-trash-o"></i>
-									</div>
-								</li>
-								<li
-									class="py-15 px-5 by-1">
-									<!-- checkbox -->
-									<input type="checkbox" id="basic_checkbox_9" class="filled-in"/>
-									<label for="basic_checkbox_9" class="mb-0 h-15"></label>
-									<span class="text-line">Quisque sodales</span>
-									<small class="badge bg-warning">
-										<i class="fa fa-clock-o"></i>
-										1 day</small>
-									<div class="tools">
-										<i class="fa fa-edit"></i>
-										<i class="fa fa-trash-o"></i>
-									</div>
-								</li>
-								<li
-									class="py-15 px-5">
-									<!-- checkbox -->
-									<input type="checkbox" id="basic_checkbox_10" class="filled-in"/>
-									<label for="basic_checkbox_10" class="mb-0 h-15"></label>
-									<span class="text-line">Proin nec mi porta</span>
-									<small class="badge bg-success">
-										<i class="fa fa-clock-o"></i>
-										3 days</small>
-									<div class="tools">
-										<i class="fa fa-edit"></i>
-										<i class="fa fa-trash-o"></i>
-									</div>
-								</li>
-							</ul>
-						</div>
-						<!-- /.tab-pane -->
-					</div>
-				</aside>
-				<!-- /.control-sidebar -->
-
-				<!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
-				<div class="control-sidebar-bg"></div>
+<!-- Control Sidebar -->
+<aside class="control-sidebar">
+	<div class="rpanel-title">
+		<span class="pull-right btn btn-circle btn-danger">
+			<i class="ion ion-close text-white" data-toggle="control-sidebar"></i>
+		</span>
+	</div>
+	<!-- Create the tabs -->
+	<ul class="nav nav-tabs control-sidebar-tabs">
+		<li class="nav-item">
+			<a href="#control-sidebar-home-tab" data-toggle="tab" class="active">Chat</a>
+		</li>
+		<li class="nav-item">
+			<a href="#control-sidebar-settings-tab" data-toggle="tab">Todo</a>
+		</li>
+	</ul>
+	<!-- Tab panes -->
+	<div
+		class="tab-content">
+		<!-- Home tab content -->
+		<div class="tab-pane active" id="control-sidebar-home-tab">
+			<div class="flexbox">
+				<a href="javascript:void(0)" class="text-grey">
+					<i class="ti-minus"></i>
+				</a>
+				<p>Users</p>
+				<a href="javascript:void(0)" class="text-right text-grey">
+					<i class="ti-plus"></i>
+				</a>
 			</div>
-			<!-- ./wrapper -->
+			<div class="lookup lookup-sm lookup-right d-none d-lg-block">
+				<input type="text" name="s" placeholder="Search" class="w-p100"/>
+			</div>
+			<div class="media-list media-list-hover mt-20">
+				<div class="media py-10 px-0">
+					<a class="avatar avatar-lg status-success" href="#">
+						<img src="{{ asset('images/avatar/1.jpg') }}" alt="..."/>
+					</a>
+					<div class="media-body">
+						<p class="font-size-16">
+							<a class="hover-primary" href="#">
+								<strong>Tyler</strong>
+							</a>
+						</p>
+						<p>Praesent tristique diam...</p>
+						<span>Just now</span>
+					</div>
+				</div>
 
-			<!-- Vendor JS -->
-			<script src="https://kit.fontawesome.com/4c827d40eb.js" crossorigin="anonymous"></script>
-			<script src="{{ asset('main/js/vendors.min.js') }}"></script>
-			<script src="{{ asset('assets/icons/feather-icons/feather.min.js') }}"></script>
-			<script src="{{ asset( 'assets/vendor_components/easypiechart/dist/jquery.easypiechart.js' ) }}"></script>
-			<script src="{{ asset( 'assets/vendor_components/apexcharts-bundle/irregular-data-series.js' ) }}"></script>
-			<script src="{{ asset('assets/vendor_components/apexcharts-bundle/dist/apexcharts.js') }}"></script>
+				<div class="media py-10 px-0">
+					<a class="avatar avatar-lg status-danger" href="#">
+						<img src="{{ asset('images/avatar/2.jpg') }}" alt="..."/>
+					</a>
+					<div class="media-body">
+						<p class="font-size-16">
+							<a class="hover-primary" href="#">
+								<strong>Luke</strong>
+							</a>
+						</p>
+						<p>Cras tempor diam ...</p>
+						<span>33 min ago</span>
+					</div>
+				</div>
 
+				<div class="media py-10 px-0">
+					<a class="avatar avatar-lg status-warning" href="#">
+						<img src="{{ asset('images/avatar/3.jpg') }}" alt="..."/>
+					</a>
+					<div class="media-body">
+						<p class="font-size-16">
+							<a class="hover-primary" href="#">
+								<strong>Evan</strong>
+							</a>
+						</p>
+						<p>In posuere tortor vel...</p>
+						<span>42 min ago</span>
+					</div>
+				</div>
 
+				<div class="media py-10 px-0">
+					<a class="avatar avatar-lg status-primary" href="#">
+						<img src="{{ asset('images/avatar/4.jpg') }}" alt="..."/>
+					</a>
+					<div class="media-body">
+						<p class="font-size-16">
+							<a class="hover-primary" href="#">
+								<strong>Evan</strong>
+							</a>
+						</p>
+						<p>In posuere tortor vel...</p>
+						<span>42 min ago</span>
+					</div>
+				</div>
 
-             
-       
-          <!-- /.tab-pane -->
-          <!-- Settings tab content -->
-          
-          <!-- /.tab-pane -->
-        </div>
-      </aside>
-      <!-- /.control-sidebar -->
+				<div class="media py-10 px-0">
+					<a class="avatar avatar-lg status-success" href="#">
+						<img src="{{ asset('images/avatar/1.jpg') }}" alt="..."/>
+					</a>
+					<div class="media-body">
+						<p class="font-size-16">
+							<a class="hover-primary" href="#">
+								<strong>Tyler</strong>
+							</a>
+						</p>
+						<p>Praesent tristique diam...</p>
+						<span>Just now</span>
+					</div>
+				</div>
 
-      <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
-      <div class="control-sidebar-bg"></div>
-    </div>
-    <!-- ./wrapper -->
+				<div class="media py-10 px-0">
+					<a class="avatar avatar-lg status-danger" href="#">
+						<img src="{{ asset('images/avatar/2.jpg') }}" alt="..."/>
+					</a>
+					<div class="media-body">
+						<p class="font-size-16">
+							<a class="hover-primary" href="#">
+								<strong>Luke</strong>
+							</a>
+						</p>
+						<p>Cras tempor diam ...</p>
+						<span>33 min ago</span>
+					</div>
+				</div>
 
-    <!-- Vendor JS -->
-    <script src="https://kit.fontawesome.com/4c827d40eb.js" crossorigin="anonymous"></script>
-    
-    <script src="{{
-        asset('assets/icons/feather-icons/feather.min.js')
-      }}"></script>
-    <script src="{{
-        asset(
-          'assets/vendor_components/easypiechart/dist/jquery.easypiechart.js'
-        )
-      }}"></script>
-    <script src="{{
-        asset(
-          'assets/vendor_components/apexcharts-bundle/irregular-data-series.js'
-        )
-      }}"></script>
-    <script src="{{
-        asset('assets/vendor_components/apexcharts-bundle/dist/apexcharts.js')
-      }}"></script>
+				<div class="media py-10 px-0">
+					<a class="avatar avatar-lg status-warning" href="#">
+						<img src="{{ asset('images/avatar/3.jpg') }}" alt="..."/>
+					</a>
+					<div class="media-body">
+						<p class="font-size-16">
+							<a class="hover-primary" href="#">
+								<strong>Evan</strong>
+							</a>
+						</p>
+						<p>In posuere tortor vel...</p>
+						<span>42 min ago</span>
+					</div>
+				</div>
 
-    <!-- Sunny Admin App -->
+				<div class="media py-10 px-0">
+					<a class="avatar avatar-lg status-primary" href="#">
+						<img src="{{ asset('images/avatar/4.jpg') }}" alt="..."/>
+					</a>
+					<div class="media-body">
+						<p class="font-size-16">
+							<a class="hover-primary" href="#">
+								<strong>Evan</strong>
+							</a>
+						</p>
+						<p>In posuere tortor vel...</p>
+						<span>42 min ago</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /.tab-pane -->
+		<!-- Settings tab content -->
+		<div class="tab-pane" id="control-sidebar-settings-tab">
+			<div class="flexbox">
+				<a href="javascript:void(0)" class="text-grey">
+					<i class="ti-minus"></i>
+				</a>
+				<p>Todo List</p>
+				<a href="javascript:void(0)" class="text-right text-grey">
+					<i class="ti-plus"></i>
+				</a>
+			</div>
+			<ul class="todo-list mt-20">
+				<li
+					class="py-15 px-5 by-1">
+					<!-- checkbox -->
+					<input type="checkbox" id="basic_checkbox_1" class="filled-in"/>
+					<label for="basic_checkbox_1" class="mb-0 h-15"></label>
+					<!-- todo text -->
+					<span class="text-line">Nulla vitae purus</span>
+					<!-- Emphasis label -->
+					<small class="badge bg-danger">
+						<i class="fa fa-clock-o"></i>
+						2 mins</small>
+					<!-- General tools such as edit or delete-->
+					<div class="tools">
+						<i class="fa fa-edit"></i>
+						<i class="fa fa-trash-o"></i>
+					</div>
+				</li>
+				<li
+					class="py-15 px-5">
+					<!-- checkbox -->
+					<input type="checkbox" id="basic_checkbox_2" class="filled-in"/>
+					<label for="basic_checkbox_2" class="mb-0 h-15"></label>
+					<span class="text-line">Phasellus interdum</span>
+					<small class="badge bg-info">
+						<i class="fa fa-clock-o"></i>
+						4 hours</small>
+					<div class="tools">
+						<i class="fa fa-edit"></i>
+						<i class="fa fa-trash-o"></i>
+					</div>
+				</li>
+				<li
+					class="py-15 px-5 by-1">
+					<!-- checkbox -->
+					<input type="checkbox" id="basic_checkbox_3" class="filled-in"/>
+					<label for="basic_checkbox_3" class="mb-0 h-15"></label>
+					<span class="text-line">Quisque sodales</span>
+					<small class="badge bg-warning">
+						<i class="fa fa-clock-o"></i>
+						1 day</small>
+					<div class="tools">
+						<i class="fa fa-edit"></i>
+						<i class="fa fa-trash-o"></i>
+					</div>
+				</li>
+				<li
+					class="py-15 px-5">
+					<!-- checkbox -->
+					<input type="checkbox" id="basic_checkbox_4" class="filled-in"/>
+					<label for="basic_checkbox_4" class="mb-0 h-15"></label>
+					<span class="text-line">Proin nec mi porta</span>
+					<small class="badge bg-success">
+						<i class="fa fa-clock-o"></i>
+						3 days</small>
+					<div class="tools">
+						<i class="fa fa-edit"></i>
+						<i class="fa fa-trash-o"></i>
+					</div>
+				</li>
+				<li
+					class="py-15 px-5 by-1">
+					<!-- checkbox -->
+					<input type="checkbox" id="basic_checkbox_5" class="filled-in"/>
+					<label for="basic_checkbox_5" class="mb-0 h-15"></label>
+					<span class="text-line">Maecenas scelerisque</span>
+					<small class="badge bg-primary">
+						<i class="fa fa-clock-o"></i>
+						1 week</small>
+					<div class="tools">
+						<i class="fa fa-edit"></i>
+						<i class="fa fa-trash-o"></i>
+					</div>
+				</li>
+				<li
+					class="py-15 px-5">
+					<!-- checkbox -->
+					<input type="checkbox" id="basic_checkbox_6" class="filled-in"/>
+					<label for="basic_checkbox_6" class="mb-0 h-15"></label>
+					<span class="text-line">Vivamus nec orci</span>
+					<small class="badge bg-info">
+						<i class="fa fa-clock-o"></i>
+						1 month</small>
+					<div class="tools">
+						<i class="fa fa-edit"></i>
+						<i class="fa fa-trash-o"></i>
+					</div>
+				</li>
+				<li
+					class="py-15 px-5 by-1">
+					<!-- checkbox -->
+					<input type="checkbox" id="basic_checkbox_7" class="filled-in"/>
+					<label for="basic_checkbox_7" class="mb-0 h-15"></label>
+					<!-- todo text -->
+					<span class="text-line">Nulla vitae purus</span>
+					<!-- Emphasis label -->
+					<small class="badge bg-danger">
+						<i class="fa fa-clock-o"></i>
+						2 mins</small>
+					<!-- General tools such as edit or delete-->
+					<div class="tools">
+						<i class="fa fa-edit"></i>
+						<i class="fa fa-trash-o"></i>
+					</div>
+				</li>
+				<li
+					class="py-15 px-5">
+					<!-- checkbox -->
+					<input type="checkbox" id="basic_checkbox_8" class="filled-in"/>
+					<label for="basic_checkbox_8" class="mb-0 h-15"></label>
+					<span class="text-line">Phasellus interdum</span>
+					<small class="badge bg-info">
+						<i class="fa fa-clock-o"></i>
+						4 hours</small>
+					<div class="tools">
+						<i class="fa fa-edit"></i>
+						<i class="fa fa-trash-o"></i>
+					</div>
+				</li>
+				<li
+					class="py-15 px-5 by-1">
+					<!-- checkbox -->
+					<input type="checkbox" id="basic_checkbox_9" class="filled-in"/>
+					<label for="basic_checkbox_9" class="mb-0 h-15"></label>
+					<span class="text-line">Quisque sodales</span>
+					<small class="badge bg-warning">
+						<i class="fa fa-clock-o"></i>
+						1 day</small>
+					<div class="tools">
+						<i class="fa fa-edit"></i>
+						<i class="fa fa-trash-o"></i>
+					</div>
+				</li>
+				<li
+					class="py-15 px-5">
+					<!-- checkbox -->
+					<input type="checkbox" id="basic_checkbox_10" class="filled-in"/>
+					<label for="basic_checkbox_10" class="mb-0 h-15"></label>
+					<span class="text-line">Proin nec mi porta</span>
+					<small class="badge bg-success">
+						<i class="fa fa-clock-o"></i>
+						3 days</small>
+					<div class="tools">
+						<i class="fa fa-edit"></i>
+						<i class="fa fa-trash-o"></i>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<!-- /.tab-pane -->
+	</div>
+</aside>
+<!-- /.control-sidebar -->
 
+<<<<<<< HEAD
     <script src="{{ asset('main/js/template.js') }}"></script>
 
 	
@@ -1023,3 +1388,23 @@
     {% block javascript %}{% endblock %}
   </body>
 </html>
+=======
+<!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+<div class="control-sidebar-bg"></div></div><!-- ./wrapper --><!-- Vendor JS --><script src="https://kit.fontawesome.com/4c827d40eb.js" crossorigin="anonymous"></script><script src="{{ asset('main/js/vendors.min.js') }}"></script><script src="{{ asset('assets/icons/feather-icons/feather.min.js') }}"></script><script src="{{ asset( 'assets/vendor_components/easypiechart/dist/jquery.easypiechart.js' ) }}"></script><script src="{{ asset( 'assets/vendor_components/apexcharts-bundle/irregular-data-series.js' ) }}"></script><script src="{{ asset('assets/vendor_components/apexcharts-bundle/dist/apexcharts.js') }}"></script><!-- /.tab-pane --><!-- Settings tab content --><!-- /.tab-pane --></div></aside><!-- /.control-sidebar --><!-- Add the sidebar's background. This div must be placed immediately after the control sidebar --><div class="control-sidebar-bg"> </div></div><!-- ./wrapper --><!-- Vendor JS --><script src="https://kit.fontawesome.com/4c827d40eb.js" crossorigin="anonymous"></script><script src="{{ asset('assets/icons/feather-icons/feather.min.js') }}"></script><script src="{{ asset( 'assets/vendor_components/easypiechart/dist/jquery.easypiechart.js' ) }}"></script><script src="{{ asset( 'assets/vendor_components/apexcharts-bundle/irregular-data-series.js' ) }}"></script><script src="{{ asset('assets/vendor_components/apexcharts-bundle/dist/apexcharts.js') }}"></script><!-- Sunny Admin App --><script src="{{ asset('main/js/template.js') }}"></script><!--  begin  FrontOffice  --><!-- Popper JS --><!-- Bootstrap JS --><script src=" {{
+																																																		        asset('FrontOffice/assets/js/bootstrap.min.js')
+																																																		      }} "> </script><!-- Meanmenu JS --><script src=" {{
+																																																		        asset('FrontOffice/assets/js/jquery.meanmenu.js')
+																																																		      }} "></script><!-- Nice Select JS --><script src=" {{
+																																																		        asset('FrontOffice/assets/js/jquery.nice-select.min.js')
+																																																		      }} "></script><!-- Owl Carousel JS --><script src=" {{
+																																																		        asset('FrontOffice/assets/js/owl.carousel.min.js')
+																																																		      }} "></script><!-- Magnific Popup JS --><script src=" {{
+																																																		        asset('FrontOffice/assets/js/jquery.magnific-popup.min.js')
+																																																		      }} "></script><!-- Odometer JS --><!-- Jquery Appear JS --><script src=" {{
+																																																		        asset('FrontOffice/assets/js/jquery.appear.min.js')
+																																																		      }} "></script><!-- Ajaxchimp JS --><script src=" {{
+																																																		        asset('FrontOffice/assets/js/jquery.ajaxchimp.min.js')
+																																																		      }} "></script><!-- Form Validator JS --><script src=" {{
+																																																		        asset('FrontOffice/assets/js/form-validator.min.js')
+																																																		      }} "></script><!-- Contact JS --><!-- Wow JS --><!-- Custom JS --><script src=" {{ asset('FrontOffice/assets/js/main.js') }} "> </script><!-- end FrontOffice  -->{#  apres on va voir ca !! <script src="{{ asset('main/js/vendors.min.js') }}"></script> #}<script src="{{ asset('main/js/pages/dashboard.js') }}"></script><script src="{{ asset('js/delete_reduction.js') }}"></script>{% block javascript %}{% endblock %}</body></html>
+>>>>>>> 6e9a64da1502c490eb852742e4e0e2aa59b02872

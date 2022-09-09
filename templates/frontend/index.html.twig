@@ -252,7 +252,12 @@
                 <ul class="item-to-move">
                   <li>
                     <a href="{{ path('app_client_index') }}" class="nav-link">
-                      <i class="bi bi-person-check-fill"></i>
+                      {# <i class="bi bi-person-check-fill"></i> #}
+                      <img
+                        src="{{ asset('assets/icons/user-svgrepo-com.svg') }}"
+                        width="20px"
+                        height="20px"
+                      />
                     </a>
                   </li>
                   <li>
@@ -260,7 +265,12 @@
                       href="{{ path('app_wish', { id: app.user.id }) }}"
                       class="nav-link"
                     >
-                      <i class="bi bi-heart-fill"></i>
+                      {# <i class="bi bi-heart-fill"></i> #}
+                      <img
+                        src="{{ asset('assets/icons/heart-svgrepo-com.svg') }}"
+                        width="20px"
+                        height="20px"
+                      />
                     </a>
                   </li>
                 </ul>
@@ -331,22 +341,15 @@
           <div class="container">
             <div class="option-inner">
               <div class="others-options d-flex align-items-center">
-                {#
-                <div class="option-item">
-                  <div class="languages-list">
-                    <select>
-                      <option value="1">Eng</option>
-                      <option value="2">Ger</option>
-                      <option value="3">Span</option>
-                    </select>
-                  </div>
-                </div>
-                #}
                 <div class="option-item">
                   {% if app.user %}
                   <div>
                     <a href="{{ path('app_client_index') }}" class="nav-link">
-                      <i class="bi bi-person-check-fill"></i>
+                      <img
+                        src="{{ asset('assets/icons/user-svgrepo-com.svg') }}"
+                        width="20px"
+                        height="15px"
+                      />
                     </a>
                   </div>
                   <div>

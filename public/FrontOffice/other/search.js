@@ -32,6 +32,11 @@ class search {
   }
 
   async loadForm() {
+    if (produits) {
+      produits.style.display = "none";
+      displayLoading();
+    }
+
     console.log(this.form);
     const formdata = new FormData(this.form);
     const url = new URL(
@@ -52,10 +57,15 @@ class search {
       },
     });
     if (response.status >= 200 && response.status < 300) {
+      if (produits) {
+        hideLoading();
+        produits.style.display = "block";
+      }
+
       const data = await response.json();
       console.log(data.content);
+
       this.content.innerHTML = data.content;
-      // history.replaceState({}, "", this.url);
     } else {
       console.log("error");
     }
@@ -63,5 +73,27 @@ class search {
 }
 
 let element = document.querySelector(".js-filter");
+var produits = document.getElementById("produits");
+const loader = document.querySelector("#loadingshop");
+if (loader) {
+  loader.style.display = "none";
+}
 
 new search(element);
+
+function displayLoading() {
+  loader.style.display = "block";
+  loader.style.width = "20rem";
+  loader.style.height = "20rem";
+  loader.classList.add("display");
+  // to stop loading after some time
+  setTimeout(() => {
+    loader.classList.remove("display");
+  }, 5000);
+}
+
+// hiding loading
+function hideLoading() {
+  loader.style.display = "none";
+  loader.classList.remove("display");
+}

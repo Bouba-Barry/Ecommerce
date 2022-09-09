@@ -24,13 +24,15 @@
 
 	<!-- Start Top Products Area -->
 		<section class="top-products-area pt-100 pb-100"> <div class="container js-filter">
-			<div class="row">
+			<div class="row row-content">
 				{% if value is not null and value is not empty %}
 					<div class="col-lg-3 js-filter-form">
 						<h5>Filtrez Votre Recherche</h5>
 						{% include 'frontend/search/_filter.html.twig' %}
 					</div>
-					<div class="col-lg-9">
+					<div id="loadingshop"></div>
+
+					<div class="col-lg-9" id="produits">
 						<div class="row js-filter-content" id="content">
 							{% include 'frontend/search/_produit.html.twig' %}
 						</div>

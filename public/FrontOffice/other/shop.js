@@ -23,12 +23,12 @@ class shop {
    * ajout des elements en fonction du clique du user
    */
   bindEvents() {
-    this.form.querySelectorAll("input").forEach((input) => {
+    this.form.querySelectorAll("input[type=checkbox]").forEach((input) => {
       input.addEventListener("change", this.loadForm.bind(this));
     });
-    // this.form.querySelectorAll("input[type=text]").forEach((texte) => {
-    //   texte.addEventListener("keyup", this.loadForm.bind(this));
-    // });
+    this.form.querySelectorAll("input[type=text]").forEach((texte) => {
+      texte.addEventListener("keyup", this.loadForm.bind(this));
+    });
   }
 
   async loadForm() {
@@ -57,7 +57,7 @@ class shop {
       const data = await response.json();
       // console.log(data.content);
       hideLoading();
-      produits.style.display = "flex";
+      produits.style.display = "block";
       this.content.innerHTML = data.content;
     } else {
       console.log("error");

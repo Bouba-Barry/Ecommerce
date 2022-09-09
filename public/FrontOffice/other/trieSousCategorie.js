@@ -11,11 +11,11 @@ class trieSousCategorie {
     if (element === null) {
       return;
     }
-
+    console.log("je me construit");
     this.container = document.querySelector(".js-filter");
     this.content = document.querySelector("#content");
     this.form = document.querySelector("#filter");
-
+    console.log(this.form);
     this.bindEvents();
   }
 
@@ -32,6 +32,12 @@ class trieSousCategorie {
   }
 
   async loadForm() {
+    if (produits) {
+      produits.style.display = "none";
+      displayLoading();
+    }
+
+    console.log(this.form);
     const formdata = new FormData(this.form);
     const url = new URL(
       this.form.getAttribute("action") || window.location.href
@@ -51,7 +57,13 @@ class trieSousCategorie {
       },
     });
     if (response.status >= 200 && response.status < 300) {
+      if (produits) {
+        hideLoading();
+        produits.style.display = "block";
+      }
+
       const data = await response.json();
+      console.log(data.content);
 
       this.content.innerHTML = data.content;
     } else {
@@ -61,5 +73,27 @@ class trieSousCategorie {
 }
 
 let element = document.querySelector(".js-filter");
+var produits = document.getElementById("produits");
+const loader = document.querySelector("#loadingshop");
+if (loader) {
+  loader.style.display = "none";
+}
 
 new trieSousCategorie(element);
+
+function displayLoading() {
+  loader.style.display = "block";
+  loader.style.width = "20rem";
+  loader.style.height = "20rem";
+  loader.classList.add("display");
+  // to stop loading after some time
+  setTimeout(() => {
+    loader.classList.remove("display");
+  }, 5000);
+}
+
+// hiding loading
+function hideLoading() {
+  loader.style.display = "none";
+  loader.classList.remove("display");
+}

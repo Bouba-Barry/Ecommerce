@@ -23,20 +23,21 @@
 	<!-- End Page Banner -->
 
 	<!-- Start Error Area -->
-		<section
-		class="error-area ptb-100"> {# <div class="d-table"> #}
-		<div class="container">
+		<section class="error-area ptb-100"> <div class="container">
 			<div class="error-content">
 				<img src="{{ asset('FrontOffice/assets/img/E404-2.jpg') }} " alt="error">
 
-				<h3>Erreur 403 : La page n'a pas été trouvé</h3>
+				<h3>Erreur : La page n'a pas été trouvé</h3>
 				<p>La page que vous recherchez n'est malheureusement pas disponible, Veuillez Retournez à la page précédante ou verifiez le chemin d'accès .</p>
 
 				<a href="{{ path('app_home') }}" class="default-btn">
 					Retour à l'accueil
 				</a>
 			</div>
+
 		</div>
-	</div>
-</section>
-<!-- End Error Area -->{% endblock %}
+	</section>
+	<!-- End Error Area -->
+
+
+{% endblock %}
