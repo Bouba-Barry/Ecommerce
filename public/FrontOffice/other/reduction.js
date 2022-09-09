@@ -32,8 +32,11 @@ class reduction {
   }
 
   async loadForm() {
-    produits.style.display = "none";
-    displayLoading();
+    if (produits) {
+      produits.style.display = "none";
+      displayLoading();
+    }
+
     // console.log(this.form);
     const formdata = new FormData(this.form);
     const url = new URL(
@@ -56,8 +59,11 @@ class reduction {
     if (response.status >= 200 && response.status < 300) {
       const data = await response.json();
       // console.log(data.content);
-      hideLoading();
-      produits.style.display = "flex";
+      if (produits) {
+        hideLoading();
+        produits.style.display = "flex";
+      }
+
       this.content.innerHTML = data.content;
     } else {
       console.log("error");
@@ -68,7 +74,9 @@ class reduction {
 let element = document.querySelector(".js-filter");
 let produits = document.getElementById("produits");
 const loader = document.querySelector("#loadingshop");
-loader.style.display = "none";
+if (loader) {
+  loader.style.display = "none";
+}
 new reduction(element);
 function displayLoading() {
   loader.style.display = "block";

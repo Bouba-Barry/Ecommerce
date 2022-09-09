@@ -11,11 +11,11 @@ class trieCategorie {
     if (element === null) {
       return;
     }
-
+    console.log("je me construit");
     this.container = document.querySelector(".js-filter");
     this.content = document.querySelector("#content");
     this.form = document.querySelector("#filter");
-
+    console.log(this.form);
     this.bindEvents();
   }
 
@@ -23,17 +23,21 @@ class trieCategorie {
    * ajout des elements en fonction du clique du user
    */
   bindEvents() {
-    this.form.querySelectorAll("input").forEach((input) => {
+    this.form.querySelectorAll("input[type=checkbox]").forEach((input) => {
       input.addEventListener("change", this.loadForm.bind(this));
     });
-    // this.form.querySelectorAll("input[type=text]").forEach((texte) => {
-    //   texte.addEventListener("keyup", this.loadForm.bind(this));
-    // });
+    this.form.querySelectorAll("input[type=text]").forEach((texte) => {
+      texte.addEventListener("keyup", this.loadForm.bind(this));
+    });
   }
 
   async loadForm() {
-    produits.style.display = "none";
-    displayLoading();
+    if (produits) {
+      produits.style.display = "none";
+      displayLoading();
+    }
+
+    console.log(this.form);
     const formdata = new FormData(this.form);
     const url = new URL(
       this.form.getAttribute("action") || window.location.href
@@ -53,9 +57,14 @@ class trieCategorie {
       },
     });
     if (response.status >= 200 && response.status < 300) {
+      if (produits) {
+        hideLoading();
+        produits.style.display = "block";
+      }
+
       const data = await response.json();
-      hideLoading();
-      produits.style.display = "flex";
+      console.log(data.content);
+
       this.content.innerHTML = data.content;
     } else {
       console.log("error");
@@ -64,9 +73,11 @@ class trieCategorie {
 }
 
 let element = document.querySelector(".js-filter");
-let produits = document.getElementById("produits");
+var produits = document.getElementById("produits");
 const loader = document.querySelector("#loadingshop");
-loader.style.display = "none";
+if (loader) {
+  loader.style.display = "none";
+}
 
 new trieCategorie(element);
 
