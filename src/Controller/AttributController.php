@@ -259,7 +259,7 @@ class AttributController extends AbstractController
 
         }
         foreach($array as $attribut){
-            foreach($attribut->getVariations() as $variation){
+            foreach($attributRepository->find($attribut)->getVariations() as $variation){
                 $variationRepository->remove($variation,true);
                }
             $attributRepository->remove($attributRepository->find($attribut),true);

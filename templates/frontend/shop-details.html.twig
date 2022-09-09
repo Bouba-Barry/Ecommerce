@@ -248,9 +248,9 @@
 										<span>I agree with the terms and conditions</span>
 									</label>
 								</div>
-								<div class="item">
+								{# <div class="item">
 									<a href="#" class="btn btn-light">Buy it now!</a>
-								</div>
+								</div> #}
 							</div>
 
 							<div class="products-share">
@@ -404,7 +404,7 @@
 								<div class="col-lg-6 col-md-6">
 									<div class="top-products-item">
 										<div class="products-image">
-											<a href="{{ path('app_shop_details', { id: produit_similaire.id }) }}"><img style="width: 450px; height: 400px" src="{{ asset('uploads/produits/' ~ produit_similaire.getImageProduit() ) }}" alt="image"/></a>
+											<a href="{{ path('app_shop_details', { id: produit_similaire.id }) }}"><img style="width: 350px; height: 260px" src="{{ asset('uploads/produits/' ~ produit_similaire.getImageProduit() ) }}" alt="image"/></a>
 
 											<ul class="products-action">
 												<li>

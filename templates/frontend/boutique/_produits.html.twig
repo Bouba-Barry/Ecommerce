@@ -9,6 +9,7 @@
           alt="image"
       /></a>
 
+      {#
       <ul class="products-action">
         <li>
           <a
@@ -46,8 +47,7 @@
           </a>
         </li>
       </ul>
-
-      {% if produit.getReduction()|length != 0 %}
+      #} {% if produit.getReduction()|length != 0 %}
       <div class="sale">
         <span>
           {% for produit_reduction in produit.getReduction() %} -{{
