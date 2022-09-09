@@ -202,8 +202,8 @@ class SousCategorieController extends AbstractController
 
 
 
-    #[Route('/new', name: 'app_sous_categorie_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SluggerInterface $slugger, SousCategorieRepository $sousCategorieRepository): Response
+    #[Route('/new/{id}', name: 'app_sous_categorie_new', methods: ['GET', 'POST'])]
+    public function new(Categorie $categorie,Request $request, SluggerInterface $slugger, SousCategorieRepository $sousCategorieRepository): Response
     {
         $sousCategorie = new SousCategorie();
         $form = $this->createForm(SousCategorieType::class, $sousCategorie);
@@ -212,6 +212,7 @@ class SousCategorieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $file */
 
+            $sousCategorie->setCategorie($categorie);
             // // $fileUploader->targetDirectory = 'sous_categorie_directory';
             // $fileUploader = new UploadFile('sous_categorie_directory', $slugger);
             $brochureFile = $form->get('photo')->getData();
@@ -240,8 +241,9 @@ class SousCategorieController extends AbstractController
 
             $sousCategorieRepository->add($sousCategorie, true);
 
+            $this->addFlash('success', 'sous Categorie ajoute avec succes');
 
-            return $this->redirectToRoute('app_sous_categorie_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_sous_categorie_new', ['id' => $categorie->getId() ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('sous_categorie/new.html.twig', [
@@ -294,8 +296,8 @@ class SousCategorieController extends AbstractController
                 // $imageOptimizer->resize($this->getParameter('sous_categorie_directory') . $newFilename, $newFilename);
             }
             $sousCategorieRepository->add($sousCategorie, true);
-
-            return $this->redirectToRoute('app_sous_categorie_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'sous Categorie modifie avec succes');
+            return $this->redirectToRoute('app_sous_categorie_edit', ['id' => $sousCategorie->getId() ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('sous_categorie/edit.html.twig', [

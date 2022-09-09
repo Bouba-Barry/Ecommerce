@@ -1,3 +1,7 @@
-
-    {{ include('produit/_form.html.twig', {'button_label': 'Update'}, {'action': path("app_produit_edit", {'id': produit.id})}) }}
-
+{{
+  include(
+    "produit/_form_edit.html.twig",
+    { button_label: "Modifier" },
+    { action: path("app_produit_edit", { id: produit.id }) }
+  )
+}}

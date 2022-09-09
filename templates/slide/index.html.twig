@@ -4,6 +4,17 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="d-flex align-items-center">
@@ -13,13 +24,8 @@
             <ol class="breadcrumb">
               <li>
                 <a
-                  id="ajouterslide"
-                  class="btn btn-primary btn-md"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Quick View"
-                  data-toggle="modal"
-                  data-target="#products"
+                  href="{{ path('app_slide_new') }}"
+                  class="btn btn-primary btn-md closebtn popup-youtube"
                   >Ajouter Un slide
 
                   <svg

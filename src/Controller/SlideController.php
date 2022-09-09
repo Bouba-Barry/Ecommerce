@@ -58,10 +58,10 @@ class SlideController extends AbstractController
 
             }
 
-
+            $slide->setChoisi("non");
             $slideRepository->add($slide, true);
-
-            return $this->redirectToRoute('app_slide_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Slide modifie avec succes');
+            return $this->redirectToRoute('app_slide_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('slide/new.html.twig', [
@@ -115,7 +115,7 @@ class SlideController extends AbstractController
 
             $slideRepository->add($slide, true);
             $this->addFlash('success', 'Slide modifie avec succes');
-            return $this->redirectToRoute('app_slide_show', ['id' => $slide->getId()  ], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_slide_edit', ['id' => $slide->getId()  ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('slide/edit.html.twig', [

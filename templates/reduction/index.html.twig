@@ -24,16 +24,8 @@
             <ol class="breadcrumb">
               <li>
                 <a
-                  {#
                   href="{{ path('app_reduction_new') }}"
-                  #}
-                  class="btn btn-primary btn-md"
-                  id="ajout"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Quick View"
-                  data-toggle="modal"
-                  data-target="#products"
+                  class="btn btn-primary btn-md closebtn popup-youtube"
                   >Ajouter Reduction
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -124,18 +116,10 @@
                             <i class="fa fa-eye"></i>
                           </a>
                           <a
-                            {#
                             href="{{
                               path('app_reduction_edit', { id: reduction.id })
                             }}"
-                            #}
-                            data-tooltip="tooltip"
-                            data-placement="top"
-                            title="Quick View"
-                            data-toggle="modal"
-                            data-target="#products"
-                            class="btn btn-md btn-warning edit"
-                            id="edit{{ reduction.id }}"
+                            class="btn btn-md btn-warning closebtn popup-youtube"
                           >
                             <i class="fa fa-edit"></i>
                           </a>
@@ -198,7 +182,7 @@
     <!-- /.content -->
   </div>
 </div>
-
+{#
 <select
   style="display: none"
   id="reduction_date_fin_date_month"
@@ -353,6 +337,7 @@
   <option value="58">58</option>
   <option value="59">59</option>
 </select>
+#}
 <!-- /.content-wrapper -->
 
 {% endblock %} {% block javascript %}

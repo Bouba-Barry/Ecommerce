@@ -6,7 +6,9 @@ use App\Entity\Attribut;
 use App\Form\AttributType;
 use App\Repository\AttributRepository;
 use App\Repository\ProduitRepository;
+use App\Repository\VariationRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Null_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -75,8 +77,14 @@ class AttributController extends AbstractController
         $attribut=$attributRepository->find($id);
         $attribut->setDeletedAt(Null);
         $em->persist($attribut);
+        foreach($attribut->getVariations() as $variation){
+            $variation->setDeletedAt(Null);
+            $em->persist($variation);
+        }
+
         $em->flush();        
         $attributs=$attributRepository->findcorbeille();
+        $this->addFlash('success', 'Attribut restaurer avec succes');
         return $this->render('attribut/corbeille.html.twig', [
             'attributs' => $attributs
         ]);
@@ -92,6 +100,7 @@ class AttributController extends AbstractController
          $attributRepository->deletefromtrash($id);
              
         $attributs=$attributRepository->findcorbeille();
+        $this->addFlash('suppression', 'Attribut supprime definitivement avec succes');
         return $this->render('attribut/corbeille.html.twig', [
             'attributs' => $attributs
         ]);
@@ -134,7 +143,7 @@ class AttributController extends AbstractController
             $attributRepository->add($attribut, true);
             $this->addFlash('success', 'Attribut ajoute avec succes vous pouvez ajoute des Variations');
 
-            return $this->redirectToRoute('app_attribut_show', ['id' => $attribut->getId() ]);
+            return $this->redirectToRoute('app_attribut_new');
         }
 
         return $this->renderForm('attribut/new.html.twig', [
@@ -191,9 +200,10 @@ class AttributController extends AbstractController
             
 
             $attributRepository->add($attribut, true);
+
             $this->addFlash('success', 'Attribut modifie avec succes');
 
-            return $this->redirectToRoute('app_attribut_show', ['id'=>$attribut->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_attribut_edit', ['id'=>$attribut->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('attribut/edit.html.twig', [
@@ -203,23 +213,29 @@ class AttributController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_attribut_delete', methods: ['POST'])]
-    public function delete(Request $request, Attribut $attribut, AttributRepository $attributRepository): Response
+    public function delete(Request $request, Attribut $attribut,VariationRepository $variationRepository ,AttributRepository $attributRepository): Response
     {
         
         if ($this->isCsrfTokenValid('delete' . $attribut->getId(), $request->request->get('_token'))) {
+            foreach($attribut->getVariations() as $variation){
+             $variationRepository->remove($variation,true);
+            }
             $attributRepository->remove($attribut, true);
         }
 
         $this->addFlash('suppression', 'Attribut supprime avec succes');
 
-        return $this->redirectToRoute('app_attribut_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_attribut_index_aside', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/delete/{id}', name: 'app_attribut_delete_get', methods: ['GET'])]
-    public function deleteget(Request $request, Attribut $attribut, AttributRepository $attributRepository): Response
+    public function deleteget(Request $request, Attribut $attribut,VariationRepository $variationRepository ,AttributRepository $attributRepository): Response
     {
         
         // if ($this->isCsrfTokenValid('delete' . $attribut->getId(), $request->request->get('_token'))) {
+            foreach($attribut->getVariations() as $variation){
+                $variationRepository->remove($variation,true);
+               }
             $attributRepository->remove($attribut, true);
         
 
@@ -230,7 +246,7 @@ class AttributController extends AbstractController
 
 
     #[Route('/delete/group', name: 'app_attribut_delete_group', methods: ['POST'])]
-    public function deletegroup(Request $request,AttributRepository $attributRepository): Response
+    public function deletegroup(Request $request,VariationRepository $variationRepository,AttributRepository $attributRepository): Response
     {
         
         // dd($request->get('check1'));
@@ -243,6 +259,9 @@ class AttributController extends AbstractController
 
         }
         foreach($array as $attribut){
+            foreach($attribut->getVariations() as $variation){
+                $variationRepository->remove($variation,true);
+               }
             $attributRepository->remove($attributRepository->find($attribut),true);
         }
         // if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {

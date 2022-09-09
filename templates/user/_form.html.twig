@@ -1,15 +1,26 @@
-{% extends 'admin.html.twig' %} {% block title %}Adding User{% endblock %} {%
+{% extends 'admin1.html.twig' %}  {%
 block content %}  {{ form_start(form) }} 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="margin-left: 0px; padding-top: 0px">
   <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="d-flex align-items-center">
         <div class="mr-auto">
           <h3 class="page-title">Ajouter Utilisateur</h3>
           <div class="d-inline-block align-items-center">
-            <nav>
+            {# <nav>
               <ol class="breadcrumb">
       
                 <li>
@@ -20,7 +31,7 @@ block content %}  {{ form_start(form) }}
                   >
                 </li>
               </ol>
-            </nav>
+            </nav> #}
           </div>
         </div>
       </div>

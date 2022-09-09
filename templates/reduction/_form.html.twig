@@ -1,10 +1,21 @@
-{% extends 'admin.html.twig' %} {# {% block title %}Ajouter Produit{% endblock
+{% extends 'admin1.html.twig' %} {# {% block title %}Ajouter Produit{% endblock
 %} #} {% block content %}
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="margin-left: 0px; padding-top: 0px">
   <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="d-flex align-items-center">
@@ -19,7 +30,7 @@
                 </li>
                 #} {#
                 <li class="breadcrumb-item" aria-current="page">Forms</li>
-                #}
+                #} {#
                 <li>
                   <a
                     href="{{ path('app_reduction_index') }}"
@@ -28,6 +39,7 @@
                     Tous les Reductions</a
                   >
                 </li>
+                #}
               </ol>
             </nav>
           </div>

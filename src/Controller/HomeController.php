@@ -173,7 +173,7 @@ class HomeController extends AbstractController
         $email = $request->get('email');
         $random = random_int(1000, 1000000);
         $email = (new Email())
-            ->from('oussabitarek123@gmail.com')
+            ->from('dld@gmail.com')
             ->to($email)
             //->cc('cc@example.com')
             //->bcc('bcc@example.com')

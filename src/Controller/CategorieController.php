@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Categorie;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
+use App\Repository\ProduitRepository;
+use App\Repository\QuantiteRepository;
 use App\Repository\SousCategorieRepository;
 use App\Services\UploadFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -94,8 +96,13 @@ class CategorieController extends AbstractController
         $categorie = $categorieRepository->find($id);
         $categorie->setDeletedAt(Null);
         $em->persist($categorie);
+        foreach($categorie->getSousCategories() as $sous_categorie){
+            $sous_categorie->setDeletedAt(Null);
+            $em->persist($sous_categorie);
+        }
         $em->flush();
         $categories = $categorieRepository->findcorbeille();
+        $this->addFlash('success', 'Categorie restaurer avec succes');
         return $this->render('categorie/corbeille.html.twig', [
             'categories' => $categories
         ]);
@@ -111,6 +118,7 @@ class CategorieController extends AbstractController
         $categorieRepository->deletefromtrash($id);
 
         $categories = $categorieRepository->findcorbeille();
+        $this->addFlash('suppression', 'categorie supprime definitivement avec succes');
         return $this->render('categorie/corbeille.html.twig', [
             'categories' => $categories
         ]);
@@ -128,7 +136,7 @@ class CategorieController extends AbstractController
             $categorieRepository->add($categorie, true);
 
             $this->addFlash('success', 'Categorie ajoute avec succes vous pouvez ajoute les sous categories');
-            return $this->redirectToRoute('app_categorie_show', ['id' => $categorie->getId()]);
+            return $this->redirectToRoute('app_categorie_new_aside', ['id' => $categorie->getId()]);
             // return $this->redirectToRoute('app_sous_categorie_new_aside', ['id' => $categorie->getId()]);
         }
 
@@ -224,7 +232,8 @@ class CategorieController extends AbstractController
                 $categorie->setIcone($newFilename);
             }
             $categorieRepository->add($categorie, true);
-            return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Categorie modifie avec succes');
+            return $this->redirectToRoute('app_categorie_edit', ['id' => $categorie->getId() ], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('categorie/edit.html.twig', [
             'categorie' => $categorie,
@@ -264,31 +273,53 @@ class CategorieController extends AbstractController
 
 
     #[Route('/{id}', name: 'app_categorie_delete', methods: ['POST'])]
-    public function delete(Request $request, Categorie $categorie, CategorieRepository $categorieRepository): Response
+    public function delete(Request $request, Categorie $categorie,QuantiteRepository $quantiteRepository,ProduitRepository $produitRepository, SousCategorieRepository $sousCategorieRepository ,CategorieRepository $categorieRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $categorie->getId(), $request->request->get('_token'))) {
+            foreach($categorie->getSousCategories() as $sous_categorie){
+                foreach($sous_categorie->getProduits() as $produit){
+                    if($produit->getType()=="variable"){
+                        foreach($produit->getQuantites() as $quantite){
+                            $quantiteRepository->remove($quantite,true);
+                        }
+                    }
+                   $produitRepository->remove($produit,true);
+
+                }
+                   $sousCategorieRepository->remove($sous_categorie,true);
+               }
             $categorieRepository->remove($categorie, true);
         }
         $this->addFlash('suppression', 'Categorie supprime avec succes');
 
-        return $this->redirectToRoute('app_categorie_show', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/delete/{id}', name: 'app_categorie_delete_get', methods: ['GET'])]
-    public function deleteget(Request $request, Categorie $categorie, CategorieRepository $categorieRepository): Response
+    public function deleteget(Request $request, Categorie $categorie,QuantiteRepository $quantiteRepository,ProduitRepository $produitRepository ,SousCategorieRepository $sousCategorieRepository ,CategorieRepository $categorieRepository): Response
     {
         // if ($this->isCsrfTokenValid('delete' . $categorie->getId(), $request->request->get('_token'))) {
+        foreach($categorie->getSousCategories() as $sous_categorie){
+         foreach($sous_categorie->getProduits() as $produit){
+            if($produit->getType()=="variable"){
+                foreach($produit->getQuantites() as $quantite){
+                    $quantiteRepository->remove($quantite,true);
+                }
+            }
+            $produitRepository->remove($produit,true);
+         }
+            $sousCategorieRepository->remove($sous_categorie,true);
+        }
         $categorieRepository->remove($categorie, true);
-
+        
         $this->addFlash('suppression', 'Categorie supprime avec succes');
 
         return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/delete/group', name: 'app_categorie_delete_group', methods: ['POST'])]
-    public function deletegroup(Request $request, CategorieRepository $categorieRepository): Response
+    public function deletegroup(Request $request,QuantiteRepository $quantiteRepository,ProduitRepository $produitRepository,SousCategorieRepository $sousCategorieRepository,CategorieRepository $categorieRepository): Response
     {
-
         // dd($request->get('check1'));
         $array = [];
         foreach ($categorieRepository->findAll() as $categorie) {
@@ -298,6 +329,17 @@ class CategorieController extends AbstractController
             }
         }
         foreach ($array as $categorie) {
+            foreach($categorie->getSousCategories() as $sous_categorie){
+                foreach($sous_categorie->getProduits() as $produit){
+                    if($produit->getType()=="variable"){
+                        foreach($produit->getQuantites() as $quantite){
+                            $quantiteRepository->remove($quantite,true);
+                        }
+                    }
+                   $produitRepository->remove($produit,true);
+                }
+                   $sousCategorieRepository->remove($sous_categorie,true);
+               }
             $categorieRepository->remove($categorieRepository->find($categorie), true);
         }
         // if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {

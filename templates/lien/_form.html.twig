@@ -1,33 +1,27 @@
-{% extends 'admin.html.twig' %} {# {% block title %}Ajouter Produit{% endblock
+{% extends 'admin1.html.twig' %} {# {% block title %}Ajouter Produit{% endblock
 %} #} {% block content %}
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="margin-left: 0px; padding-top: 0px">
   <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="d-flex align-items-center">
         <div class="mr-auto">
-          <h3 class="page-title">Ajouter Un Attribut</h3>
-          <div class="d-inline-block align-items-center">
-            <nav>
-              <ol class="breadcrumb">
-                {#
-                <li class="breadcrumb-item">
-                  <a href="#"><i class="mdi mdi-home-outline"></i></a>
-                </li>
-                #} {#
-                <li class="breadcrumb-item" aria-current="page">Forms</li>
-                #}
-                <a
-                  href="{{ path('app_produit_new_variable') }}"
-                  class="btn btn-primary btn-md"
-                  >Retour</a
-                >
-              </ol>
-            </nav>
-          </div>
+          <h3 class="page-title">Ajouter Un Lien</h3>
+          <div class="d-inline-block align-items-center"></div>
         </div>
       </div>
     </div>
@@ -65,19 +59,6 @@
                   {{ form_row(form.url) }}
                   <span class="form-text text-muted">{{
                     form_errors(form.url)
-                  }}</span>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-form-label col-md-2">Slide</label>
-                <div class="mb-3 col-md-10">
-                  {#
-                  <input class="form-control" type="datetime" name="datetime" />
-                  #}
-                  {{ form_row(form.slide) }}
-                  <span class="form-text text-muted">{{
-                    form_errors(form.slide)
                   }}</span>
                 </div>
               </div>

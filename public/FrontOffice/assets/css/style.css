@@ -8077,6 +8077,7 @@ Footer Area CSS
 =================================================*/
 .footer-area {
   background-color: #f3f9fe;
+  margin-top: 80px;
 }
 
 .single-footer-widget {
@@ -8404,6 +8405,8 @@ Copy Right Area CSS
   padding-top: 30px;
   padding-bottom: 30px;
   background-color: #021a32;
+  position: absolute;
+  width: 100%;
 }
 
 .copyright-area .copyright-area-content p {

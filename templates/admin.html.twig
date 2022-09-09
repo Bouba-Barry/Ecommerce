@@ -240,7 +240,7 @@
 													<i class="ti-more"></i>Un Produit Stable</a>
 											</li>
 											<li>
-												<a href="{{ path('app_produit_new_variable') }}">
+												<a class="popup-youtube" href="{{ path('app_produit_new_variable') }}">
 													<i class="ti-more"></i>Un Produit Variable</a>
 											</li>
 										</ul>
@@ -264,7 +264,7 @@
 											Liste des Utilisateurs</a>
 									</li>
 									<li>
-										<a href="{{ path('app_user_new') }}">
+										<a href="{{ path('app_user_new') }}" class="popup-youtube">
 											<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 											Ajouter Un Utilisateur</a>
 									</li>
@@ -282,12 +282,12 @@
 								</a>
 								<ul class="treeview-menu">
 									<li>
-										<a href="{{ path('app_reduction_index') }}">
+										<a href="{{ path('app_reduction_index') }}" >
 											<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
 											Liste Reductions</a>
 									</li>
 									<li>
-										<a href="{{ path('app_reduction_new') }}">
+										<a href="{{ path('app_reduction_new') }}" class="popup-youtube">
 											<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 											Ajouter Une Reduction</a>
 									</li>
@@ -310,7 +310,7 @@
 											Liste des Categories</a>
 									</li>
 									<li>
-										<a href="{{ path('app_categorie_new_aside') }}">
+										<a href="{{ path('app_categorie_new_aside') }}" class="popup-youtube">
 											<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 											Ajouter Une Categorie</a>
 									</li>
@@ -331,7 +331,7 @@
 											Liste des Attributs</a>
 									</li>
 									<li>
-										<a href="{{ path('app_attribut_new') }}">
+										<a href="{{ path('app_attribut_new') }}" class="popup-youtube">
 											<svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 											Ajouter Un Attribut</a> 
 									</li>
@@ -970,8 +970,8 @@
 
     <script src="{{ asset('main/js/template.js') }}"></script>
 
-	<!--  begin  FrontOffice  -->
 	
+	<script src=" {{ asset('FrontOffice/assets/js/jquery.min.js') }}"></script>
     <!-- Popper JS -->
     
     <!-- Bootstrap JS -->
@@ -1014,8 +1014,7 @@
 
     <!-- Custom JS -->
     <script src=" {{ asset('FrontOffice/assets/js/main.js') }} "></script>
-
-     <!-- end FrontOffice  -->
+	<script src=" {{ asset('FrontOffice/assets/js/close.js') }} "></script>
 
 	{#  apres on va voir ca !! <script src="{{ asset('main/js/vendors.min.js') }}"></script> #}
     <script src="{{ asset('main/js/pages/dashboard.js') }}"></script>

@@ -268,27 +268,34 @@ class VariationController extends AbstractController
 
 
     #[Security("is_granted('ROLE_ADMIN')")]
-    #[Route('/new', name: 'app_variation_new', methods: ['GET', 'POST'])]
-    public function new( Request $request , VariationRepository $variationRepository): Response
+    #[Route('/new/variation/{id}', name: 'app_variation_new', methods: ['GET', 'POST'])]
+    public function new( Request $request ,Attribut $attribut, VariationRepository $variationRepository): Response
     {
         
+        // dd("ff");
        
         $variation = new Variation();
         $form = $this->createForm(VariationType::class, $variation);
         $form->handleRequest($request);
+       
+        // if(count($form->getErrors())>0){
+        //     dd($form->getErrors());
+        // }
 
-        if ($form->isSubmitted() && $form->isValid()) {
 
+        if ($form->isSubmitted() && $form->isValid() ) {
+            //   dd("flfl");
+            $variation->setAttribut($attribut);
             $variation_produit = $form->get('produits')->getData();
 
             foreach ($variation_produit as $var) {
                 $variation->addProduit($var);
             }
 
-
+            // dd('fjfj');
             $variationRepository->add($variation, true);
-
-            return $this->redirectToRoute('app_variation_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'variation ajoute avec succes');
+            return $this->redirectToRoute('app_variation_new', ['id' => $attribut->getId() ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('variation/new.html.twig', [
@@ -324,8 +331,7 @@ class VariationController extends AbstractController
             $variationRepository->add($variation, true);
             $this->addFlash('success', 'Variation modifie avec succes');
 
-
-            return $this->redirectToRoute('app_attribut_show', [ 'id' => $variation->getAttribut()->getId()  ]);
+            return $this->redirectToRoute('app_variation_edit', [ 'id' => $variation->getId()  ]);
         }
 
         return $this->renderForm('variation/edit.html.twig', [

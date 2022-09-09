@@ -439,9 +439,9 @@
 										</div>
 
 										<div class="products-content">
-											<h3>
-												<a href="{{ path('app_shop_details', { id: produit_similaire.id }) }}">{{ produit_similaire.designation|slice(0,13) ~ '...' }}</a>
-											</h3>
+											<h5>
+												<a href="{{ path('app_shop_details', { id: produit_similaire.id }) }}">{{ produit_similaire.designation }}</a>
+											</h5>
 											{% if produit_similaire.getReduction()|length != 0 %}
 												<div class="price">
 													<span class="new-price">
@@ -543,9 +543,9 @@
 							</div>
 
 							<div class="products-content">
-								<h3>
-									<a href="{{ path('app_shop_details', { id: produit_en_relation.id }) }}">{{ produit_en_relation.designation|slice(0,13) ~ '...'  }}</a>
-								</h3>
+								<h5>
+									<a href="{{ path('app_shop_details', { id: produit_en_relation.id }) }}">{{ produit_en_relation.designation  }}</a>
+								</h5>
 								{% if produit_en_relation.getReduction()|length != 0 %}
 									<div class="price">
 										<span class="new-price">

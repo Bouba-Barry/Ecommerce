@@ -123,13 +123,8 @@
                           "
                         >
                           <a
-                            class="btn btn-md btn-warning"
-                            id="editproduit"
-                            data-tooltip="tooltip"
-                            data-placement="top"
-                            title="Quick View"
-                            data-toggle="modal"
-                            data-target="#products"
+                            class="btn btn-md btn-warning closebtn popup-youtube"
+                            href="{{ path('app_produit_edit',{id:produit.id}) }}"
                           >
                             Editer <i class="fa fa-edit"></i>
                           </a>
@@ -145,7 +140,7 @@
                         "
                       >
                         <a
-                          class="btn btn-md btn-warning popup-youtube"
+                          class="btn btn-md btn-warning closebtn popup-youtube"
                           href="{{ path('app_produit_edit_variable' , {id:produit.id} )  }}"
                         >
                           Editer <i class="fa fa-edit"></i>
@@ -278,13 +273,9 @@
               justify-content: end;
               
             ">
-            <a href="#"
-            id="ajouter"
-            data-tooltip="tooltip"
-            data-placement="top"
-            title="Quick View"
-            data-toggle="modal"
-            data-target="#products" style="color:blue;"><strong> Ajouter Une Variation</strong>
+            <a href="{{ path('app_quantite_new_variable_produit' , { id:produit.id } ) }}"
+            class="popup-youtube closebtn"
+            style="color:blue;"><strong> Ajouter Une Variation</strong>
                 <svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
               </a>
               </div>
@@ -352,19 +343,14 @@
                             <td>{{ quantite.getPrix() }}</td>
                             <td>
                               <a
-                                class="btn btn-md btn-warning editquantite"
-                                id="editquantite{{ quantite.id }}"
-                                data-tooltip="tooltip"
-                                data-placement="top"
-                                title="Quick View"
-                                data-toggle="modal"
-                                data-target="#products"
-                                {# href="{{
+                                class="btn btn-md btn-warning closebtn popup-youtube"
+                                
+                                 href="{{
                                   path('app_quantite_edit_variable', {
                                     id: quantite.id,
                                     slug: produit.id
                                   })
-                                }}" #}
+                                }}" 
                               >
                                 <i class="fa fa-edit"></i>
                               </a>
@@ -439,13 +425,9 @@
               justify-content: end;
               
             ">
-            <a href="#"
-            id="ajouterimage"
-            data-tooltip="tooltip"
-            data-placement="top"
-            title="Quick View"
-            data-toggle="modal"
-            data-target="#products" style="color:blue;"><strong> Ajouter Une Image</strong>
+            <a href="{{ path('app_image_new_variable_produiut',{id:produit.id}) }}"]
+            class="popup-youtube closebtn"
+            style="color:blue;"><strong> Ajouter Une Image</strong>
                 <svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
               </a>
               </div>
@@ -490,12 +472,9 @@
                               <td>{{ image.variation.nom }}</td>
                               {% if image.produit.user.id == app.user.id or "ROLE_SUPER_ADMIN" in  app.user.Roles  %}
                                 <td>
-                                  <a  id="editimage{{ image.id }}"
-                                  data-tooltip="tooltip"
-                                  data-placement="top"
-                                  title="Quick View"
-                                  data-toggle="modal"
-                                  data-target="#products" class="btn btn-md btn-warning editimage">
+                                  <a   class="btn btn-md btn-warning closebtn popup-youtube"
+                                  href="{{ path('app_image_edit_variable',{id:image.id,slug:produit.id}) }}"
+                                  >
                                     <i class="fa fa-edit"></i>
                                   </a>
                                   <a

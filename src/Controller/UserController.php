@@ -245,7 +245,7 @@ class UserController extends AbstractController
             $userRepository->add($user, true);
             $this->addFlash('success', 'utilisateur ajoute avec succes');
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/new.html.twig', [
@@ -365,7 +365,7 @@ class UserController extends AbstractController
             $userRepository->add($user, true);
             $this->addFlash('success', 'vos modifications sont enregistre avec succes avec succes');
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_edit', ['id' => $user->getId() ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/edit.html.twig', [

@@ -24,16 +24,8 @@
             <ol class="breadcrumb">
               <li>
                 <a
-                  {#
                   href="{{ path('app_categorie_new_aside') }}"
-                  #}
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Quick View"
-                  data-toggle="modal"
-                  data-target="#products"
-                  class="btn btn-primary btn-md"
-                  id="ajoutercategorie"
+                  class="btn btn-primary btn-md closebtn popup-youtube"
                   >Ajouter Une Categorie
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +115,7 @@
                             href="{{
                               path('app_categorie_edit', { id: categorie.id })
                             }}"
-                            class="btn btn-md btn-warning"
+                            class="btn btn-md btn-warning closebtn popup-youtube"
                           >
                             <i class="fa fa-edit"></i>
                           </a>

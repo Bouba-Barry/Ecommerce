@@ -124,17 +124,6 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-form-label col-md-2">Categorie</label>
-                <div class="mb-3 col-md-10" id="categorie">
-                  {#
-                  <span class="form-text text-muted"
-                    >Using <code>input type="datetime"</code></span
-                  >
-                  #}
-                </div>
-              </div>
-
-              <div class="form-group row">
                 <label class="col-form-label col-md-2">Sous Catégorie</label>
                 <div class="mb-3 col-md-10">
                   {{ form_row(form.sous_categorie) }}
@@ -177,6 +166,4 @@
   </div>
 </div>
 <!-- /.content-wrapper -->
-{% endblock %} {% block javascript %}
-<script src="{{ asset('main/js/categorie.js') }}"></script>
 {% endblock %}

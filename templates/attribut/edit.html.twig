@@ -1,10 +1,21 @@
-{% extends 'admin.html.twig' %} {# {% block title %}Ajouter Produit{% endblock
+{% extends 'admin1.html.twig' %} {# {% block title %}Ajouter Produit{% endblock
 %} #} {% block content %}
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="margin-left: 0px; padding-top: 0px">
   <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="d-flex align-items-center">
@@ -19,12 +30,13 @@
                 </li>
                 #} {#
                 <li class="breadcrumb-item" aria-current="page">Forms</li>
-                #}
+                #} {#
                 <a
                   href="{{ path('app_attribut_index_aside') }}"
                   class="btn btn-primary btn-md"
                   >Retour à la Liste</a
                 >
+                #}
               </ol>
             </nav>
           </div>
@@ -58,6 +70,7 @@
 
               <div class="row">
                 <div class="mb-3 col-4">
+                  {#
                   <a
                     href="{{
                       path('app_variation_index_attribut', { id: attribut.id })
@@ -66,6 +79,7 @@
                   >
                     Personnaliser les Variations
                   </a>
+                  #}
                 </div>
                 <div class="col-4"></div>
                 <div class="mb-3 col-4">

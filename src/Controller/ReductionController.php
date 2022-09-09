@@ -115,7 +115,7 @@ class ReductionController extends AbstractController
             $reductionRepository->add($reduction, true);
             $this->addFlash('success', 'Reduction ajoute avec succes');
 
-            return $this->redirectToRoute('app_reduction_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_reduction_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('reduction/new.html.twig', [
@@ -150,7 +150,7 @@ class ReductionController extends AbstractController
 
             $reductionRepository->add($reduction, true);
             $this->addFlash('success', 'Reduction modifie avec succes');
-            return $this->redirectToRoute('app_reduction_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_reduction_edit', ['id' => $reduction->getId() ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('reduction/edit.html.twig', [

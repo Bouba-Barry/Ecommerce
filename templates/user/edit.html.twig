@@ -1,4 +1,4 @@
-{% extends 'admin.html.twig' %} {#
+{% extends 'admin1.html.twig' %} {#
 {{
   include(
     "user/_form.html.twig",
@@ -8,26 +8,25 @@
 }}
 #} {% block content %}
 
-<div class="content-wrapper">
+<div class="content-wrapper" style="margin-left: 0px; padding-top: 0px">
   <div class="container-full">
+    <div id="message">
+      {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %} {% for message in app.flashes('suppression') %}
+      <div class="alert btn-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="d-flex align-items-center">
         <div class="mr-auto">
           <h3 class="page-title">Edit User</h3>
-          <div class="d-inline-block align-items-center">
-            <nav>
-              <ol class="breadcrumb">
-                <li>
-                  <a
-                    href="{{ path('app_user_index') }}"
-                    class="btn btn-primary btn-md"
-                    >Retour à la Liste</a
-                  >
-                </li>
-              </ol>
-            </nav>
-          </div>
+          <div class="d-inline-block align-items-center"></div>
         </div>
       </div>
     </div>
@@ -36,22 +35,12 @@
     <section class="content">
       <!-- Step wizard -->
       <div class="box box-default">
-        <div class="box-header with-border">
-          <h4 class="box-title">Client Modification</h4>
-          <h6 class="box-subtitle">
-            You can find the
-            <a href="http://www.jquery-steps.com" target="_blank"
-              >offical website
-            </a>
-          </h6>
-        </div>
-
         <!-- /.box-header -->
         <div class="box-body wizard-content">
           {{
             include(
               "user/_form_edit_user.html.twig",
-              { button_label: "Update" },
+              { button_label: "Modifier" },
               { action: path("app_user_edit", { id: user.id }) }
             )
           }}

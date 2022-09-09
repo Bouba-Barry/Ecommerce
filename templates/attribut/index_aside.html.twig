@@ -24,16 +24,8 @@
             <ol class="breadcrumb">
               <li>
                 <a
-                  {#
-                  href="{{ path('app_attribut_new_aside') }}"
-                  #}
-                  id="ajouterattribut"
-                  class="btn btn-primary btn-md"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Quick View"
-                  data-toggle="modal"
-                  data-target="#products"
+                  href="{{ path('app_attribut_new') }}"
+                  class="btn btn-primary btn-md closebtn popup-youtube"
                   >Ajouter Un Attribut
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +123,7 @@
                             href="{{
                               path('app_attribut_edit', { id: attribut.id })
                             }}"
-                            class="btn btn-md btn-warning"
+                            class="btn btn-md btn-warning closebtn popup-youtube"
                           >
                             <i class="fa fa-edit"></i>
                           </a>

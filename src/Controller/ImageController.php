@@ -77,7 +77,7 @@ class ImageController extends AbstractController
             }
             $imageRepository->add($image, true);
             $this->addFlash('success', 'Image ajoute avec succes');
-            return $this->redirectToRoute('app_produit_show', ['id' => $id]);
+            return $this->redirectToRoute('app_image_new_variable_produiut', ['id' => $id]);
         }
 
         return $this->renderForm('image/new_produit.html.twig', [
@@ -265,7 +265,7 @@ class ImageController extends AbstractController
             $this->addFlash('success', 'Vos modifications sont enregistres avec succes');
 
 
-            return $this->redirectToRoute('app_produit_show', ['id'=> $slug]);
+            return $this->redirectToRoute('app_image_edit_variable', ['id'=> $id,'slug'=>$slug]);
         }
 
         return $this->renderForm('image/edit.html.twig', [

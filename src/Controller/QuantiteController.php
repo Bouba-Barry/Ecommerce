@@ -203,7 +203,7 @@ class QuantiteController extends AbstractController
             
             // $quantite->setProduit($produitRepository->find($id));
             
-            $this->addFlash('success', 'Combinaison Ajoute avec succes');
+        
              $quantite=$form->getData();
              $produit=$produitRepository->find($id);
             //   dd($form->get('variations')->getData()->getNom());
@@ -223,8 +223,8 @@ class QuantiteController extends AbstractController
                 // dd($array);
             $quantite->setVariations($array);
             $quantiteRepository->add($quantite, true);
-
-            return $this->redirectToRoute('app_produit_show', ['id' => $id]);
+            $this->addFlash('success', 'Combinaison Ajoute avec succes');
+            return $this->redirectToRoute('app_quantite_new_variable_produit', ['id' => $id]);
         }
 
         return $this->renderForm('quantite/new_produit.html.twig', [
@@ -378,7 +378,7 @@ class QuantiteController extends AbstractController
             $quantite->setVariations($array);
             $quantiteRepository->add($quantite, true);
 
-            return $this->redirectToRoute('app_produit_show', ['id' => $slug]);
+            return $this->redirectToRoute('app_quantite_edit_variable', ['id' => $id,'slug'=>$slug]);
         }
 
         return $this->renderForm('quantite/edit.html.twig', [

@@ -26,7 +26,7 @@ class LienController extends AbstractController
     }
 
     #[Route('/new/{id}', name: 'app_lien_new', methods: ['GET', 'POST'])]
-    public function new($id,Request $request, SluggerInterface $slugger,LienRepository $lienRepository): Response
+    public function new($id,Request $request, SlideRepository $slideRepository ,SluggerInterface $slugger,LienRepository $lienRepository): Response
     {
         $lien = new Lien();
         $form = $this->createForm(LienType::class, $lien);
@@ -59,10 +59,10 @@ class LienController extends AbstractController
 
             }
 
-
+            $lien->setSlide($slideRepository->find($id));
             $lienRepository->add($lien, true);
             $this->addFlash('success', 'Lien Ajoute avec succes');
-            return $this->redirectToRoute('app_slide_show', ['id' => $id ], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_lien_new', ['id' => $id ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('lien/new.html.twig', [
@@ -80,7 +80,7 @@ class LienController extends AbstractController
     }
 
     #[Route('/{id}/edit/{slug}', name: 'app_lien_edit', methods: ['GET', 'POST'])]
-    public function edit($id,$slug,Request $request,SluggerInterface $slugger ,LienRepository $lienRepository): Response
+    public function edit($id,$slug,Request $request,SluggerInterface $slugger , SlideRepository $slideRepository ,LienRepository $lienRepository): Response
     {
         $lien=$lienRepository->find($id);
         $form = $this->createForm(LienType::class, $lien);
@@ -94,7 +94,6 @@ class LienController extends AbstractController
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $picture->guessExtension();
-
                 // Move the file to the directory where pictures are stored
                 try {
                     $picture->move(
@@ -104,23 +103,16 @@ class LienController extends AbstractController
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
-
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $lien->setImage($newFilename);
                 // return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
-
             }
-
-
-
-
-
+            $lien->setSlide($slideRepository->find($slug));
             $lienRepository->add($lien, true);
             $this->addFlash('success', 'lien modifie avec succes');
-            return $this->redirectToRoute('app_slide_show', ['id' => $slug ], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_lien_edit', ['id' => $id , 'slug' => $slug  ], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('lien/edit.html.twig', [
             'lien' => $lien,
             'form' => $form,

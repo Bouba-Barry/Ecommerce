@@ -32,16 +32,8 @@
             <ol class="breadcrumb">
               <li>
                 <a
-                  {#
                   href="{{ path('app_user_new') }}"
-                  #}
-                  id="ajout"
-                  data-tooltip="tooltip"
-                  data-placement="top"
-                  title="Quick View"
-                  data-toggle="modal"
-                  data-target="#products"
-                  class="btn btn-primary btn-md"
+                  class="btn btn-primary btn-md closebtn popup-youtube"
                   >Ajouter Un Utilisateur
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -129,22 +121,11 @@
                         <td>{{ user.Nom }} {{ user.prenom }}</td>
                         <td>{{ user.adresse }}</td>
                         <td>
-                          <select
-                            size="1"
-                            id="row-1-office"
-                            name="row-1-office"
-                          >
-                            <option value="Roles" selected="selected">
-                              Roles ici
-                            </option>
-                            {% for role in user.roles %}
-
-                            <option value="{{ role }}">
-                              {{ role }}
-                            </option>
-
-                            {% endfor %}
-                          </select>
+                          {% if "ROLE_SUPER_ADMIN" in user.getRoles() %}
+                          SUPER_ADMIN {% else %} {% if "ROLE_ADMIN" in
+                          user.getRoles() %} ADMIN {% else %} {% if
+                          "ROLE_COMPTABLE" in user.getRoles() %} COMPTABLE {%
+                          else %} USER {% endif %} {% endif %} {% endif %}
                         </td>
 
                         <td>{{ user.telephone }}</td>
@@ -157,13 +138,8 @@
                             <i class="fa fa-eye"></i>
                           </a>
                           <a
-                            data-tooltip="tooltip"
-                            data-placement="top"
-                            title="Quick View"
-                            data-toggle="modal"
-                            data-target="#products"
-                            id="edit{{ user.id }}"
-                            class="btn btn-md btn-warning edit"
+                            href="{{ path('app_user_edit', { id: user.id }) }}"
+                            class="btn btn-md btn-warning closebtn popup-youtube"
                           >
                             <i class="fa fa-edit"></i>
                           </a>

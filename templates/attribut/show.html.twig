@@ -127,16 +127,11 @@
                                           </td>
                                           <td>
                                             <a
-                                            id="editinfos"
-                                            data-tooltip="tooltip"
-                                            data-placement="top"
-                                            title="Quick View"
-                                            data-toggle="modal"
-                                            data-target="#products"
-                                              {# href="{{
+                                            
+                                              href="{{
                                                 path('app_attribut_edit', { id: attribut.id })
-                                              }}" #}
-                                              class="btn btn-md btn-warning mb-5"
+                                              }}"
+                                              class="btn btn-md btn-warning mb-5 closebtn popup-youtube"
                                             >
                                               <i class="fa fa-edit"></i>
                                             </a>
@@ -168,13 +163,9 @@
                             justify-content: end;
                             
                           ">
-                          <a href="#"
-                          id="ajoutervariation"
-                          data-tooltip="tooltip"
-                          data-placement="top"
-                          title="Quick View"
-                          data-toggle="modal"
-                          data-target="#products" style="color:blue;"><strong> Ajouter Une Variation</strong>
+                          <a href="{{ path('app_variation_new',{id:attribut.id}) }}"
+                          class="popup-youtube closebtn"
+                          style="color:blue;"><strong> Ajouter Une Variation</strong>
                               <svg xmlns="http://www.w3.org/2000/svg" width="36" height="26" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                             </a>
 
@@ -223,16 +214,11 @@
                                            
                                             <a
 
-                                              {# href="{{
+                                              href="{{
                                                 path('app_variation_edit', { id: variation.id })
-                                              }}" #}
-                                              data-tooltip="tooltip"
-                                              data-placement="top"
-                                              title="Quick View"
-                                              data-toggle="modal"
-                                              data-target="#products"
-                                              id="editvariation{{ variation.id }}"
-                                              class="btn btn-md btn-warning editvariations"
+                                              }}"
+                                              
+                                              class="btn btn-md btn-warning closebtn popup-youtube"
                                             >
                                               <i class="fa fa-edit"></i>
                                             </a>

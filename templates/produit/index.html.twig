@@ -31,13 +31,56 @@ content %}
 					<h3 class="page-title">Liste Produits</h3>
 					<div class="d-inline-block align-items-center">
 					  <ol class="breadcrumb">
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle btn-primary " data-toggle="dropdown" href="#" >
-							  <span class="hidden-sm-up"><i class="ion-email"></i></span> <span class="hidden-xs-down">Ajouter Un produit</span>
+						<li>
+							<a
+							 
+							  class="btn btn-primary btn-md closebtn popup-youtube"
+							  href="{{ path('app_produit_new') }}"
+							 
+							  >Produit Stable
+							  <svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="36"
+								height="26"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="white"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="feather feather-plus"
+							  >
+								<line x1="12" y1="5" x2="12" y2="19"></line>
+								<line x1="5" y1="12" x2="19" y2="12"></line>
+							  </svg>
 							</a>
-							<div class="dropdown-menu "> <a class="dropdown-item popup-youtube" id="dropdown1-tab"   href="{{ path('app_produit_new') }}" > Produit stable</a> <a class="dropdown-item popup-youtube" id="dropdown2-tab" href="{{ path('app_produit_new_variable') }}" >Produit Variable
-							 </a> </div>
 						  </li>
+                           &nbsp;&nbsp;
+						  <li>
+							<a
+							 
+							  class="btn btn-primary btn-md closebtn popup-youtube"
+							  href="{{ path('app_produit_new_variable') }}" 
+							  id="produitvariable"
+							  >Produit Variable
+							  <svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="36"
+								height="26"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="white"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="feather feather-plus"
+							  >
+								<line x1="12" y1="5" x2="12" y2="19"></line>
+								<line x1="5" y1="12" x2="19" y2="12"></line>
+							  </svg>
+							</a>
+						  </li>
+						
 					  </ol>
 					</div>
 				  </div>
@@ -108,7 +151,7 @@ content %}
 								{% if produit.getType()=="stable" %}
                         			<a 
 									href="{{ path('app_produit_edit',{ id:produit.id }) }}"
-									class="btn btn-md btn-warning edit popup-youtube">
+									class="btn btn-md btn-warning edit closebtn popup-youtube">
 		                          <i class="fa fa-edit"></i>
          	               		</a>
 								{% else %}

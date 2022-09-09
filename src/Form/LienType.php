@@ -42,14 +42,7 @@ class LienType extends AbstractType
                 ],
                 'attr' => ['placeholder' => 'Votre Image SVP', 'class' => 'form-control']
             ])
-            ->add('url',TextType::class,array('label'   => false, 'attr' => ['placeholder' => 'URL', 'class' => 'form-control']))
-            ->add('slide', EntityType::class,
-            [
-                'class' => Slide::class,
-                'choice_label' => 'id',
-                'label' => false,
-                'attr' => ['placeholder' => 'Slide Concerner' , 'class' => 'form-control']])
-        ;
+            ->add('url',TextType::class,array('label'   => false, 'attr' => ['placeholder' => 'URL', 'class' => 'form-control']));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

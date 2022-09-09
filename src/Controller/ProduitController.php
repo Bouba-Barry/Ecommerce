@@ -122,7 +122,7 @@ class ProduitController extends AbstractController
             $produitRepository->add($produit, true);
             $this->addFlash('success', 'Produit ajoute avec succes, vous pouvez ajouter les variations');
 
-            return $this->redirectToRoute('app_produit_show', ['id' => $produit->getId() ]);
+            return $this->redirectToRoute('app_produit_new', ['id' => $produit->getId() ]);
         }
 
         return $this->renderForm('produit/new_variable.html.twig', [
@@ -156,7 +156,7 @@ class ProduitController extends AbstractController
             
             $produitRepository->add($produit, true);
             $this->addFlash('success', 'vos modifications sont enregistre avec succes avec succes');
-            return $this->redirectToRoute('app_produit_show', ['id'=>$produit->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_produit_edit_variable', ['id'=>$produit->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('produit/edit_variable.html.twig', [
@@ -237,8 +237,9 @@ class ProduitController extends AbstractController
 
 
             $produitRepository->add($produit, true);
+            $this->addFlash('success', 'Produit ajoute avec succes');
 
-            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_produit_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('produit/new.html.twig', [
@@ -274,6 +275,10 @@ class ProduitController extends AbstractController
             //     $produit->addAttribut($var);
             // }
 
+            // dd($form->get('sous_categorie')->getData());
+           
+            
+            
             // dd($form);
             /** @var UploadedFile $brochureFile */
             $produit = $form->getData();
@@ -306,7 +311,7 @@ class ProduitController extends AbstractController
             $this->addFlash('success', 'vos modifications sont enregistre avec succes avec succes');
 
             // dd("dfl");
-            return $this->redirectToRoute('app_produit_show', ['id'=>$produit->getId() ]);
+            return $this->redirectToRoute('app_produit_edit', ['id'=>$produit->getId() ]);
         }
 
         return $this->renderForm('produit/edit.html.twig', [
